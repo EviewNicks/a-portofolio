@@ -18,11 +18,20 @@ The portfolio will use a hybrid component approach combining:
 ### Technology Stack Integration
 
 - **Base Framework**: Next.js 16.0.10 with React 19
-- **Styling**: Tailwind CSS 4 with custom design tokens
+- **Styling**: Tailwind CSS 4 with CSS-based theme configuration
 - **Component Library**: shadcn/ui with custom enhancements
 - **Animation**: Framer Motion + custom CSS animations
 - **Typography**: Google Fonts integration
 - **Development Tools**: Prettier, ESLint, TypeScript
+
+### Tailwind CSS 4 Configuration Approach
+
+Unlike Tailwind CSS 3, version 4 uses a CSS-first configuration approach:
+
+- **Theme Definition**: Uses `@theme` blocks directly in CSS files instead of JavaScript config
+- **Import Method**: Single `@import "tailwindcss";` replaces multiple @tailwind directives
+- **Custom Properties**: CSS custom properties define design tokens instead of JavaScript objects
+- **PostCSS Plugin**: Uses `@tailwindcss/postcss` instead of the traditional `tailwindcss` plugin
 
 ## Components and Interfaces
 
@@ -47,7 +56,7 @@ interface DesignSystem {
 
 // Theme System Interface
 interface ThemeSystem {
-  mode: 'light' | 'dark';
+  mode: "light" | "dark";
   colors: ColorTokens;
   fonts: FontTokens;
   spacing: SpacingTokens;
@@ -56,42 +65,42 @@ interface ThemeSystem {
 
 ### Component Categories
 
-#### UI Components (shadcn/ui)
+#### UI Components (shadcn/ui) - Located in components/ui/
+
 - Button: Primary, secondary, ghost, outline variants
 - Card: Glass-enhanced card components
 - Input/Textarea: Form elements with glass styling
 - Navigation: Header, footer, menu components
 - Dialog/Modal: Overlay components with backdrop blur
 
-#### Enhanced Components (Custom)
-- GlassCard: Glassmorphism-enhanced card component
-- ParallaxContainer: Scroll-based animation wrapper
-- AnimatedText: Text with entrance animations
-- FloatingElement: Hover and scroll animations
-- ThemeToggle: Dark/light mode switcher
+#### Enhanced Components (Custom) - Located in components/common/ and components/layout/
+
+- GlassCard: Glassmorphism-enhanced card component (components/common/)
+- ParallaxContainer: Scroll-based animation wrapper (components/common/)
+- AnimatedText: Text with entrance animations (components/common/)
+- FloatingElement: Hover and scroll animations (components/common/)
+- ThemeToggle: Dark/light mode switcher (components/layout/)
 
 ## Data Models
 
 ### Configuration Models
 
 ```typescript
-// Tailwind Configuration
-interface TailwindConfig {
-  theme: {
-    extend: {
-      colors: AIColorPalette;
-      fontFamily: FontFamilies;
-      animation: AnimationDefinitions;
-      backdropBlur: BlurVariants;
-    };
+// Tailwind CSS 4 Theme Configuration (CSS-based)
+interface TailwindTheme {
+  customProperties: {
+    colors: AIColorPalette;
+    fonts: FontFamilies;
+    animations: AnimationDefinitions;
+    spacing: SpacingTokens;
   };
-  plugins: TailwindPlugins[];
+  themeBlocks: ThemeBlockDefinitions;
 }
 
 // Component Configuration
 interface ComponentConfig {
-  style: 'default' | 'new-york';
-  baseColor: 'slate' | 'zinc';
+  style: "default" | "new-york";
+  baseColor: "slate" | "zinc";
   cssVariables: boolean;
   aliases: PathAliases;
 }
@@ -131,76 +140,91 @@ interface AIColorPalette {
 // Typography System
 interface FontSystem {
   display: string; // Playfair Display
-  body: string;    // Poppins
-  mono: string;    // Fira Code
+  body: string; // Poppins
+  mono: string; // Fira Code
 }
 ```
 
 ## Correctness Properties
 
-*A property is a characteristic or behavior that should hold true across all valid executions of a system-essentially, a formal statement about what the system should do. Properties serve as the bridge between human-readable specifications and machine-verifiable correctness guarantees.*
+_A property is a characteristic or behavior that should hold true across all valid executions of a system-essentially, a formal statement about what the system should do. Properties serve as the bridge between human-readable specifications and machine-verifiable correctness guarantees._
 
 ### Property 1: Component Installation Completeness
-*For any* required shadcn/ui component, when the installation process is executed, all necessary files and dependencies should be properly installed and importable without errors
+
+_For any_ required shadcn/ui component, when the installation process is executed, all necessary files and dependencies should be properly installed and importable without errors
 **Validates: Requirements 1.1**
 
 ### Property 2: Dependency Integration Consistency
-*For any* required library (Framer Motion, clsx, tailwind-merge), when the system is configured, all dependencies should be importable and functional
+
+_For any_ required library (Framer Motion, clsx, tailwind-merge), when the system is configured, all dependencies should be importable and functional
 **Validates: Requirements 1.2, 1.4**
 
 ### Property 3: Font Integration Correctness
-*For any* text element with typography classes, when custom fonts are loaded, headings should use Playfair Display and body text should use Poppins
+
+_For any_ text element with typography classes, when custom fonts are loaded, headings should use Playfair Display and body text should use Poppins
 **Validates: Requirements 1.3, 2.4**
 
 ### Property 4: Theme System Consistency
-*For any* theme toggle operation, when switching between dark and light modes, all AI color palette tokens should update consistently across the entire system
+
+_For any_ theme toggle operation, when switching between dark and light modes, all AI color palette CSS custom properties should update consistently across the entire system
 **Validates: Requirements 2.1, 2.5**
 
 ### Property 5: Glassmorphism Utility Functionality
-*For any* element with glass utility classes, when glassmorphism styles are applied, the backdrop-blur and transparency effects should render correctly
+
+_For any_ element with glass utility classes, when glassmorphism styles are applied, the backdrop-blur and transparency effects should render correctly
 **Validates: Requirements 2.2**
 
 ### Property 6: Animation System Integration
-*For any* animation utility or keyframe, when custom animations are applied, parallax and floating animations should execute smoothly at 60fps
+
+_For any_ animation utility or keyframe, when custom animations are applied, parallax and floating animations should execute smoothly at 60fps
 **Validates: Requirements 2.3**
 
 ### Property 7: Utility Function Reliability
-*For any* glassmorphism or animation utility function, when called with valid parameters, the function should return correct CSS classes or animation variants
+
+_For any_ glassmorphism or animation utility function, when called with valid parameters, the function should return correct CSS classes or animation variants
 **Validates: Requirements 3.2**
 
 ### Property 8: Development Tool Configuration
-*For any* code file, when Prettier formatting is applied, the code should be formatted consistently according to Tailwind CSS plugin rules
+
+_For any_ code file, when Prettier formatting is applied, the code should be formatted consistently according to Tailwind CSS plugin rules
 **Validates: Requirements 4.1**
 
 ### Property 9: TypeScript Configuration Correctness
-*For any* import statement using path aliases, when TypeScript compilation is executed, all imports should resolve correctly without errors
+
+_For any_ import statement using path aliases, when TypeScript compilation is executed, all imports should resolve correctly without errors
 **Validates: Requirements 3.5**
 
 ### Property 10: Build Process Validation
-*For any* production build execution, when the build process runs, the system should compile successfully without TypeScript errors or missing dependencies
+
+_For any_ production build execution, when the build process runs, the system should compile successfully without TypeScript errors or missing dependencies
 **Validates: Requirements 4.4, 4.5**
 
 ### Property 11: Component Library Integration
-*For any* shadcn/ui component import, when the component is rendered, it should display correctly without runtime errors
+
+_For any_ shadcn/ui component import, when the component is rendered, it should display correctly without runtime errors
 **Validates: Requirements 5.1**
 
 ### Property 12: Animation Performance Consistency
-*For any* animation trigger, when animations are executed, they should maintain smooth transitions without frame drops
+
+_For any_ animation trigger, when animations are executed, they should maintain smooth transitions without frame drops
 **Validates: Requirements 5.2**
 
 ## Error Handling
 
 ### Dependency Installation Errors
+
 - **Missing Node Modules**: Automatic npm install with error recovery
 - **Version Conflicts**: Clear error messages with resolution steps
 - **Network Issues**: Retry mechanism with offline fallback
 
 ### Configuration Errors
+
 - **Invalid Tailwind Config**: Validation with helpful error messages
 - **Missing Font Files**: Graceful fallback to system fonts
 - **Theme Loading Issues**: Default theme with error logging
 
 ### Component Integration Errors
+
 - **Import Failures**: Clear path resolution error messages
 - **Type Errors**: Comprehensive TypeScript error reporting
 - **Animation Failures**: Fallback to CSS transitions
@@ -208,12 +232,14 @@ interface FontSystem {
 ## Testing Strategy
 
 ### Unit Testing Approach
+
 - **Component Rendering**: Test that all shadcn/ui components render correctly
 - **Utility Functions**: Test glassmorphism and animation utility functions
 - **Theme System**: Test dark/light mode switching functionality
 - **Font Loading**: Test custom font integration and fallbacks
 
 ### Property-Based Testing Approach
+
 - **Component Installation**: Generate random component combinations and verify installation
 - **Animation Performance**: Test animation smoothness across different viewport sizes
 - **Theme Consistency**: Generate random theme configurations and verify consistency

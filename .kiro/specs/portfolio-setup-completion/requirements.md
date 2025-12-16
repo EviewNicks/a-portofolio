@@ -32,7 +32,7 @@ This document outlines the requirements for completing the development environme
 
 #### Acceptance Criteria
 
-1. WHEN the Theme_System is configured THEN the system SHALL implement custom AI color palette with orange accents
+1. WHEN the Theme_System is configured THEN the system SHALL extend the existing @theme block with custom AI color palette with orange accents
 2. WHEN glassmorphism effects are needed THEN the Design_System SHALL provide glass utility classes
 3. WHEN custom animations are required THEN the Animation_Framework SHALL include parallax and floating animations
 4. WHEN typography is rendered THEN the system SHALL use Playfair Display for headings and Poppins for body text
