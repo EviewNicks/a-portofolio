@@ -420,7 +420,7 @@
 
 ### Component Library Structure
 ```
-src/components/
+components/
 ├── ui/                    # shadcn/ui base components
 ├── reactbits/             # Reactbits enhanced components
 │   ├── animations/
