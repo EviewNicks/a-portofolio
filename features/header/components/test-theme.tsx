@@ -18,7 +18,7 @@ export default function TestTheme() {
             This is Poppins body text demonstrating the AI theme system integration.
           </p>
           <code className="font-code text-sm bg-muted p-2 rounded">
-            console.log('Fira Code monospace font');
+            console.log(&code Fira Code monospace font &Code);
           </code>
         </section>
 

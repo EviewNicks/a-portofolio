@@ -8,12 +8,37 @@ This design document outlines the technical approach for completing the developm
 
 ### Component Integration Strategy
 
-The portfolio will use a hybrid component approach combining:
+The portfolio will use a feature-based modular architecture combining:
 
-1. **shadcn/ui Base Components**: Form elements, buttons, cards, navigation
-2. **Custom Enhanced Components**: Glassmorphism effects, parallax animations
-3. **Framer Motion Integration**: Advanced animations and transitions
-4. **Custom Utility System**: Glass effects, animation variants, theme utilities
+1. **shadcn/ui Base Components**: Form elements, buttons, cards, navigation (component/ui/)
+2. **Reactbits Enhanced Components**: Interactive components with animations (components/reactbits/)
+3. **Custom Shared Components**: Glassmorphism effects, parallax animations (components/common/, components/layout/)
+4. **Feature-Specific Components**: Modular sections organized by functionality (features/[feature]/components/)
+5. **Custom Utility System**: Glass effects, animation variants, theme utilities (lib/)
+
+### Feature-Based Architecture
+
+Each portfolio section is organized as an independent feature module:
+
+```
+features/
+├── hero/
+│   ├── components/     # HeroSection, HeroBackground, HeroContent
+│   ├── hooks/         # useParallax, useHeroAnimations
+│   └── types.ts       # Hero-specific TypeScript types
+├── about/
+│   ├── components/     # AboutCard, SkillsList, Timeline
+│   ├── hooks/         # useSkillsAnimation, useTimeline
+│   └── types.ts       # About-specific types
+├── projects/
+│   ├── components/     # ProjectCard, ProjectFilter, ProjectGrid
+│   ├── hooks/         # useProjectFilter, useProjectAnimations
+│   └── types.ts       # Project-specific types
+└── contact/
+    ├── components/     # ContactForm, ContactInfo, SocialLinks
+    ├── hooks/         # useContactForm, useFormValidation
+    └── types.ts       # Contact-specific types
+```
 
 ### Technology Stack Integration
 
@@ -65,7 +90,7 @@ interface ThemeSystem {
 
 ### Component Categories
 
-#### UI Components (shadcn/ui) - Located in components/ui/
+#### UI Components (shadcn/ui & reactbits) - Located in components/ui/
 
 - Button: Primary, secondary, ghost, outline variants
 - Card: Glass-enhanced card components
@@ -80,6 +105,13 @@ interface ThemeSystem {
 - AnimatedText: Text with entrance animations (components/common/)
 - FloatingElement: Hover and scroll animations (components/common/)
 - ThemeToggle: Dark/light mode switcher (components/layout/)
+
+#### Feature Components - Located in features/[feature-name]/components/
+
+- Hero Section: features/hero/components/ (HeroSection, HeroBackground, HeroContent)
+- About Section: features/about/components/ (AboutCard, SkillsList, Timeline)
+- Projects Section: features/projects/components/ (ProjectCard, ProjectFilter, ProjectGrid)
+- Contact Section: features/contact/components/ (ContactForm, ContactInfo, SocialLinks)
 
 ## Data Models
 
