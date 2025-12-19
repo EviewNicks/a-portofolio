@@ -1,0 +1,50 @@
+{
+  "portfolio_data": {
+    "version": "1.0.0",
+    "last_updated": "2024-12-17",
+    "sections": {
+      "personal": {
+        "file": "personal-info.json",
+        "description": "Basic personal information, education, and career details"
+      },
+      "hero": {
+        "file": "hero-section.json",
+        "description": "Landing page hero section content and configuration"
+      },
+      "about": {
+        "file": "about-section.json",
+        "description": "Detailed about section with bio, education, and values"
+      },
+      "skills": {
+        "file": "skills-section.json",
+        "description": "Technical skills categorized by expertise areas"
+      },
+      "projects": {
+        "file": "projects-section.json",
+        "description": "Portfolio projects including featured, academic, and personal"
+      },
+      "experience": {
+        "file": "experience-section.json",
+        "description": "Timeline of education, work, and project experiences"
+      },
+      "contact": {
+        "file": "contact-section.json",
+        "description": "Contact information, social links, and contact form configuration"
+      }
+    },
+    "metadata": {
+      "total_sections": 7,
+      "data_format": "JSON",
+      "encoding": "UTF-8",
+      "structure": "Feature-based modular architecture",
+      "maintenance": "Easy to update individual sections"
+    },
+    "usage_notes": [
+      "Each section is self-contained and can be updated independently",
+      "All data follows TypeScript interfaces defined in features/*/types.ts",
+      "Images paths are relative to public/ directory",
+      "Social links and external URLs should be verified before deployment",
+      "Contact form requires backend integration for functionality"
+    ]
+  }
+}

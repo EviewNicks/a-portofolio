@@ -1,0 +1,191 @@
+{
+  "contact": {
+    "info": {
+      "email": "ardiansyah.dev@gmail.com",
+      "phone": "+62 812-3456-7890",
+      "location": "Makassar, South Sulawesi, Indonesia",
+      "timezone": "WITA (UTC+8)",
+      "availability": "Available for internships and freelance projects",
+      "response_time": "Usually responds within 24 hours",
+      "languages": ["Indonesian (Native)", "English (Fluent)"]
+    },
+    "social_links": [
+      {
+        "id": "github",
+        "platform": "github",
+        "url": "https://github.com/EviewNicks",
+        "username": "EviewNicks",
+        "icon": "github",
+        "isPublic": true,
+        "description": "Open source projects and code repositories"
+      },
+      {
+        "id": "linkedin",
+        "platform": "linkedin",
+        "url": "https://www.linkedin.com/in/ardi-ansyah-421708325/",
+        "username": "ardi-ansyah-421708325",
+        "icon": "linkedin",
+        "isPublic": true,
+        "description": "Professional network and career updates"
+      },
+      {
+        "id": "twitter",
+        "platform": "twitter",
+        "url": "https://twitter.com/ardiansyah_dev",
+        "username": "ardiansyah_dev",
+        "icon": "twitter",
+        "isPublic": true,
+        "description": "Tech insights and industry discussions"
+      },
+      {
+        "id": "instagram",
+        "platform": "instagram",
+        "url": "https://instagram.com/ardiansyah.tech",
+        "username": "ardiansyah.tech",
+        "icon": "instagram",
+        "isPublic": true,
+        "description": "Behind-the-scenes of tech projects"
+      },
+      {
+        "id": "medium",
+        "platform": "medium",
+        "url": "https://medium.com/@ardiansyah",
+        "username": "@ardiansyah",
+        "icon": "medium",
+        "isPublic": true,
+        "description": "Technical articles and tutorials"
+      },
+      {
+        "id": "dev",
+        "platform": "dev",
+        "url": "https://dev.to/ardiansyah",
+        "username": "ardiansyah",
+        "icon": "dev",
+        "isPublic": true,
+        "description": "Developer community and discussions"
+      },
+      {
+        "id": "stackoverflow",
+        "platform": "stackoverflow",
+        "url": "https://stackoverflow.com/users/ardiansyah",
+        "username": "ardiansyah",
+        "icon": "stackoverflow",
+        "isPublic": true,
+        "description": "Programming Q&A and community help"
+      }
+    ],
+    "form": {
+      "fields": [
+        {
+          "name": "name",
+          "label": "Full Name",
+          "type": "text",
+          "required": true,
+          "placeholder": "Enter your full name",
+          "validation": {
+            "minLength": 2,
+            "maxLength": 50,
+            "pattern": "^[a-zA-Z\\s]+$"
+          }
+        },
+        {
+          "name": "email",
+          "label": "Email Address",
+          "type": "email",
+          "required": true,
+          "placeholder": "your.email@example.com",
+          "validation": {
+            "pattern": "^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$"
+          }
+        },
+        {
+          "name": "subject",
+          "label": "Subject",
+          "type": "select",
+          "required": true,
+          "placeholder": "Select a subject",
+          "options": [
+            { "value": "internship", "label": "Internship Opportunity" },
+            { "value": "freelance", "label": "Freelance Project" },
+            { "value": "collaboration", "label": "Collaboration" },
+            { "value": "consultation", "label": "Technical Consultation" },
+            { "value": "other", "label": "Other" }
+          ]
+        },
+        {
+          "name": "message",
+          "label": "Message",
+          "type": "textarea",
+          "required": true,
+          "placeholder": "Tell me about your project or opportunity...",
+          "validation": {
+            "minLength": 10,
+            "maxLength": 1000
+          }
+        }
+      ],
+      "settings": {
+        "submitText": "Send Message",
+        "successMessage": "Thank you for your message! I'll get back to you within 24 hours.",
+        "errorMessage": "Sorry, there was an error sending your message. Please try again or contact me directly via email.",
+        "emailService": "emailjs",
+        "recaptcha": false
+      }
+    },
+    "cta": {
+      "title": "Let's Work Together",
+      "subtitle": "Ready to bring your AI ideas to life?",
+      "description": "I'm always excited to discuss new opportunities, collaborate on interesting projects, or help solve challenging problems with AI and technology.",
+      "buttons": [
+        {
+          "text": "Send Message",
+          "action": "scroll-to-form",
+          "variant": "primary"
+        },
+        {
+          "text": "Download Resume",
+          "action": "download",
+          "url": "/files/Ardiansyah-AI-Engineer-Resume.pdf",
+          "variant": "outline"
+        }
+      ]
+    },
+    "availability": {
+      "status": "available",
+      "types": [
+        {
+          "type": "internship",
+          "title": "Internship Opportunities",
+          "description": "Seeking AI/ML or software engineering internships",
+          "available": true,
+          "duration": "3-6 months",
+          "start_date": "Flexible"
+        },
+        {
+          "type": "freelance",
+          "title": "Freelance Projects",
+          "description": "AI/ML consulting and web development services",
+          "available": true,
+          "duration": "Project-based",
+          "start_date": "Immediate"
+        },
+        {
+          "type": "collaboration",
+          "title": "Open Source Collaboration",
+          "description": "Contributing to interesting open source projects",
+          "available": true,
+          "duration": "Ongoing",
+          "start_date": "Anytime"
+        },
+        {
+          "type": "mentorship",
+          "title": "Mentorship",
+          "description": "Helping fellow students and junior developers",
+          "available": true,
+          "duration": "Ongoing",
+          "start_date": "Anytime"
+        }
+      ]
+    }
+  }
+}

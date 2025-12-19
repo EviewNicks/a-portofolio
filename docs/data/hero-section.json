@@ -1,0 +1,51 @@
+{
+  "hero": {
+    "name": "Ardiansyah",
+    "title": "AI Engineer & Developer",
+    "subtitle": "Building intelligent solutions with AI",
+    "description": "Passionate AI Engineer specializing in machine learning, computer vision, and intelligent system development. Currently pursuing Computer Engineering at Universitas Negeri Makassar with focus on creating innovative AI solutions for real-world problems.",
+    "tagline": "Transforming ideas into intelligent reality",
+    "cta": {
+      "primary": {
+        "text": "View Projects",
+        "link": "#projects",
+        "variant": "primary"
+      },
+      "secondary": {
+        "text": "Get In Touch",
+        "link": "#contact",
+        "variant": "outline"
+      }
+    },
+    "highlights": [
+      "6th Semester Computer Engineering Student",
+      "AI/ML Enthusiast & Developer",
+      "Open Source Contributor",
+      "Problem Solver"
+    ],
+    "avatar": {
+      "url": "/images/profile/ardiansyah-avatar.jpg",
+      "alt": "Ardiansyah - AI Engineer Profile Photo"
+    },
+    "background": {
+      "type": "animated-gradient",
+      "theme": "ai-neural-network",
+      "particles": true
+    },
+    "parallax": {
+      "enabled": true,
+      "layers": [
+        {
+          "element": "background",
+          "speed": 0.2,
+          "direction": "up"
+        },
+        {
+          "element": "content",
+          "speed": 0.5,
+          "direction": "down"
+        }
+      ]
+    }
+  }
+}

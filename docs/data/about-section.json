@@ -1,0 +1,95 @@
+{
+  "about": {
+    "personal": {
+      "name": "Ardiansyah",
+      "title": "AI Engineer & Computer Engineering Student",
+      "location": "Makassar, Indonesia",
+      "timezone": "WITA (UTC+8)",
+      "bio": "I'm a passionate AI Engineer and Computer Engineering student at Universitas Negeri Makassar, currently in my 6th semester. My journey in technology began with curiosity about how machines can learn and make intelligent decisions. I specialize in developing AI solutions including computer vision systems, optical mark recognition, and intelligent recommendation algorithms that solve real-world problems.",
+      "philosophy": "I believe that artificial intelligence should augment human capabilities and solve practical problems. My approach focuses on creating efficient, accurate, and beneficial AI systems that can make a positive impact on education, business, and society through innovative applications of machine learning and computer vision.",
+      "interests": [
+        "Machine Learning & Computer Vision",
+        "Optical Mark Recognition Systems",
+        "Recommendation Algorithms & Decision Support",
+        "Web Development & Full-Stack Solutions",
+        "Open Source Development & Innovation"
+      ]
+    },
+    "education": {
+      "current": {
+        "institution": "Universitas Negeri Makassar",
+        "degree": "Bachelor of Computer Engineering",
+        "field": "Teknik Komputer",
+        "semester": "6th Semester",
+        "period": "2022 - Present",
+        "gpa": "3.8/4.0",
+        "status": "Active",
+        "focus_areas": [
+          "Artificial Intelligence",
+          "Machine Learning",
+          "Computer Systems",
+          "Software Engineering"
+        ]
+      },
+      "achievements": [
+        {
+          "title": "Dean's List",
+          "period": "2023-2024",
+          "description": "Consistent academic excellence"
+        },
+        {
+          "title": "AI Research Project",
+          "period": "2024",
+          "description": "Led research on computer vision applications"
+        }
+      ]
+    },
+    "career_objectives": [
+      "Develop intelligent systems for education and business automation",
+      "Advance computer vision applications in real-world scenarios",
+      "Build scalable AI solutions with high accuracy and efficiency",
+      "Contribute to innovative AI research and development",
+      "Bridge the gap between academic AI research and practical applications"
+    ],
+    "values": [
+      {
+        "title": "Innovation",
+        "description": "Constantly exploring new technologies and approaches"
+      },
+      {
+        "title": "Ethics",
+        "description": "Building responsible and transparent AI systems"
+      },
+      {
+        "title": "Collaboration",
+        "description": "Working together to solve complex challenges"
+      },
+      {
+        "title": "Learning",
+        "description": "Continuous growth and knowledge acquisition"
+      }
+    ],
+    "stats": [
+      {
+        "label": "Projects Completed",
+        "value": "15+",
+        "icon": "code"
+      },
+      {
+        "label": "Technologies Mastered",
+        "value": "20+",
+        "icon": "tools"
+      },
+      {
+        "label": "Study Hours",
+        "value": "1000+",
+        "icon": "clock"
+      },
+      {
+        "label": "Open Source Contributions",
+        "value": "50+",
+        "icon": "git-branch"
+      }
+    ]
+  }
+}

@@ -1,0 +1,289 @@
+{
+  "projects": {
+    "featured": [
+      {
+        "id": "notess-webapp",
+        "title": "Notess - Note Taking Web Application",
+        "description": "Modern web application for creating, organizing, and managing personal notes with intuitive user interface and real-time synchronization.",
+        "longDescription": "Notess is a comprehensive note-taking web application built with modern web technologies. It features a clean, intuitive interface for creating and organizing notes, with real-time synchronization and advanced search capabilities. The application supports rich text editing, categorization, and collaborative features.",
+        "technologies": ["React", "Node.js", "Express", "MongoDB", "Socket.io", "CSS3"],
+        "category": "web-development",
+        "status": "completed",
+        "featured": true,
+        "images": [
+          {
+            "id": "main-interface",
+            "url": "/images/projects/notess/main-interface.jpg",
+            "alt": "Notess Main Interface",
+            "isPrimary": true,
+            "caption": "Clean and intuitive note-taking interface"
+          },
+          {
+            "id": "note-editor",
+            "url": "/images/projects/notess/note-editor.jpg",
+            "alt": "Note Editor",
+            "isPrimary": false,
+            "caption": "Rich text editor with formatting options"
+          }
+        ],
+        "links": [
+          {
+            "id": "github",
+            "type": "github",
+            "url": "https://github.com/EviewNicks/Notiss",
+            "label": "View Source Code"
+          },
+          {
+            "id": "demo",
+            "type": "demo",
+            "url": "#",
+            "label": "Live Demo"
+          }
+        ],
+        "highlights": [
+          "Real-time note synchronization",
+          "Rich text editing capabilities",
+          "Advanced search and filtering",
+          "Responsive design for all devices"
+        ],
+        "createdAt": "2023-08-15",
+        "updatedAt": "2024-01-10"
+      },
+      {
+        "id": "omr-grading-system",
+        "title": "OMR Grading System",
+        "description": "Optical Mark Recognition system for automated grading of answer sheets using computer vision and machine learning techniques.",
+        "longDescription": "An intelligent OMR (Optical Mark Recognition) system that automates the grading process for multiple-choice answer sheets. The system uses advanced computer vision algorithms to detect and analyze marked answers, providing accurate and efficient grading with detailed analytics and reporting features.",
+        "technologies": ["Python", "OpenCV", "NumPy", "Pandas", "Flask", "Machine Learning"],
+        "category": "ai-ml",
+        "status": "completed",
+        "featured": true,
+        "images": [
+          {
+            "id": "scanning-process",
+            "url": "/images/projects/omr-grading-system/scanning-process.jpg",
+            "alt": "OMR Scanning Process",
+            "isPrimary": true,
+            "caption": "Automated answer sheet scanning and recognition"
+          },
+          {
+            "id": "results-dashboard",
+            "url": "/images/projects/omr-grading-system/results-dashboard.jpg",
+            "alt": "Results Dashboard",
+            "isPrimary": false,
+            "caption": "Comprehensive grading results and analytics"
+          }
+        ],
+        "links": [
+          {
+            "id": "github",
+            "type": "github",
+            "url": "https://github.com/EviewNicks/omr_grading_system",
+            "label": "View Source Code"
+          }
+        ],
+        "highlights": [
+          "95%+ accuracy in mark detection",
+          "Automated batch processing",
+          "Detailed analytics and reporting",
+          "Support for various answer sheet formats"
+        ],
+        "createdAt": "2023-06-20",
+        "updatedAt": "2023-11-15"
+      },
+      {
+        "id": "fuzzy-topsis-laptop-recommendation",
+        "title": "Fuzzy TOPSIS Laptop Recommendation System",
+        "description": "Intelligent laptop recommendation system using Fuzzy TOPSIS algorithm for multi-criteria decision making based on user preferences.",
+        "longDescription": "A sophisticated recommendation system that helps users find the perfect laptop based on their specific needs and preferences. The system implements the Fuzzy TOPSIS (Technique for Order Preference by Similarity to Ideal Solution) algorithm to evaluate laptops across multiple criteria including performance, price, battery life, and user requirements.",
+        "technologies": ["Python", "Flask", "Pandas", "NumPy", "Scikit-learn", "HTML/CSS", "JavaScript"],
+        "category": "ai-ml",
+        "status": "completed",
+        "featured": true,
+        "images": [
+          {
+            "id": "recommendation-interface",
+            "url": "/images/projects/fuzzy-topsis-laptop-recommendation/recommendation-interface.jpg",
+            "alt": "Laptop Recommendation Interface",
+            "isPrimary": true,
+            "caption": "User-friendly recommendation interface"
+          },
+          {
+            "id": "algorithm-visualization",
+            "url": "/images/projects/fuzzy-topsis-laptop-recommendation/algorithm-visualization.jpg",
+            "alt": "Algorithm Visualization",
+            "isPrimary": false,
+            "caption": "TOPSIS algorithm decision matrix visualization"
+          }
+        ],
+        "links": [
+          {
+            "id": "github",
+            "type": "github",
+            "url": "https://github.com/EviewNicks/laptop-recommendation-backend",
+            "label": "View Source Code"
+          }
+        ],
+        "highlights": [
+          "Multi-criteria decision analysis",
+          "Fuzzy logic implementation",
+          "Personalized recommendations",
+          "Interactive comparison features"
+        ],
+        "createdAt": "2023-04-10",
+        "updatedAt": "2023-09-25"
+      }
+    ],
+    "academic": [
+      {
+        "id": "brandu-ecommerce",
+        "title": "Brandu - E-Commerce Platform",
+        "description": "Full-stack e-commerce web application with modern UI/UX design, shopping cart functionality, and payment integration.",
+        "longDescription": "Brandu is a comprehensive e-commerce platform developed as an academic project. It features a modern, responsive design with complete shopping functionality including product catalog, shopping cart, user authentication, order management, and payment processing integration.",
+        "technologies": ["React", "Node.js", "Express", "MongoDB", "Stripe API", "JWT"],
+        "category": "web-development",
+        "status": "completed",
+        "featured": false,
+        "images": [
+          {
+            "id": "homepage",
+            "url": "/images/projects/brandu/homepage.jpg",
+            "alt": "Brandu Homepage",
+            "isPrimary": true,
+            "caption": "Modern e-commerce homepage design"
+          },
+          {
+            "id": "product-catalog",
+            "url": "/images/projects/brandu/product-catalog.jpg",
+            "alt": "Product Catalog",
+            "isPrimary": false,
+            "caption": "Product browsing and filtering interface"
+          }
+        ],
+        "links": [
+          {
+            "id": "github",
+            "type": "github",
+            "url": "https://github.com/Magurutech/maguru",
+            "label": "View Project"
+          }
+        ],
+        "highlights": [
+          "Complete e-commerce functionality",
+          "Responsive design for all devices",
+          "Secure payment integration",
+          "Admin dashboard for management"
+        ],
+        "createdAt": "2023-02-15",
+        "updatedAt": "2023-07-20"
+      },
+      {
+        "id": "webapp-rental-baju",
+        "title": "Rental Baju - Clothing Rental System",
+        "description": "Web-based clothing rental management system with inventory tracking, booking system, and customer management features.",
+        "longDescription": "A comprehensive web application for managing clothing rental business operations. The system includes inventory management, customer registration, booking and reservation system, payment tracking, and detailed reporting features for business analytics.",
+        "technologies": ["PHP", "MySQL", "Bootstrap", "JavaScript", "HTML/CSS"],
+        "category": "web-development",
+        "status": "completed",
+        "featured": false,
+        "images": [
+          {
+            "id": "dashboard",
+            "url": "/images/projects/webapp-rental-baju/dashboard.jpg",
+            "alt": "Rental Management Dashboard",
+            "isPrimary": true,
+            "caption": "Comprehensive rental management dashboard"
+          },
+          {
+            "id": "inventory-system",
+            "url": "/images/projects/webapp-rental-baju/inventory-system.jpg",
+            "alt": "Inventory Management",
+            "isPrimary": false,
+            "caption": "Clothing inventory tracking system"
+          }
+        ],
+        "links": [
+          {
+            "id": "github",
+            "type": "github",
+            "url": "https://github.com/EviewNicks/rental-baju",
+            "label": "View Source"
+          }
+        ],
+        "highlights": [
+          "Complete rental management system",
+          "Inventory tracking and management",
+          "Customer booking and reservations",
+          "Financial reporting and analytics"
+        ],
+        "createdAt": "2023-01-10",
+        "updatedAt": "2023-05-30"
+      }
+    ],
+    "personal": [
+      {
+        "id": "portfolio-website",
+        "title": "AI Engineer Portfolio Website",
+        "description": "Modern, responsive portfolio website with glassmorphism design, parallax scrolling, and advanced animations.",
+        "longDescription": "A cutting-edge portfolio website built with Next.js featuring glassmorphism design, parallax scrolling, and modern web development practices. The site showcases technical skills, projects, and professional experience with optimal performance and accessibility.",
+        "technologies": ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion", "Vercel"],
+        "category": "web-development",
+        "status": "in-progress",
+        "featured": false,
+        "images": [
+          {
+            "id": "homepage",
+            "url": "/images/projects/portfolio/homepage.jpg",
+            "alt": "Portfolio Homepage",
+            "isPrimary": true,
+            "caption": "Modern glassmorphism design with parallax effects"
+          }
+        ],
+        "links": [
+          {
+            "id": "demo",
+            "type": "demo",
+            "url": "https://ardiansyah.dev",
+            "label": "Live Website"
+          },
+          {
+            "id": "github",
+            "type": "github",
+            "url": "https://github.com/ardiansyah/portfolio-website",
+            "label": "Source Code"
+          }
+        ],
+        "highlights": [
+          "98+ Lighthouse performance score",
+          "Fully responsive design",
+          "Advanced CSS animations",
+          "SEO optimized"
+        ],
+        "createdAt": "2024-03-01",
+        "updatedAt": "2024-12-17"
+      }
+    ],
+    "filters": {
+      "categories": [
+        { "id": "all", "name": "All Projects", "count": 6 },
+        { "id": "ai-ml", "name": "AI & Machine Learning", "count": 2 },
+        { "id": "web-development", "name": "Web Development", "count": 4 },
+        { "id": "data-science", "name": "Data Science", "count": 0 },
+        { "id": "automation", "name": "Automation", "count": 0 }
+      ],
+      "status": [
+        { "id": "all", "name": "All Status", "count": 6 },
+        { "id": "completed", "name": "Completed", "count": 5 },
+        { "id": "in-progress", "name": "In Progress", "count": 1 }
+      ]
+    },
+    "stats": {
+      "total_projects": 6,
+      "completed_projects": 5,
+      "in_progress": 1,
+      "technologies_used": 20,
+      "github_stars": 120,
+      "total_commits": 400
+    }
+  }
+}
