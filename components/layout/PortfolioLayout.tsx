@@ -6,8 +6,11 @@ import { ScrollIndicator } from './ScrollIndicator';
 import { ScrollToTop } from './ScrollToTop';
 import { SectionIndicator } from './SectionIndicator';
 import { KeyboardShortcuts } from './KeyboardShortcuts';
+import { SkipLinks } from '@/components/accessibility/SkipLinks';
 import { useNavigation } from '@/lib/hooks/useNavigation';
 import { useKeyboardNavigation } from '@/lib/hooks/useKeyboardNavigation';
+import { useAccessibilityPreferences } from '@/lib/hooks/useAccessibility';
+import { useResponsive } from '@/lib/hooks/useResponsive';
 
 const navigationItems = [
   { id: 'hero', label: 'Home', href: '#hero' },
@@ -24,6 +27,8 @@ interface PortfolioLayoutProps {
 
 export function PortfolioLayout({ children }: PortfolioLayoutProps) {
   const { activeSection, scrollToSection } = useNavigation(navigationItems);
+  const { reducedMotion, highContrast } = useAccessibilityPreferences();
+  const { isMobile, isTablet } = useResponsive();
   
   // Enable keyboard navigation
   useKeyboardNavigation({
@@ -35,19 +40,30 @@ export function PortfolioLayout({ children }: PortfolioLayoutProps) {
 
   return (
     <>
+      {/* Skip Links for Accessibility */}
+      <SkipLinks />
+
       {/* Navigation Components */}
       <Navigation />
       <ScrollIndicator />
-      <SectionIndicator
-        sections={navigationItems}
-        activeSection={activeSection}
-        onSectionClick={scrollToSection}
-      />
+      {!isMobile && (
+        <SectionIndicator
+          sections={navigationItems}
+          activeSection={activeSection}
+          onSectionClick={scrollToSection}
+        />
+      )}
       <ScrollToTop />
       <KeyboardShortcuts />
 
       {/* Main Content */}
-      <main className="min-h-screen bg-background">
+      <main 
+        className="min-h-screen bg-background"
+        data-reduced-motion={reducedMotion}
+        data-high-contrast={highContrast}
+        data-mobile={isMobile}
+        data-tablet={isTablet}
+      >
         {children}
       </main>
     </>
