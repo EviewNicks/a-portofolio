@@ -4,7 +4,8 @@ import React from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { HeroGlassCard } from '@/components/common/GlassCard';
-import { HeroTitle, HeroSubtitle, AnimatedText } from '@/components/common/AnimatedText';
+import { HeroTitle, HeroSubtitle } from '@/components/common/AnimatedText';
+import TextType from '@/components/reactbits/TextType';
 import { Button } from '@/components/ui/button';
 import { HeroData } from '@/lib/types/portfolio';
 
@@ -46,7 +47,7 @@ export const HeroContent: React.FC<HeroContentProps> = ({ heroData }) => {
   };
 
   return (
-    <div className="container mx-auto px-4 py-16 lg:py-24">
+    <div className="container mx-auto px-2 py-4 lg:py-8">
       <motion.div
         variants={containerVariants}
         initial="initial"
@@ -76,10 +77,17 @@ export const HeroContent: React.FC<HeroContentProps> = ({ heroData }) => {
             variants={itemVariants}
             transition={{ duration: 0.6, ease: "easeOut" }}
           >
-            <AnimatedText
+            <TextType
               text={heroData.tagline}
-              variant="typewriter"
+              typingSpeed={80}
+              initialDelay={1000}
+              pauseDuration={3000}
+              loop={true}
+              showCursor={true}
+              cursorCharacter="|"
+              cursorBlinkDuration={0.7}
               className="text-lg md:text-xl font-medium text-ai-amber"
+              startOnVisible={true}
             />
           </motion.div>
 
@@ -103,8 +111,12 @@ export const HeroContent: React.FC<HeroContentProps> = ({ heroData }) => {
               size="lg"
               className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-3"
               onClick={() => {
-                const element = document.querySelector(heroData.cta.primary.link);
-                element?.scrollIntoView({ behavior: 'smooth' });
+                if (heroData.cta.primary.link.startsWith('#')) {
+                  const element = document.querySelector(heroData.cta.primary.link);
+                  element?.scrollIntoView({ behavior: 'smooth' });
+                } else {
+                  window.open(heroData.cta.primary.link, '_blank');
+                }
               }}
             >
               {heroData.cta.primary.text}
@@ -115,8 +127,12 @@ export const HeroContent: React.FC<HeroContentProps> = ({ heroData }) => {
               size="lg"
               className="border-primary text-primary hover:bg-primary hover:text-primary-foreground px-8 py-3"
               onClick={() => {
-                const element = document.querySelector(heroData.cta.secondary.link);
-                element?.scrollIntoView({ behavior: 'smooth' });
+                if (heroData.cta.secondary.link.startsWith('#')) {
+                  const element = document.querySelector(heroData.cta.secondary.link);
+                  element?.scrollIntoView({ behavior: 'smooth' });
+                } else {
+                  window.open(heroData.cta.secondary.link, '_blank');
+                }
               }}
             >
               {heroData.cta.secondary.text}
