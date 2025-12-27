@@ -1,4 +1,4 @@
-import { Project } from '@/features/projects/types'
+import { Project } from '@/lib/types/portfolio'
 
 // Sample Projects Data
 export const projectsData: Project[] = [
@@ -32,6 +32,11 @@ export const projectsData: Project[] = [
         url: 'https://ai-recognition-demo.com',
         label: 'Live Demo'
       }
+    ],
+    highlights: [
+      'Real-time object detection with 95% accuracy',
+      'Deployed on AWS with auto-scaling capabilities',
+      'Processes 1000+ images per minute'
     ],
     createdAt: '2023-06-15',
     updatedAt: '2023-08-20'
@@ -67,6 +72,11 @@ export const projectsData: Project[] = [
         label: 'Visit Website'
       }
     ],
+    highlights: [
+      'Modern glassmorphism design system',
+      'Optimized for 90+ Lighthouse score',
+      'Fully responsive across all devices'
+    ],
     createdAt: '2023-09-01',
     updatedAt: '2023-12-15'
   },
@@ -94,6 +104,11 @@ export const projectsData: Project[] = [
         url: 'https://github.com/yourusername/analytics-dashboard',
         label: 'View Source Code'
       }
+    ],
+    highlights: [
+      'Interactive D3.js visualizations',
+      'Real-time data processing',
+      'Handles 10M+ data points'
     ],
     createdAt: '2023-10-01',
     updatedAt: '2023-12-10'

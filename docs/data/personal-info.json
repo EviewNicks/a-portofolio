@@ -1,0 +1,140 @@
+{
+  "personal": {
+    "basic_info": {
+      "full_name": "Ardiansyah",
+      "display_name": "Ardiansyah",
+      "title": "AI Engineer & Computer Engineering Student",
+      "tagline": "Building intelligent solutions with AI",
+      "bio_short": "Passionate AI Engineer specializing in machine learning, computer vision, and intelligent system development.",
+      "bio_long": "I'm a dedicated AI Engineer and Computer Engineering student at Universitas Negeri Makassar, currently in my 6th semester. My passion lies in developing intelligent solutions that solve real-world problems through artificial intelligence and machine learning. I specialize in computer vision, optical mark recognition systems, and recommendation algorithms, combining theoretical knowledge with practical implementation to create innovative AI systems.",
+      "location": {
+        "city": "Makassar",
+        "state": "South Sulawesi",
+        "country": "Indonesia",
+        "timezone": "WITA (UTC+8)"
+      },
+      "age": 21,
+      "nationality": "Indonesian",
+      "languages": [
+        {
+          "language": "Indonesian",
+          "level": "Native",
+          "code": "id"
+        },
+        {
+          "language": "English",
+          "level": "Fluent",
+          "code": "en"
+        }
+      ]
+    },
+    "education": {
+      "current": {
+        "institution": "Universitas Negeri Makassar",
+        "degree": "Bachelor of Computer Engineering",
+        "field": "Teknik Komputer",
+        "semester": "6th Semester",
+        "start_year": 2022,
+        "expected_graduation": 2026,
+        "gpa": "3.8/4.0",
+        "status": "Active Student"
+      },
+      "previous": {
+        "institution": "SMA Negeri 1 Makassar",
+        "degree": "High School Diploma",
+        "field": "Mathematics and Natural Sciences",
+        "graduation_year": 2022,
+        "achievement": "Graduated with Honors"
+      }
+    },
+    "career": {
+      "current_status": "Student & Freelancer",
+      "career_level": "Entry Level",
+      "experience_years": 2,
+      "seeking": [
+        "Internship Opportunities",
+        "AI/ML Projects",
+        "Software Engineering Roles",
+        "Research Collaborations"
+      ],
+      "interests": [
+        "Artificial Intelligence",
+        "Machine Learning",
+        "Computer Vision",
+        "Optical Mark Recognition",
+        "Recommendation Systems",
+        "Web Development",
+        "Educational Technology"
+      ],
+      "goals": [
+        "Become a leading AI Engineer",
+        "Contribute to cutting-edge AI research",
+        "Build impactful AI solutions",
+        "Mentor future AI engineers"
+      ]
+    },
+    "personality": {
+      "traits": [
+        "Analytical Thinker",
+        "Problem Solver",
+        "Continuous Learner",
+        "Team Collaborator",
+        "Innovation Driven"
+      ],
+      "work_style": [
+        "Detail-oriented",
+        "Research-focused",
+        "Collaborative",
+        "Agile methodology",
+        "Quality-conscious"
+      ],
+      "values": [
+        "Innovation",
+        "Ethics in AI",
+        "Continuous Learning",
+        "Collaboration",
+        "Impact-driven Development"
+      ]
+    },
+    "achievements": {
+      "academic": [
+        "Dean's List 2023-2024",
+        "GPA 3.8/4.0",
+        "Research Project Leader",
+        "Academic Excellence Award"
+      ],
+      "professional": [
+        "15+ Projects Completed",
+        "95% Client Satisfaction Rate",
+        "Open Source Contributor",
+        "Technical Blog Writer"
+      ],
+      "personal": [
+        "Self-taught AI/ML Skills",
+        "Multilingual Communication",
+        "Leadership Experience",
+        "Community Involvement"
+      ]
+    },
+    "statistics": {
+      "projects_completed": 15,
+      "github_repositories": 25,
+      "github_stars": 150,
+      "github_commits": 500,
+      "blog_articles": 8,
+      "technologies_mastered": 20,
+      "study_hours": 1000,
+      "open_source_contributions": 50
+    },
+    "availability": {
+      "status": "Available",
+      "for_work": true,
+      "for_internship": true,
+      "for_freelance": true,
+      "for_collaboration": true,
+      "preferred_work_type": ["Remote", "Hybrid", "On-site"],
+      "notice_period": "Flexible",
+      "travel_willingness": "Yes, within Indonesia"
+    }
+  }
+}

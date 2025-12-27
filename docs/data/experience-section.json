@@ -1,0 +1,178 @@
+{
+  "experience": {
+    "timeline": [
+      {
+        "id": "unm-current",
+        "date": "2022 - Present",
+        "title": "Computer Engineering Student",
+        "organization": "Universitas Negeri Makassar",
+        "type": "education",
+        "status": "current",
+        "description": "Pursuing Bachelor's degree in Computer Engineering with focus on Artificial Intelligence and Machine Learning. Currently in 6th semester with strong academic performance.",
+        "details": [
+          "Specialized coursework in AI, ML, and Computer Systems",
+          "Active participation in research projects",
+          "Consistent Dean's List achievement",
+          "Leadership roles in student organizations"
+        ],
+        "technologies": ["Python", "Java", "C++", "TensorFlow", "PyTorch", "MATLAB"],
+        "achievements": [
+          "GPA: 3.8/4.0",
+          "Dean's List 2023-2024",
+          "Research Project Leader",
+          "Academic Excellence Award"
+        ],
+        "location": "Makassar, Indonesia"
+      },
+      {
+        "id": "ai-research-project",
+        "date": "Jan 2024 - Present",
+        "title": "AI Research Project Lead",
+        "organization": "University Research Lab",
+        "type": "project",
+        "status": "current",
+        "description": "Leading a research project on computer vision applications for educational technology, developing innovative solutions for automated assessment systems.",
+        "details": [
+          "Designed and implemented computer vision algorithms",
+          "Collaborated with faculty and graduate students",
+          "Published preliminary findings in student conference",
+          "Mentored junior students in ML techniques"
+        ],
+        "technologies": ["Python", "OpenCV", "TensorFlow", "PyTorch", "Jupyter"],
+        "achievements": [
+          "90% accuracy in prototype testing",
+          "Student conference presentation",
+          "Research grant recipient",
+          "Team leadership experience"
+        ],
+        "location": "Makassar, Indonesia"
+      },
+      {
+        "id": "freelance-developer",
+        "date": "Jun 2023 - Present",
+        "title": "Freelance AI/Web Developer",
+        "organization": "Self-Employed",
+        "type": "work",
+        "status": "current",
+        "description": "Providing AI/ML consulting and web development services to small businesses and startups, specializing in intelligent automation solutions.",
+        "details": [
+          "Developed custom AI solutions for clients",
+          "Built responsive web applications",
+          "Provided technical consulting on ML projects",
+          "Maintained long-term client relationships"
+        ],
+        "technologies": ["Python", "React", "Next.js", "FastAPI", "TensorFlow", "Docker"],
+        "achievements": [
+          "10+ successful project deliveries",
+          "95% client satisfaction rate",
+          "Repeat business from 80% of clients",
+          "Technical blog contributions"
+        ],
+        "location": "Remote"
+      },
+      {
+        "id": "coding-bootcamp",
+        "date": "Mar 2023 - Aug 2023",
+        "title": "Full-Stack Development Bootcamp",
+        "organization": "Tech Academy Indonesia",
+        "type": "education",
+        "status": "completed",
+        "description": "Intensive 6-month bootcamp focusing on modern web development technologies and best practices, with emphasis on full-stack JavaScript development.",
+        "details": [
+          "Comprehensive training in MERN stack",
+          "Agile development methodologies",
+          "Team collaboration and project management",
+          "Industry best practices and code quality"
+        ],
+        "technologies": ["JavaScript", "React", "Node.js", "MongoDB", "Express.js", "Git"],
+        "achievements": [
+          "Top 10% of cohort",
+          "Capstone project recognition",
+          "Peer mentoring role",
+          "Industry networking connections"
+        ],
+        "location": "Jakarta, Indonesia (Remote)"
+      },
+      {
+        "id": "internship-tech-startup",
+        "date": "Dec 2022 - Feb 2023",
+        "title": "Software Development Intern",
+        "organization": "InnovateTech Startup",
+        "type": "work",
+        "status": "completed",
+        "description": "Internship at a local tech startup focusing on educational technology solutions, contributing to both frontend and backend development.",
+        "details": [
+          "Developed features for educational platform",
+          "Participated in code reviews and team meetings",
+          "Learned industry development workflows",
+          "Contributed to product planning discussions"
+        ],
+        "technologies": ["JavaScript", "React", "Python", "Django", "PostgreSQL", "Git"],
+        "achievements": [
+          "Successfully delivered 3 major features",
+          "Positive performance evaluation",
+          "Offered return internship position",
+          "Mentorship from senior developers"
+        ],
+        "location": "Makassar, Indonesia"
+      },
+      {
+        "id": "high-school",
+        "date": "2019 - 2022",
+        "title": "High School Graduate",
+        "organization": "SMA Negeri 1 Makassar",
+        "type": "education",
+        "status": "completed",
+        "description": "Completed high school education with focus on Mathematics and Natural Sciences, developing strong foundation in analytical thinking and problem-solving.",
+        "details": [
+          "Mathematics and Science specialization",
+          "Programming club participation",
+          "Academic competitions involvement",
+          "Leadership in student organizations"
+        ],
+        "technologies": ["Basic Programming", "Mathematics", "Physics", "Computer Literacy"],
+        "achievements": [
+          "Graduated with honors",
+          "Mathematics olympiad participant",
+          "Student council member",
+          "Academic excellence awards"
+        ],
+        "location": "Makassar, Indonesia"
+      }
+    ],
+    "summary": {
+      "total_experience": "2+ years",
+      "education_years": "6 years",
+      "work_experience": "1.5 years",
+      "projects_completed": "15+",
+      "technologies_learned": "20+",
+      "certifications": "3 planned"
+    },
+    "skills_progression": [
+      {
+        "year": "2019",
+        "skills": ["Basic Programming", "Mathematics", "Problem Solving"]
+      },
+      {
+        "year": "2020",
+        "skills": ["Python Basics", "Web Development Fundamentals", "Git"]
+      },
+      {
+        "year": "2021",
+        "skills": ["JavaScript", "React", "Database Basics", "Linux"]
+      },
+      {
+        "year": "2022",
+        "skills": ["Machine Learning", "TensorFlow", "Full-Stack Development", "Docker"]
+      },
+      {
+        "year": "2023",
+        "skills": ["Deep Learning", "PyTorch", "Computer Vision", "DevOps", "Cloud Services"]
+      },
+      {
+        "year": "2024",
+        "skills": ["Advanced AI/ML", "MLOps", "System Design", "Research Methodology", "Leadership"]
+      }
+    ]
+  }
+}

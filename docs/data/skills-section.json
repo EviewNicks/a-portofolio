@@ -1,0 +1,277 @@
+{
+  "skills": {
+    "categories": [
+      {
+        "id": "ai-ml",
+        "name": "AI & Machine Learning",
+        "description": "Core AI/ML technologies and frameworks",
+        "icon": "brain",
+        "color": "#3b82f6",
+        "skills": [
+          {
+            "id": "tensorflow",
+            "name": "TensorFlow",
+            "level": 85,
+            "experience": "2 years",
+            "icon": "tensorflow",
+            "description": "Deep learning model development and deployment"
+          },
+          {
+            "id": "pytorch",
+            "name": "PyTorch",
+            "level": 80,
+            "experience": "1.5 years",
+            "icon": "pytorch",
+            "description": "Research-oriented deep learning projects"
+          },
+          {
+            "id": "scikit-learn",
+            "name": "Scikit-learn",
+            "level": 90,
+            "experience": "2.5 years",
+            "icon": "scikit-learn",
+            "description": "Traditional ML algorithms and data preprocessing"
+          },
+          {
+            "id": "opencv",
+            "name": "OpenCV",
+            "level": 75,
+            "experience": "1 year",
+            "icon": "opencv",
+            "description": "Computer vision and image processing"
+          },
+          {
+            "id": "huggingface",
+            "name": "Hugging Face",
+            "level": 70,
+            "experience": "1 year",
+            "icon": "huggingface",
+            "description": "NLP models and transformers"
+          }
+        ]
+      },
+      {
+        "id": "programming",
+        "name": "Programming Languages",
+        "description": "Core programming languages and paradigms",
+        "icon": "code",
+        "color": "#10b981",
+        "skills": [
+          {
+            "id": "python",
+            "name": "Python",
+            "level": 95,
+            "experience": "3 years",
+            "icon": "python",
+            "description": "Primary language for AI/ML development"
+          },
+          {
+            "id": "javascript",
+            "name": "JavaScript",
+            "level": 85,
+            "experience": "2 years",
+            "icon": "javascript",
+            "description": "Full-stack web development"
+          },
+          {
+            "id": "typescript",
+            "name": "TypeScript",
+            "level": 80,
+            "experience": "1.5 years",
+            "icon": "typescript",
+            "description": "Type-safe web application development"
+          },
+          {
+            "id": "java",
+            "name": "Java",
+            "level": 75,
+            "experience": "2 years",
+            "icon": "java",
+            "description": "Object-oriented programming and enterprise applications"
+          },
+          {
+            "id": "cpp",
+            "name": "C++",
+            "level": 70,
+            "experience": "1.5 years",
+            "icon": "cpp",
+            "description": "System programming and performance optimization"
+          }
+        ]
+      },
+      {
+        "id": "web-development",
+        "name": "Web Development",
+        "description": "Modern web technologies and frameworks",
+        "icon": "globe",
+        "color": "#f59e0b",
+        "skills": [
+          {
+            "id": "react",
+            "name": "React",
+            "level": 85,
+            "experience": "2 years",
+            "icon": "react",
+            "description": "Component-based UI development"
+          },
+          {
+            "id": "nextjs",
+            "name": "Next.js",
+            "level": 80,
+            "experience": "1.5 years",
+            "icon": "nextjs",
+            "description": "Full-stack React applications"
+          },
+          {
+            "id": "nodejs",
+            "name": "Node.js",
+            "level": 75,
+            "experience": "1.5 years",
+            "icon": "nodejs",
+            "description": "Server-side JavaScript development"
+          },
+          {
+            "id": "tailwindcss",
+            "name": "Tailwind CSS",
+            "level": 90,
+            "experience": "2 years",
+            "icon": "tailwindcss",
+            "description": "Utility-first CSS framework"
+          },
+          {
+            "id": "fastapi",
+            "name": "FastAPI",
+            "level": 80,
+            "experience": "1 year",
+            "icon": "fastapi",
+            "description": "High-performance Python web APIs"
+          }
+        ]
+      },
+      {
+        "id": "devops-tools",
+        "name": "DevOps & Tools",
+        "description": "Development operations and productivity tools",
+        "icon": "settings",
+        "color": "#8b5cf6",
+        "skills": [
+          {
+            "id": "git",
+            "name": "Git",
+            "level": 90,
+            "experience": "3 years",
+            "icon": "git",
+            "description": "Version control and collaboration"
+          },
+          {
+            "id": "docker",
+            "name": "Docker",
+            "level": 75,
+            "experience": "1 year",
+            "icon": "docker",
+            "description": "Containerization and deployment"
+          },
+          {
+            "id": "jira",
+            "name": "JIRA",
+            "level": 80,
+            "experience": "1.5 years",
+            "icon": "jira",
+            "description": "Project management and issue tracking"
+          },
+          {
+            "id": "confluence",
+            "name": "Confluence",
+            "level": 75,
+            "experience": "1 year",
+            "icon": "confluence",
+            "description": "Documentation and knowledge management"
+          },
+          {
+            "id": "vscode",
+            "name": "VS Code",
+            "level": 95,
+            "experience": "3 years",
+            "icon": "vscode",
+            "description": "Primary development environment"
+          }
+        ]
+      },
+      {
+        "id": "databases",
+        "name": "Databases & Data",
+        "description": "Data storage and management systems",
+        "icon": "database",
+        "color": "#ef4444",
+        "skills": [
+          {
+            "id": "postgresql",
+            "name": "PostgreSQL",
+            "level": 75,
+            "experience": "1.5 years",
+            "icon": "postgresql",
+            "description": "Relational database management"
+          },
+          {
+            "id": "mongodb",
+            "name": "MongoDB",
+            "level": 70,
+            "experience": "1 year",
+            "icon": "mongodb",
+            "description": "NoSQL document database"
+          },
+          {
+            "id": "pandas",
+            "name": "Pandas",
+            "level": 90,
+            "experience": "2.5 years",
+            "icon": "pandas",
+            "description": "Data manipulation and analysis"
+          },
+          {
+            "id": "numpy",
+            "name": "NumPy",
+            "level": 95,
+            "experience": "3 years",
+            "icon": "numpy",
+            "description": "Numerical computing and arrays"
+          }
+        ]
+      }
+    ],
+    "learning": [
+      {
+        "name": "Kubernetes",
+        "progress": 40,
+        "target_date": "2024-06",
+        "reason": "Container orchestration for ML deployments"
+      },
+      {
+        "name": "AWS/Cloud Services",
+        "progress": 30,
+        "target_date": "2024-08",
+        "reason": "Cloud-based AI/ML infrastructure"
+      },
+      {
+        "name": "MLOps",
+        "progress": 50,
+        "target_date": "2024-07",
+        "reason": "Production ML pipeline management"
+      }
+    ],
+    "certifications": [
+      {
+        "name": "TensorFlow Developer Certificate",
+        "issuer": "Google",
+        "status": "planned",
+        "target_date": "2024-06"
+      },
+      {
+        "name": "AWS Machine Learning Specialty",
+        "issuer": "Amazon",
+        "status": "planned",
+        "target_date": "2024-09"
+      }
+    ]
+  }
+}

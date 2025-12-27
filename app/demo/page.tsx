@@ -61,7 +61,7 @@ export default function DemoPage() {
 
             {/* Medium Glass */}
             <motion.div variants={staggerItem}>
-              <GlassCard variant="medium" hover glow className="p-8 text-center space-y-4">
+              <GlassCard variant="medium" hover className="p-8 text-center space-y-4">
                 <h3 className="text-xl font-semibold text-white">Medium Glass</h3>
                 <p className="text-slate-300">Balanced transparency with moderate blur</p>
                 <div className="space-y-2">
