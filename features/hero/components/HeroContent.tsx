@@ -1,11 +1,10 @@
 'use client';
 
 import React from 'react';
-import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { HeroGlassCard } from '@/components/common/GlassCard';
 import { HeroTitle, HeroSubtitle } from '@/components/common/AnimatedText';
 import TextType from '@/components/reactbits/TextType';
+import ProfileCard from '@/components/reactbits/ProfileCard';
 import { Button } from '@/components/ui/button';
 import { HeroData } from '@/lib/types/portfolio';
 
@@ -44,6 +43,14 @@ export const HeroContent: React.FC<HeroContentProps> = ({ heroData }) => {
   const highlightVariants = {
     initial: { opacity: 0, x: -20 },
     animate: { opacity: 1, x: 0 },
+  };
+
+  // Handle contact button click
+  const handleContactClick = () => {
+    const contactSection = document.querySelector('#contact');
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   return (
@@ -140,64 +147,67 @@ export const HeroContent: React.FC<HeroContentProps> = ({ heroData }) => {
           </motion.div>
         </div>
 
-        {/* Right Column - Avatar and Highlights */}
-        <div className="lg:col-span-5 space-y-6 lg:space-y-8">
-          {/* Avatar */}
+        {/* Right Column - ProfileCard and Highlights */}
+        <div className="lg:col-span-5 ">
+          {/* ProfileCard */}
           <motion.div 
             variants={itemVariants} 
             transition={{ duration: 0.6, ease: "easeOut" }}
             className="flex justify-center lg:justify-end"
           >
-            <HeroGlassCard className="p-2 w-fit">
-              <div className="relative w-48 h-48 md:w-56 md:h-56 lg:w-64 lg:h-64">
-                <Image
-                  src={heroData.avatar.url}
-                  alt={heroData.avatar.alt}
-                  fill
-                  className="rounded-lg object-cover"
-                  priority
-                  sizes="(max-width: 768px) 192px, (max-width: 1024px) 224px, 256px"
-                  onError={(e) => {
-                    // Fallback to placeholder if image fails to load
-                    const target = e.target as HTMLImageElement;
-                    target.src = '/images/placeholder-avatar.svg';
-                  }}
-                />
-              </div>
-            </HeroGlassCard>
+            {/* profle card menajdi ke sisi kiri */}
+            <div className="w-full justify-left  max-w-xs">
+              <ProfileCard
+                avatarUrl={heroData.avatar.url}
+                name={heroData.name}
+                title={heroData.title}
+                handle="ardiansyah"
+                status="Internship"
+                // contactText="Hubungi Saya"
+                showUserInfo={true}
+                enableTilt={true}
+                enableMobileTilt={false}
+                mobileTiltSensitivity={3}
+                behindGlowEnabled={false}
+                behindGlowColor="rgba(251, 146, 60, 0.25)"
+                behindGlowSize="40%"
+                innerGradient="linear-gradient(145deg, rgba(251, 146, 60, 0.06) 0%, rgba(59, 130, 246, 0.06) 100%)"
+                onContactClick={handleContactClick}
+                className="w-full h-auto transform scale-75 origin-center"
+              />
+            </div>
           </motion.div>
 
           {/* Professional Highlights */}
           <motion.div 
             variants={itemVariants}
             transition={{ duration: 0.6, ease: "easeOut" }}
+            className="bg-background/80 backdrop-blur-md border border-border/50 rounded-xl p-4 shadow-lg"
           >
-            <HeroGlassCard className="p-6">
-              <h3 className="text-lg font-semibold mb-4 text-foreground">
-                Professional Highlights
-              </h3>
-              <ul className="space-y-3">
-                {heroData.highlights.map((highlight, index) => (
-                  <motion.li
-                    key={index}
-                    variants={highlightVariants}
-                    initial="initial"
-                    animate="animate"
-                    transition={{ 
-                      delay: 0.8 + index * 0.1,
-                      duration: 0.5,
-                      ease: "easeOut"
-                    }}
-                    className="flex items-center space-x-3"
-                  >
-                    <div className="w-2 h-2 bg-primary rounded-full shrink-0" />
-                    <span className="text-sm md:text-base text-muted-foreground">
-                      {highlight}
-                    </span>
-                  </motion.li>
-                ))}
-              </ul>
-            </HeroGlassCard>
+            <h3 className="text-base font-semibold mb-3 text-foreground">
+              Keahlian Utama
+            </h3>
+            <ul className="space-y-2">
+              {heroData.highlights.map((highlight, index) => (
+                <motion.li
+                  key={index}
+                  variants={highlightVariants}
+                  initial="initial"
+                  animate="animate"
+                  transition={{ 
+                    delay: 0.8 + index * 0.1,
+                    duration: 0.5,
+                    ease: "easeOut"
+                  }}
+                  className="flex items-center space-x-2"
+                >
+                  <div className="w-1.5 h-1.5 bg-primary rounded-full shrink-0" />
+                  <span className="text-xs md:text-sm text-muted-foreground">
+                    {highlight}
+                  </span>
+                </motion.li>
+              ))}
+            </ul>
           </motion.div>
         </div>
       </motion.div>

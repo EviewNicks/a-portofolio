@@ -55,12 +55,12 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ className }) => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1.5, duration: 0.6 }}
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10"
       >
         <motion.div
           animate={{ y: [0, 10, 0] }}
           transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-          className="w-6 h-10 border-2 border-primary rounded-full flex justify-center"
+          className="w-6 h-10 border-2 border-primary rounded-full flex justify-center backdrop-blur-sm bg-background/20"
         >
           <motion.div
             animate={{ y: [0, 12, 0] }}
