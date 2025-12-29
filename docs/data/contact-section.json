@@ -1,12 +1,11 @@
 {
   "contact": {
     "info": {
-      "email": "ardiansyah.dev@gmail.com",
-      "phone": "+62 812-3456-7890",
+      "email": "diansyahardi139@gmail.com",
+      "phone": "+62 89526293221",
       "location": "Makassar, South Sulawesi, Indonesia",
-      "timezone": "WITA (UTC+8)",
-      "availability": "Available for internships and freelance projects",
-      "response_time": "Usually responds within 24 hours",
+      "availability": "Open to internships and learning opportunities",
+      "response_time": "Usually responds within 1-2 days",
       "languages": [
         "Indonesian (Native)",
         "English (Fluent)"
@@ -34,8 +33,8 @@
       {
         "id": "instagram",
         "platform": "instagram",
-        "url": "https://instagram.com/ardiansyah.tech",
-        "username": "ardiansyah.tech",
+        "url": "https://www.instagram.com/ard1a_nsyah/",
+        "username": "ard1an_nsyah",
         "icon": "instagram",
         "isPublic": true,
         "description": "Learning journey and tech projects"

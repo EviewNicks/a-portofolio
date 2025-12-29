@@ -31,7 +31,7 @@ export function ContactInfo({ info }: ContactInfoProps) {
       icon: Phone,
       label: 'Phone',
       value: info.phone,
-      href: `tel:${info.phone}`,
+      href: info.phone.includes('xxxx') ? undefined : `tel:${info.phone}`,
       color: 'text-green-500',
     },
     {
@@ -39,13 +39,7 @@ export function ContactInfo({ info }: ContactInfoProps) {
       label: 'Location',
       value: info.location,
       color: 'text-red-500',
-    },
-    {
-      icon: Clock,
-      label: 'Timezone',
-      value: info.timezone,
-      color: 'text-purple-500',
-    },
+    }
   ]
 
   const statusItems = [
@@ -83,7 +77,7 @@ export function ContactInfo({ info }: ContactInfoProps) {
   return (
     <GlassCard variant="light" className="space-y-6 p-6">
       <h4 className="text-foreground mb-4 text-xl font-semibold">
-        Contact Information
+        Contact Details
       </h4>
 
       {/* Contact Details */}
@@ -128,7 +122,7 @@ export function ContactInfo({ info }: ContactInfoProps) {
 
       {/* Status Information */}
       <div className="border-border space-y-4 border-t pt-4">
-        <h5 className="text-foreground text-lg font-medium">Current Status</h5>
+        <h5 className="text-foreground text-lg font-medium">Availability Status</h5>
         {statusItems.map(item => {
           const Icon = item.icon
           return (
