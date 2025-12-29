@@ -13,7 +13,7 @@ export function useTheme() {
 
   // Initialize theme from localStorage or default to system
   const [theme, setTheme] = useState<Theme>(() => {
-    if (typeof window === 'undefined') return 'system'
+    if (typeof window === 'undefined' || typeof localStorage === 'undefined') return 'system'
     const savedTheme = localStorage.getItem('theme') as Theme
     return savedTheme && ['light', 'dark', 'system'].includes(savedTheme) ? savedTheme : 'system'
   })
@@ -28,7 +28,7 @@ export function useTheme() {
     const actualTheme = newTheme === 'system' ? getSystemTheme() : newTheme
     
     // Update document class and localStorage
-    if (typeof document !== 'undefined') {
+    if (typeof document !== 'undefined' && typeof localStorage !== 'undefined') {
       document.documentElement.classList.remove('light', 'dark')
       document.documentElement.classList.add(actualTheme)
       localStorage.setItem('theme', newTheme)

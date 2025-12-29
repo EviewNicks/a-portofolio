@@ -25,6 +25,9 @@ export function useAccessibilityPreferences() {
   });
 
   useEffect(() => {
+    // SSR guard
+    if (typeof window === 'undefined') return;
+
     const updatePreferences = () => {
       setPreferences({
         reducedMotion: prefersReducedMotion(),
@@ -54,7 +57,7 @@ export function useAccessibilityPreferences() {
         mq.removeEventListener('change', handleChange);
       });
     };
-  }, []);
+  }, [])
 
   return preferences;
 }
@@ -176,6 +179,9 @@ export function useKeyboardNavigation<T extends HTMLElement = HTMLElement>(
   }, [currentIndex, items, loop, orientation, onActivate, onEscape]);
 
   useEffect(() => {
+    // SSR guard
+    if (typeof document === 'undefined') return;
+
     document.addEventListener('keydown', handleKeyDown);
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, [handleKeyDown]);
@@ -256,6 +262,9 @@ export function useFocusVisible() {
       setIsFocusVisible(false);
     };
 
+    // SSR guard
+    if (typeof document === 'undefined') return;
+
     document.addEventListener('keydown', handleKeyDown);
     document.addEventListener('mousedown', handleMouseDown);
     document.addEventListener('focusin', handleFocus);
@@ -280,6 +289,8 @@ export function useFocusVisible() {
  */
 export function useSkipLinks(links: Array<{ id: string; label: string }>) {
   const skipToContent = useCallback((targetId: string) => {
+    if (typeof document === 'undefined') return;
+    
     const target = document.getElementById(targetId);
     if (target) {
       target.focus();

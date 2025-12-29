@@ -60,9 +60,11 @@ export function useKeyboardNavigation({
 
         case 'Escape':
           // Close mobile menu or blur active element
-          const activeElement = document.activeElement as HTMLElement;
-          if (activeElement && activeElement.blur) {
-            activeElement.blur();
+          if (typeof document !== 'undefined') {
+            const activeElement = document.activeElement as HTMLElement;
+            if (activeElement && activeElement.blur) {
+              activeElement.blur();
+            }
           }
           break;
       }
@@ -71,6 +73,9 @@ export function useKeyboardNavigation({
   );
 
   useEffect(() => {
+    // SSR guard
+    if (typeof window === 'undefined') return;
+    
     if (enabled) {
       document.addEventListener('keydown', handleKeyDown);
       return () => document.removeEventListener('keydown', handleKeyDown);

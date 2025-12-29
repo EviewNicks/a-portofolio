@@ -1,6 +1,5 @@
 'use client'
 
-import React from 'react'
 import { motion } from 'framer-motion'
 import { ContactInfo as ContactInfoType } from '@/lib/types/portfolio'
 import { GlassCard } from '@/components/common'
@@ -8,7 +7,6 @@ import {
   Mail,
   Phone,
   MapPin,
-  Clock,
   CheckCircle,
   MessageCircle,
   Globe,
@@ -82,11 +80,12 @@ export function ContactInfo({ info }: ContactInfoProps) {
 
       {/* Contact Details */}
       <div className="space-y-4">
-        {contactItems.map(item => {
+        {contactItems.map((item, index) => {
           const Icon = item.icon
+          const uniqueKey = `contact-${item.label}-${index}`
           const content = (
             <motion.div
-              key={item.label}
+              key={uniqueKey}
               variants={itemVariants}
               className="hover:bg-accent/50 group flex items-center gap-3 rounded-lg p-3 transition-colors"
             >
@@ -106,7 +105,7 @@ export function ContactInfo({ info }: ContactInfoProps) {
 
           return item.href ? (
             <motion.a
-              key={item.label}
+              key={uniqueKey}
               href={item.href}
               className="block"
               whileHover={{ scale: 1.02 }}
@@ -123,11 +122,12 @@ export function ContactInfo({ info }: ContactInfoProps) {
       {/* Status Information */}
       <div className="border-border space-y-4 border-t pt-4">
         <h5 className="text-foreground text-lg font-medium">Availability Status</h5>
-        {statusItems.map(item => {
+        {statusItems.map((item, index) => {
           const Icon = item.icon
+          const uniqueKey = `status-${item.label}-${index}`
           return (
             <motion.div
-              key={item.label}
+              key={uniqueKey}
               variants={itemVariants}
               className="bg-background/30 flex items-start gap-3 rounded-lg p-3"
             >

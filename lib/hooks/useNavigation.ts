@@ -23,6 +23,9 @@ export function useNavigation(
 
   // Smooth scroll to section
   const scrollToSection = useCallback((href: string) => {
+    // SSR guard
+    if (typeof window === 'undefined') return;
+    
     const sectionId = href.replace('#', '');
     const section = document.getElementById(sectionId);
     
@@ -44,6 +47,9 @@ export function useNavigation(
 
   // Update active section based on scroll position
   useEffect(() => {
+    // SSR guard
+    if (typeof window === 'undefined') return;
+
     const handleScroll = () => {
       if (isScrolling) return; // Don't update during programmatic scroll
 

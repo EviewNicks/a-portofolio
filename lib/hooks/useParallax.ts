@@ -46,13 +46,22 @@ export function useScrollParallax(speed: number = 0.5) {
   const [offsetY, setOffsetY] = useState(0)
 
   const handleScroll = useCallback(() => {
-    setOffsetY(window.pageYOffset * speed)
+    if (typeof window !== 'undefined') {
+      setOffsetY(window.pageYOffset * speed)
+    }
   }, [speed])
 
   useEffect(() => {
+    // SSR guard
+    if (typeof window === 'undefined') return;
+
+    const handleScroll = useCallback(() => {
+      setOffsetY(window.pageYOffset * speed)
+    }, [speed])
+
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
-  }, [handleScroll])
+  }, [speed])
 
   return offsetY
 }
@@ -62,6 +71,9 @@ export function useMouseParallax(intensity: number = 0.1) {
   const [parallaxOffset, setParallaxOffset] = useState({ x: 0, y: 0 })
 
   useEffect(() => {
+    // SSR guard
+    if (typeof window === 'undefined') return;
+
     const handleMouseMove = (e: MouseEvent) => {
       const { clientX, clientY } = e
       const { innerWidth, innerHeight } = window

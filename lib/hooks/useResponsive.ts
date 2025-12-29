@@ -34,6 +34,9 @@ export function useResponsive(): UseResponsiveReturn {
   const [orientation, setOrientation] = useState<'portrait' | 'landscape'>('portrait');
 
   useEffect(() => {
+    // SSR guard
+    if (typeof window === 'undefined') return;
+
     const updateResponsiveState = () => {
       setBreakpoint(getCurrentBreakpoint());
       setIsTouch(isTouchDevice());

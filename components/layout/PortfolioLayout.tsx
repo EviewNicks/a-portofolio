@@ -1,6 +1,7 @@
 'use client';
 
-import React from 'react';
+import React, { Suspense } from 'react';
+import { ErrorBoundary } from 'react-error-boundary';
 import { Navigation } from './Navigation';
 import { ScrollIndicator } from './ScrollIndicator';
 import { ScrollToTop } from './ScrollToTop';
@@ -25,7 +26,49 @@ interface PortfolioLayoutProps {
   children: React.ReactNode;
 }
 
+function ErrorFallback({ error, resetErrorBoundary }: { error: Error; resetErrorBoundary: () => void }) {
+  return (
+    <div className="flex min-h-screen items-center justify-center bg-background">
+      <div className="text-center">
+        <h2 className="text-2xl font-bold text-foreground mb-4">
+          Something went wrong
+        </h2>
+        <p className="text-muted-foreground mb-6">
+          {error.message || 'An unexpected error occurred'}
+        </p>
+        <button
+          onClick={resetErrorBoundary}
+          className="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors"
+        >
+          Try again
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function LoadingFallback() {
+  return (
+    <div className="flex min-h-screen items-center justify-center bg-background">
+      <div className="text-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
+        <p className="text-muted-foreground">Loading...</p>
+      </div>
+    </div>
+  );
+}
+
 export function PortfolioLayout({ children }: PortfolioLayoutProps) {
+  return (
+    <ErrorBoundary FallbackComponent={ErrorFallback}>
+      <Suspense fallback={<LoadingFallback />}>
+        <PortfolioLayoutContent>{children}</PortfolioLayoutContent>
+      </Suspense>
+    </ErrorBoundary>
+  );
+}
+
+function PortfolioLayoutContent({ children }: PortfolioLayoutProps) {
   const { activeSection, scrollToSection } = useNavigation(navigationItems);
   const { reducedMotion, highContrast } = useAccessibilityPreferences();
   const { isMobile, isTablet } = useResponsive();
