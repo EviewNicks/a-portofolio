@@ -4,273 +4,185 @@
       {
         "id": "ai-ml",
         "name": "AI & Machine Learning",
-        "description": "Core AI/ML technologies and frameworks",
+        "description": "Specialized AI frameworks and tools",
         "icon": "brain",
         "color": "#3b82f6",
         "skills": [
           {
             "id": "tensorflow",
             "name": "TensorFlow",
-            "level": 85,
-            "experience": "2 years",
+            "level": 70,
+            "experience": "1 year",
             "icon": "tensorflow",
-            "description": "Deep learning model development and deployment"
+            "description": "Deep learning framework for AI model development and training"
+          },
+          {
+            "id": "langchain",
+            "name": "LangChain",
+            "level": 75,
+            "experience": "1.5 years",
+            "icon": "langchain",
+            "description": "Framework for building LLM applications and RAG systems"
+          },
+          {
+            "id": "transformers",
+            "name": "Transformers",
+            "level": 70,
+            "experience": "1 year",
+            "icon": "transformers",
+            "description": "Hugging Face library for NLP and transformer model implementations"
           },
           {
             "id": "pytorch",
             "name": "PyTorch",
-            "level": 80,
-            "experience": "1.5 years",
+            "level": 65,
+            "experience": "8 months",
             "icon": "pytorch",
-            "description": "Research-oriented deep learning projects"
+            "description": "Deep learning framework for research and production AI models"
           },
-          {
-            "id": "scikit-learn",
-            "name": "Scikit-learn",
-            "level": 90,
-            "experience": "2.5 years",
-            "icon": "scikit-learn",
-            "description": "Traditional ML algorithms and data preprocessing"
-          },
-          {
-            "id": "opencv",
-            "name": "OpenCV",
-            "level": 75,
-            "experience": "1 year",
-            "icon": "opencv",
-            "description": "Computer vision and image processing"
-          },
-          {
-            "id": "huggingface",
-            "name": "Hugging Face",
-            "level": 70,
-            "experience": "1 year",
-            "icon": "huggingface",
-            "description": "NLP models and transformers"
-          }
-        ]
-      },
-      {
-        "id": "programming",
-        "name": "Programming Languages",
-        "description": "Core programming languages and paradigms",
-        "icon": "code",
-        "color": "#10b981",
-        "skills": [
           {
             "id": "python",
             "name": "Python",
-            "level": 95,
-            "experience": "3 years",
-            "icon": "python",
-            "description": "Primary language for AI/ML development"
-          },
-          {
-            "id": "javascript",
-            "name": "JavaScript",
-            "level": 85,
-            "experience": "2 years",
-            "icon": "javascript",
-            "description": "Full-stack web development"
-          },
-          {
-            "id": "typescript",
-            "name": "TypeScript",
             "level": 80,
-            "experience": "1.5 years",
-            "icon": "typescript",
-            "description": "Type-safe web application development"
-          },
-          {
-            "id": "java",
-            "name": "Java",
-            "level": 75,
-            "experience": "2 years",
-            "icon": "java",
-            "description": "Object-oriented programming and enterprise applications"
-          },
-          {
-            "id": "cpp",
-            "name": "C++",
-            "level": 70,
-            "experience": "1.5 years",
-            "icon": "cpp",
-            "description": "System programming and performance optimization"
+            "experience": "1 years",
+            "icon": "python",
+            "description": "Primary language for AI/ML and backend development"
           }
         ]
       },
       {
         "id": "web-development",
         "name": "Web Development",
-        "description": "Modern web technologies and frameworks",
+        "description": "Full-stack web development frameworks and tools",
         "icon": "globe",
         "color": "#f59e0b",
         "skills": [
           {
             "id": "react",
             "name": "React",
-            "level": 85,
-            "experience": "2 years",
+            "level": 75,
+            "experience": "1 years",
             "icon": "react",
-            "description": "Component-based UI development"
-          },
-          {
-            "id": "nextjs",
-            "name": "Next.js",
-            "level": 80,
-            "experience": "1.5 years",
-            "icon": "nextjs",
-            "description": "Full-stack React applications"
+            "description": "Component-based UI for e-commerce and note-taking apps"
           },
           {
             "id": "nodejs",
             "name": "Node.js",
-            "level": 75,
+            "level": 70,
             "experience": "1.5 years",
             "icon": "nodejs",
-            "description": "Server-side JavaScript development"
+            "description": "Backend development with Express for web applications"
           },
           {
-            "id": "tailwindcss",
-            "name": "Tailwind CSS",
-            "level": 90,
+            "id": "nextjs",
+            "name": "Next.js",
+            "level": 65,
+            "experience": "6 months",
+            "icon": "nextjs",
+            "description": "Modern React framework for portfolio development"
+          },
+          {
+            "id": "flask",
+            "name": "Flask",
+            "level": 75,
+            "experience": "1.5 years",
+            "icon": "flask",
+            "description": "Python web framework for AI/ML applications and APIs"
+          },
+          {
+            "id": "javascript",
+            "name": "JavaScript",
+            "level": 75,
             "experience": "2 years",
-            "icon": "tailwindcss",
-            "description": "Utility-first CSS framework"
+            "icon": "javascript",
+            "description": "Full-stack web development and interactive features"
           },
           {
-            "id": "fastapi",
-            "name": "FastAPI",
-            "level": 80,
-            "experience": "1 year",
-            "icon": "fastapi",
-            "description": "High-performance Python web APIs"
+            "id": "php",
+            "name": "PHP",
+            "level": 70,
+            "experience": "2 year",
+            "icon": "php",
+            "description": "Server-side development for rental management system"
           }
         ]
       },
       {
-        "id": "devops-tools",
-        "name": "DevOps & Tools",
-        "description": "Development operations and productivity tools",
+        "id": "tools",
+        "name": "Development Tools",
+        "description": "Essential development and collaboration tools",
         "icon": "settings",
         "color": "#8b5cf6",
         "skills": [
           {
             "id": "git",
-            "name": "Git",
-            "level": 90,
-            "experience": "3 years",
+            "name": "Git & GitHub",
+            "level": 80,
+            "experience": "2.5 years",
             "icon": "git",
-            "description": "Version control and collaboration"
-          },
-          {
-            "id": "docker",
-            "name": "Docker",
-            "level": 75,
-            "experience": "1 year",
-            "icon": "docker",
-            "description": "Containerization and deployment"
+            "description": "Version control and collaborative development"
           },
           {
             "id": "jira",
             "name": "JIRA",
-            "level": 80,
-            "experience": "1.5 years",
-            "icon": "jira",
-            "description": "Project management and issue tracking"
-          },
-          {
-            "id": "confluence",
-            "name": "Confluence",
-            "level": 75,
-            "experience": "1 year",
-            "icon": "confluence",
-            "description": "Documentation and knowledge management"
-          },
-          {
-            "id": "vscode",
-            "name": "VS Code",
-            "level": 95,
-            "experience": "3 years",
-            "icon": "vscode",
-            "description": "Primary development environment"
-          }
-        ]
-      },
-      {
-        "id": "databases",
-        "name": "Databases & Data",
-        "description": "Data storage and management systems",
-        "icon": "database",
-        "color": "#ef4444",
-        "skills": [
-          {
-            "id": "postgresql",
-            "name": "PostgreSQL",
-            "level": 75,
-            "experience": "1.5 years",
-            "icon": "postgresql",
-            "description": "Relational database management"
-          },
-          {
-            "id": "mongodb",
-            "name": "MongoDB",
             "level": 70,
             "experience": "1 year",
-            "icon": "mongodb",
-            "description": "NoSQL document database"
-          },
-          {
-            "id": "pandas",
-            "name": "Pandas",
-            "level": 90,
-            "experience": "2.5 years",
-            "icon": "pandas",
-            "description": "Data manipulation and analysis"
-          },
-          {
-            "id": "numpy",
-            "name": "NumPy",
-            "level": 95,
-            "experience": "3 years",
-            "icon": "numpy",
-            "description": "Numerical computing and arrays"
+            "icon": "jira",
+            "description": "Project management and agile development workflows"
           }
         ]
       }
     ],
     "learning": [
       {
-        "name": "Kubernetes",
+        "name": "The AI Engineer Course 2025",
         "progress": 40,
-        "target_date": "2024-06",
-        "reason": "Container orchestration for ML deployments"
-      },
-      {
-        "name": "AWS/Cloud Services",
-        "progress": 30,
-        "target_date": "2024-08",
-        "reason": "Cloud-based AI/ML infrastructure"
-      },
-      {
-        "name": "MLOps",
-        "progress": 50,
-        "target_date": "2024-07",
-        "reason": "Production ML pipeline management"
+        "target_date": "2025-06",
+        "reason": "Complete AI Engineer bootcamp to enhance practical AI development skills",
+        "platform": "Udemy",
+        "url": "https://www.udemy.com/course/the-ai-engineer-course-complete-ai-engineer-bootcamp/"
       }
     ],
     "certifications": [
       {
-        "name": "TensorFlow Developer Certificate",
-        "issuer": "Google",
-        "status": "planned",
-        "target_date": "2024-06"
+        "name-license": "Belajar Dasar Visualisasi Data",
+        "organisasi": "dicoding",
+        "tanggal-terbit": "01/02/2023",
+        "no": "98XW5K5L9PM3",
+        "deksripsi": "Materi yang dipelajari: Pendahuluan : Pengenalan tentang definisi visualisasi data, media visualisasi data, tools dalam visualisasi data, dan konteks data. (1 jam 39 menit) Persiapan Data Pra-Visualisasi : Pengenalan tentang tools aplikasi spreadsheet menggunakan Google Sheets mulai dari navigasi hingga fungsi-fungsi yang bisa digunakan untuk mengolah data.  (8 jam 14 menit) Transformasi Data ke Visual : Cara untuk mengubah data menjadi bentuk grafik, kesalahan umum dalam visualisasi data, pentingnya dokumentasi data, bagaimana cara bercerita dengan data, dan praktek terbaik dalam visualisasi yang efektif seperti prinsip Gestalt, konsep Preattentive Attributes, dan konsep teori desain. (4 jam 29 menit) ",
+        "media": "images/certificate/visualise-data.png"
       },
       {
-        "name": "AWS Machine Learning Specialty",
-        "issuer": "Amazon",
-        "status": "planned",
-        "target_date": "2024-09"
+        "name-license": "Memulai pemrograman dengan Python ",
+        "organisasi": "dicoding",
+        "tanggal-terbit": "12/06/2023",
+        "no": "NVP7Q5VLOZR0",
+        "deksripsi": "Materi yang dipelajari: Berkenalan dengan Python: Pengenalan bahasa Python dari perkembangan, versi rilis, hingga membuat kode pertamamu. (4 jam 5 menit) Berinteraksi dengan Data: Menjelaskan bagaimana berinteraksi dengan berbagai macam data menggunakan bahasa Python, mulai dari pengenalan hingga mengoperasikannya. (5 jam 25 menit) Ekspresi: Menjelaskan konsep ekspresi dan penerapannya pada bahasa Python. (2 jam) - Aksi Sekuensial: Menjelaskan konsep aksi sekuensial dan penerapannya pada bahasa Python. (1 jam 15 menit) Control Flow: Menjelaskan cara mengontrol alur menggunakan percabangan dan perulangan serta mengontrol kesalahan pada Python. (3 jam 20 menit) Array dan Pemrosesannya: Menjelaskan konsep array pada pemrograman dan menerapkannya ke dalam bahasa Python. (2 jam 55 menit) Matriks: Menjelaskan konsep matriks pada pemrograman dan menerapkannya ke dalam bahasa Python. (1 jam 45 menit) Subprogram: Menjelaskan cara efektif membangun program dengan membaginya menjadi fungsi dan prosedur. (2 jam 35 menit) Object-Oriented Programming (OOP): Menjelaskan pemrograman berorientasi objek pada Python, seperti object, class, method, atribut, dan pewarisan atau inheritance. Materi ini bersifat opsional. (2 jam 45 menit) Style Guide pada Python: Menjelaskan style guide pada Python, PEP8, formatting kode, statement gabungan, dan prinsip penamaan. (2 jam) Unit Testing: Memahami teknik pengujian program secara otomatis pada Python dengan unit testing beserta contoh implementasinya. (1     ",
+        "media": "images/certificate/program-python.png"
+      },
+      {
+        "name-license": " Belajar Dasar AI ",
+        "organisasi": " Dicoding ",
+        "tanggal-terbit": "23/01/2025",
+        "no": "53XEOQ63KZRN",
+        "deksripsi": " - Comprehensive TypeScript tutorial,  - Detailed lessons on React with TypeScript, - Complete Next.js tutorial with TypeScript, - Several complex Next.js projects, - Over 30 hours of new content !!!, - Stay ahead with the latest industry standards and master the skills needed for modern React development! ",
+        "media": "images/certificate/dasar-ai.png"
+      },
+      {
+        "name-license": "Belajar Membuat Aplikasi Web dengan React ",
+        "organisasi": "dicoding",
+        "tanggal-terbit": "18/11/2024",
+        "no": "81P246WQQZOY",
+        "deksripsi": "Materi yang dipelajari: Pengenalan React : Berkenalan dengan React, mengetahui alasan mempelajari React, dan mengenal ekosistem yang ada di React (1 Jam 35 Menit) Konsep Dasar React : Belajar tentang konsep dasar React seperti composition, declarative code, unidirectional data flow, dan menyadari bahwa React hanyalah JavaScript (2 Jam 45 Menit). ",
+        "media": "images/certificate/web-react.png"
+      },
+      {
+        "name-license": " Complete React, Next.js, TypeScript Projects Course 2025 ",
+        "organisasi": " Udemy ",
+        "tanggal-terbit": "23/01/2025",
+        "no": "UC-658007be4-1f35-4bf8-8a30-c814b206f40b",
+        "deksripsi": " - Comprehensive TypeScript tutorial,  - Detailed lessons on React with TypeScript, - Complete Next.js tutorial with TypeScript, - Several complex Next.js projects, - Over 30 hours of new content !!!, - Stay ahead with the latest industry standards and master the skills needed for modern React development! ",
+        "media": "images/certificate/complete-nextjs-typescript.png"
       }
     ]
   }

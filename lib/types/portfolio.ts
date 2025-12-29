@@ -133,10 +133,12 @@ export interface LearningItem {
 }
 
 export interface Certification {
-  name: string;
-  issuer: string;
-  status: 'planned' | 'in-progress' | 'completed';
-  target_date?: string;
+  "name-license": string;
+  organisasi: string;
+  "tanggal-terbit": string;
+  no: string;
+  deksripsi: string;
+  media: string;
 }
 
 export interface SkillsData {

@@ -3,92 +3,113 @@
     "personal": {
       "name": "Ardiansyah",
       "title": "AI Engineer & Computer Engineering Student",
-      "location": "Makassar, Indonesia",
+      "location": "Makassar, South Sulawesi, Indonesia",
       "timezone": "WITA (UTC+8)",
-      "bio": "I'm a passionate AI Engineer and Computer Engineering student at Universitas Negeri Makassar, currently in my 6th semester. My journey in technology began with curiosity about how machines can learn and make intelligent decisions. I specialize in developing AI solutions including computer vision systems, optical mark recognition, and intelligent recommendation algorithms that solve real-world problems.",
-      "philosophy": "I believe that artificial intelligence should augment human capabilities and solve practical problems. My approach focuses on creating efficient, accurate, and beneficial AI systems that can make a positive impact on education, business, and society through innovative applications of machine learning and computer vision.",
+      "bio": "I'm a passionate AI Engineer and Computer Engineering student at Universitas Negeri Makassar, currently in my 6th semester. My journey in technology began with curiosity about how machines can learn and make intelligent decisions. I specialize in developing practical AI solutions including computer vision systems, optical mark recognition (OMR), and intelligent recommendation algorithms that solve real-world problems in education and business.",
+      "philosophy": "I believe that artificial intelligence should augment human capabilities and solve practical problems that matter. My approach focuses on creating efficient, accurate, and ethically responsible AI systems that can make a positive impact on education, business automation, and society through innovative applications of machine learning and computer vision technologies.",
       "interests": [
-        "Machine Learning & Computer Vision",
-        "Optical Mark Recognition Systems",
-        "Recommendation Algorithms & Decision Support",
-        "Web Development & Full-Stack Solutions",
-        "Open Source Development & Innovation"
+        "Optical Mark Recognition (OMR) Systems",
+        "Machine Learning & AI Algorithms",
+        "Recommendation Systems & Decision Support",
+        "Full-Stack Web Development",
+        "Open Source Development & Innovation",
+        "Educational Technology Solutions"
       ]
     },
     "education": {
       "current": {
         "institution": "Universitas Negeri Makassar",
         "degree": "Bachelor of Computer Engineering",
-        "field": "Teknik Komputer",
+        "field": "Teknik Komputer (Computer Engineering)",
         "semester": "6th Semester",
-        "period": "2022 - Present",
+        "period": "2022 - Present (Expected 2026)",
         "gpa": "3.8/4.0",
-        "status": "Active",
+        "status": "Active Student",
         "focus_areas": [
-          "Artificial Intelligence",
-          "Machine Learning",
-          "Computer Systems",
-          "Software Engineering"
+          "Artificial Intelligence & Machine Learning",
+          "Software Engineering & System Design",
+          "Database Systems & Data Management",
+          "Web Development & Programming"
         ]
       },
       "achievements": [
         {
-          "title": "Dean's List",
-          "period": "2023-2024",
-          "description": "Consistent academic excellence"
+          "title": "High Academic Performance",
+          "period": "2022-2024",
+          "description": "Maintaining excellent GPA while actively developing AI projects"
         },
         {
-          "title": "AI Research Project",
+          "title": "OMR Grading System Project",
           "period": "2024",
-          "description": "Led research on computer vision applications"
+          "description": "Developed computer vision system with 95%+ accuracy for automated grading"
+        },
+        {
+          "title": "Multiple AI Projects",
+          "period": "2023-2024",
+          "description": "Successfully completed 5+ major AI and web development projects"
         }
       ]
     },
     "career_objectives": [
-      "Develop intelligent systems for education and business automation",
-      "Advance computer vision applications in real-world scenarios",
-      "Build scalable AI solutions with high accuracy and efficiency",
-      "Contribute to innovative AI research and development",
-      "Bridge the gap between academic AI research and practical applications"
+      "Develop intelligent AI systems for educational automation and assessment",
+      "Advance computer vision applications in real-world business scenarios",
+      "Build scalable and accurate machine learning solutions with high performance",
+      "Contribute to innovative AI research and open-source development",
+      "Bridge the gap between academic AI research and practical industry applications",
+      "Specialize in optical mark recognition and automated grading systems"
     ],
     "values": [
       {
         "title": "Innovation",
-        "description": "Constantly exploring new technologies and approaches"
+        "description": "Constantly exploring cutting-edge technologies and creative approaches to solve complex problems"
+      },
+      {
+        "title": "Excellence",
+        "description": "Striving for high-quality solutions with attention to detail and performance optimization"
       },
       {
         "title": "Ethics",
-        "description": "Building responsible and transparent AI systems"
+        "description": "Building responsible, transparent, and fair AI systems that benefit society"
       },
       {
         "title": "Collaboration",
-        "description": "Working together to solve complex challenges"
+        "description": "Working together with diverse teams to tackle challenging technical problems"
       },
       {
         "title": "Learning",
-        "description": "Continuous growth and knowledge acquisition"
+        "description": "Continuous growth through hands-on experience and staying updated with latest AI trends"
       }
     ],
     "stats": [
       {
-        "label": "Projects Completed",
-        "value": "15+",
-        "icon": "code"
+        "label": "AI Projects Completed",
+        "value": "5+",
+        "icon": "brain"
       },
       {
         "label": "Technologies Mastered",
-        "value": "20+",
+        "value": "15+",
         "icon": "tools"
       },
       {
-        "label": "Study Hours",
-        "value": "1000+",
+        "label": "Study & Development Hours",
+        "value": "2000+",
         "icon": "clock"
       },
       {
-        "label": "Open Source Contributions",
-        "value": "50+",
+        "label": "GitHub Repositories",
+        "value": "10+",
         "icon": "git-branch"
+      },
+      {
+        "label": "Computer Vision Accuracy",
+        "value": "95%+",
+        "icon": "eye"
+      },
+      {
+        "label": "Academic Semester",
+        "value": "6th",
+        "icon": "graduation-cap"
       }
     ]
   }
