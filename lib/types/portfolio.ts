@@ -204,7 +204,6 @@ export interface ProjectStats {
 }
 
 export interface ProjectsData {
-  featured: Project[];
   academic: Project[];
   personal: Project[];
   filters: ProjectFilters;

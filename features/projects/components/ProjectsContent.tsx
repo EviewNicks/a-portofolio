@@ -65,7 +65,6 @@ export const ProjectsContent: React.FC<ProjectsContentProps> = ({
   // Combine all projects from different sections
   const allProjects = useMemo(() => {
     return [
-      ...projectsData.featured,
       ...projectsData.academic,
       ...projectsData.personal,
     ];
@@ -113,31 +112,6 @@ export const ProjectsContent: React.FC<ProjectsContentProps> = ({
         </p>
       </motion.div>
 
-      {/* Project Statistics */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.2 }}
-        className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12"
-      >
-        <div className="text-center p-4 bg-muted/20 rounded-lg">
-          <div className="text-2xl font-bold text-primary">{projectsData.stats.total_projects}</div>
-          <div className="text-sm text-muted-foreground">Total Projects</div>
-        </div>
-        <div className="text-center p-4 bg-muted/20 rounded-lg">
-          <div className="text-2xl font-bold text-green-600">{projectsData.stats.completed_projects}</div>
-          <div className="text-sm text-muted-foreground">Completed</div>
-        </div>
-        <div className="text-center p-4 bg-muted/20 rounded-lg">
-          <div className="text-2xl font-bold text-blue-600">{projectsData.stats.technologies_used}</div>
-          <div className="text-sm text-muted-foreground">Technologies</div>
-        </div>
-        <div className="text-center p-4 bg-muted/20 rounded-lg">
-          <div className="text-2xl font-bold text-orange-600">{projectsData.stats.github_stars}</div>
-          <div className="text-sm text-muted-foreground">GitHub Stars</div>
-        </div>
-      </motion.div>
-
       {/* Filters */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -145,13 +119,6 @@ export const ProjectsContent: React.FC<ProjectsContentProps> = ({
         transition={{ duration: 0.8, delay: 0.4 }}
         className="mb-12"
       >
-        <ProjectFilters
-          filters={projectsData.filters}
-          activeCategory={activeCategory}
-          activeStatus={activeStatus}
-          onCategoryChange={setActiveCategory}
-          onStatusChange={setActiveStatus}
-        />
       </motion.div>
 
       {/* Projects Display */}
@@ -175,12 +142,6 @@ export const ProjectsContent: React.FC<ProjectsContentProps> = ({
             </div>
           ) : (
             <div className="space-y-12">
-              {/* Featured Projects */}
-              <ProjectSection
-                title="Featured Projects"
-                projects={groupedProjects.featured}
-                description="Highlighted projects that showcase key technical skills and achievements"
-              />
 
               {/* Academic Projects */}
               <ProjectSection
@@ -191,7 +152,7 @@ export const ProjectsContent: React.FC<ProjectsContentProps> = ({
 
               {/* Personal Projects */}
               <ProjectSection
-                title="Personal Projects"
+                title="Umkm Projects"
                 projects={groupedProjects.personal}
                 description="Independent projects and experiments"
               />

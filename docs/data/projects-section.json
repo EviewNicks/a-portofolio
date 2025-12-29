@@ -1,29 +1,28 @@
 {
   "projects": {
-    "featured": [
+    "academic": [
       {
         "id": "notess-webapp",
         "title": "Notess - Note Taking Web Application",
-        "description": "Modern web application for creating, organizing, and managing personal notes with intuitive user interface and real-time synchronization.",
-        "longDescription": "Notess is a comprehensive note-taking web application built with modern web technologies. It features a clean, intuitive interface for creating and organizing notes, with real-time synchronization and advanced search capabilities. The application supports rich text editing, categorization, and collaborative features.",
-        "technologies": ["React", "Node.js", "Express", "MongoDB", "Socket.io", "CSS3"],
+        "description": "Full-stack note-taking web application with CRUD operations, user authentication, and modern responsive design for efficient personal note management.",
+        "longDescription": "Notess is a comprehensive note-taking web application built with React and Node.js. The application provides a seamless user experience for creating, editing, organizing, and managing personal notes. Features include user authentication, real-time note operations, search functionality, and a clean, responsive interface optimized for both desktop and mobile devices. The backend API handles secure data operations with proper validation and error handling.",
+        "technologies": [
+          "React",
+          "Node.js",
+          "JavaScript",
+          "CSS3",
+          "HTML5"
+        ],
         "category": "web-development",
         "status": "completed",
         "featured": true,
         "images": [
           {
             "id": "main-interface",
-            "url": "/images/projects/notess/main-interface.jpg",
-            "alt": "Notess Main Interface",
+            "url": "/images/projects/notess/image.png",
+            "alt": "Notess Main Interface - Note Taking Application",
             "isPrimary": true,
-            "caption": "Clean and intuitive note-taking interface"
-          },
-          {
-            "id": "note-editor",
-            "url": "/images/projects/notess/note-editor.jpg",
-            "alt": "Note Editor",
-            "isPrimary": false,
-            "caption": "Rich text editor with formatting options"
+            "caption": "Clean and intuitive note-taking interface with modern design"
           }
         ],
         "links": [
@@ -32,19 +31,13 @@
             "type": "github",
             "url": "https://github.com/EviewNicks/Notiss",
             "label": "View Source Code"
-          },
-          {
-            "id": "demo",
-            "type": "demo",
-            "url": "#",
-            "label": "Live Demo"
           }
         ],
         "highlights": [
-          "Real-time note synchronization",
-          "Rich text editing capabilities",
-          "Advanced search and filtering",
-          "Responsive design for all devices"
+          "Full CRUD operations for note management",
+          "Responsive design for all devices",
+          "Search and filter functionality",
+          "Modern React-based frontend"
         ],
         "createdAt": "2023-08-15",
         "updatedAt": "2024-01-10"
@@ -52,26 +45,27 @@
       {
         "id": "omr-grading-system",
         "title": "OMR Grading System",
-        "description": "Optical Mark Recognition system for automated grading of answer sheets using computer vision and machine learning techniques.",
-        "longDescription": "An intelligent OMR (Optical Mark Recognition) system that automates the grading process for multiple-choice answer sheets. The system uses advanced computer vision algorithms to detect and analyze marked answers, providing accurate and efficient grading with detailed analytics and reporting features.",
-        "technologies": ["Python", "OpenCV", "NumPy", "Pandas", "Flask", "Machine Learning"],
+        "description": "Advanced Optical Mark Recognition system using traditional computer vision pipeline for automated grading of multiple-choice answer sheets with 95%+ accuracy.",
+        "longDescription": "A sophisticated OMR (Optical Mark Recognition) system built with traditional computer vision techniques for automated grading of multiple-choice answer sheets. The system implements a 4-phase modular pipeline: Edge Detection → Rectangle Filtering → Perspective Transform → Grid Analysis. Achieves exceptional performance with 100% success rate on test samples, processing time under 0.1 seconds per sheet, and 95%+ accuracy in bubble detection. Built for academic coursework in Digital Image Processing with emphasis on OpenCV and traditional computer vision methods.",
+        "technologies": [
+          "Python",
+          "OpenCV",
+          "NumPy",
+          "Pandas",
+          "Matplotlib",
+          "Jupyter",
+          "Computer Vision"
+        ],
         "category": "ai-ml",
         "status": "completed",
         "featured": true,
         "images": [
           {
-            "id": "scanning-process",
-            "url": "/images/projects/omr-grading-system/scanning-process.jpg",
-            "alt": "OMR Scanning Process",
+            "id": "system-interface",
+            "url": "/images/projects/omr-grading-system/image.png",
+            "alt": "OMR Grading System - Computer Vision Pipeline",
             "isPrimary": true,
-            "caption": "Automated answer sheet scanning and recognition"
-          },
-          {
-            "id": "results-dashboard",
-            "url": "/images/projects/omr-grading-system/results-dashboard.jpg",
-            "alt": "Results Dashboard",
-            "isPrimary": false,
-            "caption": "Comprehensive grading results and analytics"
+            "caption": "Advanced OMR system with 4-phase computer vision pipeline"
           }
         ],
         "links": [
@@ -83,37 +77,40 @@
           }
         ],
         "highlights": [
-          "95%+ accuracy in mark detection",
-          "Automated batch processing",
-          "Detailed analytics and reporting",
-          "Support for various answer sheet formats"
+          "4-phase modular computer vision pipeline",
+          "100% success rate on test samples",
+          "Sub-0.1s processing time per sheet",
+          "95%+ bubble detection accuracy",
+          "Traditional OpenCV-based approach",
+          "Complete academic implementation with documentation"
         ],
         "createdAt": "2023-06-20",
         "updatedAt": "2023-11-15"
       },
       {
         "id": "fuzzy-topsis-laptop-recommendation",
-        "title": "Fuzzy TOPSIS Laptop Recommendation System",
-        "description": "Intelligent laptop recommendation system using Fuzzy TOPSIS algorithm for multi-criteria decision making based on user preferences.",
-        "longDescription": "A sophisticated recommendation system that helps users find the perfect laptop based on their specific needs and preferences. The system implements the Fuzzy TOPSIS (Technique for Order Preference by Similarity to Ideal Solution) algorithm to evaluate laptops across multiple criteria including performance, price, battery life, and user requirements.",
-        "technologies": ["Python", "Flask", "Pandas", "NumPy", "Scikit-learn", "HTML/CSS", "JavaScript"],
+        "title": "Laptop Recommendation System - Backend API",
+        "description": "FastAPI backend system for laptop recommendations using multi-criteria decision making with budget filtering and persona-based recommendations.",
+        "longDescription": "A backend API system for laptop recommendations built with FastAPI and Python. Currently implements Phase 1 with budget-based filtering and persona-based recommendations (Student, Professional, Gamer). Features include RESTful API endpoints, SQLite database with laptop specifications, CORS support for frontend integration, and comprehensive API documentation. Phase 2 will implement the full Fuzzy-TOPSIS algorithm for advanced multi-criteria decision making with linguistic variables and uncertainty handling.",
+        "technologies": [
+          "Python",
+          "FastAPI",
+          "SQLite",
+          "Pandas",
+          "Uvicorn",
+          "OpenAPI",
+          "REST API"
+        ],
         "category": "ai-ml",
         "status": "completed",
         "featured": true,
         "images": [
           {
-            "id": "recommendation-interface",
-            "url": "/images/projects/fuzzy-topsis-laptop-recommendation/recommendation-interface.jpg",
-            "alt": "Laptop Recommendation Interface",
+            "id": "api-interface",
+            "url": "/images/projects/fuzzy-topsis-laptop-recommendation/image.png",
+            "alt": "Laptop Recommendation System API Interface",
             "isPrimary": true,
-            "caption": "User-friendly recommendation interface"
-          },
-          {
-            "id": "algorithm-visualization",
-            "url": "/images/projects/fuzzy-topsis-laptop-recommendation/algorithm-visualization.jpg",
-            "alt": "Algorithm Visualization",
-            "isPrimary": false,
-            "caption": "TOPSIS algorithm decision matrix visualization"
+            "caption": "FastAPI backend with comprehensive API documentation"
           }
         ],
         "links": [
@@ -125,81 +122,83 @@
           }
         ],
         "highlights": [
-          "Multi-criteria decision analysis",
-          "Fuzzy logic implementation",
-          "Personalized recommendations",
-          "Interactive comparison features"
+          "FastAPI backend with OpenAPI documentation",
+          "Multi-persona recommendation system",
+          "Budget-based filtering (2-50M IDR)",
+          "RESTful API with CRUD operations",
+          "SQLite database with laptop specifications"
         ],
         "createdAt": "2023-04-10",
         "updatedAt": "2023-09-25"
-      }
-    ],
-    "academic": [
+      },
       {
         "id": "brandu-ecommerce",
         "title": "Brandu - E-Commerce Platform",
-        "description": "Full-stack e-commerce web application with modern UI/UX design, shopping cart functionality, and payment integration.",
-        "longDescription": "Brandu is a comprehensive e-commerce platform developed as an academic project. It features a modern, responsive design with complete shopping functionality including product catalog, shopping cart, user authentication, order management, and payment processing integration.",
-        "technologies": ["React", "Node.js", "Express", "MongoDB", "Stripe API", "JWT"],
+        "description": "Academic e-commerce web application project focusing on UI/UX design and web programming fundamentals with modern frontend technologies.",
+        "longDescription": "Brandu is an e-commerce platform developed as part of UI and Web Programming coursework. The project demonstrates proficiency in frontend web development, responsive design principles, and user interface creation. Features include product catalog display, shopping cart functionality, user-friendly navigation, and modern web design patterns. Built with emphasis on clean code structure and responsive design implementation.",
+        "technologies": [
+          "HTML5",
+          "CSS3",
+          "JavaScript",
+          "tailwind",
+          "jQuery",
+          "Responsive Design"
+        ],
         "category": "web-development",
         "status": "completed",
         "featured": false,
         "images": [
           {
-            "id": "homepage",
-            "url": "/images/projects/brandu/homepage.jpg",
-            "alt": "Brandu Homepage",
+            "id": "main-interface",
+            "url": "/images/projects/brandu/image.png",
+            "alt": "Brandu E-Commerce Platform Interface",
             "isPrimary": true,
-            "caption": "Modern e-commerce homepage design"
-          },
-          {
-            "id": "product-catalog",
-            "url": "/images/projects/brandu/product-catalog.jpg",
-            "alt": "Product Catalog",
-            "isPrimary": false,
-            "caption": "Product browsing and filtering interface"
+            "caption": "Modern e-commerce interface with responsive design"
           }
         ],
         "links": [
           {
             "id": "github",
             "type": "github",
-            "url": "https://github.com/Magurutech/maguru",
-            "label": "View Project"
+            "url": "https://github.com/EviewNicks/E-Commerce-Project",
+            "label": "View Source Code"
           }
         ],
         "highlights": [
-          "Complete e-commerce functionality",
-          "Responsive design for all devices",
-          "Secure payment integration",
-          "Admin dashboard for management"
+          "Responsive web design implementation",
+          "Modern frontend development practices",
+          "Clean and intuitive user interface",
+          "Product catalog and shopping features"
         ],
         "createdAt": "2023-02-15",
         "updatedAt": "2023-07-20"
-      },
+      }
+    ],
+    "personal": [
       {
         "id": "webapp-rental-baju",
-        "title": "Rental Baju - Clothing Rental System",
-        "description": "Web-based clothing rental management system with inventory tracking, booking system, and customer management features.",
-        "longDescription": "A comprehensive web application for managing clothing rental business operations. The system includes inventory management, customer registration, booking and reservation system, payment tracking, and detailed reporting features for business analytics.",
-        "technologies": ["PHP", "MySQL", "Bootstrap", "JavaScript", "HTML/CSS"],
+        "title": "Maguru - Rental Clothing Management System",
+        "description": "Comprehensive web-based rental management system for clothing rental operations with inventory tracking, customer management, and transaction processing.",
+        "longDescription": "Maguru is a full-stack rental clothing management system built with Next.js and modern web technologies. The system handles complete rental operations including product catalog management with size-aware inventory, customer registration and management, transaction lifecycle from rental to return, penalty calculation for late returns and damaged items, and financial reporting. Features a modular architecture with role-based access control for different user types (Owner, Producer, Kasir).",
+        "technologies": [
+          "Next.js",
+          "React",
+          "TypeScript",
+          "TailwindCSS",
+          "Prisma",
+          "PostgreSQL",
+          "Clerk Auth"
+        ],
         "category": "web-development",
         "status": "completed",
         "featured": false,
         "images": [
           {
-            "id": "dashboard",
-            "url": "/images/projects/webapp-rental-baju/dashboard.jpg",
-            "alt": "Rental Management Dashboard",
+            "id": "management-dashboard",
+            "url": "/images/projects/webapp-rental-baju/image.png",
+            "alt": "Maguru Rental Management Dashboard",
             "isPrimary": true,
-            "caption": "Comprehensive rental management dashboard"
-          },
-          {
-            "id": "inventory-system",
-            "url": "/images/projects/webapp-rental-baju/inventory-system.jpg",
-            "alt": "Inventory Management",
-            "isPrimary": false,
-            "caption": "Clothing inventory tracking system"
+            "caption": "Comprehensive rental management system interface"
           }
         ],
         "links": [
@@ -207,74 +206,65 @@
             "id": "github",
             "type": "github",
             "url": "https://github.com/EviewNicks/rental-baju",
-            "label": "View Source"
+            "label": "View Source Code"
           }
         ],
         "highlights": [
-          "Complete rental management system",
-          "Inventory tracking and management",
-          "Customer booking and reservations",
-          "Financial reporting and analytics"
+          "Full-stack Next.js application with TypeScript",
+          "Role-based access control (Owner/Producer/Kasir)",
+          "Size-aware inventory management system",
+          "Complete transaction lifecycle management",
+          "Automated penalty calculation system",
+          "Financial reporting and expense tracking"
         ],
         "createdAt": "2023-01-10",
         "updatedAt": "2023-05-30"
       }
     ],
-    "personal": [
-      {
-        "id": "portfolio-website",
-        "title": "AI Engineer Portfolio Website",
-        "description": "Modern, responsive portfolio website with glassmorphism design, parallax scrolling, and advanced animations.",
-        "longDescription": "A cutting-edge portfolio website built with Next.js featuring glassmorphism design, parallax scrolling, and modern web development practices. The site showcases technical skills, projects, and professional experience with optimal performance and accessibility.",
-        "technologies": ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion", "Vercel"],
-        "category": "web-development",
-        "status": "in-progress",
-        "featured": false,
-        "images": [
-          {
-            "id": "homepage",
-            "url": "/images/projects/portfolio/homepage.jpg",
-            "alt": "Portfolio Homepage",
-            "isPrimary": true,
-            "caption": "Modern glassmorphism design with parallax effects"
-          }
-        ],
-        "links": [
-          {
-            "id": "demo",
-            "type": "demo",
-            "url": "https://ardiansyah.dev",
-            "label": "Live Website"
-          },
-          {
-            "id": "github",
-            "type": "github",
-            "url": "https://github.com/ardiansyah/portfolio-website",
-            "label": "Source Code"
-          }
-        ],
-        "highlights": [
-          "98+ Lighthouse performance score",
-          "Fully responsive design",
-          "Advanced CSS animations",
-          "SEO optimized"
-        ],
-        "createdAt": "2024-03-01",
-        "updatedAt": "2024-12-17"
-      }
-    ],
     "filters": {
       "categories": [
-        { "id": "all", "name": "All Projects", "count": 6 },
-        { "id": "ai-ml", "name": "AI & Machine Learning", "count": 2 },
-        { "id": "web-development", "name": "Web Development", "count": 4 },
-        { "id": "data-science", "name": "Data Science", "count": 0 },
-        { "id": "automation", "name": "Automation", "count": 0 }
+        {
+          "id": "all",
+          "name": "All Projects",
+          "count": 6
+        },
+        {
+          "id": "ai-ml",
+          "name": "AI & Machine Learning",
+          "count": 2
+        },
+        {
+          "id": "web-development",
+          "name": "Web Development",
+          "count": 4
+        },
+        {
+          "id": "data-science",
+          "name": "Data Science",
+          "count": 0
+        },
+        {
+          "id": "automation",
+          "name": "Automation",
+          "count": 0
+        }
       ],
       "status": [
-        { "id": "all", "name": "All Status", "count": 6 },
-        { "id": "completed", "name": "Completed", "count": 5 },
-        { "id": "in-progress", "name": "In Progress", "count": 1 }
+        {
+          "id": "all",
+          "name": "All Status",
+          "count": 6
+        },
+        {
+          "id": "completed",
+          "name": "Completed",
+          "count": 5
+        },
+        {
+          "id": "in-progress",
+          "name": "In Progress",
+          "count": 1
+        }
       ]
     },
     "stats": {

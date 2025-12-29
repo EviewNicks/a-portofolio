@@ -12,7 +12,7 @@
             "id": "tensorflow",
             "name": "TensorFlow",
             "level": 70,
-            "experience": "1 year",
+            "experience": "1 months",
             "icon": "tensorflow",
             "description": "Deep learning framework for AI model development and training"
           },
@@ -20,7 +20,7 @@
             "id": "langchain",
             "name": "LangChain",
             "level": 75,
-            "experience": "1.5 years",
+            "experience": "1 months",
             "icon": "langchain",
             "description": "Framework for building LLM applications and RAG systems"
           },
@@ -28,7 +28,7 @@
             "id": "transformers",
             "name": "Transformers",
             "level": 70,
-            "experience": "1 year",
+            "experience": "1 months",
             "icon": "transformers",
             "description": "Hugging Face library for NLP and transformer model implementations"
           },
@@ -39,6 +39,14 @@
             "experience": "8 months",
             "icon": "pytorch",
             "description": "Deep learning framework for research and production AI models"
+          },
+          {
+            "id": "flask",
+            "name": "Flask",
+            "level": 75,
+            "experience": "4 months",
+            "icon": "flask",
+            "description": "Python web framework for AI/ML applications and APIs"
           },
           {
             "id": "python",
@@ -61,7 +69,7 @@
             "id": "react",
             "name": "React",
             "level": 75,
-            "experience": "1 years",
+            "experience": "8 months",
             "icon": "react",
             "description": "Component-based UI for e-commerce and note-taking apps"
           },
@@ -80,14 +88,6 @@
             "experience": "6 months",
             "icon": "nextjs",
             "description": "Modern React framework for portfolio development"
-          },
-          {
-            "id": "flask",
-            "name": "Flask",
-            "level": 75,
-            "experience": "1.5 years",
-            "icon": "flask",
-            "description": "Python web framework for AI/ML applications and APIs"
           },
           {
             "id": "javascript",
@@ -118,7 +118,7 @@
             "id": "git",
             "name": "Git & GitHub",
             "level": 80,
-            "experience": "2.5 years",
+            "experience": "1.5 years",
             "icon": "git",
             "description": "Version control and collaborative development"
           },
