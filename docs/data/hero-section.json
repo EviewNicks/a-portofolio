@@ -2,30 +2,30 @@
   "hero": {
     "name": "Ardiansyah",
     "title": "AI Engineer & Developer",
-    "subtitle": "Building intelligent solutions with AI",
-    "description": "Passionate AI Engineer specializing in machine learning, computer vision, and intelligent system development. Currently pursuing Computer Engineering at Universitas Negeri Makassar with focus on creating innovative AI solutions for real-world problems.",
-    "tagline": "Transforming ideas into intelligent reality",
+    "subtitle": "Fokus pada Data-Centric AI & LLM Development",
+    "description": "Mahasiswa Teknik Informatika semester 5 dengan latar belakang software engineering dan minat kuat pada data-centric AI dan Large Language Models (LLM). Berpengalaman menggunakan Python untuk pemrosesan data teks, eksperimen NLP, dan pengembangan sistem LLM berbasis LangChain dan RAG.",
+    "tagline": "Membangun sistem AI yang berpusat pada kualitas data",
     "cta": {
       "primary": {
-        "text": "View Projects",
+        "text": "Lihat Portfolio",
         "link": "#projects",
         "variant": "primary"
       },
       "secondary": {
-        "text": "Get In Touch",
-        "link": "#contact",
+        "text": "Download CV",
+        "link": "/docs/cv-Ardiansyah.pdf",
         "variant": "outline"
       }
     },
     "highlights": [
-      "6th Semester Computer Engineering Student",
-      "AI/ML Enthusiast & Developer",
-      "Open Source Contributor",
-      "Problem Solver"
+      "Mahasiswa Semester 5 Teknik Informatika",
+      "Fokus Data-Centric AI & LLM Development",
+      "Berpengalaman Python & NLP Processing",
+      "Tertarik Data Science & AI Internship"
     ],
     "avatar": {
-      "url": "/images/profile/ardiansyah-avatar.jpg",
-      "alt": "Ardiansyah - AI Engineer Profile Photo"
+      "url": "/images/profile/ardiansyah-professional.png",
+      "alt": "Ardiansyah - Foto Profil AI Engineer"
     },
     "background": {
       "type": "animated-gradient",

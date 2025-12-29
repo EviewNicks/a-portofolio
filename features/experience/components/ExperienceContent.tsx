@@ -77,7 +77,7 @@ export const ExperienceContent: React.FC<ExperienceContentProps> = ({
           <h3 className="text-2xl font-bold text-foreground mb-6 text-center">
             Experience Overview
           </h3>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
             <div className="text-center">
               <div className="text-3xl font-bold text-primary mb-2">
                 {experienceData.summary.total_experience}
@@ -108,14 +108,6 @@ export const ExperienceContent: React.FC<ExperienceContentProps> = ({
               </div>
               <div className="text-sm text-muted-foreground">
                 Projects
-              </div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold text-orange-600 mb-2">
-                {experienceData.summary.technologies_learned}
-              </div>
-              <div className="text-sm text-muted-foreground">
-                Technologies
               </div>
             </div>
             <div className="text-center">
@@ -192,7 +184,7 @@ export const ExperienceContent: React.FC<ExperienceContentProps> = ({
               Get In Touch
             </a>
             <a
-              href="/cv.pdf"
+              href="https://drive.google.com/uc?export=download&id=1kMEYOEBtAt9vxFGJMNbqLsJsclJh5gya"
               target="_blank"
               rel="noopener noreferrer"
               className="px-6 py-3 border border-border text-foreground rounded-lg font-medium hover:bg-muted/50 transition-colors"

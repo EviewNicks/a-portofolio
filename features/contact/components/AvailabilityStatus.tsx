@@ -156,12 +156,7 @@ export function AvailabilityStatus({ availability }: AvailabilityStatusProps) {
           })}
         </motion.div>
 
-        {/* Additional Info */}
-        <div className="pt-4 border-t border-border">
-          <p className="text-sm text-muted-foreground text-center">
-            Interested in working together? Send me a message to discuss opportunities!
-          </p>
-        </div>
+
       </div>
     </GlassCard>
   );

@@ -6,6 +6,7 @@ import { cn } from '@/lib/utils';
 import { SkillsSectionData } from '@/lib/types/portfolio';
 import { SkillsContent } from './SkillsContent';
 import { LearningProgress } from './LearningProgress';
+import { SkillsLogoLoop } from './SkillsLogoLoop';
 import skillsData from '@/docs/data/skills-section.json';
 
 interface SkillsSectionProps {
@@ -17,12 +18,14 @@ interface SkillsSectionProps {
  * 
  * Main skills section component that combines:
  * - SkillsContent: Technical skills organized by category with progress indicators
+ * - SkillsLogoLoop: Animated showcase of technology icons
  * - LearningProgress: Current learning items and certification plans
  * 
  * Features:
  * - JSON data integration from skills-section.json
  * - Category-specific colors and icons for visual distinction
  * - Animated progress bars with percentage values
+ * - Technology logo loop with hover effects
  * - Learning progress indicators with target dates
  * - Responsive layout with proper spacing
  * - Glassmorphism design elements
@@ -84,6 +87,14 @@ export const SkillsSection: React.FC<SkillsSectionProps> = ({ className }) => {
 
       {/* Main Skills Content */}
       <SkillsContent skillsData={skills} />
+
+      {/* Technology Logo Loop */}
+      <div className="container mx-auto px-4 mt-16">
+        <SkillsLogoLoop 
+          categories={skills.categories}
+          className="mb-16"
+        />
+      </div>
 
       {/* Learning Progress and Certifications */}
       <LearningProgress

@@ -3,3 +3,4 @@ export { SkillsSection } from './SkillsSection';
 export { SkillsContent } from './SkillsContent';
 export { LearningProgress } from './LearningProgress';
 export { ProgressBar } from './ProgressBar';
+export { SkillsLogoLoop } from './SkillsLogoLoop';

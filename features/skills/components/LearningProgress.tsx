@@ -6,6 +6,7 @@ import { cn } from '@/lib/utils';
 import { LearningItem, Certification } from '@/lib/types/portfolio';
 import { GlassCard } from '@/components/common';
 import { ProgressBar } from './ProgressBar';
+import Image from 'next/image';
 
 interface LearningProgressProps {
   learning: LearningItem[];
@@ -25,7 +26,7 @@ interface CertificationCardProps {
 
 /**
  * LearningCard Component
- * Display current learning progress
+ * Display current learning progress with enhanced layout
  */
 const LearningCard: React.FC<LearningCardProps> = ({ item, index }) => {
   const targetDate = new Date(item.target_date);
@@ -40,13 +41,21 @@ const LearningCard: React.FC<LearningCardProps> = ({ item, index }) => {
       <GlassCard
         variant="light"
         hover
-        className="p-6 h-full transition-all duration-300 hover:scale-[1.02]"
+        className="p-8 h-full transition-all duration-300 hover:scale-[1.02] min-h-[280px]"
       >
-        <div className="flex items-start justify-between mb-4">
-          <h4 className="font-semibold text-foreground text-lg">{item.name}</h4>
+        <div className="flex items-start justify-between mb-6">
+          <div className="flex-1">
+            <h4 className="font-bold text-foreground text-xl mb-2">{item.name}</h4>
+            {/* Platform badge if available */}
+            {(item as any).platform && (
+              <span className="inline-block px-3 py-1 bg-primary/10 text-primary text-sm font-medium rounded-full mb-3">
+                {(item as any).platform}
+              </span>
+            )}
+          </div>
           <span
             className={cn(
-              'px-2 py-1 rounded-full text-xs font-medium',
+              'px-3 py-2 rounded-full text-sm font-semibold',
               isOverdue
                 ? 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300'
                 : 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300'
@@ -59,17 +68,42 @@ const LearningCard: React.FC<LearningCardProps> = ({ item, index }) => {
           </span>
         </div>
 
-        <ProgressBar
-          value={item.progress}
-          color={isOverdue ? '#ef4444' : '#3b82f6'}
-          animated
-          showValue
-          className="mb-4"
-        />
+        {/* Progress Section */}
+        <div className="mb-6">
+          <div className="flex justify-between items-center mb-3">
+            <span className="text-sm font-medium text-muted-foreground">Progress</span>
+            <span className="text-lg font-bold text-foreground">{item.progress}%</span>
+          </div>
+          <ProgressBar
+            value={item.progress}
+            color={isOverdue ? '#ef4444' : '#3b82f6'}
+            animated
+            showValue={false}
+            className="mb-2 h-3"
+          />
+        </div>
 
-        <p className="text-sm text-muted-foreground leading-relaxed">
+        {/* Description */}
+        <p className="text-base text-muted-foreground leading-relaxed mb-4">
           {item.reason}
         </p>
+
+        {/* Course URL if available */}
+        {(item as any).url && (
+          <div className="mt-auto pt-4 border-t border-border/50">
+            <a
+              href={(item as any).url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center text-sm text-primary hover:text-primary/80 transition-colors"
+            >
+              View Course
+              <svg className="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+              </svg>
+            </a>
+          </div>
+        )}
       </GlassCard>
     </motion.div>
   );
@@ -77,33 +111,17 @@ const LearningCard: React.FC<LearningCardProps> = ({ item, index }) => {
 
 /**
  * CertificationCard Component
- * Display certification status and plans
+ * Display certification with image and details
  */
 const CertificationCard: React.FC<CertificationCardProps> = ({ certification, index }) => {
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'completed':
-        return 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300';
-      case 'in-progress':
-        return 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-300';
-      case 'planned':
-        return 'bg-gray-100 text-gray-700 dark:bg-gray-900/30 dark:text-gray-300';
-      default:
-        return 'bg-gray-100 text-gray-700 dark:bg-gray-900/30 dark:text-gray-300';
-    }
-  };
-
-  const getStatusText = (status: string) => {
-    switch (status) {
-      case 'completed':
-        return 'Completed';
-      case 'in-progress':
-        return 'In Progress';
-      case 'planned':
-        return 'Planned';
-      default:
-        return 'Unknown';
-    }
+  const formatDate = (dateString: string) => {
+    // Convert DD/MM/YYYY to readable format
+    const [day, month, year] = dateString.split('/');
+    const date = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
+    return date.toLocaleDateString('en-US', {
+      month: 'long',
+      year: 'numeric'
+    });
   };
 
   return (
@@ -115,37 +133,76 @@ const CertificationCard: React.FC<CertificationCardProps> = ({ certification, in
       <GlassCard
         variant="light"
         hover
-        className="p-6 h-full transition-all duration-300 hover:scale-[1.02]"
+        className="p-6 h-full transition-all duration-300 hover:scale-[1.02] min-h-[400px]"
       >
-        <div className="flex items-start justify-between mb-4">
-          <div>
-            <h4 className="font-semibold text-foreground text-lg mb-1">
-              {certification.name}
-            </h4>
-            <p className="text-sm text-muted-foreground">
-              {certification.issuer}
-            </p>
+        {/* Certificate Image */}
+        <div className="mb-6 relative overflow-hidden rounded-lg bg-gray-100 dark:bg-gray-800">
+          <Image
+            src={`/${certification.media}`}
+            alt={`${certification["name-license"]} Certificate`}
+            width={400}
+            height={300}
+            className="w-full  object-cover transition-transform duration-300 hover:scale-105"
+            onError={(e) => {
+              const target = e.target as HTMLImageElement;
+              target.style.display = 'none';
+              target.nextElementSibling?.classList.remove('hidden');
+            }}
+          />
+          {/* Fallback placeholder */}
+          <div className="hidden absolute inset-0 flex items-center justify-center bg-gray-200 dark:bg-gray-700">
+            <div className="text-center">
+              <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+              <p className="mt-2 text-sm text-gray-500">Certificate</p>
+            </div>
           </div>
-          <span
-            className={cn(
-              'px-2 py-1 rounded-full text-xs font-medium',
-              getStatusColor(certification.status)
-            )}
-          >
-            {getStatusText(certification.status)}
-          </span>
         </div>
 
-        {certification.target_date && (
-          <div className="mt-4 pt-4 border-t border-border/50">
-            <p className="text-sm text-muted-foreground">
-              Target: {new Date(certification.target_date).toLocaleDateString('en-US', {
-                month: 'long',
-                year: 'numeric'
-              })}
+        {/* Certificate Details */}
+        <div className="space-y-4">
+          <div>
+            <h4 className="font-bold text-foreground text-lg mb-2 overflow-hidden" style={{ 
+              display: '-webkit-box', 
+              WebkitLineClamp: 2, 
+              WebkitBoxOrient: 'vertical' 
+            }}>
+              {certification["name-license"]}
+            </h4>
+            <div className="flex items-center justify-between mb-2">
+              <p className="text-sm font-medium text-primary">
+                {certification.organisasi}
+              </p>
+              <span className="px-2 py-1 bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300 rounded-full text-xs font-medium">
+                Completed
+              </span>
+            </div>
+          </div>
+
+          {/* Certificate Number and Date */}
+          <div className="space-y-2 text-sm text-muted-foreground">
+            <div className="flex justify-between">
+              <span className="font-medium">Certificate No:</span>
+              <span className="font-mono text-xs">{certification.no}</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="font-medium">Issued:</span>
+              <span>{formatDate(certification["tanggal-terbit"])}</span>
+            </div>
+          </div>
+
+          {/* Description */}
+          <div className="pt-4 border-t border-border/50">
+            <p className="text-sm text-muted-foreground leading-relaxed overflow-hidden" style={{ 
+              display: '-webkit-box', 
+              WebkitLineClamp: 4, 
+              WebkitBoxOrient: 'vertical' 
+            }}>
+              {certification.deksripsi}
             </p>
           </div>
-        )}
+        </div>
       </GlassCard>
     </motion.div>
   );
@@ -187,7 +244,7 @@ export const LearningProgress: React.FC<LearningProgressProps> = ({
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
             {learning.map((item, index) => (
               <LearningCard key={item.name} item={item} index={index} />
             ))}
@@ -212,10 +269,10 @@ export const LearningProgress: React.FC<LearningProgressProps> = ({
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {certifications.map((certification, index) => (
               <CertificationCard
-                key={certification.name}
+                key={certification["name-license"]}
                 certification={certification}
                 index={index}
               />
