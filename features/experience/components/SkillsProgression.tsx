@@ -45,36 +45,44 @@ export const SkillsProgression: React.FC<SkillsProgressionProps> = ({
       </motion.div>
 
       {/* Skills Timeline */}
-      <div className="relative">
-        {/* Timeline Line */}
-        <div className="absolute left-4 md:left-1/2 md:transform md:-translate-x-1/2 top-0 bottom-0 w-0.5 bg-border" />
+      <div className="relative max-w-6xl mx-auto">
+        {/* Timeline Line - Vertical center line */}
+        <div className="absolute left-4 md:left-1/2 md:transform md:-translate-x-0.5 top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary/20 via-primary/40 to-primary/20" />
 
         {/* Timeline Entries */}
-        <div className="space-y-8">
+        <div className="space-y-12">
           {skillsProgression.map((yearData, index) => (
             <motion.div
               key={yearData.year}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1, duration: 0.6 }}
-              className={cn(
-                'relative flex items-center',
-                index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
-              )}
+              initial={{ 
+                opacity: 0, 
+                x: index % 2 === 0 ? 50 : -50, // Slide from right for odd, left for even
+                y: 20 
+              }}
+              animate={{ opacity: 1, x: 0, y: 0 }}
+              transition={{ delay: index * 0.2, duration: 0.8, ease: "easeOut" }}
+              className="relative"
             >
-              {/* Year Indicator */}
-              <div className="absolute left-0 md:left-1/2 md:transform md:-translate-x-1/2 w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold border-4 border-background z-10">
-                {yearData.year.slice(-2)}
+              {/* Year Indicator - Always centered */}
+              <div className="absolute left-4 md:left-1/2 md:transform md:-translate-x-1/2 w-10 h-10 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold border-4 border-background z-10 shadow-lg">
+                {yearData.year.includes('-') ? yearData.year.split('-')[0].slice(-2) + '-' + yearData.year.split('-')[1].slice(-2) : yearData.year.slice(-2)}
               </div>
 
-              {/* Content */}
+              {/* Content - Alternating left/right */}
               <div className={cn(
-                'ml-12 md:ml-0 flex-1',
-                index % 2 === 0 ? 'md:pr-8' : 'md:pl-8'
+                'ml-16 md:ml-0 md:w-1/2',
+                // Ganjil (0, 2, 4) = kanan, Genap (1, 3, 5) = kiri
+                index % 2 === 0 
+                  ? 'md:ml-auto md:pl-8' // Kanan
+                  : 'md:mr-auto md:pr-8' // Kiri
               )}>
                 <GlassCard
                   variant="light"
-                  className="p-6 max-w-md mx-auto md:mx-0"
+                  className={cn(
+                    "p-6 max-w-md",
+                    // Animation direction based on position
+                    index % 2 === 0 ? 'md:ml-0' : 'md:mr-0'
+                  )}
                 >
                   {/* Year Title */}
                   <div className="mb-4">
@@ -121,50 +129,24 @@ export const SkillsProgression: React.FC<SkillsProgressionProps> = ({
                   </div>
                 </GlassCard>
               </div>
+
+              {/* Connecting Line Animation */}
+              <motion.div
+                initial={{ scaleX: 0 }}
+                animate={{ scaleX: 1 }}
+                transition={{ delay: index * 0.1 + 0.3, duration: 0.5 }}
+                className={cn(
+                  "hidden md:block absolute top-5 w-8 h-0.5 bg-primary/30",
+                  index % 2 === 0 
+                    ? "left-1/2 ml-5" // Kanan - line dari center ke kanan
+                    : "right-1/2 mr-5" // Kiri - line dari center ke kiri
+                )}
+              />
             </motion.div>
           ))}
         </div>
       </div>
 
-      {/* Summary Statistics */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.8, duration: 0.6 }}
-        className="mt-12"
-      >
-        <GlassCard variant="medium" className="p-6">
-          <h4 className="text-lg font-semibold text-foreground mb-4 text-center">
-            Learning Journey Summary
-          </h4>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="text-center">
-              <div className="text-2xl font-bold text-primary">
-                {skillsProgression.length}
-              </div>
-              <div className="text-sm text-muted-foreground">Years</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-primary">
-                {skillsProgression.reduce((total, year) => total + year.skills.length, 0)}
-              </div>
-              <div className="text-sm text-muted-foreground">Total Skills</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-primary">
-                {Math.round(skillsProgression.reduce((total, year) => total + year.skills.length, 0) / skillsProgression.length)}
-              </div>
-              <div className="text-sm text-muted-foreground">Avg/Year</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-primary">
-                {Math.max(...skillsProgression.map(year => year.skills.length))}
-              </div>
-              <div className="text-sm text-muted-foreground">Peak Year</div>
-            </div>
-          </div>
-        </GlassCard>
-      </motion.div>
     </div>
   );
 };

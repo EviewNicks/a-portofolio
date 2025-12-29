@@ -6,7 +6,7 @@ import { ContactData } from '@/lib/types/portfolio';
 import { ContactInfo } from './ContactInfo';
 import { SocialLinks } from './SocialLinks';
 import { ContactForm } from './ContactForm';
-import { AvailabilityStatus } from './AvailabilityStatus';
+// import { AvailabilityStatus } from './AvailabilityStatus';
 
 interface ContactContentProps {
   data: ContactData;
@@ -81,7 +81,7 @@ export function ContactContent({ data }: ContactContentProps) {
         <motion.div variants={itemVariants} className="space-y-8">
           <ContactInfo info={data.info} />
           <SocialLinks links={data.social_links} />
-          <AvailabilityStatus availability={data.availability} />
+          {/* <AvailabilityStatus availability={data.availability} /> */}
         </motion.div>
 
         {/* Right Column - Contact Form */}

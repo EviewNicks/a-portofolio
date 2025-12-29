@@ -7,7 +7,10 @@
       "timezone": "WITA (UTC+8)",
       "availability": "Available for internships and freelance projects",
       "response_time": "Usually responds within 24 hours",
-      "languages": ["Indonesian (Native)", "English (Fluent)"]
+      "languages": [
+        "Indonesian (Native)",
+        "English (Fluent)"
+      ]
     },
     "social_links": [
       {
@@ -17,7 +20,7 @@
         "username": "EviewNicks",
         "icon": "github",
         "isPublic": true,
-        "description": "Open source projects and code repositories"
+        "description": "Personal projects and learning repositories"
       },
       {
         "id": "linkedin",
@@ -26,16 +29,7 @@
         "username": "ardi-ansyah-421708325",
         "icon": "linkedin",
         "isPublic": true,
-        "description": "Professional network and career updates"
-      },
-      {
-        "id": "twitter",
-        "platform": "twitter",
-        "url": "https://twitter.com/ardiansyah_dev",
-        "username": "ardiansyah_dev",
-        "icon": "twitter",
-        "isPublic": true,
-        "description": "Tech insights and industry discussions"
+        "description": "Academic and professional networking"
       },
       {
         "id": "instagram",
@@ -44,34 +38,7 @@
         "username": "ardiansyah.tech",
         "icon": "instagram",
         "isPublic": true,
-        "description": "Behind-the-scenes of tech projects"
-      },
-      {
-        "id": "medium",
-        "platform": "medium",
-        "url": "https://medium.com/@ardiansyah",
-        "username": "@ardiansyah",
-        "icon": "medium",
-        "isPublic": true,
-        "description": "Technical articles and tutorials"
-      },
-      {
-        "id": "dev",
-        "platform": "dev",
-        "url": "https://dev.to/ardiansyah",
-        "username": "ardiansyah",
-        "icon": "dev",
-        "isPublic": true,
-        "description": "Developer community and discussions"
-      },
-      {
-        "id": "stackoverflow",
-        "platform": "stackoverflow",
-        "url": "https://stackoverflow.com/users/ardiansyah",
-        "username": "ardiansyah",
-        "icon": "stackoverflow",
-        "isPublic": true,
-        "description": "Programming Q&A and community help"
+        "description": "Learning journey and tech projects"
       }
     ],
     "form": {
@@ -105,11 +72,26 @@
           "required": true,
           "placeholder": "Select a subject",
           "options": [
-            { "value": "internship", "label": "Internship Opportunity" },
-            { "value": "freelance", "label": "Freelance Project" },
-            { "value": "collaboration", "label": "Collaboration" },
-            { "value": "consultation", "label": "Technical Consultation" },
-            { "value": "other", "label": "Other" }
+            {
+              "value": "internship",
+              "label": "Internship Opportunity"
+            },
+            {
+              "value": "freelance",
+              "label": "Small Project/Freelance"
+            },
+            {
+              "value": "collaboration",
+              "label": "Study Group/Collaboration"
+            },
+            {
+              "value": "learning",
+              "label": "Learning & Mentorship"
+            },
+            {
+              "value": "other",
+              "label": "Other"
+            }
           ]
         },
         {
@@ -133,9 +115,9 @@
       }
     },
     "cta": {
-      "title": "Let's Work Together",
-      "subtitle": "Ready to bring your AI ideas to life?",
-      "description": "I'm always excited to discuss new opportunities, collaborate on interesting projects, or help solve challenging problems with AI and technology.",
+      "title": "Let's Connect & Learn Together",
+      "subtitle": "Interested in collaborating or discussing opportunities?",
+      "description": "I'm always eager to learn from others, collaborate on interesting projects, and explore new opportunities in AI and software development.",
       "buttons": [
         {
           "text": "Send Message",
@@ -143,9 +125,9 @@
           "variant": "primary"
         },
         {
-          "text": "Download Resume",
+          "text": "Download CV",
           "action": "download",
-          "url": "/files/Ardiansyah-AI-Engineer-Resume.pdf",
+          "url": "https://drive.google.com/uc?export=download&id=1kMEYOEBtAt9vxFGJMNbqLsJsclJh5gya",
           "variant": "outline"
         }
       ]
@@ -163,24 +145,24 @@
         },
         {
           "type": "freelance",
-          "title": "Freelance Projects",
-          "description": "AI/ML consulting and web development services",
+          "title": "Small Projects",
+          "description": "Simple web development and programming tasks",
           "available": true,
           "duration": "Project-based",
-          "start_date": "Immediate"
+          "start_date": "Flexible"
         },
         {
           "type": "collaboration",
-          "title": "Open Source Collaboration",
-          "description": "Contributing to interesting open source projects",
+          "title": "Study Groups & Projects",
+          "description": "Academic collaborations and learning projects",
           "available": true,
-          "duration": "Ongoing",
+          "duration": "Semester-based",
           "start_date": "Anytime"
         },
         {
           "type": "mentorship",
-          "title": "Mentorship",
-          "description": "Helping fellow students and junior developers",
+          "title": "Peer Learning",
+          "description": "Learning together with fellow students",
           "available": true,
           "duration": "Ongoing",
           "start_date": "Anytime"

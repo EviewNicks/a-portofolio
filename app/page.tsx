@@ -5,7 +5,7 @@ import { ProjectsSection } from '@/features/projects';
 import { ExperienceSection } from '@/features/experience';
 import { ContactSection } from '@/features/contact';
 import { PortfolioLayout } from '@/components/layout';
-import { AccessibilityDemo } from '@/components/demo/AccessibilityDemo';
+// import { AccessibilityDemo } from '@/components/demo/AccessibilityDemo';
 import { ContactSectionData } from '@/lib/types/portfolio';
 import contactDataRaw from '@/docs/data/contact-section.json';
 
@@ -19,7 +19,7 @@ export default function Home() {
       <SkillsSection />
       <ProjectsSection />
       <ExperienceSection />
-      <AccessibilityDemo />
+      {/* <AccessibilityDemo /> */}
       <ContactSection data={contactData} />
     </PortfolioLayout>
   );
