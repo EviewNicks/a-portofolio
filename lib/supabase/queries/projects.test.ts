@@ -4,7 +4,6 @@
  * Task 4.3 — Property 4 & 5
  */
 import * as fc from 'fast-check';
-import { searchProjects } from './projects';
 
 // We test the filter/search logic in isolation (pure function behavior)
 // by extracting the filtering predicate used in searchProjects

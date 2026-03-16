@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState , useCallback } from 'react'
 import { useScroll, useTransform } from 'framer-motion'
 
 export interface ParallaxOptions {
@@ -45,19 +45,13 @@ export function useParallax(options: ParallaxOptions = {}) {
 export function useScrollParallax(speed: number = 0.5) {
   const [offsetY, setOffsetY] = useState(0)
 
-  const handleScroll = useCallback(() => {
-    if (typeof window !== 'undefined') {
-      setOffsetY(window.pageYOffset * speed)
-    }
-  }, [speed])
-
   useEffect(() => {
     // SSR guard
     if (typeof window === 'undefined') return;
 
-    const handleScroll = useCallback(() => {
+    const handleScroll = () => {
       setOffsetY(window.pageYOffset * speed)
-    }, [speed])
+    }
 
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)

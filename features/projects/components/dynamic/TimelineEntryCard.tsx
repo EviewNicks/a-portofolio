@@ -61,6 +61,7 @@ export function TimelineEntryCard({ entry }: TimelineEntryCardProps) {
 
           {/* YouTube thumbnail */}
           {entry.entry_type === 'video' && entry.media_preview && (
+            // eslint-disable-next-line @next/next/no-img-element
             <img
               src={entry.media_preview}
               alt={entry.title}

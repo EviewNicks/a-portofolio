@@ -15,6 +15,7 @@ export function MediaGallery({ media, videoEntries }: MediaGalleryProps) {
         {/* Screenshots */}
         {media.map((item) => (
           <div key={item.id} className="rounded-lg overflow-hidden border border-white/10 aspect-video bg-white/5">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={item.public_url}
               alt={item.file_name}
@@ -33,6 +34,7 @@ export function MediaGallery({ media, videoEntries }: MediaGalleryProps) {
             className="group relative rounded-lg overflow-hidden border border-white/10 aspect-video bg-white/5 block"
           >
             {entry.media_preview ? (
+              // eslint-disable-next-line @next/next/no-img-element
               <img src={entry.media_preview} alt={entry.title} className="w-full h-full object-cover" />
             ) : (
               <div className="w-full h-full flex items-center justify-center text-white/30 text-sm">
