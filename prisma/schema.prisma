@@ -1,0 +1,99 @@
+// Prisma Schema — Dynamic Project Management Timeline
+// Docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ─── Enums ───────────────────────────────────────────────────────────────────
+
+enum ProjectStatus {
+  active
+  maintenance
+  archived
+}
+
+enum EntryType {
+  pr
+  milestone
+  blog_post
+  video
+  deployment
+  release
+}
+
+enum PRStatus {
+  merged
+  closed
+  open
+}
+
+// ─── Models ──────────────────────────────────────────────────────────────────
+
+model Project {
+  id                String    @id @default(dbgenerated("gen_random_uuid()::text"))
+  title             String
+  short_description String
+  long_description  String?
+  tech_stack        String[]  @default([])
+  status            ProjectStatus @default(active)
+  github_repo_url   String?   @unique
+  github_owner      String?
+  github_repo       String?
+  last_sync_at      DateTime?
+  created_at        DateTime  @default(now())
+  updated_at        DateTime  @updatedAt
+
+  timeline_entries  TimelineEntry[]
+  project_media     ProjectMedia[]
+
+  @@index([status])
+  @@index([github_owner, github_repo])
+  @@map("projects")
+}
+
+model TimelineEntry {
+  id              String    @id @default(dbgenerated("gen_random_uuid()::text"))
+  project_id      String
+  entry_type      EntryType
+  date            DateTime
+  sprint_number   Int
+  title           String
+  description     String?
+  external_url    String?
+  external_title  String?
+  external_status PRStatus?
+  is_featured     Boolean   @default(false)
+  media_preview   String?
+  github_pr_number Int?
+  github_pr_title  String?
+  github_author    String?
+  created_at      DateTime  @default(now())
+  updated_at      DateTime  @updatedAt
+
+  project         Project   @relation(fields: [project_id], references: [id], onDelete: Cascade)
+
+  @@unique([project_id, github_pr_number])
+  @@index([project_id, date(sort: Desc)])
+  @@index([project_id, sprint_number])
+  @@map("timeline_entries")
+}
+
+model ProjectMedia {
+  id           String   @id @default(dbgenerated("gen_random_uuid()::text"))
+  project_id   String
+  storage_path String
+  public_url   String
+  file_name    String
+  created_at   DateTime @default(now())
+
+  project      Project  @relation(fields: [project_id], references: [id], onDelete: Cascade)
+
+  @@index([project_id])
+  @@map("project_media")
+}
