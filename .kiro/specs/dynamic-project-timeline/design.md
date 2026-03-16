@@ -59,7 +59,7 @@ app/
     └── page.tsx                    → AdminDashboard (Client)
 
 features/
-├── projects-dynamic/
+├── projects/
 │   ├── components/
 │   │   ├── ProjectGrid.tsx
 │   │   ├── ProjectCard.tsx
@@ -70,6 +70,14 @@ features/
 │   │   ├── TimelineSection.tsx
 │   │   ├── SprintCard.tsx
 │   │   └── TimelineEntryCard.tsx
+│   ├── services/
+│   │   ├── github/
+│   │   │   └── api.ts              → GitHub API functions
+│   │   └── youtube/
+│   │       └── api.ts              → YouTube API functions
+│   ├── utils/
+│   │   └── timeline.ts             → Timeline utility functions
+│   ├── types.ts                    → Type definitions
 │   └── index.ts
 └── admin/
     ├── components/
@@ -82,17 +90,18 @@ features/
 
 lib/
 ├── supabase/
-│   ├── client.ts                   → Browser Supabase client
-│   ├── server.ts                   → Server Supabase client
+│   ├── client.ts                   → Browser Supabase client (Storage only)
+│   ├── server.ts                   → Server Supabase client (Storage only)
 │   └── queries/
-│       ├── projects.ts             → Project query functions
-│       └── timeline.ts             → Timeline query functions
-├── github/
-│   └── api.ts                      → GitHub API functions
-├── youtube/
-│   └── api.ts                      → YouTube API functions
-└── types/
-    └── dynamic-project.ts          → Type definitions
+│       ├── projects.ts             → Project query functions (via Prisma)
+│       └── timeline.ts             → Timeline query functions (via Prisma)
+
+prisma/
+├── schema.prisma                   → Sumber kebenaran schema database
+└── lib/
+    ├── client.ts                   → Singleton PrismaClient (PrismaPg + DATABASE_URL)
+    ├── singleton.ts                → Mock singleton untuk unit tests (jest-mock-extended)
+    └── context.ts                  → Dependency injection context untuk unit tests
 ```
 
 ### API Routes
@@ -127,7 +136,7 @@ app/api/
 ### TypeScript Types
 
 ```typescript
-// lib/types/dynamic-project.ts
+// features/projects/types.ts
 
 export type ProjectStatus = 'active' | 'maintenance' | 'archived';
 
@@ -201,65 +210,68 @@ export interface ProjectMedia {
 }
 ```
 
-### Database Schema (Supabase)
+### Database Schema (Prisma)
 
-```sql
--- Projects table
-CREATE TABLE projects (
-  id TEXT PRIMARY KEY DEFAULT gen_random_uuid()::text,
-  title TEXT NOT NULL,
-  short_description TEXT NOT NULL,
-  long_description TEXT,
-  tech_stack TEXT[] NOT NULL DEFAULT '{}',
-  status TEXT NOT NULL DEFAULT 'active'
-    CHECK (status IN ('active', 'maintenance', 'archived')),
-  github_repo_url TEXT UNIQUE,
-  github_owner TEXT,
-  github_repo TEXT,
-  last_sync_at TIMESTAMPTZ,
-  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
-);
+Schema dikelola via `prisma/schema.prisma`. Migrasi dijalankan dengan `npx prisma migrate dev`.
+`DATABASE_URL` (port 6543, PgBouncer) dipakai untuk runtime queries.
+`DIRECT_URL` (port 5432) dipakai khusus untuk `prisma migrate`.
 
--- Timeline entries table
-CREATE TABLE timeline_entries (
-  id TEXT PRIMARY KEY DEFAULT gen_random_uuid()::text,
-  project_id TEXT NOT NULL REFERENCES projects(id) ON DELETE CASCADE,
-  entry_type TEXT NOT NULL
-    CHECK (entry_type IN ('pr','milestone','blog_post','video','deployment','release')),
-  date TIMESTAMPTZ NOT NULL,
-  sprint_number INTEGER NOT NULL CHECK (sprint_number >= 1),
-  title TEXT NOT NULL,
-  description TEXT,
-  external_url TEXT,
-  external_title TEXT,
-  external_status TEXT CHECK (external_status IN ('merged','closed','open')),
-  is_featured BOOLEAN NOT NULL DEFAULT FALSE,
-  media_preview TEXT,
-  github_pr_number INTEGER,
-  github_pr_title TEXT,
-  github_author TEXT,
-  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-  UNIQUE(project_id, github_pr_number)
-);
+```prisma
+// prisma/schema.prisma
 
--- Project media table (screenshots)
-CREATE TABLE project_media (
-  id TEXT PRIMARY KEY DEFAULT gen_random_uuid()::text,
-  project_id TEXT NOT NULL REFERENCES projects(id) ON DELETE CASCADE,
-  storage_path TEXT NOT NULL,
-  public_url TEXT NOT NULL,
-  file_name TEXT NOT NULL,
-  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
-);
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
 
--- Indexes
-CREATE INDEX idx_projects_status ON projects(status);
-CREATE INDEX idx_projects_github ON projects(github_owner, github_repo);
-CREATE INDEX idx_timeline_project_date ON timeline_entries(project_id, date DESC);
-CREATE INDEX idx_timeline_sprint ON timeline_entries(project_id, sprint_number);
-CREATE INDEX idx_media_project ON project_media(project_id);
+datasource db {
+  provider = "postgresql"
+  // url dan directUrl dikonfigurasi di prisma.config.ts
+}
+
+enum ProjectStatus { active maintenance archived }
+enum EntryType     { pr milestone blog_post video deployment release }
+enum PRStatus      { merged closed open }
+
+model Project {
+  id                String        @id @default(dbgenerated("gen_random_uuid()::text"))
+  title             String
+  short_description String
+  long_description  String?
+  tech_stack        String[]      @default([])
+  status            ProjectStatus @default(active)
+  github_repo_url   String?       @unique
+  github_owner      String?
+  github_repo       String?
+  last_sync_at      DateTime?
+  created_at        DateTime      @default(now())
+  updated_at        DateTime      @updatedAt
+  timeline_entries  TimelineEntry[]
+  project_media     ProjectMedia[]
+  @@map("projects")
+}
+
+model TimelineEntry {
+  id               String    @id @default(dbgenerated("gen_random_uuid()::text"))
+  project_id       String
+  entry_type       EntryType
+  date             DateTime
+  sprint_number    Int
+  title            String
+  // ... (lihat prisma/schema.prisma untuk field lengkap)
+  @@unique([project_id, github_pr_number])
+  @@map("timeline_entries")
+}
+
+model ProjectMedia {
+  id           String   @id @default(dbgenerated("gen_random_uuid()::text"))
+  project_id   String
+  storage_path String
+  public_url   String
+  file_name    String
+  created_at   DateTime @default(now())
+  @@map("project_media")
+}
 ```
 
 ---
@@ -301,7 +313,7 @@ Preview YouTube tidak disimpan ke database. Flow-nya stateless: admin input URL 
 ## Testing Strategy
 
 ### Testing Framework
-- **Unit & Property tests**: Vitest + fast-check (property-based testing library untuk TypeScript)
+- **Unit & Property tests**: Jest + fast-check (property-based testing library untuk TypeScript)
 - **Test location**: Co-located dengan source files menggunakan `.test.ts` suffix
 
 ### Dual Testing Approach
@@ -310,8 +322,8 @@ Preview YouTube tidak disimpan ke database. Flow-nya stateless: admin input URL 
 
 ### Property-Based Testing Configuration
 ```typescript
-// Setiap property test menggunakan fast-check
-import { fc } from '@fast-check/vitest';
+// Setiap property test menggunakan fast-check dengan Jest
+import * as fc from 'fast-check';
 
 // Minimum 100 runs per property
 // Tag format: Feature: dynamic-project-timeline, Property N: <property_text>

@@ -6,43 +6,48 @@ Implementasi dilakukan secara incremental dalam 6 tahap: setup foundation, core 
 
 ## Tasks
 
-- [ ] 1. Setup foundation: types, Supabase clients, dan database schema
-  - Buat `lib/types/dynamic-project.ts` dengan semua TypeScript interfaces (DynamicProject, TimelineEntry, SprintGroup, GitHubStats, YouTubePreview, ProjectMedia)
-  - Buat `lib/supabase/client.ts` (browser client) dan `lib/supabase/server.ts` (server client)
-  - Jalankan SQL schema di Supabase dashboard: tabel projects, timeline_entries, project_media beserta indexes
-  - Setup environment variables: NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_ANON_KEY, SUPABASE_SERVICE_ROLE_KEY, GITHUB_TOKEN, YOUTUBE_API_KEY, ADMIN_SECRET_KEY
+- [x] 1. Setup foundation: types, Prisma schema, Supabase clients
+  - Buat `features/projects/types.ts` dengan semua TypeScript interfaces (DynamicProject, TimelineEntry, SprintGroup, GitHubStats, YouTubePreview, ProjectMedia)
+  - Buat `prisma/schema.prisma` — definisi model Project, TimelineEntry, ProjectMedia dengan enums
+  - Buat `prisma.config.ts` — konfigurasi Prisma 7 dengan PrismaPg adapter (DATABASE_URL + DIRECT_URL)
+  - Buat `prisma/lib/client.ts` — singleton PrismaClient (PrismaPg adapter + DATABASE_URL)
+  - Buat `prisma/lib/singleton.ts` — mock singleton untuk unit tests (jest-mock-extended)
+  - Buat `prisma/lib/context.ts` — dependency injection context untuk unit tests
+  - Buat `lib/supabase/client.ts` (browser) dan `lib/supabase/server.ts` (server) — hanya untuk Storage
+  - Jalankan `npx prisma migrate dev --name init` untuk push schema ke Supabase
+  - Setup environment variables: DATABASE_URL, DIRECT_URL, NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_ANON_KEY, SUPABASE_SERVICE_ROLE_KEY, GITHUB_TOKEN, YOUTUBE_API_KEY, ADMIN_SECRET_KEY
   - _Requirements: 1.1, 4.1, 8.4_
 
-- [ ] 2. Core utility functions dan validasi
-  - [ ] 2.1 Implementasi `lib/github/api.ts`
+- [x] 2. Core utility functions dan validasi
+  - [x] 2.1 Implementasi `features/projects/services/github/api.ts`
     - Fungsi `extractGitHubOwnerRepo(url: string): { owner: string; repo: string } | null`
     - Fungsi `fetchGitHubPRs(owner: string, repo: string): Promise<PRData[]>`
     - Fungsi `fetchGitHubStats(owner: string, repo: string): Promise<GitHubStats>`
     - _Requirements: 1.2, 5.1, 5.2, 9.1_
 
-  - [ ]* 2.2 Write property test untuk GitHub URL extraction
+  - [x]* 2.2 Write property test untuk GitHub URL extraction
     - **Property 1: GitHub URL Extraction Correctness**
     - **Validates: Requirements 1.2**
     - Test dengan fast-check: generate random owner/repo strings, build URL, verify extraction
 
-  - [ ] 2.3 Implementasi `lib/youtube/api.ts`
+  - [x] 2.3 Implementasi `features/projects/services/youtube/api.ts`
     - Fungsi `extractYouTubeVideoId(url: string): string | null`
     - Fungsi `fetchYouTubeMetadata(videoId: string): Promise<YouTubePreview>`
     - _Requirements: 6.1, 6.2_
 
-  - [ ]* 2.4 Write property test untuk YouTube URL extraction
+  - [x]* 2.4 Write property test untuk YouTube URL extraction
     - **Property 13: YouTube URL Video ID Extraction**
     - **Validates: Requirements 6.1, 6.6**
     - Test dengan fast-check: generate valid YouTube URL formats, verify 11-char video_id
 
-  - [ ] 2.5 Implementasi `lib/utils/timeline.ts`
+  - [x] 2.5 Implementasi `features/projects/utils/timeline.ts`
     - Fungsi `groupEntriesBySprint(entries: TimelineEntry[]): SprintGroup[]`
     - Fungsi `validateProjectInput(data: unknown): ValidationResult`
     - Fungsi `validateTimelineEntryInput(data: unknown): ValidationResult`
     - Fungsi `validateAdminSecret(secret: string): boolean`
     - _Requirements: 1.5, 1.6, 3.4, 4.1, 4.2, 4.3, 8.1, 8.2_
 
-  - [ ]* 2.6 Write property tests untuk core utility functions
+  - [x]* 2.6 Write property tests untuk core utility functions
     - **Property 2: Project Status Validation** — Validates: Requirements 1.5
     - **Property 3: Project Creation Requires Non-Empty Title and Description** — Validates: Requirements 1.6
     - **Property 7: Sprint Grouping Produces Unique, Ascending Sprint Numbers** — Validates: Requirements 3.4
@@ -51,12 +56,13 @@ Implementasi dilakukan secara incremental dalam 6 tahap: setup foundation, core 
     - **Property 10: Timeline Entry Required Fields Validation** — Validates: Requirements 4.2, 4.3
     - **Property 14: Admin Secret Validation Rejects Non-Matching Strings** — Validates: Requirements 8.1, 8.2, 8.3
 
-- [ ] 3. Checkpoint — Pastikan semua tests pass, tanyakan jika ada pertanyaan.
+- [x] 3. Checkpoint — Pastikan semua tests pass, tanyakan jika ada pertanyaan.
 
-- [ ] 4. Supabase query functions dan API routes untuk projects
-  - [ ] 4.1 Implementasi `lib/supabase/queries/projects.ts`
+- [ ] 4. Prisma query functions dan API routes untuk projects
+  - [ ] 4.1 Implementasi `lib/supabase/queries/projects.ts` menggunakan Prisma Client
     - `getAllProjects()`, `getProjectById(id)`, `createProject(data)`, `updateProject(id, data)`, `deleteProject(id)`
-    - `searchProjects(query, status?)` — filter by status dan search query
+    - `searchProjects(query, status?)` — filter by status dan search query menggunakan Prisma `where`
+    - Import `prisma` dari `@/prisma/lib/client`
     - _Requirements: 1.1, 1.3, 1.4, 2.1, 2.2, 2.3_
 
   - [ ] 4.2 Implementasi API routes untuk projects
@@ -68,10 +74,12 @@ Implementasi dilakukan secara incremental dalam 6 tahap: setup foundation, core 
   - [ ]* 4.3 Write property tests untuk filter dan search logic
     - **Property 4: Status Filter Returns Only Matching Projects** — Validates: Requirements 2.2
     - **Property 5: Search Filter Returns Only Matching Projects** — Validates: Requirements 2.3
+    - Gunakan `prismaMock` dari `prisma/lib/singleton` atau `createMockContext` dari `prisma/lib/context` untuk mock database calls
 
-- [ ] 5. Supabase query functions dan API routes untuk timeline entries
-  - [ ] 5.1 Implementasi `lib/supabase/queries/timeline.ts`
+- [ ] 5. Prisma query functions dan API routes untuk timeline entries
+  - [ ] 5.1 Implementasi `lib/supabase/queries/timeline.ts` menggunakan Prisma Client
     - `getTimelineEntriesByProjectId(projectId)`, `createTimelineEntry(data)`, `updateTimelineEntry(id, data)`, `deleteTimelineEntry(id)`
+    - Import `prisma` dari `@/prisma/lib/client`
     - _Requirements: 4.2, 4.4, 4.5_
 
   - [ ] 5.2 Implementasi API routes untuk timeline
@@ -81,6 +89,7 @@ Implementasi dilakukan secara incremental dalam 6 tahap: setup foundation, core 
 
   - [ ]* 5.3 Write property test untuk GitHub PR to timeline entry mapping
     - **Property 11: GitHub PR to Timeline Entry Mapping** — Validates: Requirements 5.2
+    - Gunakan `prismaMock` dari `prisma/lib/singleton` atau `createMockContext` dari `prisma/lib/context` untuk mock upsert calls
 
 - [ ] 6. Public pages: Project List dan Project Detail
   - [ ] 6.1 Implementasi komponen `features/projects-dynamic/components/`
@@ -184,5 +193,5 @@ Implementasi dilakukan secara incremental dalam 6 tahap: setup foundation, core 
 
 - Tasks bertanda `*` adalah opsional dan bisa di-skip untuk MVP yang lebih cepat
 - Setiap task mereferensikan requirements spesifik untuk traceability
-- Property tests menggunakan Vitest + fast-check dengan minimum 100 iterasi
+- Property tests menggunakan Jest + fast-check dengan minimum 100 iterasi
 - Admin secret divalidasi server-side, tidak pernah dikirim ke client
