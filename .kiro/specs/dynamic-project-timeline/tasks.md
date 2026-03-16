@@ -58,136 +58,170 @@ Implementasi dilakukan secara incremental dalam 6 tahap: setup foundation, core 
 
 - [x] 3. Checkpoint — Pastikan semua tests pass, tanyakan jika ada pertanyaan.
 
-- [ ] 4. Prisma query functions dan API routes untuk projects
-  - [ ] 4.1 Implementasi `lib/supabase/queries/projects.ts` menggunakan Prisma Client
+- [x] 4. Prisma query functions dan API routes untuk projects
+  - [x] 4.1 Implementasi `lib/supabase/queries/projects.ts` menggunakan Prisma Client
     - `getAllProjects()`, `getProjectById(id)`, `createProject(data)`, `updateProject(id, data)`, `deleteProject(id)`
     - `searchProjects(query, status?)` — filter by status dan search query menggunakan Prisma `where`
     - Import `prisma` dari `@/prisma/lib/client`
     - _Requirements: 1.1, 1.3, 1.4, 2.1, 2.2, 2.3_
 
-  - [ ] 4.2 Implementasi API routes untuk projects
+  - [x] 4.2 Implementasi API routes untuk projects
     - `app/api/projects/route.ts` — GET (list + search), POST (create dengan validasi)
     - `app/api/projects/[id]/route.ts` — GET, PUT, DELETE
     - Semua routes memvalidasi input dan return error yang sesuai
     - _Requirements: 1.1, 1.3, 1.4, 1.6_
 
-  - [ ]* 4.3 Write property tests untuk filter dan search logic
+  - [x]* 4.3 Write property tests untuk filter dan search logic
     - **Property 4: Status Filter Returns Only Matching Projects** — Validates: Requirements 2.2
     - **Property 5: Search Filter Returns Only Matching Projects** — Validates: Requirements 2.3
     - Gunakan `prismaMock` dari `prisma/lib/singleton` atau `createMockContext` dari `prisma/lib/context` untuk mock database calls
 
-- [ ] 5. Prisma query functions dan API routes untuk timeline entries
-  - [ ] 5.1 Implementasi `lib/supabase/queries/timeline.ts` menggunakan Prisma Client
+- [x] 5. Prisma query functions dan API routes untuk timeline entries
+  - [x] 5.1 Implementasi `lib/supabase/queries/timeline.ts` menggunakan Prisma Client
     - `getTimelineEntriesByProjectId(projectId)`, `createTimelineEntry(data)`, `updateTimelineEntry(id, data)`, `deleteTimelineEntry(id)`
     - Import `prisma` dari `@/prisma/lib/client`
     - _Requirements: 4.2, 4.4, 4.5_
 
-  - [ ] 5.2 Implementasi API routes untuk timeline
+  - [x] 5.2 Implementasi API routes untuk timeline
     - `app/api/projects/[id]/timeline/route.ts` — GET, POST (dengan validasi)
     - `app/api/projects/[id]/timeline/[entryId]/route.ts` — PUT, DELETE
     - _Requirements: 4.2, 4.3, 4.4_
 
-  - [ ]* 5.3 Write property test untuk GitHub PR to timeline entry mapping
+  - [x]* 5.3 Write property test untuk GitHub PR to timeline entry mapping
     - **Property 11: GitHub PR to Timeline Entry Mapping** — Validates: Requirements 5.2
     - Gunakan `prismaMock` dari `prisma/lib/singleton` atau `createMockContext` dari `prisma/lib/context` untuk mock upsert calls
 
-- [ ] 6. Public pages: Project List dan Project Detail
-  - [ ] 6.1 Implementasi komponen `features/projects-dynamic/components/`
+- [x] 6. Public pages: Project List dan Project Detail
+  - [x] 6.1 Implementasi komponen `features/projects-dynamic/components/`
     - `ProjectCard.tsx` — card dengan title, status badge, short_description, tech_stack, sprint count, PR count
     - `ProjectGrid.tsx` — grid layout dari ProjectCard
     - `ProjectFilters.tsx` — filter by status + search input
     - _Requirements: 2.1, 2.2, 2.3, 2.4, 2.5_
 
-  - [ ]* 6.2 Write property test untuk project card rendering
+  - [x]* 6.2 Write property test untuk project card rendering
     - **Property 6: Project Card Renders All Required Fields** — Validates: Requirements 2.4
 
-  - [ ] 6.3 Implementasi `app/projects/page.tsx`
+  - [x] 6.3 Implementasi `app/projects/page.tsx`
     - SSR: fetch projects dari Supabase server-side
     - Render ProjectFilters + ProjectGrid
     - Handle empty state
     - _Requirements: 2.1, 2.5_
 
-  - [ ] 6.4 Implementasi komponen timeline untuk project detail
+  - [x] 6.4 Implementasi komponen timeline untuk project detail
     - `TimelineEntryCard.tsx` — card dengan icon, title, date, sprint number, external link, PR status badge, YouTube thumbnail
     - `SprintCard.tsx` — sprint header dengan number + entry count, list of TimelineEntryCard
     - `TimelineSection.tsx` — render semua SprintCard, handle empty state
     - _Requirements: 4.5, 4.6, 10.1, 10.2, 10.3, 10.4, 10.5, 10.6_
 
-  - [ ]* 6.5 Write property tests untuk timeline rendering
+  - [x]* 6.5 Write property tests untuk timeline rendering
     - **Property 15: Timeline Entry Card Renders Required Fields** — Validates: Requirements 10.3
     - **Property 16: Sprint Card Renders Sprint Number and Entry Count** — Validates: Requirements 10.2
 
-  - [ ] 6.6 Implementasi komponen project detail
+  - [x] 6.6 Implementasi komponen project detail
     - `ProjectHeader.tsx` — title, long_description, tech_stack, status, GitHub link
     - `GitHubStats.tsx` — stars, forks, contributors, last commit, timestamp cache
     - `MediaGallery.tsx` — screenshots carousel + YouTube thumbnails
     - _Requirements: 3.1, 3.2, 3.3, 9.1, 9.3, 9.4_
 
-  - [ ] 6.7 Implementasi `app/projects/[id]/page.tsx`
+  - [x] 6.7 Implementasi `app/projects/[id]/page.tsx`
     - SSR: fetch project, timeline entries, GitHub stats, media
     - Handle 404 via `notFound()`
     - Render semua komponen detail
     - _Requirements: 3.1, 3.2, 3.3, 3.5, 3.6_
 
-- [ ] 7. Checkpoint — Pastikan semua tests pass, tanyakan jika ada pertanyaan.
+- [x] 7. Checkpoint — Pastikan semua tests pass, tanyakan jika ada pertanyaan.
 
-- [ ] 8. GitHub sync integration
-  - [ ] 8.1 Implementasi `app/api/github/sync/route.ts`
+- [x] 8. GitHub sync integration
+  - [x] 8.1 Implementasi `app/api/github/sync/route.ts`
     - POST: validasi secret, fetch PRs dari GitHub API, upsert ke timeline_entries (skip duplicates), update last_sync_at
     - Handle GitHub API errors (rate limit, unavailable)
     - _Requirements: 5.1, 5.2, 5.3, 5.4, 5.5_
 
-  - [ ]* 8.2 Write property test untuk GitHub sync idempotence
+  - [x]* 8.2 Write property test untuk GitHub sync idempotence
     - **Property 12: GitHub Sync Idempotence** — Validates: Requirements 5.3
 
-- [ ] 9. YouTube preview integration
-  - [ ] 9.1 Implementasi `app/api/youtube/preview/route.ts`
+- [x] 9. YouTube preview integration
+  - [x] 9.1 Implementasi `app/api/youtube/preview/route.ts`
     - POST: validasi URL format, extract video_id, fetch metadata dari YouTube API, return preview data
     - Handle invalid URL (400), video not found (404), API error (500)
     - _Requirements: 6.1, 6.2, 6.3, 6.6, 6.7_
 
-- [ ] 10. Media upload (screenshots)
-  - [ ] 10.1 Implementasi `app/api/media/upload/route.ts`
+- [x] 10. Media upload (screenshots)
+  - [x] 10.1 Implementasi `app/api/media/upload/route.ts`
     - POST: validasi secret, validasi file type (JPEG/PNG/WebP) dan size (≤5MB), upload ke Supabase Storage, simpan record ke project_media
     - _Requirements: 7.1, 7.2, 7.3, 7.4_
 
-  - [ ] 10.2 Implementasi `app/api/media/[id]/route.ts`
+  - [x] 10.2 Implementasi `app/api/media/[id]/route.ts`
     - DELETE: validasi secret, hapus dari Supabase Storage, hapus record dari project_media
     - _Requirements: 7.5_
 
-  - [ ]* 10.3 Write property test untuk file type validation
+  - [x]* 10.3 Write property test untuk file type validation
     - **Property 17: Image File Type Validation** — Validates: Requirements 7.2, 7.3
 
-- [ ] 11. Admin dashboard
-  - [ ] 11.1 Implementasi admin auth middleware
-    - `middleware.ts` — protect `/admin` routes, validate secret query param
-    - `features/admin/components/AdminLayout.tsx` — layout dengan navigation
+- [ ] 11. Admin dashboard (multi-page)
+  - [ ] 11.1 Implementasi admin auth middleware dan layout
+    - `middleware.ts` — protect semua route `/admin/*`, validate secret query param, redirect ke `/admin?error=unauthorized` jika invalid
+    - `app/admin/layout.tsx` — AdminLayout: sidebar navigation dengan secret passthrough ke semua links
+    - `features/admin/components/AdminLayout.tsx` — sidebar dengan links ke: Overview, Projects, dan back ke portfolio
     - _Requirements: 8.1, 8.2, 8.3_
 
-  - [ ] 11.2 Implementasi `features/admin/components/ProjectManagement.tsx`
-    - Form create/edit project: title, short_description, long_description, tech_stack (tags input), github_repo_url, status
-    - List projects dengan edit/delete actions
-    - _Requirements: 1.1, 1.2, 1.3, 1.4, 1.6_
-
-  - [ ] 11.3 Implementasi `features/admin/components/TimelineManagement.tsx`
-    - Form add/edit timeline entry: entry_type dropdown, date, sprint_number, title, description, external_url, is_featured
-    - List entries per project dengan delete action
-    - _Requirements: 4.1, 4.2, 4.3, 4.4, 4.5_
-
-  - [ ] 11.4 Implementasi `features/admin/components/GitHubSyncPanel.tsx`
-    - Tampilkan last_sync_at, tombol "Sync Now", feedback sukses/error
-    - _Requirements: 5.1, 5.4, 5.5_
-
-  - [ ] 11.5 Implementasi `features/admin/components/YouTubePreviewManager.tsx`
-    - Input YouTube URL, tampilkan preview card (thumbnail, title, view count), tombol Approve/Reject
-    - Approve → POST ke timeline API, Reject → clear form
-    - _Requirements: 6.1, 6.2, 6.3, 6.4, 6.5, 6.6, 6.7_
-
-  - [ ] 11.6 Implementasi `app/admin/page.tsx`
-    - Validasi secret server-side, render AdminLayout dengan semua panels
+  - [ ] 11.2 Implementasi `app/admin/page.tsx` — Admin Overview
+    - Validasi secret server-side
+    - Tampilkan stats ringkas: total projects, total timeline entries, last sync
+    - Quick links ke `/admin/projects` dan `/admin/projects/new`
     - _Requirements: 8.1, 8.2_
 
-- [ ] 12. Final checkpoint — Pastikan semua tests pass, tanyakan jika ada pertanyaan.
+  - [ ] 11.3 Implementasi `app/admin/projects/page.tsx` — Project List
+    - `features/admin/components/AdminProjectList.tsx` — table dengan kolom: title, status, sprint count, PR count, last_sync_at, actions (View, Edit, Delete)
+    - Tombol "New Project" → navigate ke `/admin/projects/new`
+    - Delete project dengan konfirmasi
+    - _Requirements: 1.3, 1.4, 2.1_
+
+  - [ ] 11.4 Implementasi `app/admin/projects/new/page.tsx` — Create Project
+    - `features/admin/components/AdminProjectForm.tsx` — reusable form: title, short_description, long_description, tech_stack (tags input), github_repo_url (auto-extract owner/repo), status dropdown
+    - Submit → POST `/api/projects` → redirect ke `/admin/projects/[id]`
+    - _Requirements: 1.1, 1.2, 1.6_
+
+  - [ ] 11.5 Implementasi `app/admin/projects/[id]/page.tsx` — Project Detail (admin view)
+    - `features/admin/components/AdminProjectDetail.tsx` — tampilkan semua field project + GitHub stats
+    - Quick action buttons: Edit Project, Manage Timeline, Delete Project
+    - _Requirements: 1.3_
+
+  - [ ] 11.6 Implementasi `app/admin/projects/[id]/edit/page.tsx` — Edit Project
+    - Reuse `AdminProjectForm.tsx` dengan data pre-filled
+    - Submit → PUT `/api/projects/[id]` → redirect ke `/admin/projects/[id]`
+    - _Requirements: 1.3_
+
+  - [ ] 11.7 Implementasi `features/admin/components/TimelineManagement.tsx` + halaman
+    - Form add/edit entry: entry_type dropdown, date picker, sprint_number input, title, description, external_url, is_featured toggle
+    - List semua entries project dengan tombol Edit dan Delete (dengan konfirmasi)
+    - Submit add → POST `/api/projects/[id]/timeline`; submit edit → PUT `/api/projects/[id]/timeline/[entryId]`
+    - Delete → DELETE `/api/projects/[id]/timeline/[entryId]`
+    - `app/admin/projects/[id]/timeline/page.tsx` — render TimelineManagement + panel lainnya (11.8–11.10)
+    - _Requirements: 4.1, 4.2, 4.3, 4.4, 4.5_
+
+  - [ ] 11.8 Implementasi `features/admin/components/GitHubSyncPanel.tsx`
+    - Tampilkan `last_sync_at` project (format relative time, misal "2 hours ago")
+    - Tombol "Sync Now" → POST `/api/github/sync` dengan project_id + secret
+    - Loading state saat sync berjalan, feedback sukses (jumlah PR baru) atau error (pesan dari API)
+    - _Requirements: 5.1, 5.4, 5.5_
+
+  - [ ] 11.9 Implementasi `features/admin/components/YouTubePreviewManager.tsx`
+    - Input URL YouTube + tombol "Preview"
+    - Fetch ke POST `/api/youtube/preview` → tampilkan preview card: thumbnail, title, view count
+    - Tombol "Approve" → POST `/api/projects/[id]/timeline` dengan entry_type 'video' + metadata
+    - Tombol "Reject" → clear preview tanpa menyimpan
+    - Handle error: URL invalid (400), video not found (404), API error (500)
+    - _Requirements: 6.1, 6.2, 6.3, 6.4, 6.5, 6.6, 6.7_
+
+  - [ ] 11.10 Implementasi `features/admin/components/MediaUploadPanel.tsx`
+    - File input dengan validasi client-side: JPEG/PNG/WebP only, max 5MB
+    - Upload → POST `/api/media/upload` dengan FormData (file + project_id + secret)
+    - Gallery grid tampilkan semua screenshot project dengan tombol Delete per item
+    - Delete → DELETE `/api/media/[id]` dengan konfirmasi
+    - _Requirements: 7.1, 7.2, 7.3, 7.4, 7.5_
+
+- [ ] 12. Final checkpoint — Pastikan semua tests pass, verifikasi semua admin routes berjalan dengan secret passthrough, tanyakan jika ada pertanyaan.
 
 ## Notes
 

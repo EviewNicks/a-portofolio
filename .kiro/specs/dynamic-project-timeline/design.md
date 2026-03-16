@@ -14,9 +14,16 @@ Stack yang digunakan sesuai dengan codebase yang sudah ada: Next.js 16, React 19
 ┌─────────────────────────────────────────────────────────┐
 │                    Next.js App Router                    │
 │                                                         │
-│  /projects          → ProjectListPage (SSR)             │
-│  /projects/[id]     → ProjectDetailPage (SSR)           │
-│  /admin             → AdminDashboard (Client, protected) │
+│  /projects                  → ProjectListPage (SSR)     │
+│  /projects/[id]             → ProjectDetailPage (SSR)   │
+│                                                         │
+│  /admin                     → Admin Overview (protected)│
+│  /admin/projects            → Project List (protected)  │
+│  /admin/projects/new        → Create Project (protected)│
+│  /admin/projects/[id]       → Project Detail (protected)│
+│  /admin/projects/[id]/edit  → Edit Project (protected)  │
+│  /admin/projects/[id]/timeline → Timeline Mgmt (protect)│
+│                                                         │
 │  /api/projects      → Projects API Routes               │
 │  /api/timeline      → Timeline API Routes               │
 │  /api/github        → GitHub Sync API Routes            │
@@ -47,16 +54,27 @@ Stack yang digunakan sesuai dengan codebase yang sudah ada: Next.js 16, React 19
 
 ## Components and Interfaces
 
-### Public Pages
+### Public Pages & Admin Pages
 
 ```
 app/
 ├── projects/
-│   ├── page.tsx                    → ProjectListPage (SSR)
+│   ├── page.tsx                         → ProjectListPage (SSR)
 │   └── [id]/
-│       └── page.tsx                → ProjectDetailPage (SSR)
+│       └── page.tsx                     → ProjectDetailPage (SSR)
 └── admin/
-    └── page.tsx                    → AdminDashboard (Client)
+    ├── layout.tsx                       → AdminLayout (auth middleware wrapper)
+    ├── page.tsx                         → Admin Overview / Dashboard
+    └── projects/
+        ├── page.tsx                     → Admin Project List
+        ├── new/
+        │   └── page.tsx                 → Create Project Form
+        └── [id]/
+            ├── page.tsx                 → Project Detail (admin view)
+            ├── edit/
+            │   └── page.tsx             → Edit Project Form
+            └── timeline/
+                └── page.tsx             → Timeline Management
 
 features/
 ├── projects/
@@ -81,11 +99,14 @@ features/
 │   └── index.ts
 └── admin/
     ├── components/
-    │   ├── AdminLayout.tsx
-    │   ├── ProjectManagement.tsx
-    │   ├── TimelineManagement.tsx
-    │   ├── GitHubSyncPanel.tsx
-    │   └── YouTubePreviewManager.tsx
+    │   ├── AdminLayout.tsx              → Sidebar nav + secret passthrough
+    │   ├── AdminProjectList.tsx         → Table list of all projects
+    │   ├── AdminProjectForm.tsx         → Reusable create/edit form
+    │   ├── AdminProjectDetail.tsx       → Project overview + quick actions
+    │   ├── TimelineManagement.tsx       → Add/edit/delete timeline entries
+    │   ├── GitHubSyncPanel.tsx          → Sync button + last_sync_at
+    │   ├── YouTubePreviewManager.tsx    → URL input + preview card
+    │   └── MediaUploadPanel.tsx         → Screenshot upload + gallery
     └── index.ts
 
 lib/
@@ -285,7 +306,20 @@ Sprint number ditentukan manual oleh admin saat membuat timeline entry. Ini memb
 Sync menggunakan `UNIQUE(project_id, github_pr_number)` constraint. Saat sync, kita lakukan upsert — jika PR sudah ada, skip. Ini mencegah duplikasi tanpa perlu query terpisah.
 
 ### Admin Auth: Server-side Validation
-Secret key divalidasi di server (API routes dan Server Components). Nilai secret tidak pernah dikirim ke client. Middleware Next.js digunakan untuk melindungi semua route `/admin/*`.
+Secret key divalidasi di server (API routes dan Server Components). Nilai secret tidak pernah dikirim ke client. Middleware Next.js digunakan untuk melindungi semua route `/admin/*`. Secret key diteruskan sebagai query param `?secret=xxx` di setiap navigasi antar halaman admin.
+
+### Admin Navigation: Multi-Page dengan Secret Passthrough
+Admin dashboard menggunakan multi-page routing (`/admin/projects`, `/admin/projects/[id]`, dll) untuk UX yang lebih baik. Secret key diteruskan sebagai query param di setiap link navigasi internal admin. `AdminLayout` bertanggung jawab menyuntikkan secret ke semua link navigasi secara otomatis.
+
+**Admin Page Structure**:
+```
+/admin?secret=xxx                        → Overview: stats ringkas + quick links
+/admin/projects?secret=xxx               → List semua projects (table view)
+/admin/projects/new?secret=xxx           → Form create project baru
+/admin/projects/[id]?secret=xxx          → Detail project: info + quick actions
+/admin/projects/[id]/edit?secret=xxx     → Form edit project
+/admin/projects/[id]/timeline?secret=xxx → Manage timeline entries + GitHub sync + YouTube + Media
+```
 
 ### GitHub Stats: Cache di Memory + Timestamp
 Stats GitHub di-cache dengan `next: { revalidate: 43200 }` (12 jam) menggunakan Next.js fetch cache. Timestamp `fetched_at` disimpan bersama data untuk ditampilkan ke visitor.

@@ -10,7 +10,9 @@
     "lint:fix": "eslint --ext .js,.jsx,.ts,.tsx --fix",
     "type-check": "tsc --noEmit --skipLibCheck",
     "test": "jest --runInBand",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "test:unit": "jest features/projects  --verbose --passWithNoTests",
+    "test:unit:all": "jest features/ --verbose --passWithNoTests"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.15",
