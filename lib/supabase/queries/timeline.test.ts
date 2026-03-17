@@ -49,7 +49,10 @@ const prArb = fc.record({
   title: fc.string({ minLength: 1, maxLength: 100 }).filter((s) => s.trim().length > 0),
   body: fc.option(fc.string({ minLength: 0, maxLength: 500 }), { nil: null }),
   html_url: fc.string({ minLength: 1, maxLength: 200 }),
-  merged_at: fc.date({ min: new Date('2020-01-01'), max: new Date('2030-01-01') }).map((d) => d.toISOString()),
+  merged_at: fc
+    .date({ min: new Date('2020-01-01'), max: new Date('2030-01-01') })
+    .filter((d) => !isNaN(d.getTime()))
+    .map((d) => d.toISOString()),
   user: fc.record({ login: fc.string({ minLength: 1, maxLength: 50 }).filter((s) => s.trim().length > 0) }),
 });
 

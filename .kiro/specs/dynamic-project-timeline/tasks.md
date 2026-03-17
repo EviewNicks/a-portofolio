@@ -158,41 +158,41 @@ Implementasi dilakukan secara incremental dalam 6 tahap: setup foundation, core 
   - [x]* 10.3 Write property test untuk file type validation
     - **Property 17: Image File Type Validation** — Validates: Requirements 7.2, 7.3
 
-- [ ] 11. Admin dashboard (multi-page)
-  - [ ] 11.1 Implementasi admin auth middleware dan layout
+- [x] 11. Admin dashboard (multi-page)
+  - [x] 11.1 Implementasi admin auth middleware dan layout
     - `middleware.ts` — protect semua route `/admin/*`, validate secret query param, redirect ke `/admin?error=unauthorized` jika invalid
     - `app/admin/layout.tsx` — AdminLayout: sidebar navigation dengan secret passthrough ke semua links
     - `features/admin/components/AdminLayout.tsx` — sidebar dengan links ke: Overview, Projects, dan back ke portfolio
     - _Requirements: 8.1, 8.2, 8.3_
 
-  - [ ] 11.2 Implementasi `app/admin/page.tsx` — Admin Overview
+  - [x] 11.2 Implementasi `app/admin/page.tsx` — Admin Overview
     - Validasi secret server-side
     - Tampilkan stats ringkas: total projects, total timeline entries, last sync
     - Quick links ke `/admin/projects` dan `/admin/projects/new`
     - _Requirements: 8.1, 8.2_
 
-  - [ ] 11.3 Implementasi `app/admin/projects/page.tsx` — Project List
+  - [x] 11.3 Implementasi `app/admin/projects/page.tsx` — Project List
     - `features/admin/components/AdminProjectList.tsx` — table dengan kolom: title, status, sprint count, PR count, last_sync_at, actions (View, Edit, Delete)
     - Tombol "New Project" → navigate ke `/admin/projects/new`
     - Delete project dengan konfirmasi
     - _Requirements: 1.3, 1.4, 2.1_
 
-  - [ ] 11.4 Implementasi `app/admin/projects/new/page.tsx` — Create Project
+  - [x] 11.4 Implementasi `app/admin/projects/new/page.tsx` — Create Project
     - `features/admin/components/AdminProjectForm.tsx` — reusable form: title, short_description, long_description, tech_stack (tags input), github_repo_url (auto-extract owner/repo), status dropdown
     - Submit → POST `/api/projects` → redirect ke `/admin/projects/[id]`
     - _Requirements: 1.1, 1.2, 1.6_
 
-  - [ ] 11.5 Implementasi `app/admin/projects/[id]/page.tsx` — Project Detail (admin view)
+  - [x] 11.5 Implementasi `app/admin/projects/[id]/page.tsx` — Project Detail (admin view)
     - `features/admin/components/AdminProjectDetail.tsx` — tampilkan semua field project + GitHub stats
     - Quick action buttons: Edit Project, Manage Timeline, Delete Project
     - _Requirements: 1.3_
 
-  - [ ] 11.6 Implementasi `app/admin/projects/[id]/edit/page.tsx` — Edit Project
+  - [x] 11.6 Implementasi `app/admin/projects/[id]/edit/page.tsx` — Edit Project
     - Reuse `AdminProjectForm.tsx` dengan data pre-filled
     - Submit → PUT `/api/projects/[id]` → redirect ke `/admin/projects/[id]`
     - _Requirements: 1.3_
 
-  - [ ] 11.7 Implementasi `features/admin/components/TimelineManagement.tsx` + halaman
+  - [x] 11.7 Implementasi `features/admin/components/TimelineManagement.tsx` + halaman
     - Form add/edit entry: entry_type dropdown, date picker, sprint_number input, title, description, external_url, is_featured toggle
     - List semua entries project dengan tombol Edit dan Delete (dengan konfirmasi)
     - Submit add → POST `/api/projects/[id]/timeline`; submit edit → PUT `/api/projects/[id]/timeline/[entryId]`
@@ -200,13 +200,13 @@ Implementasi dilakukan secara incremental dalam 6 tahap: setup foundation, core 
     - `app/admin/projects/[id]/timeline/page.tsx` — render TimelineManagement + panel lainnya (11.8–11.10)
     - _Requirements: 4.1, 4.2, 4.3, 4.4, 4.5_
 
-  - [ ] 11.8 Implementasi `features/admin/components/GitHubSyncPanel.tsx`
+  - [x] 11.8 Implementasi `features/admin/components/GitHubSyncPanel.tsx`
     - Tampilkan `last_sync_at` project (format relative time, misal "2 hours ago")
     - Tombol "Sync Now" → POST `/api/github/sync` dengan project_id + secret
     - Loading state saat sync berjalan, feedback sukses (jumlah PR baru) atau error (pesan dari API)
     - _Requirements: 5.1, 5.4, 5.5_
 
-  - [ ] 11.9 Implementasi `features/admin/components/YouTubePreviewManager.tsx`
+  - [x] 11.9 Implementasi `features/admin/components/YouTubePreviewManager.tsx`
     - Input URL YouTube + tombol "Preview"
     - Fetch ke POST `/api/youtube/preview` → tampilkan preview card: thumbnail, title, view count
     - Tombol "Approve" → POST `/api/projects/[id]/timeline` dengan entry_type 'video' + metadata
@@ -214,7 +214,7 @@ Implementasi dilakukan secara incremental dalam 6 tahap: setup foundation, core 
     - Handle error: URL invalid (400), video not found (404), API error (500)
     - _Requirements: 6.1, 6.2, 6.3, 6.4, 6.5, 6.6, 6.7_
 
-  - [ ] 11.10 Implementasi `features/admin/components/MediaUploadPanel.tsx`
+  - [x] 11.10 Implementasi `features/admin/components/MediaUploadPanel.tsx`
     - File input dengan validasi client-side: JPEG/PNG/WebP only, max 5MB
     - Upload → POST `/api/media/upload` dengan FormData (file + project_id + secret)
     - Gallery grid tampilkan semua screenshot project dengan tombol Delete per item
