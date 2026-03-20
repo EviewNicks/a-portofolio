@@ -232,7 +232,7 @@ Implementasi dilakukan secara incremental dalam 6 tahap: setup foundation, core 
     - Buat `tests/api/README.md` — panduan lengkap: urutan eksekusi, setup variables, cara import, flow testing
     - _Requirements: 1.1, 1.3, 1.4, 4.2, 4.4, 5.1, 6.1, 7.1, 7.5_
 
-  - [ ] 12.3 Install Playwright dan buat `playwright.config.ts`
+  - [x] 12.3 Install Playwright dan buat `playwright.config.ts`
     - `npm install -D @playwright/test`
     - Config: baseURL `http://localhost:3000`, browser chromium, timeout 30s
     - _Requirements: semua_

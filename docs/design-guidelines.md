@@ -55,7 +55,7 @@
 
 ## 🌈 Color Palette & Theme System
 
-### Dark Mode (Primary)
+### Dark Mode (Secondary)
 - **Background Primary**: `#213448` (Deep Navy Blue)
 - **Background Secondary**: `#1a2938` (Darker Navy)
 - **Glass Effect**: `rgba(255, 255, 255, 0.1)` (Translucent White)
@@ -66,7 +66,7 @@
 - **Success**: `#10b981` (Emerald-500)
 - **Warning**: `#eab308` (Yellow-500)
 
-### Light Mode (Secondary)
+### Light Mode (Primary)
 - **Background Primary**: `#EAE0CF` (Warm Beige)
 - **Background Secondary**: `#f5f1e8` (Lighter Beige)
 - **Glass Effect**: `rgba(33, 52, 72, 0.1)` (Translucent Navy)

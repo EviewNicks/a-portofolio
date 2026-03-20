@@ -48,7 +48,7 @@ export function AdminProjectList({
 
   if (projects.length === 0) {
     return (
-      <div className="text-center py-16 text-gray-500">
+      <div data-testid="project-list-empty" className="text-center py-16 text-gray-500">
         <p>No projects yet.</p>
         <Link
           href={`/admin/projects/new?secret=${secret}`}
@@ -62,7 +62,7 @@ export function AdminProjectList({
 
   return (
     <>
-      <div className="overflow-x-auto rounded-xl border border-gray-800">
+      <div data-testid="project-table" className="overflow-x-auto rounded-xl border border-gray-800">
         <table className="w-full text-sm">
           <thead>
             <tr className="border-b border-gray-800 bg-gray-900/50">
@@ -82,15 +82,16 @@ export function AdminProjectList({
           </thead>
           <tbody className="divide-y divide-gray-800">
             {projects.map((project) => (
-              <tr key={project.id} className="bg-gray-900 hover:bg-gray-800/50">
+              <tr key={project.id} data-testid="project-row" data-project-id={project.id} className="bg-gray-900 hover:bg-gray-800/50">
                 <td className="px-4 py-3">
-                  <p className="font-medium text-white">{project.title}</p>
+                  <p data-testid="project-row-title" className="font-medium text-white">{project.title}</p>
                   <p className="text-xs text-gray-500 mt-0.5 line-clamp-1">
                     {project.short_description}
                   </p>
                 </td>
                 <td className="px-4 py-3">
                   <span
+                    data-testid="project-row-status"
                     className={`inline-block px-2 py-0.5 rounded text-xs font-medium capitalize ${STATUS_STYLES[project.status] ?? ''}`}
                   >
                     {project.status}
@@ -105,6 +106,7 @@ export function AdminProjectList({
                   <div className="flex items-center justify-end gap-1">
                     <Link
                       href={`/admin/projects/${project.id}?secret=${secret}`}
+                      data-testid="btn-view-project"
                       className="p-1.5 text-gray-400 hover:text-white hover:bg-gray-700 rounded transition-colors"
                       title="View"
                     >
@@ -112,6 +114,7 @@ export function AdminProjectList({
                     </Link>
                     <Link
                       href={`/admin/projects/${project.id}/edit?secret=${secret}`}
+                      data-testid="btn-edit-project"
                       className="p-1.5 text-gray-400 hover:text-white hover:bg-gray-700 rounded transition-colors"
                       title="Edit"
                     >
@@ -119,6 +122,7 @@ export function AdminProjectList({
                     </Link>
                     <Link
                       href={`/admin/projects/${project.id}/timeline?secret=${secret}`}
+                      data-testid="btn-timeline-project"
                       className="p-1.5 text-gray-400 hover:text-white hover:bg-gray-700 rounded transition-colors"
                       title="Timeline"
                     >
@@ -126,6 +130,7 @@ export function AdminProjectList({
                     </Link>
                     <button
                       onClick={() => setConfirmId(project.id)}
+                      data-testid="btn-delete-project"
                       className="p-1.5 text-gray-400 hover:text-red-400 hover:bg-red-400/10 rounded transition-colors"
                       title="Delete"
                     >
@@ -141,7 +146,7 @@ export function AdminProjectList({
 
       {/* Delete confirmation modal */}
       {confirmId && (
-        <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
+        <div data-testid="delete-project-modal" className="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
           <div className="bg-gray-900 border border-gray-700 rounded-xl p-6 max-w-sm w-full mx-4 space-y-4">
             <h3 className="font-semibold text-white">Delete Project?</h3>
             <p className="text-sm text-gray-400">
@@ -151,6 +156,7 @@ export function AdminProjectList({
             <div className="flex gap-3 justify-end">
               <button
                 onClick={() => setConfirmId(null)}
+                data-testid="btn-cancel-delete"
                 className="px-4 py-2 text-sm text-gray-400 hover:text-white transition-colors"
               >
                 Cancel
@@ -158,6 +164,7 @@ export function AdminProjectList({
               <button
                 onClick={() => handleDelete(confirmId)}
                 disabled={deleting}
+                data-testid="btn-confirm-delete"
                 className="px-4 py-2 text-sm bg-red-600 hover:bg-red-500 text-white rounded-lg transition-colors disabled:opacity-50"
               >
                 {deleting ? 'Deleting...' : 'Delete'}

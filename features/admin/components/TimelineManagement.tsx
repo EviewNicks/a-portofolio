@@ -136,11 +136,12 @@ export function TimelineManagement({
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <h3 className="text-base font-semibold text-white">
+        <h3 data-testid="timeline-entries-heading" className="text-base font-semibold text-white">
           Timeline Entries ({entries.length})
         </h3>
         <button
           onClick={openAdd}
+          data-testid="btn-add-entry"
           className="flex items-center gap-1.5 px-3 py-1.5 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-sm transition-colors"
         >
           <Plus size={14} /> Add Entry
@@ -149,25 +150,25 @@ export function TimelineManagement({
 
       {/* Entry list */}
       {entries.length === 0 ? (
-        <p className="text-sm text-gray-500 py-4">No timeline entries yet.</p>
+        <p data-testid="timeline-entries-empty" className="text-sm text-gray-500 py-4">No timeline entries yet.</p>
       ) : (
         <div className="space-y-2">
           {[...entries]
             .sort((a, b) => a.sprint_number - b.sprint_number || new Date(a.date).getTime() - new Date(b.date).getTime())
             .map((entry) => (
-              <div key={entry.id} className="flex items-center justify-between bg-gray-900 border border-gray-800 rounded-lg px-4 py-3 gap-3">
+              <div key={entry.id} data-testid="entry-row" data-entry-id={entry.id} className="flex items-center justify-between bg-gray-900 border border-gray-800 rounded-lg px-4 py-3 gap-3">
                 <div className="min-w-0">
-                  <p className="text-sm font-medium text-white truncate">{entry.title}</p>
+                  <p data-testid="entry-row-title" className="text-sm font-medium text-white truncate">{entry.title}</p>
                   <p className="text-xs text-gray-500">
                     Sprint {entry.sprint_number} · {entry.entry_type} · {new Date(entry.date).toLocaleDateString('id-ID')}
                     {entry.is_featured && <span className="ml-2 text-yellow-400">★ Featured</span>}
                   </p>
                 </div>
                 <div className="flex gap-1 shrink-0">
-                  <button onClick={() => openEdit(entry)} className="p-1.5 text-gray-400 hover:text-white hover:bg-gray-700 rounded transition-colors">
+                  <button onClick={() => openEdit(entry)} data-testid="btn-edit-entry" className="p-1.5 text-gray-400 hover:text-white hover:bg-gray-700 rounded transition-colors">
                     <Pencil size={13} />
                   </button>
-                  <button onClick={() => setConfirmDeleteId(entry.id)} className="p-1.5 text-gray-400 hover:text-red-400 hover:bg-red-400/10 rounded transition-colors">
+                  <button onClick={() => setConfirmDeleteId(entry.id)} data-testid="btn-delete-entry" className="p-1.5 text-gray-400 hover:text-red-400 hover:bg-red-400/10 rounded transition-colors">
                     <Trash2 size={13} />
                   </button>
                 </div>
@@ -178,19 +179,20 @@ export function TimelineManagement({
 
       {/* Add/Edit form modal */}
       {showForm && (
-        <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
+        <div data-testid="entry-form-modal" className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
           <div className="bg-gray-900 border border-gray-700 rounded-xl w-full max-w-lg max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between px-5 py-4 border-b border-gray-800">
               <h4 className="font-semibold text-white">{editId ? 'Edit Entry' : 'Add Entry'}</h4>
               <button onClick={() => setShowForm(false)} className="text-gray-400 hover:text-white"><X size={18} /></button>
             </div>
             <form onSubmit={handleSubmit} className="p-5 space-y-4">
-              {error && <p className="text-sm text-red-400 bg-red-500/10 border border-red-500/30 px-3 py-2 rounded-lg">{error}</p>}
+              {error && <p data-testid="entry-form-error" className="text-sm text-red-400 bg-red-500/10 border border-red-500/30 px-3 py-2 rounded-lg">{error}</p>}
 
               <div className="grid grid-cols-2 gap-3">
                 <div className="space-y-1">
                   <label className="text-xs text-gray-400">Type</label>
                   <select value={form.entry_type} onChange={(e) => field('entry_type', e.target.value as EntryType)}
+                    data-testid="select-entry-type"
                     className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-blue-500">
                     {ENTRY_TYPES.map((t) => <option key={t} value={t}>{t}</option>)}
                   </select>
@@ -198,6 +200,7 @@ export function TimelineManagement({
                 <div className="space-y-1">
                   <label className="text-xs text-gray-400">Sprint #</label>
                   <input type="number" min={1} value={form.sprint_number} onChange={(e) => field('sprint_number', e.target.value)}
+                    data-testid="input-sprint-number"
                     className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-blue-500" />
                 </div>
               </div>
@@ -205,18 +208,21 @@ export function TimelineManagement({
               <div className="space-y-1">
                 <label className="text-xs text-gray-400">Date</label>
                 <input type="date" value={form.date} onChange={(e) => field('date', e.target.value)}
+                  data-testid="input-entry-date"
                   className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-blue-500" />
               </div>
 
               <div className="space-y-1">
                 <label className="text-xs text-gray-400">Title *</label>
                 <input type="text" value={form.title} onChange={(e) => field('title', e.target.value)} required
+                  data-testid="input-entry-title"
                   className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-blue-500" />
               </div>
 
               <div className="space-y-1">
                 <label className="text-xs text-gray-400">Description</label>
                 <textarea value={form.description} onChange={(e) => field('description', e.target.value)} rows={3}
+                  data-testid="input-entry-description"
                   className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-blue-500 resize-y" />
               </div>
 
@@ -224,21 +230,25 @@ export function TimelineManagement({
                 <label className="text-xs text-gray-400">External URL</label>
                 <input type="url" value={form.external_url} onChange={(e) => field('external_url', e.target.value)}
                   placeholder="https://..."
+                  data-testid="input-entry-url"
                   className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-blue-500" />
               </div>
 
               <label className="flex items-center gap-2 cursor-pointer">
                 <input type="checkbox" checked={form.is_featured} onChange={(e) => field('is_featured', e.target.checked)}
+                  data-testid="checkbox-featured"
                   className="w-4 h-4 rounded border-gray-600 bg-gray-800 text-blue-500 focus:ring-blue-500" />
                 <span className="text-sm text-gray-300">Featured entry</span>
               </label>
 
               <div className="flex gap-3 pt-2">
                 <button type="submit" disabled={saving}
+                  data-testid="btn-save-entry"
                   className="flex items-center gap-1.5 px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-sm font-medium transition-colors disabled:opacity-50">
                   <Check size={14} /> {saving ? 'Saving...' : 'Save'}
                 </button>
                 <button type="button" onClick={() => setShowForm(false)}
+                  data-testid="btn-cancel-entry"
                   className="px-4 py-2 bg-gray-800 hover:bg-gray-700 text-gray-300 rounded-lg text-sm transition-colors">
                   Cancel
                 </button>
@@ -250,13 +260,13 @@ export function TimelineManagement({
 
       {/* Delete confirmation */}
       {confirmDeleteId && (
-        <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
+        <div data-testid="delete-entry-modal" className="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
           <div className="bg-gray-900 border border-gray-700 rounded-xl p-6 max-w-sm w-full mx-4 space-y-4">
             <h3 className="font-semibold text-white">Delete Entry?</h3>
             <p className="text-sm text-gray-400">This action cannot be undone.</p>
             <div className="flex gap-3 justify-end">
-              <button onClick={() => setConfirmDeleteId(null)} className="px-4 py-2 text-sm text-gray-400 hover:text-white transition-colors">Cancel</button>
-              <button onClick={() => handleDelete(confirmDeleteId)} className="px-4 py-2 text-sm bg-red-600 hover:bg-red-500 text-white rounded-lg transition-colors">Delete</button>
+              <button onClick={() => setConfirmDeleteId(null)} data-testid="btn-cancel-delete-entry" className="px-4 py-2 text-sm text-gray-400 hover:text-white transition-colors">Cancel</button>
+              <button onClick={() => handleDelete(confirmDeleteId)} data-testid="btn-confirm-delete-entry" className="px-4 py-2 text-sm bg-red-600 hover:bg-red-500 text-white rounded-lg transition-colors">Delete</button>
             </div>
           </div>
         </div>

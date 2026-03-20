@@ -86,6 +86,7 @@ export function GitHubSyncPanel({
             <button
               onClick={handleSync}
               disabled={syncing}
+              data-testid="btn-sync-now"
               className="flex items-center gap-1.5 px-3 py-1.5 bg-gray-700 hover:bg-gray-600 text-white rounded-lg text-sm transition-colors disabled:opacity-50"
             >
               <RefreshCw size={14} className={syncing ? 'animate-spin' : ''} />
@@ -94,13 +95,13 @@ export function GitHubSyncPanel({
           </div>
 
           {result && (
-            <p className="text-sm text-green-400 bg-green-500/10 border border-green-500/30 px-3 py-2 rounded-lg">
+            <p data-testid="sync-result" className="text-sm text-green-400 bg-green-500/10 border border-green-500/30 px-3 py-2 rounded-lg">
               Sync complete — {result.added} new PR{result.added !== 1 ? 's' : ''} added.
             </p>
           )}
 
           {error && (
-            <p className="text-sm text-red-400 bg-red-500/10 border border-red-500/30 px-3 py-2 rounded-lg">
+            <p data-testid="sync-error" className="text-sm text-red-400 bg-red-500/10 border border-red-500/30 px-3 py-2 rounded-lg">
               {error}
             </p>
           )}

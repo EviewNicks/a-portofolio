@@ -94,6 +94,7 @@ export function MediaUploadPanel({
         />
         <label
           htmlFor="media-upload-input"
+          data-testid="btn-upload-screenshot"
           className={`inline-flex items-center gap-2 px-3 py-2 bg-gray-800 hover:bg-gray-700 text-gray-300 rounded-lg text-sm cursor-pointer transition-colors ${uploading ? 'opacity-50 pointer-events-none' : ''}`}
         >
           <Upload size={14} />
@@ -103,7 +104,7 @@ export function MediaUploadPanel({
       </div>
 
       {error && (
-        <p className="text-sm text-red-400 bg-red-500/10 border border-red-500/30 px-3 py-2 rounded-lg">
+        <p data-testid="upload-error" className="text-sm text-red-400 bg-red-500/10 border border-red-500/30 px-3 py-2 rounded-lg">
           {error}
         </p>
       )}
@@ -112,9 +113,9 @@ export function MediaUploadPanel({
       {media.length === 0 ? (
         <p className="text-sm text-gray-500">No screenshots uploaded yet.</p>
       ) : (
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+        <div data-testid="media-gallery" className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
           {media.map((item) => (
-            <div key={item.id} className="relative group rounded-lg overflow-hidden bg-gray-800 aspect-video">
+            <div key={item.id} data-testid="media-item" className="relative group rounded-lg overflow-hidden bg-gray-800 aspect-video">
               <Image
                 src={item.public_url}
                 alt={item.file_name}
@@ -125,6 +126,7 @@ export function MediaUploadPanel({
               <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                 <button
                   onClick={() => setConfirmDeleteId(item.id)}
+                  data-testid="btn-delete-media"
                   className="p-2 bg-red-600 hover:bg-red-500 text-white rounded-lg transition-colors"
                   title="Delete"
                 >
@@ -141,13 +143,13 @@ export function MediaUploadPanel({
 
       {/* Delete confirmation */}
       {confirmDeleteId && (
-        <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
+        <div data-testid="delete-media-modal" className="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
           <div className="bg-gray-900 border border-gray-700 rounded-xl p-6 max-w-sm w-full mx-4 space-y-4">
             <h3 className="font-semibold text-white">Delete Screenshot?</h3>
             <p className="text-sm text-gray-400">This will permanently remove the image. This action cannot be undone.</p>
             <div className="flex gap-3 justify-end">
               <button onClick={() => setConfirmDeleteId(null)} className="px-4 py-2 text-sm text-gray-400 hover:text-white transition-colors">Cancel</button>
-              <button onClick={() => handleDelete(confirmDeleteId)} className="px-4 py-2 text-sm bg-red-600 hover:bg-red-500 text-white rounded-lg transition-colors">Delete</button>
+              <button onClick={() => handleDelete(confirmDeleteId)} data-testid="btn-confirm-delete-media" className="px-4 py-2 text-sm bg-red-600 hover:bg-red-500 text-white rounded-lg transition-colors">Delete</button>
             </div>
           </div>
         </div>

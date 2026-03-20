@@ -11,9 +11,9 @@ export function TimelineSection({ entries }: TimelineSectionProps) {
 
   if (sprints.length === 0) {
     return (
-      <section className="py-8">
-        <h2 className="text-xl font-bold text-white mb-4">Development Timeline</h2>
-        <div className="text-center py-12 text-white/30 border border-white/10 rounded-xl">
+      <section data-testid="timeline-section" className="py-8">
+        <h2 className="text-xl font-bold text-foreground mb-4">Development Timeline</h2>
+        <div data-testid="timeline-empty" className="text-center py-12 text-muted-foreground border border-border rounded-xl">
           No timeline entries yet.
         </div>
       </section>
@@ -21,8 +21,8 @@ export function TimelineSection({ entries }: TimelineSectionProps) {
   }
 
   return (
-    <section className="py-8">
-      <h2 className="text-xl font-bold text-white mb-6">Development Timeline</h2>
+    <section data-testid="timeline-section" className="py-8">
+      <h2 className="text-xl font-bold text-foreground mb-6">Development Timeline</h2>
       <div className="space-y-6">
         {sprints.map((sprint) => (
           <SprintCard key={sprint.number} sprint={sprint} />

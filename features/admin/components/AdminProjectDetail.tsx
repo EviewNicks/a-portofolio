@@ -62,18 +62,21 @@ export function AdminProjectDetail({
         <div className="flex gap-2 shrink-0">
           <Link
             href={`/admin/projects/${project.id}/edit?secret=${secret}`}
+            data-testid="btn-edit-project-detail"
             className="flex items-center gap-1.5 px-3 py-1.5 bg-gray-800 hover:bg-gray-700 text-gray-300 rounded-lg text-sm transition-colors"
           >
             <Pencil size={14} /> Edit
           </Link>
           <Link
             href={`/admin/projects/${project.id}/timeline?secret=${secret}`}
+            data-testid="btn-manage-timeline"
             className="flex items-center gap-1.5 px-3 py-1.5 bg-gray-800 hover:bg-gray-700 text-gray-300 rounded-lg text-sm transition-colors"
           >
             <GitBranch size={14} /> Timeline
           </Link>
           <button
             onClick={() => setConfirmDelete(true)}
+            data-testid="btn-delete-project-detail"
             className="flex items-center gap-1.5 px-3 py-1.5 bg-red-600/10 hover:bg-red-600/20 text-red-400 rounded-lg text-sm transition-colors"
           >
             <Trash2 size={14} /> Delete
@@ -165,7 +168,7 @@ export function AdminProjectDetail({
 
       {/* Delete confirmation */}
       {confirmDelete && (
-        <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
+        <div data-testid="delete-project-detail-modal" className="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
           <div className="bg-gray-900 border border-gray-700 rounded-xl p-6 max-w-sm w-full mx-4 space-y-4">
             <h3 className="font-semibold text-white">Delete Project?</h3>
             <p className="text-sm text-gray-400">
@@ -182,6 +185,7 @@ export function AdminProjectDetail({
               <button
                 onClick={handleDelete}
                 disabled={deleting}
+                data-testid="btn-confirm-delete-detail"
                 className="px-4 py-2 text-sm bg-red-600 hover:bg-red-500 text-white rounded-lg transition-colors disabled:opacity-50"
               >
                 {deleting ? 'Deleting...' : 'Delete'}

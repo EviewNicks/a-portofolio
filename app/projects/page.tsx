@@ -48,11 +48,23 @@ export default async function ProjectsPage({ searchParams }: PageProps) {
   const { status, query } = await searchParams;
 
   return (
-    <main className="min-h-screen bg-background">
+    <main className="relative min-h-screen overflow-hidden">
+      {/* Animated gradient background */}
+      <div className="absolute inset-0 -z-10 projects-bg-gradient" />
+      {/* Subtle warm accent blobs */}
+      <div
+        className="absolute top-0 right-0 w-96 h-96 rounded-full -z-10 opacity-20 blur-3xl"
+        style={{ background: 'radial-gradient(circle, #ea580c 0%, transparent 70%)' }}
+      />
+      <div
+        className="absolute bottom-1/3 left-0 w-80 h-80 rounded-full -z-10 opacity-10 blur-3xl"
+        style={{ background: 'radial-gradient(circle, #d97706 0%, transparent 70%)' }}
+      />
+
       <div className="container mx-auto px-4 py-12 max-w-6xl">
         <div className="mb-10">
-          <h1 className="text-4xl font-bold text-white mb-2">Projects</h1>
-          <p className="text-white/50">A timeline of development work, sprints, and technical progress.</p>
+          <h1 className="text-4xl font-bold text-foreground font-display mb-2">Projects</h1>
+          <p className="text-muted-foreground">A timeline of development work, sprints, and technical progress.</p>
         </div>
 
         <Suspense fallback={null}>
@@ -63,7 +75,7 @@ export default async function ProjectsPage({ searchParams }: PageProps) {
           fallback={
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {Array.from({ length: 6 }).map((_, i) => (
-                <div key={i} className="h-56 rounded-xl bg-white/5 animate-pulse" />
+                <div key={i} className="h-56 rounded-xl bg-foreground/5 animate-pulse" />
               ))}
             </div>
           }

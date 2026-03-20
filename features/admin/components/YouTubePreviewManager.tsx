@@ -104,11 +104,13 @@ export function YouTubePreviewManager({
           onChange={(e) => setUrl(e.target.value)}
           onKeyDown={(e) => e.key === 'Enter' && handlePreview()}
           placeholder="https://www.youtube.com/watch?v=..."
+          data-testid="input-youtube-url"
           className="flex-1 bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-500"
         />
         <button
           onClick={handlePreview}
           disabled={loading || !url.trim()}
+          data-testid="btn-youtube-preview"
           className="flex items-center gap-1.5 px-3 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg text-sm transition-colors disabled:opacity-50"
         >
           <Search size={14} />
@@ -117,19 +119,19 @@ export function YouTubePreviewManager({
       </div>
 
       {error && (
-        <p className="text-sm text-red-400 bg-red-500/10 border border-red-500/30 px-3 py-2 rounded-lg">
+        <p data-testid="youtube-error" className="text-sm text-red-400 bg-red-500/10 border border-red-500/30 px-3 py-2 rounded-lg">
           {error}
         </p>
       )}
 
       {success && (
-        <p className="text-sm text-green-400 bg-green-500/10 border border-green-500/30 px-3 py-2 rounded-lg">
+        <p data-testid="youtube-success" className="text-sm text-green-400 bg-green-500/10 border border-green-500/30 px-3 py-2 rounded-lg">
           {success}
         </p>
       )}
 
       {preview && (
-        <div className="bg-gray-900 border border-gray-800 rounded-xl overflow-hidden">
+        <div data-testid="youtube-preview-card" className="bg-gray-900 border border-gray-800 rounded-xl overflow-hidden">
           <div className="flex gap-4 p-4">
             <div className="relative w-32 h-20 shrink-0 rounded-lg overflow-hidden bg-gray-800">
               <Image
@@ -141,10 +143,10 @@ export function YouTubePreviewManager({
               />
             </div>
             <div className="flex-1 min-w-0 space-y-1">
-              <p className="text-sm font-medium text-white line-clamp-2">
+              <p data-testid="youtube-preview-title" className="text-sm font-medium text-white line-clamp-2">
                 {preview.title}
               </p>
-              <p className="text-xs text-gray-500">
+              <p data-testid="youtube-preview-views" className="text-xs text-gray-500">
                 {parseInt(preview.view_count).toLocaleString()} views
               </p>
               <p className="text-xs text-gray-600 truncate">{preview.url}</p>
@@ -154,12 +156,14 @@ export function YouTubePreviewManager({
             <button
               onClick={handleApprove}
               disabled={saving}
+              data-testid="btn-approve-video"
               className="flex items-center gap-1.5 px-3 py-1.5 bg-green-600 hover:bg-green-500 text-white rounded-lg text-sm transition-colors disabled:opacity-50"
             >
               <Check size={14} /> {saving ? 'Adding...' : 'Approve & Add'}
             </button>
             <button
               onClick={handleReject}
+              data-testid="btn-reject-video"
               className="flex items-center gap-1.5 px-3 py-1.5 bg-gray-700 hover:bg-gray-600 text-gray-300 rounded-lg text-sm transition-colors"
             >
               <X size={14} /> Reject

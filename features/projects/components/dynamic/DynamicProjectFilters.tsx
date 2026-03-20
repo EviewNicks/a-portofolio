@@ -37,7 +37,8 @@ export function DynamicProjectFilters() {
         placeholder="Search projects..."
         defaultValue={currentQuery}
         onChange={(e) => updateParam('query', e.target.value)}
-        className="flex-1 px-4 py-2 rounded-lg bg-white/5 border border-white/10 text-white placeholder:text-white/30 text-sm focus:outline-none focus:border-white/30"
+        data-testid="filter-search"
+        className="flex-1 px-4 py-2 rounded-lg bg-background border border-border text-foreground placeholder:text-muted-foreground text-sm focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/20"
       />
 
       {/* Status filter */}
@@ -46,11 +47,12 @@ export function DynamicProjectFilters() {
           <button
             key={opt.value}
             onClick={() => updateParam('status', opt.value)}
+            data-testid={`filter-status-${opt.value}`}
             className={cn(
               'px-3 py-2 rounded-lg text-sm font-medium transition-colors',
               currentStatus === opt.value
-                ? 'bg-primary text-white'
-                : 'bg-white/5 text-white/60 hover:bg-white/10 hover:text-white'
+                ? 'bg-primary text-primary-foreground'
+                : 'bg-background border border-border text-muted-foreground hover:border-primary/30 hover:text-foreground'
             )}
           >
             {opt.label}

@@ -89,7 +89,7 @@ export default async function ProjectDetailPage({ params }: PageProps) {
   return (
     <main className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-12 max-w-4xl">
-        <Link href="/projects" className="text-sm text-white/40 hover:text-white/70 transition-colors mb-8 inline-block">
+        <Link href="/projects" className="text-sm text-muted-foreground hover:text-foreground transition-colors mb-8 inline-block">
           ← Back to Projects
         </Link>
 

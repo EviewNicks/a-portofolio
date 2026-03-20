@@ -93,9 +93,9 @@ export function AdminProjectForm({ secret, project }: AdminProjectFormProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6 max-w-2xl">
+    <form data-testid="project-form" onSubmit={handleSubmit} className="space-y-6 max-w-2xl">
       {error && (
-        <div className="bg-red-500/10 border border-red-500/30 text-red-400 text-sm px-4 py-3 rounded-lg">
+        <div data-testid="form-error" className="bg-red-500/10 border border-red-500/30 text-red-400 text-sm px-4 py-3 rounded-lg">
           {error}
         </div>
       )}
@@ -110,6 +110,7 @@ export function AdminProjectForm({ secret, project }: AdminProjectFormProps) {
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           placeholder="My Awesome Project"
+          data-testid="input-title"
           className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-500"
           required
         />
@@ -125,6 +126,7 @@ export function AdminProjectForm({ secret, project }: AdminProjectFormProps) {
           value={shortDesc}
           onChange={(e) => setShortDesc(e.target.value)}
           placeholder="One-line summary of the project"
+          data-testid="input-short-desc"
           className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-500"
           required
         />
@@ -140,6 +142,7 @@ export function AdminProjectForm({ secret, project }: AdminProjectFormProps) {
           onChange={(e) => setLongDesc(e.target.value)}
           placeholder="Detailed description of the project..."
           rows={5}
+          data-testid="input-long-desc"
           className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 resize-y"
         />
       </div>
@@ -147,10 +150,11 @@ export function AdminProjectForm({ secret, project }: AdminProjectFormProps) {
       {/* Tech stack */}
       <div className="space-y-1.5">
         <label className="text-sm font-medium text-gray-300">Tech Stack</label>
-        <div className="flex flex-wrap gap-2 mb-2">
+        <div data-testid="tech-stack-tags" className="flex flex-wrap gap-2 mb-2">
           {techStack.map((tag) => (
             <span
               key={tag}
+              data-testid="tech-stack-tag"
               className="flex items-center gap-1 px-2 py-0.5 bg-blue-600/20 text-blue-300 text-xs rounded-full"
             >
               {tag}
@@ -171,11 +175,13 @@ export function AdminProjectForm({ secret, project }: AdminProjectFormProps) {
             onChange={(e) => setTagInput(e.target.value)}
             onKeyDown={handleTagKeyDown}
             placeholder="Next.js, TypeScript... (Enter to add)"
+            data-testid="input-tech-tag"
             className="flex-1 bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-500"
           />
           <button
             type="button"
             onClick={addTag}
+            data-testid="btn-add-tag"
             className="px-3 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg text-sm transition-colors"
           >
             <Plus size={14} />
@@ -193,6 +199,7 @@ export function AdminProjectForm({ secret, project }: AdminProjectFormProps) {
           value={githubUrl}
           onChange={(e) => setGithubUrl(e.target.value)}
           placeholder="https://github.com/owner/repo"
+          data-testid="input-github-url"
           className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-500"
         />
         <p className="text-xs text-gray-500">
@@ -206,6 +213,7 @@ export function AdminProjectForm({ secret, project }: AdminProjectFormProps) {
         <select
           value={status}
           onChange={(e) => setStatus(e.target.value)}
+          data-testid="select-status"
           className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-blue-500"
         >
           {STATUS_OPTIONS.map((s) => (
@@ -221,6 +229,7 @@ export function AdminProjectForm({ secret, project }: AdminProjectFormProps) {
         <button
           type="submit"
           disabled={saving}
+          data-testid="btn-submit"
           className="px-5 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-sm font-medium transition-colors disabled:opacity-50"
         >
           {saving ? 'Saving...' : isEdit ? 'Save Changes' : 'Create Project'}
@@ -228,6 +237,7 @@ export function AdminProjectForm({ secret, project }: AdminProjectFormProps) {
         <button
           type="button"
           onClick={() => router.back()}
+          data-testid="btn-cancel"
           className="px-5 py-2 bg-gray-800 hover:bg-gray-700 text-gray-300 rounded-lg text-sm transition-colors"
         >
           Cancel
