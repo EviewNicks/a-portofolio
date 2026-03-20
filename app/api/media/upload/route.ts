@@ -34,7 +34,17 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'file is required' }, { status: 400 });
   }
 
-  const validationError = validateMediaFile(file.type, file.size);
+  // Fallback: detect MIME type from file extension if browser/client doesn't set it
+  const EXT_MIME_MAP: Record<string, string> = {
+    jpg: 'image/jpeg',
+    jpeg: 'image/jpeg',
+    png: 'image/png',
+    webp: 'image/webp',
+  };
+  const ext = file.name.split('.').pop()?.toLowerCase() ?? '';
+  const mimeType = file.type || EXT_MIME_MAP[ext] || '';
+
+  const validationError = validateMediaFile(mimeType, file.size);
   if (validationError) {
     return NextResponse.json({ error: validationError }, { status: 400 });
   }
@@ -47,7 +57,7 @@ export async function POST(request: NextRequest) {
   const buffer = Buffer.from(await file.arrayBuffer());
   let uploadResult;
   try {
-    uploadResult = await uploadMediaToStorage(projectId, file.name, file.type, buffer);
+    uploadResult = await uploadMediaToStorage(projectId, file.name, mimeType, buffer);
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : 'Upload failed';
     console.error('[POST /api/media/upload]', error);

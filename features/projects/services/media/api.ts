@@ -28,6 +28,25 @@ export function validateMediaFile(mimeType: string, sizeBytes: number): string |
 }
 
 /**
+ * Ensures the storage bucket exists, creating it (public) if not.
+ * Uses service_role key so no RLS policy needed for bucket management.
+ */
+async function ensureBucketExists(supabase: ReturnType<typeof createServerClient>): Promise<void> {
+  const { data: buckets, error: listError } = await supabase.storage.listBuckets();
+  if (listError) throw new Error(`Failed to list buckets: ${listError.message}`);
+
+  const exists = buckets?.some((b) => b.name === STORAGE_BUCKET);
+  if (!exists) {
+    const { error: createError } = await supabase.storage.createBucket(STORAGE_BUCKET, {
+      public: true,
+      fileSizeLimit: MAX_FILE_SIZE_BYTES,
+      allowedMimeTypes: [...ALLOWED_MIME_TYPES],
+    });
+    if (createError) throw new Error(`Failed to create bucket: ${createError.message}`);
+  }
+}
+
+/**
  * Uploads a file buffer to Supabase Storage under the project-media bucket.
  * Returns the storage path and public URL on success.
  * Throws an error if the upload fails.
@@ -40,6 +59,7 @@ export async function uploadMediaToStorage(
   buffer: Buffer
 ): Promise<MediaUploadResult> {
   const supabase = createServerClient();
+  await ensureBucketExists(supabase);
   const safeName = fileName.replace(/[^a-zA-Z0-9._-]/g, '_');
   const storagePath = `${projectId}/${Date.now()}-${safeName}`;
 

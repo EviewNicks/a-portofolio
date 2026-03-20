@@ -65,11 +65,11 @@ export async function POST(request: NextRequest) {
 
   for (const pr of prs) {
     try {
-      const result = await upsertTimelineEntryByPR(project_id, pr.number, {
+      const { isNew } = await upsertTimelineEntryByPR(project_id, pr.number, {
         project: { connect: { id: project_id } },
         entry_type: 'pr',
         title: pr.title,
-        description: pr.body ? pr.body.substring(0, 200) : null,
+        description: pr.body ?? null,
         external_url: pr.html_url,
         external_title: `PR #${pr.number}: ${pr.title}`,
         external_status: 'merged',
@@ -81,10 +81,6 @@ export async function POST(request: NextRequest) {
         is_featured: pr.labels.some((l) => l.name === 'featured'),
       });
 
-      // Prisma upsert with empty update{} means: if it existed, nothing changed
-      // We detect "new" by checking if created_at === updated_at (both set on create)
-      const isNew =
-        result.created_at.getTime() === result.updated_at.getTime();
       if (isNew) {
         newCount++;
       } else {

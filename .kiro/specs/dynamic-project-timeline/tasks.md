@@ -221,7 +221,36 @@ Implementasi dilakukan secara incremental dalam 6 tahap: setup foundation, core 
     - Delete → DELETE `/api/media/[id]` dengan konfirmasi
     - _Requirements: 7.1, 7.2, 7.3, 7.4, 7.5_
 
-- [ ] 12. Final checkpoint — Pastikan semua tests pass, verifikasi semua admin routes berjalan dengan secret passthrough, tanyakan jika ada pertanyaan.
+- [-] 12. Final checkpoint — API testing (Postman) + E2E testing (Playwright)
+  - [x] 12.2 Buat 3 Postman collections di `tests/api/`
+    - `projects.postman_collection.json` — CRUD projects + timeline entries (self-contained: POST dulu, simpan id ke variable, lalu GET/PUT/DELETE)
+    - `integrations.postman_collection.json` — GitHub sync + YouTube preview (butuh projectId dari collection projects)
+    - `media.postman_collection.json` — upload screenshot + delete (butuh projectId, gunakan FormData)
+    - Auth via `x-admin-secret` header di semua protected endpoints
+    - Collection variables: `baseUrl=http://localhost:3000`, `adminSecret=Ardiansy4`, `projectId`, `entryId`, `mediaId`
+    - Setiap POST menyimpan id ke collection variable via test script
+    - Buat `tests/api/README.md` — panduan lengkap: urutan eksekusi, setup variables, cara import, flow testing
+    - _Requirements: 1.1, 1.3, 1.4, 4.2, 4.4, 5.1, 6.1, 7.1, 7.5_
+
+  - [ ] 12.3 Install Playwright dan buat `playwright.config.ts`
+    - `npm install -D @playwright/test`
+    - Config: baseURL `http://localhost:3000`, browser chromium, timeout 30s
+    - _Requirements: semua_
+
+  - [ ] 12.4 Playwright E2E tests untuk public pages `tests/e2e/public.spec.ts`
+    - `/projects` — halaman load, project cards tampil, filter by status bekerja
+    - `/projects/[id]` — detail page load, timeline section tampil
+    - _Requirements: 2.1, 2.2, 2.3, 3.1, 4.5_
+
+  - [ ] 12.5 Playwright E2E tests untuk admin dashboard `tests/e2e/admin.spec.ts`
+    - Full CRUD flow: create project → add timeline entry → edit project → delete timeline entry → delete project
+    - Auth via `?secret=Ardiansy4` query param
+    - Cleanup setelah setiap test (delete created data)
+    - _Requirements: 8.1, 8.2, 8.3, 1.1, 1.3, 1.4, 4.2, 4.4_
+
+  - [ ] 12.6 Verifikasi akhir
+    - Jalankan seed script, import Postman collection, jalankan Playwright tests
+    - Konfirmasi semua pass
 
 ## Notes
 

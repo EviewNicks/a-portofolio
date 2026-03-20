@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getTimelineEntriesByProjectId, createTimelineEntry } from '@/lib/supabase/queries/timeline';
+import { getTimelineEntriesByProjectId, createTimelineEntry, deleteAllTimelineEntriesByProjectId } from '@/lib/supabase/queries/timeline';
 import { getProjectById } from '@/lib/supabase/queries/projects';
 import { validateTimelineEntryInput, validateAdminSecret } from '@/features/projects/utils/timeline';
 
@@ -39,7 +39,7 @@ export async function POST(request: NextRequest, { params }: Params) {
     }
 
     const body = await request.json();
-    const validation = validateTimelineEntryInput(body);
+    const validation = validateTimelineEntryInput({ ...body, project_id: id });
     if (!validation.valid) {
       return NextResponse.json({ error: 'Validation failed', details: validation.errors }, { status: 400 });
     }
@@ -64,6 +64,29 @@ export async function POST(request: NextRequest, { params }: Params) {
     return NextResponse.json({ data: entry }, { status: 201 });
   } catch (error) {
     console.error('[POST /api/projects/[id]/timeline]', error);
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+  }
+}
+
+// DELETE /api/projects/[id]/timeline — delete ALL entries for a project
+export async function DELETE(request: NextRequest, { params }: Params) {
+  const secret = request.headers.get('x-admin-secret') ?? request.nextUrl.searchParams.get('secret') ?? '';
+  if (!validateAdminSecret(secret)) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
+  try {
+    const { id } = await params;
+
+    const project = await getProjectById(id);
+    if (!project) {
+      return NextResponse.json({ error: 'Project not found' }, { status: 404 });
+    }
+
+    const deleted = await deleteAllTimelineEntriesByProjectId(id);
+    return NextResponse.json({ success: true, deleted });
+  } catch (error) {
+    console.error('[DELETE /api/projects/[id]/timeline]', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }

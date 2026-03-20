@@ -1,0 +1,219 @@
+{
+    "info": {
+        "name": "Dynamic Project Timeline — Integrations",
+        "description": "GitHub sync dan YouTube preview. Jalankan SETELAH collection Projects — butuh projectId yang sudah tersimpan di collection variables.",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "variable": [
+        {
+            "key": "baseUrl",
+            "value": "http://localhost:3000"
+        },
+        {
+            "key": "adminSecret",
+            "value": "Ardiansy4"
+        },
+        {
+            "key": "projectId",
+            "value": ""
+        }
+    ],
+    "item": [
+        {
+            "name": "GitHub Sync",
+            "item": [
+                {
+                    "name": "POST /api/github/sync — sync PRs",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "x-admin-secret",
+                                "value": "{{adminSecret}}"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"project_id\": \"{{projectId}}\"\n}"
+                        },
+                        "url": "{{baseUrl}}/api/github/sync"
+                    }
+                },
+                {
+                    "name": "POST /api/github/sync — idempotent (sync ulang, harus 0 new)",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "x-admin-secret",
+                                "value": "{{adminSecret}}"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"project_id\": \"{{projectId}}\"\n}"
+                        },
+                        "url": "{{baseUrl}}/api/github/sync"
+                    }
+                },
+                {
+                    "name": "POST /api/github/sync — 400 missing project_id",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "x-admin-secret",
+                                "value": "{{adminSecret}}"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{}"
+                        },
+                        "url": "{{baseUrl}}/api/github/sync"
+                    }
+                },
+                {
+                    "name": "POST /api/github/sync — 404 project not found",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "x-admin-secret",
+                                "value": "{{adminSecret}}"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"project_id\": \"nonexistent-id-xyz\"\n}"
+                        },
+                        "url": "{{baseUrl}}/api/github/sync"
+                    }
+                },
+                {
+                    "name": "POST /api/github/sync — 401 no secret",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"project_id\": \"{{projectId}}\"\n}"
+                        },
+                        "url": "{{baseUrl}}/api/github/sync"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "YouTube Preview",
+            "item": [
+                {
+                    "name": "POST /api/youtube/preview — valid URL",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"url\": \"https://www.youtube.com/watch?v=dQw4w9WgXcQ\"\n}"
+                        },
+                        "url": "{{baseUrl}}/api/youtube/preview"
+                    }
+                },
+                {
+                    "name": "POST /api/youtube/preview — youtu.be short URL",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"url\": \"https://youtu.be/dQw4w9WgXcQ\"\n}"
+                        },
+                        "url": "{{baseUrl}}/api/youtube/preview"
+                    }
+                },
+                {
+                    "name": "POST /api/youtube/preview — 400 invalid URL format",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"url\": \"https://vimeo.com/123456\"\n}"
+                        },
+                        "url": "{{baseUrl}}/api/youtube/preview"
+                    }
+                },
+                {
+                    "name": "POST /api/youtube/preview — 400 empty url",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"url\": \"\"\n}"
+                        },
+                        "url": "{{baseUrl}}/api/youtube/preview"
+                    }
+                },
+                {
+                    "name": "POST /api/youtube/preview — 400 missing url field",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{}"
+                        },
+                        "url": "{{baseUrl}}/api/youtube/preview"
+                    }
+                }
+            ]
+        }
+    ]
+}

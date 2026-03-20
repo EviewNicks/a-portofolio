@@ -1,0 +1,191 @@
+{
+    "info": {
+        "name": "Dynamic Project Timeline — Media Upload",
+        "description": "Upload screenshot dan delete media. Butuh projectId dari collection Projects. Upload menggunakan form-data (bukan JSON).",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "variable": [
+        {
+            "key": "baseUrl",
+            "value": "http://localhost:3000"
+        },
+        {
+            "key": "adminSecret",
+            "value": "Ardiansy4"
+        },
+        {
+            "key": "projectId",
+            "value": ""
+        },
+        {
+            "key": "mediaId",
+            "value": ""
+        }
+    ],
+    "item": [
+        {
+            "name": "Media Upload",
+            "item": [
+                {
+                    "name": "POST /api/media/upload — upload screenshot",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "const res = pm.response.json();",
+                                    "if (res.data && res.data.id) {",
+                                    "  pm.collectionVariables.set('mediaId', res.data.id);",
+                                    "  console.log('mediaId saved:', res.data.id);",
+                                    "}"
+                                ]
+                            }
+                        }
+                    ],
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "file",
+                                    "type": "file",
+                                    "src": "",
+                                    "description": "Pilih file gambar JPEG/PNG/WebP, max 5MB"
+                                },
+                                {
+                                    "key": "project_id",
+                                    "value": "{{projectId}}",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "secret",
+                                    "value": "{{adminSecret}}",
+                                    "type": "text"
+                                }
+                            ]
+                        },
+                        "url": "{{baseUrl}}/api/media/upload",
+                        "description": "PENTING: Pilih file gambar di field 'file' sebelum send. Gunakan file JPEG/PNG/WebP ukuran < 5MB."
+                    }
+                },
+                {
+                    "name": "POST /api/media/upload — 400 missing project_id",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "file",
+                                    "type": "file",
+                                    "src": "",
+                                    "description": "Pilih file gambar"
+                                },
+                                {
+                                    "key": "secret",
+                                    "value": "{{adminSecret}}",
+                                    "type": "text"
+                                }
+                            ]
+                        },
+                        "url": "{{baseUrl}}/api/media/upload"
+                    }
+                },
+                {
+                    "name": "POST /api/media/upload — 401 no secret",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "file",
+                                    "type": "file",
+                                    "src": ""
+                                },
+                                {
+                                    "key": "project_id",
+                                    "value": "{{projectId}}",
+                                    "type": "text"
+                                }
+                            ]
+                        },
+                        "url": "{{baseUrl}}/api/media/upload"
+                    }
+                },
+                {
+                    "name": "POST /api/media/upload — 400 invalid file type (via x-admin-secret header)",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "x-admin-secret",
+                                "value": "{{adminSecret}}"
+                            }
+                        ],
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "file",
+                                    "type": "file",
+                                    "src": "",
+                                    "description": "Pilih file .pdf atau .txt untuk trigger error"
+                                },
+                                {
+                                    "key": "project_id",
+                                    "value": "{{projectId}}",
+                                    "type": "text"
+                                }
+                            ]
+                        },
+                        "url": "{{baseUrl}}/api/media/upload"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Media Delete",
+            "item": [
+                {
+                    "name": "DELETE /api/media/:mediaId",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "x-admin-secret",
+                                "value": "{{adminSecret}}"
+                            }
+                        ],
+                        "url": "{{baseUrl}}/api/media/{{mediaId}}"
+                    }
+                },
+                {
+                    "name": "DELETE /api/media/:mediaId — 404 not found",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "x-admin-secret",
+                                "value": "{{adminSecret}}"
+                            }
+                        ],
+                        "url": "{{baseUrl}}/api/media/nonexistent-media-id"
+                    }
+                },
+                {
+                    "name": "DELETE /api/media/:mediaId — 401 no secret",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [],
+                        "url": "{{baseUrl}}/api/media/{{mediaId}}"
+                    }
+                }
+            ]
+        }
+    ]
+}

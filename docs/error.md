@@ -1,486 +1,80 @@
-# Analysis Report: Task Plan vs Requirements & Design
-
-## Executive Summary
-
-**Analysis Date**: 2026-03-16
-**Documents Analyzed**:
-- requirements.md (10 requirements, 50 acceptance criteria)
-- feature.md (comprehensive feature specification)
-- tasks.md (12 task groups, 50+ tasks)
-
-**Overall Assessment**: ✅ **COMPREHENSIVE COVERAGE**
-- **Requirements Coverage**: 100% (10/10 requirements covered)
-- **Acceptance Criteria Coverage**: 100% (50/50 criteria covered)
-- **Design Elements Covered**: 100% (all major components specified)
-- **Task Implementation**: ✅ Complete and detailed
-
-**Critical Findings**:
-- ✅ All requirements have corresponding tasks
-- ✅ All acceptance criteria implemented as tasks
-- ✅ All design elements included in implementation plan
-- ⚠️ Minor suggestions for improvements (documented below)
-
----
-
-## Detailed Gap Analysis
-
-### ✅ Requirement Coverage by Category
-
-| Category | Requirements | Tasks | Coverage | Status |
-|----------|-------------|-------|----------|--------|
-| Project Management | 1.1-1.6 | 11.2, 4.1, 4.2 | 6/6 tasks | ✅ Complete |
-| Project List | 2.1-2.5 | 6.1, 6.3 | 5/5 tasks | ✅ Complete |
-| Project Detail | 3.1-3.6 | 6.2, 6.6, 6.7 | 3/3 tasks | ✅ Complete |
-| Timeline Entry | 4.1-4.6 | 2.5, 5.1, 5.2, 6.4, 11.3 | 5/5 tasks | ✅ Complete |
-| GitHub Sync | 5.1-5.5 | 2.1, 8.1, 11.4 | 3/3 tasks | ✅ Complete |
-| YouTube Preview | 6.1-6.7 | 2.3, 9.1, 11.5 | 3/3 tasks | ✅ Complete |
-| Media Upload | 7.1-7.5 | 10.1, 10.2 | 2/2 tasks | ✅ Complete |
-| Admin Auth | 8.1-8.4 | 2.5, 11.1, 11.6 | 3/3 tasks | ✅ Complete |
-| Project Stats | 9.1-9.4 | 2.1, 6.6 | 2/2 tasks | ✅ Complete |
-| Timeline Visual | 10.1-10.6 | 2.5, 6.4 | 2/2 tasks | ✅ Complete |
-
-**Total**: 10/10 requirements (100%), 50/50 acceptance criteria (100%)
-
----
-
-### ✅ Acceptance Criteria Coverage
-
-| Requirement | AC Count | ACs Covered | Status |
-|-------------|----------|-------------|--------|
-| R1: Project Data Management | 6 | 1.1-1.6 | ✅ Complete |
-| R2: Project List Page | 5 | 2.1-2.5 | ✅ Complete |
-| R3: Project Detail Page | 6 | 3.1-3.6 | ✅ Complete |
-| R4: Timeline Entry Management | 6 | 4.1-4.6 | ✅ Complete |
-| R5: GitHub PR Auto-Sync | 5 | 5.1-5.5 | ✅ Complete |
-| R6: YouTube Preview System | 7 | 6.1-6.7 | ✅ Complete |
-| R7: Media Upload (Screenshots) | 5 | 7.1-7.5 | ✅ Complete |
-| R8: Admin Dashboard Auth | 4 | 8.1-8.4 | ✅ Complete |
-| R9: Project Stats Display | 4 | 9.1-9.4 | ✅ Complete |
-| R10: Sprint-Based Timeline Vis | 6 | 10.1-10.6 | ✅ Complete |
-
-**Total**: 50/50 acceptance criteria (100%)
-
----
-
-## 📋 Feature Design Coverage
-
-### ✅ Design Components in Tasks
-
-| Design Component | Status | Implementation Details |
-|------------------|--------|------------------------|
-| **Database Schema** | ✅ Complete | Tasks 1.1 covers all tables (projects, timeline_entries, youtube_previews, admin_sessions) |
-| **API Endpoints** | ✅ Complete | Tasks 4.1-4.2 (projects), 5.1-5.2 (timeline), 8.1 (github), 9.1 (youtube), 10.1-10.2 (media) |
-| **Frontend Components** | ✅ Complete | Tasks 6.1-6.7 cover all components (ProjectCard, ProjectGrid, TimelineSection, etc.) |
-| **Admin Dashboard** | ✅ Complete | Tasks 11.1-11.6 cover all panels and authentication |
-| **Integration Functions** | ✅ Complete | Tasks 2.1-2.3 cover GitHub and YouTube APIs |
-| **Utilities** | ✅ Complete | Tasks 2.5 covers validation and helper functions |
-| **Testing** | ✅ Complete | Tasks with `*` mark property tests for all critical logic |
-
----
-
-## 🔍 Detailed Analysis by Requirement
-
-### ✅ Requirement 1: Project Data Management
-**Status**: ✅ Complete
-
-**Covered Tasks**:
-- 1.1: Types, Supabase clients, database schema setup
-- 4.1: Query functions (getAllProjects, getProjectById, createProject, updateProject, deleteProject)
-- 4.2: API routes (GET, POST, PUT, DELETE for projects)
-- 11.2: ProjectManagement component with CRUD forms
-
-**Coverage**: 6/6 acceptance criteria ✅
-- AC 1.1: Project creation form → Task 11.2
-- AC 1.2: GitHub URL parsing → Task 2.1
-- AC 1.3: Update project → Task 4.1
-- AC 1.4: Delete project → Task 4.1
-- AC 1.5: Status validation → Task 4.1
-- AC 1.6: Required field validation → Task 4.2
-
----
-
-### ✅ Requirement 2: Project List Page
-**Status**: ✅ Complete
-
-**Covered Tasks**:
-- 4.1: Query functions with search and filter
-- 4.2: API routes for GET/POST projects
-- 6.1: ProjectCard, ProjectGrid, ProjectFilters components
-- 6.3: app/projects/page.tsx with SSR
-
-**Coverage**: 5/5 acceptance criteria ✅
-- AC 2.1: Grid layout → Task 6.1
-- AC 2.2: Status filter → Task 4.1
-- AC 2.3: Search query → Task 4.1
-- AC 2.4: Card display fields → Task 6.1
-- AC 2.5: Empty state → Task 6.3
-
----
-
-### ✅ Requirement 3: Project Detail Page
-**Status**: ✅ Complete
-
-**Covered Tasks**:
-- 6.2: ProjectHeader component
-- 6.6: GitHubStats, MediaGallery components
-- 6.7: app/projects/[id]/page.tsx
-
-**Coverage**: 6/6 acceptance criteria ✅
-- AC 3.1: Header display → Task 6.2
-- AC 3.2: GitHub stats → Task 6.6
-- AC 3.3: API fallback → Task 6.6
-- AC 3.4: Sprint grouping → Task 6.4
-- AC 3.5: 404 handling → Task 6.7
-- AC 3.6: Media gallery → Task 6.6
-
----
-
-### ✅ Requirement 4: Timeline Entry Management
-**Status**: ✅ Complete
-
-**Covered Tasks**:
-- 2.5: Validation functions (validateTimelineEntryInput, groupEntriesBySprint)
-- 5.1: Query functions (getTimelineEntriesByProjectId, create, update, delete)
-- 5.2: API routes for timeline
-- 6.4: TimelineEntryCard, SprintCard, TimelineSection components
-- 11.3: TimelineManagement component
-
-**Coverage**: 6/6 acceptance criteria ✅
-- AC 4.1: 6 entry types → Task 2.5 (entry_type ENUM)
-- AC 4.2: Required fields → Task 2.5
-- AC 4.3: Sprint number validation → Task 2.5
-- AC 4.4: Delete entry → Task 5.2
-- AC 4.5: Featured highlighting → Task 6.4
-- AC 4.6: Date sorting → Task 2.5
-
----
-
-### ✅ Requirement 5: GitHub PR Auto-Sync
-**Status**: ✅ Complete
-
-**Covered Tasks**:
-- 2.1: fetchGitHubPRs, fetchGitHubStats functions
-- 8.1: API route for sync
-- 11.4: GitHubSyncPanel component
-
-**Coverage**: 5/5 acceptance criteria ✅
-- AC 5.1: Fetch merged PRs → Task 2.1
-- AC 5.2: Create timeline entry → Task 8.1
-- AC 5.3: Skip duplicates → Task 8.1
-- AC 5.4: API error handling → Task 8.1
-- AC 5.5: Update timestamp → Task 8.1
-
----
-
-### ✅ Requirement 6: YouTube Preview System
-**Status**: ✅ Complete
-
-**Covered Tasks**:
-- 2.3: extractVideoId, fetchYouTubeMetadata functions
-- 9.1: API route for preview
-- 11.5: YouTubePreviewManager component
-
-**Coverage**: 7/7 acceptance criteria ✅
-- AC 6.1: Extract video_id → Task 2.3
-- AC 6.2: Fetch metadata → Task 2.3
-- AC 6.3: Preview card display → Task 11.5
-- AC 6.4: Approve → Task 9.1
-- AC 6.5: Reject → Task 9.1
-- AC 6.6: URL validation → Task 9.1
-- AC 6.7: Not found handling → Task 9.1
-
----
-
-### ✅ Requirement 7: Media Upload (Screenshots)
-**Status**: ✅ Complete
-
-**Covered Tasks**:
-- 10.1: Media upload route with validation
-- 10.2: Media delete route
-
-**Coverage**: 5/5 acceptance criteria ✅
-- AC 7.1: Upload to Supabase Storage → Task 10.1
-- AC 7.2: File types (JPEG, PNG, WebP) → Task 10.1
-- AC 7.3: File size validation (≤5MB) → Task 10.1
-- AC 7.4: Display in gallery → Task 6.6
-- AC 7.5: Delete file and record → Task 10.2
-
----
-
-### ✅ Requirement 8: Admin Dashboard Authentication
-**Status**: ✅ Complete
-
-**Covered Tasks**:
-- 2.5: validateAdminSecret function
-- 11.1: Middleware with secret validation
-- 11.6: Admin page with secret check
-
-**Coverage**: 4/4 acceptance criteria ✅
-- AC 8.1: Valid secret renders dashboard → Task 11.6
-- AC 8.2: Invalid secret shows unauthorized → Task 11.1
-- AC 8.3: API returns 401 → Task 11.1
-- AC 8.4: Secret not exposed client-side → Task 11.1
-
----
-
-### ✅ Requirement 9: Project Stats Display
-**Status**: ✅ Complete
-
-**Covered Tasks**:
-- 2.1: fetchGitHubStats function
-- 6.6: GitHubStats component
-
-**Coverage**: 4/4 acceptance criteria ✅
-- AC 9.1: Display stars, forks, contributors → Task 6.6
-- AC 9.2: Cache for 12 hours → Task 2.1
-- AC 9.3: Last updated timestamp → Task 6.6
-- AC 9.4: Hide if no repo → Task 6.6
-
----
-
-### ✅ Requirement 10: Sprint-Based Timeline Visualization
-**Status**: ✅ Complete
-
-**Covered Tasks**:
-- 2.5: groupEntriesBySprint function
-- 6.4: TimelineSection, SprintCard, TimelineEntryCard components
-
-**Coverage**: 6/6 acceptance criteria ✅
-- AC 10.1: Group by sprint_number → Task 2.5
-- AC 10.2: Display sprint number and count → Task 6.4
-- AC 10.3: Entry card fields (icon, title, date, etc.) → Task 6.4
-- AC 10.4: PR status badge → Task 6.4
-- AC 10.5: Video embed/thumbnail → Task 6.4
-- AC 10.6: Empty state → Task 6.4
-
----
-
-## ✅ Testing Coverage
-
-### Property Tests (Tasks marked with `*`)
-
-All 17 property tests are properly defined:
-
-**Validation Properties** (Tasks 2.6):
-- ✅ Project Status Validation
-- ✅ Project Creation Requirements
-- ✅ Sprint Grouping
-- ✅ Date Sorting
-- ✅ Entry Type Validation
-- ✅ Entry Required Fields
-- ✅ Admin Secret Validation
-
-**Utility Properties** (Tasks 2.2, 2.4, 4.3, 5.3, 10.3):
-- ✅ GitHub URL Extraction
-- ✅ YouTube Video ID Extraction
-- ✅ Status Filter
-- ✅ Search Filter
-- ✅ File Type Validation
-- ✅ GitHub Sync Idempotence
-
-**Component Properties** (Tasks 6.2, 6.5, 6.8):
-- ✅ Project Card Rendering
-- ✅ Timeline Entry Card Rendering
-- ✅ Sprint Card Rendering
-
-**Total**: 17 property tests with fast-check configuration
-
----
-
-## 📊 Task Structure Analysis
-
-### Task Organization
-
-```
-Total Tasks: 50+ tasks organized in 12 task groups
-├── Task 1: Setup Foundation ✅
-├── Task 2: Core Utilities ✅
-├── Task 3: Checkpoint 1
-├── Task 4: Projects API ✅
-├── Task 5: Timeline API ✅
-├── Task 6: Public Pages ✅
-├── Task 7: Checkpoint 2
-├── Task 8: GitHub Sync ✅
-├── Task 9: YouTube Preview ✅
-├── Task 10: Media Upload ✅
-├── Task 11: Admin Dashboard ✅
-└── Task 12: Final Checkpoint
-```
-
-**Assessment**: ✅ Logical flow with checkpoints
-
-### Task Completeness
-
-Each task includes:
-- ✅ File path specification
-- ✅ Function/component implementation details
-- ✅ Requirement references (e.g., `Requirements: 1.1, 4.1`)
-- ✅ Property test markers (`*`) for testable logic
-- ✅ Dependencies between tasks
-
-**Assessment**: ✅ Tasks are actionable and complete
-
----
-
-## ⚠️ Minor Suggestions for Improvement
-
-### 1. Add Project Filters (Tech Stack Filtering)
-**Priority**: Medium
-**Current State**: Search and status filter exist (AC 2.3, AC 2.2)
-**Suggestion**: Add tech_stack filter for more granular project discovery
-
-**Recommended Task Addition**:
-```
-- [ ] 4.3 Add tech_stack filter to project search
-    - Filter by specific tech stack tags
-    - Support multiple tag selection
-    - Requirements: 2.1
-```
-
-### 2. Add Contribution Graph Visualization
-**Priority**: Low
-**Current State**: GitHub stats show stars, forks, contributors
-**Suggestion**: Add contribution graph from GitHub API
-
-**Recommended Task Addition**:
-```
-- [ ] 6.7 Add GitHub Contribution Graph
-    - Fetch contributor activity via GitHub API
-    - Display simple contribution heatmap
-    - Requirements: 9.1
-```
-
-### 3. Add Project Categorization
-**Priority**: Low
-**Current State**: Projects have status (active, maintenance, archived)
-**Suggestion**: Add category field (e.g., Web, Mobile, AI, Tools)
-
-**Recommended Task Addition**:
-```
-- [ ] 11.2 Add project category field
-    - Add category ENUM to database
-    - Add category selection in admin form
-    - Requirements: 1.1
-```
-
-### 4. Add PDF Export Feature
-**Priority**: Very Low
-**Current State**: No export functionality
-**Suggestion**: Allow PDF export of project details
-
-**Recommended Task Addition**:
-```
-- [ ] 6.8 Add PDF Export for Project Details
-    - Use jsPDF or similar library
-    - Export project info + timeline
-    - Requirements: Future enhancement
-```
-
----
-
-## ✅ Consistency Checks
-
-### Design vs Implementation Alignment
-
-| Design Element | Task Coverage | Notes |
-|----------------|---------------|-------|
-| Database Schema | ✅ Complete | All 4 tables covered |
-| API Endpoints | ✅ Complete | All 30+ endpoints covered |
-| Components | ✅ Complete | All 15+ components covered |
-| Integrations | ✅ Complete | GitHub, YouTube, Supabase all covered |
-| Testing | ✅ Complete | 17 property tests + unit tests |
-| Security | ✅ Complete | Auth, tokens, caching all addressed |
-
-### Requirement Alignment
-
-**Requirements**: All 10 requirements have 100% task coverage
-**Acceptance Criteria**: All 50 criteria have 100% task coverage
-**User Stories**: All 9 user stories addressed in tasks
-
----
-
-## 📈 Task Count Analysis
-
-### Task Distribution by Category
-
-| Category | Tasks | Percentage |
-|----------|-------|------------|
-| Foundation/Setup | 1 | 2% |
-| Utilities/Validation | 6 | 12% |
-| Projects API | 3 | 6% |
-| Timeline API | 2 | 4% |
-| Public Pages | 7 | 14% |
-| GitHub Integration | 2 | 4% |
-| YouTube Integration | 1 | 2% |
-| Media Upload | 2 | 4% |
-| Admin Dashboard | 6 | 12% |
-| Testing | 10 | 20% |
-| Checkpoints | 2 | 4% |
-| **Total** | **50+** | **100%** |
-
-**Assessment**: ✅ Balanced distribution across all areas
-
----
-
-## 🎯 Implementation Readiness
-
-### Prerequisites Checklist
-
-✅ **Project Foundation**: Next.js 16, React 19, TypeScript
-✅ **Database**: Supabase configured with DATABASE_URL and DIRECT_URL
-✅ **Environment Variables**: SPACE for all keys (GITHUB_TOKEN, YOUTUBE_API_KEY, etc.)
-✅ **Dependencies**: No new dependencies needed (all tools available)
-✅ **Design System**: Existing portfolio design can be reused
-✅ **Testing**: Vitest + fast-check available
-
-### Technical Debt
-
-**None identified** - all requirements are clean specifications
-
----
-
-## ✅ Summary
-
-### Overall Assessment
-
-**Plan Quality**: ✅ **EXCELLENT**
-- ✅ 100% requirement coverage
-- ✅ 100% acceptance criteria coverage
-- ✅ 100% design element coverage
-- ✅ Comprehensive task breakdown
-- ✅ Logical implementation flow
-- ✅ Test coverage for all critical logic
-
-### Recommendations
-
-1. ✅ **No critical gaps** - implementation plan is complete
-2. 🟡 **Consider adding** tech_stack filtering (optional, medium priority)
-3. 🟢 **Consider adding** contribution graph (optional, low priority)
-4. 🟢 **Consider adding** PDF export (optional, very low priority)
-
-### Confidence Level
-
-**Implementation Readiness**: **100%**
-
-The task plan is comprehensive, well-structured, and addresses all requirements and acceptance criteria. Ready for implementation.
-
----
-
-## 📝 Conformance Summary
-
-| Aspect | Status | Details |
-|--------|--------|---------|
-| Requirements Coverage | ✅ 100% | 10/10 requirements covered |
-| Acceptance Criteria | ✅ 100% | 50/50 criteria covered |
-| Design Elements | ✅ 100% | All major components specified |
-| Task Completeness | ✅ Complete | 50+ tasks with clear requirements |
-| Testing Coverage | ✅ Comprehensive | 17 property tests defined |
-| Security Considerations | ✅ Addressed | Auth, tokens, caching handled |
-| Performance Optimization | ✅ Addressed | Caching strategy specified |
-| Documentation | ✅ Complete | Schema, APIs, components documented |
-| **Overall Conformance** | **✅ EXCELLENT** | **100% alignment with requirements and design** |
-
----
-
-**Analysis Completed**: 2026-03-16
-**Status**: ✅ **READY FOR IMPLEMENTATION**
+{
+    "data": [
+        {
+            "id": "4cb10e40-edd3-4b3a-a83d-8668161040ef",
+            "project_id": "69ead9e0-a49a-45ab-9968-996bae53c97e",
+            "entry_type": "pr",
+            "date": "2025-10-25T08:37:13.000Z",
+            "sprint_number": 1,
+            "title": "Preprocessing",
+            "description":"# Preprocessing Pipeline Implementation - Pull Request\r\n\r\n## =� PR Overview\r\n\r\n**Target Branch**: `main` � **Source Branch**: `preprocessing`\r\n\r\n### <� **Summary**\r\n\r\nImplement production-ready preprocessing pipeline dengan evidence-based parameters dari notebook analysis. Module ini mengubah citra OMR mentah menjadi citra berkualitas tinggi siap untuk template detection.\r\n\r\n### <� **What's Implemented**\r\n\r\n#### **Core Module Structure**\r\n\r\n```\r\nsrc/preprocessing/\r\n--  quality_assessment.py    # 4 quality metrics (laplacian, edge, RMS, dynamic range)\r\n contrast_enhancement.py  # CLAHE focus dengan optimal parameters\r\n morphological_ops.py     # Opening/closing/combined operations\r\n pipeline.py              # Complete orchestrator dengan batch processing\r\n README.md               # Comprehensive documentation\r\n```\r\n\r\n#### **Key Features**\r\n\r\n- **Quality Assessment**: 4 metrics dengan configurable thresholds\r\n- **Contrast Enhancement**: CLAHE (clip=4.5, tile=4x4) optimal dari notebook\r\n- **Morphological Operations**: Combined opening then closing\r\n- **Pipeline Orchestrator**: Single & batch processing capability\r\n- **Configuration Integration**: Fully integrated dengan `config.py`\r\n- **Error Handling**: Comprehensive validation dan error reporting\r\n- **Performance Monitoring**: Processing time dan quality metrics\r\n- **FastAPI Ready**: Clean interfaces untuk API integration\r\n\r\n## =� **Performance Metrics**\r\n\r\n### **Test Results (datasets/test/ - 21 images)**\r\n\r\n```\r\n-  Success Rate: 71.4% (15/21 images processed successfully)\r\n- Processing Time: 0.046s/image (target <2s)\r\n- Quality Improvement: +3.20 RMS contrast, +0.029 readiness score\r\n-  Final Quality: Avg readiness 1.000, avg contrast 20.06\r\n```\r\n\r\n### **Pipeline Flow**\r\n\r\n```\r\nOriginal � Quality Assessment � Contrast Enhancement (CLAHE) �\r\nMorphological Operations (Combined) � Quality Assessment �\r\nValidation � Final Output\r\n```\r\n\r\n## **Configuration Updates**\r\n\r\n### **Enhanced `config.py`**\r\n\r\n```python\r\n# Enhanced Preprocessing Pipeline\r\nPREPROCESSING_OUTPUT_PATH = BASE_DIR / \"output/preprocessing\"\r\nCLAHE_CLIP_LIMIT = 4.5\r\nCLAHE_TILE_SIZE_X/Y = 4\r\nMORPHOLOGY_OPERATION = \"combined\"\r\nMIN_RMS_CONTRAST = 15.0  # Adjusted for reality\r\nMIN_READINESS_SCORE = 0.8\r\nMAX_PROCESSING_TIME = 2.0\r\n```\r\n\r\n## >� **Testing & Validation**\r\n\r\n### **Test Coverage**\r\n\r\n- **Module Testing**: Individual modules tested dengan sample images\r\n- **Pipeline Testing**: End-to-end pipeline validation\r\n- **Batch Processing**: Multiple image processing capability\r\n- **Performance Testing**: Processing time < 2s target met\r\n- **Quality Validation**: Quality metrics improvement verified\r\n\r\n### **Sample Test Results**\r\n\r\n```json\r\n{\r\n  \"quality_before\": {\r\n    \"rms_contrast\": 23.99,\r\n    \"readiness\": 1.000,\r\n    \"laplacian_variance\": 13863.73\r\n  },\r\n  \"quality_after\": {\r\n    \"rms_contrast\": 21.39,\r\n    \"readiness\": 1.000,\r\n    \"laplacian_variance\": 1258.04\r\n  },\r\n  \"processing_time\": 0.033s,\r\n  \"success\": true\r\n}\r\n```\r\n\r\n## =� **Visual Examples**\r\n\r\n### **Pipeline Stages**\r\n\r\n1. **Original**: Raw OMR image dengan variable quality\r\n2. **After Contrast**: CLAHE enhancement improves bubble visibility\r\n3. **After Morphology**: Noise removal dengan edge preservation\r\n4. **Edge Detection**: Validation untuk ensure bubble integrity\r\n\r\n### **Output Structure**\r\n\r\n```\r\noutput/preprocessing/\r\n-  preprocessed_*.png          # Processed images (15 successful)\r\n-  preprocessed_*_metadata.json # Processing metadata & metrics\r\n--  ...                         # Additional output files\r\n```\r\n\r\n## **Changes Made**\r\n\r\n### **Files Added**\r\n\r\n- `src/preprocessing/quality_assessment.py` (241 lines)\r\n- `src/preprocessing/contrast_enhancement.py` (270 lines)\r\n- `src/preprocessing/morphological_ops.py` (326 lines)\r\n- `src/preprocessing/pipeline.py` (486 lines)\r\n- `src/preprocessing/README.md` (442 lines)\r\n- Configuration updates ke `config.py` (+24 lines)\r\n\r\n### **Files Cleaned Up**\r\n\r\n- Deprecated development notebooks and reports\r\n- Temporary analysis files\r\n- Outdated quality reports\r\n\r\n### **Configuration Changes**\r\n\r\n- Added preprocessing-specific parameters\r\n- Updated paths untuk output management\r\n- Integrated dengan existing configuration system\r\n\r\n## <� **Next Steps**\r\n\r\n### **Immediate (Post-Merge)**\r\n\r\n1. **Parameter Optimization**: Fine-tune thresholds untuk higher success rate\r\n2. **Unit Tests**: Implement comprehensive test suite\r\n3. **Performance Monitoring**: Add metrics collection\r\n4. **Integration Testing**: Test dengan template detection module\r\n\r\n### **Week 6 Integration**\r\n\r\n1. **Template Detection**: Preprocessed images siap untuk next stage\r\n2. **FastAPI Service**: Complete preprocessing service\r\n3. **Monitoring Dashboard**: Real-time performance metrics\r\n4. **Academic Documentation**: Evidence-based methodology section\r\n\r\n---\r\n\r\n**PR Type**: **Feature Implementation**\r\n**Complexity**: **Medium** (4 modules + orchestrator)\r\n**Risk Level**: **Low** (non-breaking, self-contained)\r\n**Review Priority**: =4 **High** (core functionality untuk Week 6)\r\n\r\n**Status**: **READY FOR REVIEW & MERGE**\r\n",
+            "external_url": "https://github.com/EviewNicks/omr_grading_system/pull/1",
+            "external_title": "PR #1: Preprocessing",
+            "external_status": "merged",
+            "is_featured": false,
+            "media_preview": null,
+            "github_pr_number": 1,
+            "github_pr_title": "Preprocessing",
+            "github_author": "EviewNicks",
+            "created_at": "2026-03-20T03:45:10.934Z",
+            "updated_at": "2026-03-20T03:45:10.934Z"
+        },
+        {
+            "id": "55f38b5f-8ff1-4daa-94e7-910e8ef05b34",
+            "project_id": "69ead9e0-a49a-45ab-9968-996bae53c97e",
+            "entry_type": "pr",
+            "date": "2025-11-02T15:45:26.000Z",
+            "sprint_number": 1,
+            "title": "Template detection",
+            "description": "Niai vaue",
+            "external_url": "https://github.com/EviewNicks/omr_grading_system/pull/2",
+            "external_title": "PR #2: Template detection",
+            "external_status": "merged",
+            "is_featured": false,
+            "media_preview": null,
+            "github_pr_number": 2,
+            "github_pr_title": "Template detection",
+            "github_author": "EviewNicks",
+            "created_at": "2026-03-20T03:45:10.422Z",
+            "updated_at": "2026-03-20T03:45:10.422Z"
+        },
+        {
+            "id": "d4876ff6-7c52-4ed8-a53f-c3b125ab36ba",
+            "project_id": "69ead9e0-a49a-45ab-9968-996bae53c97e",
+            "entry_type": "pr",
+            "date": "2025-11-03T14:10:54.000Z",
+            "sprint_number": 1,
+            "title": "Production dev",
+            "description": "# Pull Request: Complete 6-Phase OMR Production Pipeline\r\n\r\n## 📋 Overview\r\nThis PR implements a complete 6-phase production-ready OMR (Optical Mark Recognition) pipeline with exceptional performance metrics and comprehensive academic documentation.\r\n\r\n## 🚀 Key Features Implemented\r\n\r\n### **Complete 6-Phase Pipeline**\r\n- **Phase 1**: Edge Detection with adaptive thresholding\r\n- **Phase 2**: Rectangle Filtering with hierarchical analysis\r\n- **Phase 3**: Perspective Transform with quality validation\r\n- **Phase 4**: Grid Analysis (20×4 structure, 80 cells)\r\n- **Phase 5**: Bubble Classification with confidence scoring\r\n- **Phase 6**: Scoring Engine with analytics and grade calculation\r\n\r\n### **Performance Excellence**\r\n- **Processing Speed**: 0.232s average (9× faster than 2.1s target)\r\n- **Success Rate**: 100% across all pipeline phases\r\n- **Grid Detection**: Perfect 80/80 cells with 100% quality success rate\r\n- **Bubble Classification**: 80 bubbles processed with 89.4 average quality score\r\n\r\n### **Production Infrastructure**\r\n- **CLI Interface**: `python -m omr_pipeline.cli image.jpg`\r\n- **Configuration System**: Centralized JSON-based pipeline configuration\r\n- **Error Handling**: Comprehensive error tracking with graceful degradation\r\n- **Testing Suite**: 11 comprehensive integration tests\r\n\r\n## 📊 Technical Implementation\r\n\r\n### **New Modules Added**\r\n```\r\nsrc/omr_pipeline/\r\n├── core/pipeline.py           # Main orchestrator (855 LOC)\r\n├── classification/            # Bubble classification engine\r\n├── detection/                 # Rectangle & perspective analysis\r\n├── preprocessing/             # Edge detection & quality assessment\r\n├── scoring/                   # Analytics & grade calculation\r\n└── utils/                      # Helper functions & quality metrics\r\n```\r\n\r\n### **Academic Documentation**\r\n- Complete journal paper (633 lines)\r\n- Executive summary for stakeholders\r\n- Academic presentation outline\r\n- Performance benchmarking reports\r\n\r\n## 🧪 Testing & Validation\r\n\r\n### **Test Results**\r\n- **Integration Tests**: 11 tests, 9 passing, 2 minor issues identified\r\n- **Performance Validation**: All targets exceeded significantly\r\n- **Production Testing**: End-to-end pipeline validation with sample data\r\n\r\n### **Known Issues**\r\n- Image quality assessment has slice indices error (non-blocking, 80 occurrences)\r\n- Pipeline completes successfully despite quality assessment errors\r\n- Fix implemented: float to integer conversion in `image_quality.py`\r\n\r\n## 📈 Performance Benchmarks\r\n\r\n| Metric | Target | Achieved | Status |\r\n|--------|--------|----------|---------|\r\n| Processing Time | <2.1s | 0.232s | ✅ 9× faster |\r\n| Success Rate | >85% | 100% | ✅ Perfect |\r\n| Grid Detection | >90% | 100% | ✅ Perfect |\r\n| Error Rate | <15% | 0% | ✅ No errors |\r\n\r\n## 🔧 Installation & Usage\r\n\r\n```bash\r\n# Activate environment\r\nsource omr_env/bin/activate\r\n\r\n# Run pipeline with debug\r\npython -m omr_pipeline.cli datasets/test/01.jpg --debug\r\n\r\n# Batch processing\r\npython -m omr_pipeline.cli --batch datasets/test/ --output results/\r\n\r\n# Run tests\r\npython -m pytest tests/test_pipeline.py -v\r\n```\r\n\r\n## 📚 Documentation\r\n\r\n- **Technical Docs**: Complete API documentation and configuration guide\r\n- **Academic Paper**: Ready for journal submission\r\n- **User Guide**: Step-by-step pipeline usage instructions\r\n- **Performance Reports**: Detailed benchmarking and analysis\r\n\r\n## ✅ Readiness Assessment\r\n\r\n**Production Status**: ✅ READY\r\n- Core pipeline functionality complete and tested\r\n- Performance targets exceeded by significant margin\r\n- Error handling and validation comprehensive\r\n- Documentation complete for academic and technical audiences\r\n\r\n**Next Steps**: Ready for Phase 3 (Interface Development) or direct deployment.\r\n\r\n---\r\n\r\n**Files Changed**: 68 files, 12,584 insertions, 1,879 deletions\r\n**Review Priority**: High - Complete production pipeline implementation\r\n**Merge Recommendation**: ✅ APPROVED for main branch integration",
+            "external_url": "https://github.com/EviewNicks/omr_grading_system/pull/3",
+            "external_title": "PR #3: Production dev",
+            "external_status": "merged",
+            "is_featured": false,
+            "media_preview": null,
+            "github_pr_number": 3,
+            "github_pr_title": "Production dev",
+            "github_author": "EviewNicks",
+            "created_at": "2026-03-20T03:45:09.937Z",
+            "updated_at": "2026-03-20T03:45:09.937Z"
+        },
+        {
+            "id": "9db7450f-be06-4e52-9fd4-64e98f8b1e05",
+            "project_id": "69ead9e0-a49a-45ab-9968-996bae53c97e",
+            "entry_type": "pr",
+            "date": "2025-11-07T01:43:56.000Z",
+            "sprint_number": 1,
+            "title": "Interface development",
+            "description": "Interface Web app",
+            "external_url": "https://github.com/EviewNicks/omr_grading_system/pull/4",
+            "external_title": "PR #4: Interface development",
+            "external_status": "merged",
+            "is_featured": false,
+            "media_preview": null,
+            "github_pr_number": 4,
+            "github_pr_title": "Interface development",
+            "github_author": "EviewNicks",
+            "created_at": "2026-03-20T03:45:09.397Z",
+            "updated_at": "2026-03-20T03:45:09.397Z"
+        }
+    ]
+}

@@ -1,119 +1,513 @@
-4:04:17 PM: Netlify Build                                                 
-4:04:17 PM: ────────────────────────────────────────────────────────────────
-4:04:17 PM: ​
-4:04:17 PM: ❯ Version
-4:04:17 PM:   @netlify/build 35.5.9
-4:04:17 PM: ​
-4:04:17 PM: ❯ Flags
-4:04:17 PM:   accountId: 69522c5f613264ea9898fa36
-4:04:17 PM:   baseRelDir: true
-4:04:17 PM:   buildId: 695235f8e05f92ed4cd1afae
-4:04:17 PM:   deployId: 695235f8e05f92ed4cd1afb0
-4:04:17 PM: ​
-4:04:17 PM: ❯ Current directory
-4:04:17 PM:   /opt/build/repo
-4:04:17 PM: ​
-4:04:17 PM: ❯ Config file
-4:04:17 PM:   No config file was defined: using default values.
-4:04:17 PM: ​
-4:04:17 PM: ❯ Context
-4:04:17 PM:   production
-4:04:18 PM: ​
-4:04:18 PM: ❯ Using Next.js Runtime - v5.15.3
-4:04:20 PM: No Next.js cache to restore
-4:04:20 PM: ​
-4:04:20 PM: Build command from Netlify app                                
-4:04:20 PM: ────────────────────────────────────────────────────────────────
-4:04:20 PM: ​
-4:04:20 PM: $ npm run build
-4:04:20 PM: > a-portofolio@0.1.0 build
-4:04:20 PM: > next build
-4:04:20 PM:  ⚠ You are using a non-standard "NODE_ENV" value in your environment. This creates inconsistencies in the project and is strongly advised against. Read more: https://nextjs.org/docs/messages/non-standard-node-env
-4:04:21 PM: ⚠ No build cache found. Please configure build caching for faster rebuilds. Read more: https://nextjs.org/docs/messages/no-cache
-4:04:21 PM:    ▲ Next.js 16.0.10 (Turbopack)
-4:04:21 PM:    Creating an optimized production build ...
-4:04:31 PM:  ✓ Compiled successfully in 9.8s
-4:04:31 PM:    Running TypeScript ...
-4:04:36 PM:    Collecting page data using 2 workers ...
-4:04:37 PM:    Generating static pages using 2 workers (0/7) ...
-4:04:37 PM: Each child in a list should have a unique "key" prop.
-4:04:37 PM: Check the top-level render call using <__next_viewport_boundary__>. See https://react.dev/link/warning-keys for more information.
-4:04:37 PM: Each child in a list should have a unique "key" prop.
-4:04:37 PM: Check the top-level render call using <U>. See https://react.dev/link/warning-keys for more information.
-4:04:37 PM: Each child in a list should have a unique "key" prop.
-4:04:37 PM: Check the top-level render call using <meta>. See https://react.dev/link/warning-keys for more information.
-4:04:37 PM: Each child in a list should have a unique "key" prop.
-4:04:37 PM: Check the top-level render call using <head>. See https://react.dev/link/warning-keys for more information.
-4:04:37 PM: Each child in a list should have a unique "key" prop.
-4:04:37 PM: Check the top-level render call using <__next_viewport_boundary__>. See https://react.dev/link/warning-keys for more information.
-4:04:37 PM: Each child in a list should have a unique "key" prop.
-4:04:37 PM: Check the top-level render call using <html>. See https://react.dev/link/warning-keys for more information.
-4:04:37 PM: Each child in a list should have a unique "key" prop.
-4:04:37 PM: Check the top-level render call using <meta>. See https://react.dev/link/warning-keys for more information.
-4:04:37 PM: Each child in a list should have a unique "key" prop.
-4:04:37 PM: Check the top-level render call using <head>. See https://react.dev/link/warning-keys for more information.
-4:04:37 PM: Each child in a list should have a unique "key" prop.
-4:04:37 PM: Check the top-level render call using <meta>. See https://react.dev/link/warning-keys for more information.
-4:04:37 PM: Each child in a list should have a unique "key" prop.
-4:04:37 PM: Check the top-level render call using <html>. See https://react.dev/link/warning-keys for more information.
-4:04:37 PM: Each child in a list should have a unique "key" prop.
-4:04:37 PM: Check the top-level render call using <meta>. See https://react.dev/link/warning-keys for more information.
-4:04:37 PM: Each child in a list should have a unique "key" prop.
-4:04:37 PM: Check the top-level render call using <head>. See https://react.dev/link/warning-keys for more information.
-4:04:37 PM: Each child in a list should have a unique "key" prop.
-4:04:37 PM: Check the top-level render call using <html>. See https://react.dev/link/warning-keys for more information.
-4:04:37 PM: Each child in a list should have a unique "key" prop.
-4:04:37 PM: Check the top-level render call using <meta>. See https://react.dev/link/warning-keys for more information.
-4:04:37 PM: Each child in a list should have a unique "key" prop.
-4:04:37 PM: Check the top-level render call using <head>. See https://react.dev/link/warning-keys for more information.
-4:04:37 PM: Each child in a list should have a unique "key" prop.
-4:04:37 PM: Check the top-level render call using <__next_viewport_boundary__>. See https://react.dev/link/warning-keys for more information.
-4:04:37 PM: Each child in a list should have a unique "key" prop.
-4:04:37 PM: Check the top-level render call using <html>. See https://react.dev/link/warning-keys for more information.
-4:04:37 PM: Each child in a list should have a unique "key" prop.
-4:04:37 PM: Check the top-level render call using <meta>. See https://react.dev/link/warning-keys for more information.
-4:04:37 PM: Each child in a list should have a unique "key" prop.
-4:04:37 PM: Check the top-level render call using <head>. See https://react.dev/link/warning-keys for more information.
-4:04:37 PM: Each child in a list should have a unique "key" prop.
-4:04:37 PM: Check the top-level render call using <__next_viewport_boundary__>. See https://react.dev/link/warning-keys for more information.
-4:04:37 PM: Each child in a list should have a unique "key" prop.
-4:04:37 PM: Check the top-level render call using <html>. See https://react.dev/link/warning-keys for more information.
-4:04:37 PM: Each child in a list should have a unique "key" prop.
-4:04:37 PM: Check the top-level render call using <meta>. See https://react.dev/link/warning-keys for more information.
-4:04:37 PM: Each child in a list should have a unique "key" prop.
-4:04:37 PM: Check the top-level render call using <head>. See https://react.dev/link/warning-keys for more information.
-4:04:37 PM: Error occurred prerendering page "/_global-error". Read more: https://nextjs.org/docs/messages/prerender-error
-4:04:37 PM: TypeError: Cannot read properties of null (reading 'useContext')
-4:04:37 PM:     at ignore-listed frames {
-4:04:37 PM:   digest: '2985668723'
-4:04:37 PM: }
-4:04:37 PM: Export encountered an error on /_global-error/page: /_global-error, exiting the build.
-4:04:37 PM:  ⨯ Next.js build worker exited with code: 1 and signal: null
-4:04:37 PM: ​
-4:04:37 PM: "build.command" failed                                        
-4:04:37 PM: ────────────────────────────────────────────────────────────────
-4:04:37 PM: ​
-4:04:37 PM:   Error message
-4:04:37 PM:   Command failed with exit code 1: npm run build (https://ntl.fyi/exit-code-1)
-4:04:37 PM: ​
-4:04:37 PM:   Error location
-4:04:37 PM:   In Build command from Netlify app:
-4:04:37 PM:   npm run build
-4:04:37 PM: ​
-4:04:37 PM:   Resolved config
-4:04:37 PM:   build:
-4:04:37 PM:     command: npm run build
-4:04:37 PM:     commandOrigin: ui
-4:04:37 PM:     environment:
-4:04:37 PM:       - NEXT_PUBLIC_VERCEL_ENV
-4:04:37 PM:       - NODE_ENV
-4:04:37 PM:     publish: /opt/build/repo/.next
-4:04:37 PM:     publishOrigin: ui
-4:04:37 PM:   plugins:
-4:04:37 PM:     - inputs: {}
-4:04:37 PM:       origin: ui
-4:04:37 PM:       package: "@netlify/plugin-nextjs"
-4:04:37 PM: Build failed due to a user error: Build script returned non-zero exit code: 2
-4:04:37 PM: Failing build: Failed to build site
-4:04:38 PM: Finished processing build request in 27.978s
-4:04:37 PM: Failed during stage 'building site': Build script returned non-zero exit code: 2 (https://ntl.fyi/exit-code-2)
+# Student Course API Testing Guide
+
+**Feature:** Course Discovery & Enrollment  
+**Sprint:** Sprint 2b  
+**Requirements:** 1.x, 2.x, 3.x, 7.x
+
+---
+
+## Overview
+
+Panduan testing untuk Student Course API — endpoint publik yang digunakan student untuk browse catalog, enroll ke kursus, dan melihat kursus yang sudah diikuti.
+
+### API Endpoints
+
+| Method | Endpoint | Auth | Description |
+|--------|----------|------|-------------|
+| GET | `/api/courses` | Optional | Public course catalog dengan filter & pagination |
+| GET | `/api/courses/[slug]` | Optional | Course detail by ID |
+| POST | `/api/courses/[slug]/enroll` | Required | Enroll ke kursus |
+| GET | `/api/courses/my-courses` | Required | Daftar kursus yang diikuti student |
+
+---
+
+## Prerequisites
+
+### 1. Start Development Server
+
+```bash
+yarn dev
+# Server berjalan di http://localhost:3000
+```
+
+### 2. Siapkan Test Data
+
+```sql
+-- Cek courses yang ada
+SELECT id, title, status, difficulty, category FROM courses LIMIT 10;
+
+-- Catat:
+-- courseId      = ID course dengan status PUBLISHED
+-- draftCourseId = ID course dengan status DRAFT
+```
+
+### 3. Dapatkan Auth Token (Clerk)
+
+1. Buka aplikasi di browser: `http://localhost:3000`
+2. Login sebagai user student
+3. Buka DevTools → Application → Cookies
+4. Copy nilai cookie `__session`
+
+---
+
+## Import Postman Collection
+
+1. Buka Postman
+2. Click **Import**
+3. Pilih file `docs/api/student-course/student-course.postman_collection.json`
+4. Click **Import**
+
+---
+
+## Configure Collection Variables
+
+| Variable | Nilai | Keterangan |
+|----------|-------|------------|
+| `baseUrl` | `http://localhost:3000` | URL server lokal |
+| `courseId` | _(isi dari database)_ | ID course PUBLISHED |
+| `draftCourseId` | _(isi dari database)_ | ID course DRAFT |
+| `authToken` | _(isi dari Clerk)_ | Session token student |
+
+---
+
+## Test Scenarios & Checklist
+
+---
+
+### Scenario 1: Browse Catalog (tanpa auth)
+
+#### 1.1 Get Catalog — Success
+
+```
+GET /api/courses
+```
+
+**Checklist:**
+- [x] Status code `200`
+- [x] Response punya field `courses` (array) dan `pagination`
+- [x] `pagination` punya: `page`, `limit`, `total`, `totalPages`
+- [x] Semua course di array punya: `id`, `title`, `category`, `difficulty`, `status`, `sectionCount`, `lessonCount`, `enrolled`
+- [x] Semua course `status === 'PUBLISHED'`
+- [x] `description` tidak lebih dari 150 karakter
+
+**Actual Response:**
+```json
+{
+    "courses": [
+        {
+            "id": "78322b16-3758-4861-9e79-e647b36d9ab5",
+            "title": "Test Course dari Postman",
+            "description": "Deskripsi kursus test yang dibuat via Postman collection",
+            "category": "programming",
+            "difficulty": "Pemula",
+            "status": "PUBLISHED",
+            "sectionCount": 0,
+            "lessonCount": 0,
+            "createdAt": "2026-03-17T03:06:06.825Z",
+            "enrolled": false
+        }
+    ],
+    "pagination": {
+        "page": 1,
+        "limit": 12,
+        "total": 1,
+        "totalPages": 1
+    }
+}
+```
+
+---
+
+#### 1.2 Get Catalog — Filter by Category
+
+```
+GET /api/courses?category=programming
+```
+
+**Checklist:**
+- [x] Status code `200`
+- [x] Semua course yang dikembalikan match category `programming`
+
+**Actual Response:**
+```json
+{
+    "courses": [
+        {
+            "id": "78322b16-3758-4861-9e79-e647b36d9ab5",
+            "title": "Test Course dari Postman",
+            "description": "Deskripsi kursus test yang dibuat via Postman collection",
+            "category": "programming",
+            "difficulty": "Pemula",
+            "status": "PUBLISHED",
+            "sectionCount": 0,
+            "lessonCount": 0,
+            "createdAt": "2026-03-17T03:06:06.825Z",
+            "enrolled": false
+        }
+    ],
+    "pagination": {
+        "page": 1,
+        "limit": 12,
+        "total": 1,
+        "totalPages": 1
+    }
+}
+```
+
+---
+
+#### 1.3 Get Catalog — Filter by Difficulty
+
+```
+GET /api/courses?difficulty=Pemula
+```
+
+**Checklist:**
+- [x] Status code `200`
+- [x] Semua course `difficulty === 'Pemula'`
+
+**Actual Response:**
+```json
+{
+    "courses": [
+        {
+            "id": "78322b16-3758-4861-9e79-e647b36d9ab5",
+            "title": "Test Course dari Postman",
+            "description": "Deskripsi kursus test yang dibuat via Postman collection",
+            "category": "programming",
+            "difficulty": "Pemula",
+            "status": "PUBLISHED",
+            "sectionCount": 0,
+            "lessonCount": 0,
+            "createdAt": "2026-03-17T03:06:06.825Z",
+            "enrolled": false
+        }
+    ],
+    "pagination": {
+        "page": 1,
+        "limit": 12,
+        "total": 1,
+        "totalPages": 1
+    }
+}
+```
+
+---
+
+#### 1.4 Get Catalog — Search by Keyword
+
+```
+GET /api/courses?search=web
+```
+
+**Checklist:**
+- [x] Status code `200`
+- [x] Response punya field `courses`
+
+**Actual Response:**
+```json
+{
+    "courses": [
+        {
+            "id": "78322b16-3758-4861-9e79-e647b36d9ab5",
+            "title": "Test Course dari Postman",
+            "description": "Deskripsi kursus test yang dibuat via Postman collection",
+            "category": "programming",
+            "difficulty": "Pemula",
+            "status": "PUBLISHED",
+            "sectionCount": 0,
+            "lessonCount": 0,
+            "createdAt": "2026-03-17T03:06:06.825Z",
+            "enrolled": false
+        }
+    ],
+    "pagination": {
+        "page": 1,
+        "limit": 12,
+        "total": 1,
+        "totalPages": 1
+    }
+}
+```
+
+---
+
+#### 1.5 Get Catalog — Pagination
+
+```
+GET /api/courses?page=1&limit=6
+```
+
+**Checklist:**
+- [x] Status code `200`
+- [x] `pagination.page === 1`
+- [x] `pagination.limit === 6`
+- [x] Jumlah courses di array ≤ 6
+
+**Actual Response:**
+```json
+{
+    "courses": [
+        {
+            "id": "78322b16-3758-4861-9e79-e647b36d9ab5",
+            "title": "Test Course dari Postman",
+            "description": "Deskripsi kursus test yang dibuat via Postman collection",
+            "category": "programming",
+            "difficulty": "Pemula",
+            "status": "PUBLISHED",
+            "sectionCount": 0,
+            "lessonCount": 0,
+            "createdAt": "2026-03-17T03:06:06.825Z",
+            "enrolled": false
+        }
+    ],
+    "pagination": {
+        "page": 1,
+        "limit": 6,
+        "total": 1,
+        "totalPages": 1
+    }
+}
+```
+
+---
+
+### Scenario 2: Course Detail
+
+#### 2.1 Get Course Detail — Success
+
+```
+GET /api/courses/{{courseId}}
+```
+
+**Checklist:**
+- [x] Status code `200`
+- [x] Response punya: `id`, `title`, `description`, `category`, `status`, `createdAt`
+
+**Actual Response:**
+```json
+{
+    "id": "78322b16-3758-4861-9e79-e647b36d9ab5",
+    "title": "Test Course dari Postman",
+    "description": "Deskripsi kursus test yang dibuat via Postman collection",
+    "category": "programming",
+    "difficulty": "Pemula",
+    "creatorId": "user_2zDLu13tvWu8kQaHUrmyMBrDmWB",
+    "status": "PUBLISHED",
+    "createdAt": "2026-03-17T03:06:06.825Z",
+    "updatedAt": "2026-03-17T07:16:25.161Z",
+    "slug": "78322b16-3758-4861-9e79-e647b36d9ab5"
+}
+```
+
+---
+
+#### 2.2 Get Course Detail — Not Found
+
+```
+GET /api/courses/non-existent-course-id-00000000
+```
+
+**Checklist:**
+- [x] Status code `404`
+- [x] Response punya field `error`
+
+**Actual Response:**
+```json
+{
+    "error": "Course not found"
+}
+```
+
+---
+
+### Scenario 3: Enrollment Flow
+
+> Jalankan **berurutan** — urutan penting untuk test 409.
+
+#### 3.1 Enroll — Unauthenticated
+
+```
+POST /api/courses/{{courseId}}/enroll
+(tanpa Authorization header)
+```
+
+**Checklist:**
+- [ ] Status code `401`
+- [ ] `error` mengandung kata `login`
+
+**Actual Response:**
+```json
+{
+    "error": "Silakan login terlebih dahulu"
+}
+```
+
+---
+
+#### 3.2 Enroll — DRAFT Course
+
+```
+POST /api/courses/{{draftCourseId}}/enroll
+Authorization: Bearer {{authToken}}
+```
+
+**Checklist:**
+- [x] Status code `403`
+- [x] Response punya field `error`
+
+**Actual Response:**
+```json
+{
+    "error": "Kursus ini belum dipublikasikan"
+}
+```
+
+---
+
+#### 3.3 Enroll — Success
+
+```
+POST /api/courses/{{courseId}}/enroll
+Authorization: Bearer {{authToken}}
+```
+
+**Checklist:**
+- [x] Status code `201`
+- [x] Response punya field `enrollment`
+- [x] `enrollment` punya: `id`, `userId`, `courseId`, `enrolledAt`
+
+**Actual Response:**
+```json
+{
+    "enrollment": {
+        "id": "8af79cb5-be5e-48c3-8b86-fa2695b5f500",
+        "userId": "user_2zENLKAiz32PGUtK7I5S3zaSPXr",
+        "courseId": "78322b16-3758-4861-9e79-e647b36d9ab5",
+        "enrolledAt": "2026-03-17T08:33:02.350Z"
+    }
+}
+```
+
+---
+
+#### 3.4 Enroll — Already Enrolled
+
+```
+POST /api/courses/{{courseId}}/enroll
+Authorization: Bearer {{authToken}}
+(jalankan ulang request yang sama setelah 3.3 berhasil)
+```
+
+**Checklist:**
+- [x] Status code `409`
+- [x] `error === 'Anda sudah terdaftar di kursus ini'`
+
+**Actual Response:**
+```json
+{
+    "error": "Anda sudah terdaftar di kursus ini"
+}
+```
+
+---
+
+### Scenario 4: My Courses
+
+#### 4.1 My Courses — Unauthenticated
+
+```
+GET /api/courses/my-courses
+(tanpa Authorization header)
+```
+
+**Checklist:**
+- [x] Status code `401`
+- [x] Response punya field `error`
+
+**Actual Response:**
+```json
+{
+    "error": "Silakan login terlebih dahulu"
+}
+```
+
+---
+
+#### 4.2 My Courses — Success
+
+```
+GET /api/courses/my-courses
+Authorization: Bearer {{authToken}}
+```
+
+**Checklist:**
+- [x] Status code `200`
+- [x] Response punya field `enrollments` (array)
+- [x] Setiap enrollment punya: `id`, `course`, `enrolledAt`, `progress`
+
+**Actual Response:**
+```json
+{
+    "enrollments": [
+        {
+            "id": "8af79cb5-be5e-48c3-8b86-fa2695b5f500",
+            "enrolledAt": "2026-03-17T08:33:02.350Z",
+            "completed": false,
+            "completedAt": null,
+            "progress": 0,
+            "course": {
+                "id": "78322b16-3758-4861-9e79-e647b36d9ab5",
+                "title": "Test Course dari Postman",
+                "description": "Deskripsi kursus test yang dibuat via Postman collection",
+                "category": "programming",
+                "difficulty": "Pemula",
+                "status": "PUBLISHED",
+                "thumbnail": null
+            }
+        }
+    ]
+}
+```
+
+---
+
+## Running All Tests (Newman CLI)
+
+```bash
+# Install Newman
+npm install -g newman
+
+# Run semua tests
+newman run docs/api/student-course/student-course.postman_collection.json \
+  --env-var "baseUrl=http://localhost:3000" \
+  --env-var "authToken=YOUR_TOKEN" \
+  --env-var "courseId=YOUR_COURSE_ID" \
+  --env-var "draftCourseId=YOUR_DRAFT_ID"
+```
+
+---
+
+## Troubleshooting
+
+| Error | Penyebab | Solusi |
+|-------|----------|--------|
+| 401 pada enroll | Token tidak valid / expired | Re-login dan copy token baru |
+| 403 pada enroll | Course masih DRAFT | Gunakan `courseId` yang PUBLISHED |
+| 404 pada detail | Course ID tidak ada | Cek database, update variable `courseId` |
+| 409 pada enroll | Sudah pernah enroll | Normal — ini yang ditest di 3.4 |
+| Connection refused | Server tidak running | Jalankan `yarn dev` |
+
+---
+
+## References
+
+- **Postman Collection:** `docs/api/student-course/student-course.postman_collection.json`
+- **Requirements:** `.kiro/specs/course-discovery/requirements.md`
+- **Design:** `.kiro/specs/course-discovery/design.md`
+- **Tasks:** `.kiro/specs/course-discovery/tasks.md`
+
+---
+
+**Last Updated:** 2026-03-17  
+**Status:** Ready for Testing

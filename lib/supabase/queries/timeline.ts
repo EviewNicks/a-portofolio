@@ -37,22 +37,37 @@ export async function deleteTimelineEntry(id: string) {
 }
 
 /**
+ * Delete ALL timeline entries for a project (bulk reset before re-sync).
+ * Returns the count of deleted entries.
+ */
+export async function deleteAllTimelineEntriesByProjectId(projectId: string): Promise<number> {
+  const result = await prisma.timelineEntry.deleteMany({ where: { project_id: projectId } });
+  return result.count;
+}
+
+/**
  * Upsert a timeline entry by project_id + github_pr_number (for GitHub sync deduplication).
+ * Returns the entry and a boolean indicating whether it was newly created.
  * Requirements: 5.3
  */
 export async function upsertTimelineEntryByPR(
   projectId: string,
   prNumber: number,
   data: Prisma.TimelineEntryCreateInput
-) {
-  return prisma.timelineEntry.upsert({
+): Promise<{ entry: Awaited<ReturnType<typeof prisma.timelineEntry.create>>; isNew: boolean }> {
+  const existing = await prisma.timelineEntry.findUnique({
     where: {
       project_id_github_pr_number: {
         project_id: projectId,
         github_pr_number: prNumber,
       },
     },
-    create: data,
-    update: {}, // skip update if already exists
   });
+
+  if (existing) {
+    return { entry: existing, isNew: false };
+  }
+
+  const entry = await prisma.timelineEntry.create({ data });
+  return { entry, isNew: true };
 }
