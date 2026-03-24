@@ -53,7 +53,7 @@ function PreBlock({ children, ...props }: ComponentPropsWithoutRef<'pre'>) {
 
 // Custom code — block (inside pre) vs inline
 // react-markdown passes node prop; block code always has a parent <pre>
-function CodeBlock({ className, children, node, ...props }: ComponentPropsWithoutRef<'code'> & { node?: { tagName?: string; position?: unknown } }) {
+function CodeBlock({ className, children, ...props }: ComponentPropsWithoutRef<'code'> & { node?: { tagName?: string; position?: unknown } }) {
   // If className has language-* OR parent is pre (node.tagName check not available here,
   // but react-markdown only renders <code> inside <pre> for fenced blocks)
   // We use PreBlock to wrap, so any <code> rendered by PreBlock is a block code.

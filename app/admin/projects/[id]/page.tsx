@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useSearchParams } from 'next/navigation';
 import { CheckCircle2, X } from 'lucide-react';
 import { AdminProjectDetail } from '@/features/admin/components/AdminProjectDetail';
 import type { DynamicProject, TimelineEntry } from '@/features/projects/types';
@@ -20,13 +19,11 @@ export default function AdminProjectDetailPage({ params }: PageParams) {
   const [timelineCount, setTimelineCount] = useState(0);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
-  const [showCreatedBanner, setShowCreatedBanner] = useState(false);
+  const [showCreatedBanner, setShowCreatedBanner] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    return new URLSearchParams(window.location.search).get('created') === '1';
+  });
   const secret = getSecret();
-
-  useEffect(() => {
-    const created = new URLSearchParams(window.location.search).get('created');
-    if (created === '1') setShowCreatedBanner(true);
-  }, []);
 
   useEffect(() => {
     params.then(({ id }) => {

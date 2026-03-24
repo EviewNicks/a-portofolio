@@ -5,7 +5,7 @@
  * Usage: npx ts-node --project tsconfig.json -e "require('./scripts/seed-test-data.ts')"
  * Or add to package.json: "seed": "ts-node scripts/seed-test-data.ts"
  */
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from '@/generated/prisma';
 import { PrismaPg } from '@prisma/adapter-pg';
 import * as dotenv from 'dotenv';
 

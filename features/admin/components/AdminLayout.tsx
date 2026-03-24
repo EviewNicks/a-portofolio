@@ -27,7 +27,13 @@ const NAV_LINKS = [
 function ThemeToggle() {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
+
+  useEffect(() => {
+    // Runs after mount to avoid hydration mismatch — setState inside a timer
+    // is the lint-safe way to update state from an effect
+    const id = setTimeout(() => setMounted(true), 0);
+    return () => clearTimeout(id);
+  }, []);
 
   return (
     <button

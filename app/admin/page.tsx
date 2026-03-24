@@ -5,6 +5,7 @@ import { groupEntriesBySprint } from '@/features/projects/utils/timeline';
 import { AdminProjectCard } from '@/features/admin/components/AdminProjectCard';
 import { FolderOpen, GitBranch, Clock, Plus } from 'lucide-react';
 import { headers } from 'next/headers';
+import type { DynamicProject, ProjectStatus, TimelineEntry } from '@/features/projects/types';
 
 export default async function AdminOverviewPage() {
   // Read secret from header forwarded by proxy.ts for link passthrough
@@ -21,7 +22,14 @@ export default async function AdminOverviewPage() {
   let lastSyncAt: Date | null = null;
 
   for (const project of projects) {
-    const entries = await getTimelineEntriesByProjectId(project.id);
+    const rawEntries = await getTimelineEntriesByProjectId(project.id);
+    const entries = rawEntries.map((e) => ({
+      ...e,
+      date: e.date.toISOString(),
+      created_at: e.created_at.toISOString(),
+      updated_at: e.updated_at.toISOString(),
+    })) as unknown as TimelineEntry[];
+
     totalEntries += entries.length;
 
     const sprints = groupEntriesBySprint(entries);
@@ -125,10 +133,22 @@ export default async function AdminOverviewPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
             {projects.slice(0, 5).map((project) => {
               const s = projectStats.get(project.id) ?? { sprintCount: 0, prCount: 0 };
+              const dynamicProject: DynamicProject = {
+                ...project,
+                long_description: project.long_description ?? undefined,
+                github_repo_url: project.github_repo_url ?? undefined,
+                github_owner: project.github_owner ?? undefined,
+                github_repo: project.github_repo ?? undefined,
+                last_sync_at: project.last_sync_at?.toISOString() ?? undefined,
+                created_at: project.created_at.toISOString(),
+                updated_at: project.updated_at.toISOString(),
+                tech_stack: Array.isArray(project.tech_stack) ? project.tech_stack : [],
+                status: project.status as ProjectStatus,
+              };
               return (
                 <AdminProjectCard
                   key={project.id}
-                  project={project}
+                  project={dynamicProject}
                   secret={secret}
                   sprintCount={s.sprintCount}
                   prCount={s.prCount}
