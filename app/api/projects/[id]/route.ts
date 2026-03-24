@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getProjectById, updateProject, deleteProject } from '@/lib/supabase/queries/projects';
 import { validateProjectInput, validateAdminSecret } from '@/features/projects/utils/timeline';
 import { extractGitHubOwnerRepo } from '@/features/projects/services/github/api';
+import { Prisma } from '@/generated/prisma';
 
 type Params = { params: Promise<{ id: string }> };
 
@@ -63,8 +64,16 @@ export async function PUT(request: NextRequest, { params }: Params) {
     const project = await updateProject(id, updateData);
     return NextResponse.json({ data: project });
   } catch (error: unknown) {
-    if ((error as { code?: string }).code === 'P2025') {
-      return NextResponse.json({ error: 'Project not found' }, { status: 404 });
+    if (error instanceof Prisma.PrismaClientKnownRequestError) {
+      if (error.code === 'P2025') {
+        return NextResponse.json({ error: 'Project not found' }, { status: 404 });
+      }
+      if (error.code === 'P2002') {
+        return NextResponse.json(
+          { error: 'A project with this GitHub repository URL already exists.' },
+          { status: 409 }
+        );
+      }
     }
     console.error('[PUT /api/projects/[id]]', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });

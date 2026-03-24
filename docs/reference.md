@@ -1,513 +1,111 @@
-# Student Course API Testing Guide
+**Rekomendasi akhir saya (diperbarui khusus untuk kasus Anda):**  
 
-**Feature:** Course Discovery & Enrollment  
-**Sprint:** Sprint 2b  
-**Requirements:** 1.x, 2.x, 3.x, 7.x
+Gunakan **remark + github-markdown-css**.  
 
----
+Ini adalah cara **paling tepat** dan **paling modern** di Next.js (App Router) tahun 2026 untuk membuat teks Markdown dari deskripsi PR GitHub Anda tampil **persis sama** seperti di halaman Pull Request GitHub — termasuk font, spacing, code block, heading, list, dan warna yang identik.  
 
-## Overview
+`react-markdown` (yang Anda pakai sekarang) dan `react-remark` memang bagus, tetapi **tidak memberikan tampilan 100% identik** dengan GitHub kecuali ditambah styling khusus. Sedangkan `github-markdown-css` dirancang khusus untuk tujuan ini dan masih aktif di-maintain (versi 5.9.0 dirilis Februari 2026).  
 
-Panduan testing untuk Student Course API — endpoint publik yang digunakan student untuk browse catalog, enroll ke kursus, dan melihat kursus yang sudah diikuti.
+### Mengapa ini pilihan terbaik untuk Anda?
+- Rendering **full server-side** (tidak ada hydration client-side yang tidak perlu).  
+- Tampilan **pixel-perfect** seperti GitHub PR.  
+- Ringan dan cepat.  
+- Mendukung GFM (tables, strikethrough, task list, dll.) yang ada di deskripsi PR Anda.  
+- Mudah diintegrasikan dengan Tailwind jika Anda sudah menggunakannya.  
 
-### API Endpoints
+### Instalasi
+```bash
+npm install remark remark-gfm remark-html github-markdown-css
+```
 
-| Method | Endpoint | Auth | Description |
-|--------|----------|------|-------------|
-| GET | `/api/courses` | Optional | Public course catalog dengan filter & pagination |
-| GET | `/api/courses/[slug]` | Optional | Course detail by ID |
-| POST | `/api/courses/[slug]/enroll` | Required | Enroll ke kursus |
-| GET | `/api/courses/my-courses` | Required | Daftar kursus yang diikuti student |
+### Contoh Kode Lengkap (Server Component — direkomendasikan)
 
----
+1. **Buat component** `MarkdownRenderer.tsx` (bisa di folder `components/`):
 
-## Prerequisites
+```tsx
+// app/components/MarkdownRenderer.tsx
+import remark from 'remark';
+import remarkGfm from 'remark-gfm';
+import remarkHtml from 'remark-html';
 
-### 1. Start Development Server
+async function markdownToHtml(markdown: string): Promise<string> {
+  const result = await remark()
+    .use(remarkGfm)          // GitHub Flavored Markdown
+    .use(remarkHtml)         // Convert ke HTML
+    .process(markdown);
+
+  return result.toString();
+}
+
+interface Props {
+  content: string;
+}
+
+export default async function MarkdownRenderer({ content }: Props) {
+  const htmlContent = await markdownToHtml(content);
+
+  return (
+    <article
+      className="markdown-body prose prose-slate max-w-none dark:prose-invert"
+      dangerouslySetInnerHTML={{ __html: htmlContent }}
+    />
+  );
+}
+```
+
+2. **Import CSS** di `globals.css` (atau `app/globals.css`):
+
+```css
+@import 'github-markdown-css/github-markdown.css';
+```
+
+3. **Gunakan di halaman Anda** (contoh di page.tsx atau component):
+
+```tsx
+import MarkdownRenderer from '@/components/MarkdownRenderer';
+import { reportMarkdown } from '@/data/your-pr-content'; // string Markdown Anda
+
+export default function PRPage() {
+  return (
+    <div className="max-w-4xl mx-auto p-6">
+      <MarkdownRenderer content={reportMarkdown} />
+    </div>
+  );
+}
+```
+
+### Hasil yang akan Anda dapatkan
+- Heading, **bold**, list, dan code block akan terlihat **persis** seperti di GitHub PR.  
+- Code block Python dan JSON akan ter-render dengan formatting yang rapi.  
+- Responsif otomatis (cocok mobile & desktop).  
+- Dark mode support jika Anda tambahkan `dark:prose-invert` (seperti di contoh di atas).  
+
+### Opsional: Syntax Highlighting (agar lebih mirip GitHub)
+Jika ingin code block berwarna seperti di GitHub, ganti `remark-html` dengan `rehype-highlight`:
 
 ```bash
-yarn dev
-# Server berjalan di http://localhost:3000
+npm install rehype-highlight rehype-stringify remark-rehype
 ```
 
-### 2. Siapkan Test Data
+Lalu ubah fungsi menjadi:
 
-```sql
--- Cek courses yang ada
-SELECT id, title, status, difficulty, category FROM courses LIMIT 10;
+```ts
+import remarkRehype from 'remark-rehype';
+import rehypeHighlight from 'rehype-highlight';
+import rehypeStringify from 'rehype-stringify';
 
--- Catat:
--- courseId      = ID course dengan status PUBLISHED
--- draftCourseId = ID course dengan status DRAFT
+const result = await remark()
+  .use(remarkGfm)
+  .use(remarkRehype)
+  .use(rehypeHighlight)
+  .use(rehypeStringify)
+  .process(markdown);
 ```
 
-### 3. Dapatkan Auth Token (Clerk)
+Ini akan membuat code block jauh lebih mirip GitHub tanpa mengubah styling utama.
 
-1. Buka aplikasi di browser: `http://localhost:3000`
-2. Login sebagai user student
-3. Buka DevTools → Application → Cookies
-4. Copy nilai cookie `__session`
+### Kesimpulan
+**Gunakan pendekatan remark + github-markdown-css** ini.  
+Ini adalah solusi paling tepat untuk kebutuhan Anda saat ini — lebih baik daripada `react-markdown` biasa atau `react-remark` jika tujuannya adalah “tampil persis seperti di GitHub PR”.  
 
----
-
-## Import Postman Collection
-
-1. Buka Postman
-2. Click **Import**
-3. Pilih file `docs/api/student-course/student-course.postman_collection.json`
-4. Click **Import**
-
----
-
-## Configure Collection Variables
-
-| Variable | Nilai | Keterangan |
-|----------|-------|------------|
-| `baseUrl` | `http://localhost:3000` | URL server lokal |
-| `courseId` | _(isi dari database)_ | ID course PUBLISHED |
-| `draftCourseId` | _(isi dari database)_ | ID course DRAFT |
-| `authToken` | _(isi dari Clerk)_ | Session token student |
-
----
-
-## Test Scenarios & Checklist
-
----
-
-### Scenario 1: Browse Catalog (tanpa auth)
-
-#### 1.1 Get Catalog — Success
-
-```
-GET /api/courses
-```
-
-**Checklist:**
-- [x] Status code `200`
-- [x] Response punya field `courses` (array) dan `pagination`
-- [x] `pagination` punya: `page`, `limit`, `total`, `totalPages`
-- [x] Semua course di array punya: `id`, `title`, `category`, `difficulty`, `status`, `sectionCount`, `lessonCount`, `enrolled`
-- [x] Semua course `status === 'PUBLISHED'`
-- [x] `description` tidak lebih dari 150 karakter
-
-**Actual Response:**
-```json
-{
-    "courses": [
-        {
-            "id": "78322b16-3758-4861-9e79-e647b36d9ab5",
-            "title": "Test Course dari Postman",
-            "description": "Deskripsi kursus test yang dibuat via Postman collection",
-            "category": "programming",
-            "difficulty": "Pemula",
-            "status": "PUBLISHED",
-            "sectionCount": 0,
-            "lessonCount": 0,
-            "createdAt": "2026-03-17T03:06:06.825Z",
-            "enrolled": false
-        }
-    ],
-    "pagination": {
-        "page": 1,
-        "limit": 12,
-        "total": 1,
-        "totalPages": 1
-    }
-}
-```
-
----
-
-#### 1.2 Get Catalog — Filter by Category
-
-```
-GET /api/courses?category=programming
-```
-
-**Checklist:**
-- [x] Status code `200`
-- [x] Semua course yang dikembalikan match category `programming`
-
-**Actual Response:**
-```json
-{
-    "courses": [
-        {
-            "id": "78322b16-3758-4861-9e79-e647b36d9ab5",
-            "title": "Test Course dari Postman",
-            "description": "Deskripsi kursus test yang dibuat via Postman collection",
-            "category": "programming",
-            "difficulty": "Pemula",
-            "status": "PUBLISHED",
-            "sectionCount": 0,
-            "lessonCount": 0,
-            "createdAt": "2026-03-17T03:06:06.825Z",
-            "enrolled": false
-        }
-    ],
-    "pagination": {
-        "page": 1,
-        "limit": 12,
-        "total": 1,
-        "totalPages": 1
-    }
-}
-```
-
----
-
-#### 1.3 Get Catalog — Filter by Difficulty
-
-```
-GET /api/courses?difficulty=Pemula
-```
-
-**Checklist:**
-- [x] Status code `200`
-- [x] Semua course `difficulty === 'Pemula'`
-
-**Actual Response:**
-```json
-{
-    "courses": [
-        {
-            "id": "78322b16-3758-4861-9e79-e647b36d9ab5",
-            "title": "Test Course dari Postman",
-            "description": "Deskripsi kursus test yang dibuat via Postman collection",
-            "category": "programming",
-            "difficulty": "Pemula",
-            "status": "PUBLISHED",
-            "sectionCount": 0,
-            "lessonCount": 0,
-            "createdAt": "2026-03-17T03:06:06.825Z",
-            "enrolled": false
-        }
-    ],
-    "pagination": {
-        "page": 1,
-        "limit": 12,
-        "total": 1,
-        "totalPages": 1
-    }
-}
-```
-
----
-
-#### 1.4 Get Catalog — Search by Keyword
-
-```
-GET /api/courses?search=web
-```
-
-**Checklist:**
-- [x] Status code `200`
-- [x] Response punya field `courses`
-
-**Actual Response:**
-```json
-{
-    "courses": [
-        {
-            "id": "78322b16-3758-4861-9e79-e647b36d9ab5",
-            "title": "Test Course dari Postman",
-            "description": "Deskripsi kursus test yang dibuat via Postman collection",
-            "category": "programming",
-            "difficulty": "Pemula",
-            "status": "PUBLISHED",
-            "sectionCount": 0,
-            "lessonCount": 0,
-            "createdAt": "2026-03-17T03:06:06.825Z",
-            "enrolled": false
-        }
-    ],
-    "pagination": {
-        "page": 1,
-        "limit": 12,
-        "total": 1,
-        "totalPages": 1
-    }
-}
-```
-
----
-
-#### 1.5 Get Catalog — Pagination
-
-```
-GET /api/courses?page=1&limit=6
-```
-
-**Checklist:**
-- [x] Status code `200`
-- [x] `pagination.page === 1`
-- [x] `pagination.limit === 6`
-- [x] Jumlah courses di array ≤ 6
-
-**Actual Response:**
-```json
-{
-    "courses": [
-        {
-            "id": "78322b16-3758-4861-9e79-e647b36d9ab5",
-            "title": "Test Course dari Postman",
-            "description": "Deskripsi kursus test yang dibuat via Postman collection",
-            "category": "programming",
-            "difficulty": "Pemula",
-            "status": "PUBLISHED",
-            "sectionCount": 0,
-            "lessonCount": 0,
-            "createdAt": "2026-03-17T03:06:06.825Z",
-            "enrolled": false
-        }
-    ],
-    "pagination": {
-        "page": 1,
-        "limit": 6,
-        "total": 1,
-        "totalPages": 1
-    }
-}
-```
-
----
-
-### Scenario 2: Course Detail
-
-#### 2.1 Get Course Detail — Success
-
-```
-GET /api/courses/{{courseId}}
-```
-
-**Checklist:**
-- [x] Status code `200`
-- [x] Response punya: `id`, `title`, `description`, `category`, `status`, `createdAt`
-
-**Actual Response:**
-```json
-{
-    "id": "78322b16-3758-4861-9e79-e647b36d9ab5",
-    "title": "Test Course dari Postman",
-    "description": "Deskripsi kursus test yang dibuat via Postman collection",
-    "category": "programming",
-    "difficulty": "Pemula",
-    "creatorId": "user_2zDLu13tvWu8kQaHUrmyMBrDmWB",
-    "status": "PUBLISHED",
-    "createdAt": "2026-03-17T03:06:06.825Z",
-    "updatedAt": "2026-03-17T07:16:25.161Z",
-    "slug": "78322b16-3758-4861-9e79-e647b36d9ab5"
-}
-```
-
----
-
-#### 2.2 Get Course Detail — Not Found
-
-```
-GET /api/courses/non-existent-course-id-00000000
-```
-
-**Checklist:**
-- [x] Status code `404`
-- [x] Response punya field `error`
-
-**Actual Response:**
-```json
-{
-    "error": "Course not found"
-}
-```
-
----
-
-### Scenario 3: Enrollment Flow
-
-> Jalankan **berurutan** — urutan penting untuk test 409.
-
-#### 3.1 Enroll — Unauthenticated
-
-```
-POST /api/courses/{{courseId}}/enroll
-(tanpa Authorization header)
-```
-
-**Checklist:**
-- [ ] Status code `401`
-- [ ] `error` mengandung kata `login`
-
-**Actual Response:**
-```json
-{
-    "error": "Silakan login terlebih dahulu"
-}
-```
-
----
-
-#### 3.2 Enroll — DRAFT Course
-
-```
-POST /api/courses/{{draftCourseId}}/enroll
-Authorization: Bearer {{authToken}}
-```
-
-**Checklist:**
-- [x] Status code `403`
-- [x] Response punya field `error`
-
-**Actual Response:**
-```json
-{
-    "error": "Kursus ini belum dipublikasikan"
-}
-```
-
----
-
-#### 3.3 Enroll — Success
-
-```
-POST /api/courses/{{courseId}}/enroll
-Authorization: Bearer {{authToken}}
-```
-
-**Checklist:**
-- [x] Status code `201`
-- [x] Response punya field `enrollment`
-- [x] `enrollment` punya: `id`, `userId`, `courseId`, `enrolledAt`
-
-**Actual Response:**
-```json
-{
-    "enrollment": {
-        "id": "8af79cb5-be5e-48c3-8b86-fa2695b5f500",
-        "userId": "user_2zENLKAiz32PGUtK7I5S3zaSPXr",
-        "courseId": "78322b16-3758-4861-9e79-e647b36d9ab5",
-        "enrolledAt": "2026-03-17T08:33:02.350Z"
-    }
-}
-```
-
----
-
-#### 3.4 Enroll — Already Enrolled
-
-```
-POST /api/courses/{{courseId}}/enroll
-Authorization: Bearer {{authToken}}
-(jalankan ulang request yang sama setelah 3.3 berhasil)
-```
-
-**Checklist:**
-- [x] Status code `409`
-- [x] `error === 'Anda sudah terdaftar di kursus ini'`
-
-**Actual Response:**
-```json
-{
-    "error": "Anda sudah terdaftar di kursus ini"
-}
-```
-
----
-
-### Scenario 4: My Courses
-
-#### 4.1 My Courses — Unauthenticated
-
-```
-GET /api/courses/my-courses
-(tanpa Authorization header)
-```
-
-**Checklist:**
-- [x] Status code `401`
-- [x] Response punya field `error`
-
-**Actual Response:**
-```json
-{
-    "error": "Silakan login terlebih dahulu"
-}
-```
-
----
-
-#### 4.2 My Courses — Success
-
-```
-GET /api/courses/my-courses
-Authorization: Bearer {{authToken}}
-```
-
-**Checklist:**
-- [x] Status code `200`
-- [x] Response punya field `enrollments` (array)
-- [x] Setiap enrollment punya: `id`, `course`, `enrolledAt`, `progress`
-
-**Actual Response:**
-```json
-{
-    "enrollments": [
-        {
-            "id": "8af79cb5-be5e-48c3-8b86-fa2695b5f500",
-            "enrolledAt": "2026-03-17T08:33:02.350Z",
-            "completed": false,
-            "completedAt": null,
-            "progress": 0,
-            "course": {
-                "id": "78322b16-3758-4861-9e79-e647b36d9ab5",
-                "title": "Test Course dari Postman",
-                "description": "Deskripsi kursus test yang dibuat via Postman collection",
-                "category": "programming",
-                "difficulty": "Pemula",
-                "status": "PUBLISHED",
-                "thumbnail": null
-            }
-        }
-    ]
-}
-```
-
----
-
-## Running All Tests (Newman CLI)
-
-```bash
-# Install Newman
-npm install -g newman
-
-# Run semua tests
-newman run docs/api/student-course/student-course.postman_collection.json \
-  --env-var "baseUrl=http://localhost:3000" \
-  --env-var "authToken=YOUR_TOKEN" \
-  --env-var "courseId=YOUR_COURSE_ID" \
-  --env-var "draftCourseId=YOUR_DRAFT_ID"
-```
-
----
-
-## Troubleshooting
-
-| Error | Penyebab | Solusi |
-|-------|----------|--------|
-| 401 pada enroll | Token tidak valid / expired | Re-login dan copy token baru |
-| 403 pada enroll | Course masih DRAFT | Gunakan `courseId` yang PUBLISHED |
-| 404 pada detail | Course ID tidak ada | Cek database, update variable `courseId` |
-| 409 pada enroll | Sudah pernah enroll | Normal — ini yang ditest di 3.4 |
-| Connection refused | Server tidak running | Jalankan `yarn dev` |
-
----
-
-## References
-
-- **Postman Collection:** `docs/api/student-course/student-course.postman_collection.json`
-- **Requirements:** `.kiro/specs/course-discovery/requirements.md`
-- **Design:** `.kiro/specs/course-discovery/design.md`
-- **Tasks:** `.kiro/specs/course-discovery/tasks.md`
-
----
-
-**Last Updated:** 2026-03-17  
-**Status:** Ready for Testing
+Implementasi di atas bisa langsung Anda copy-paste. Jika Anda ingin saya sesuaikan lagi (misalnya tambah copy button di code block, atau integrasi dengan Shiki untuk highlight lebih modern), kirimkan saja struktur folder atau kode existing Anda. Saya siap membantu migrasi selengkapnya.

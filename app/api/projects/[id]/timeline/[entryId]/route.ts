@@ -1,8 +1,23 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { updateTimelineEntry, deleteTimelineEntry } from '@/lib/supabase/queries/timeline';
+import { getTimelineEntryById, updateTimelineEntry, deleteTimelineEntry } from '@/lib/supabase/queries/timeline';
 import { validateAdminSecret } from '@/features/projects/utils/timeline';
 
 type Params = { params: Promise<{ id: string; entryId: string }> };
+
+// GET /api/projects/[id]/timeline/[entryId]
+export async function GET(_request: NextRequest, { params }: Params) {
+  try {
+    const { entryId } = await params;
+    const entry = await getTimelineEntryById(entryId);
+    if (!entry) {
+      return NextResponse.json({ error: 'Timeline entry not found' }, { status: 404 });
+    }
+    return NextResponse.json({ data: entry });
+  } catch (error) {
+    console.error('[GET /api/projects/[id]/timeline/[entryId]]', error);
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+  }
+}
 
 // PUT /api/projects/[id]/timeline/[entryId]
 export async function PUT(request: NextRequest, { params }: Params) {

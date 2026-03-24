@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getAllProjects, createProject, searchProjects } from '@/lib/supabase/queries/projects';
 import { validateProjectInput, validateAdminSecret } from '@/features/projects/utils/timeline';
 import { extractGitHubOwnerRepo } from '@/features/projects/services/github/api';
+import { Prisma } from '@/generated/prisma';
 
 // GET /api/projects?query=...&status=...
 export async function GET(request: NextRequest) {
@@ -59,6 +60,20 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ data: project }, { status: 201 });
   } catch (error) {
+    // Handle unique constraint violation (P2002)
+    if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2002') {
+      const fields = (error.meta?.target as string[]) ?? [];
+      if (fields.includes('github_repo_url')) {
+        return NextResponse.json(
+          { error: 'A project with this GitHub repository URL already exists.' },
+          { status: 409 }
+        );
+      }
+      return NextResponse.json(
+        { error: 'A project with one of these values already exists.' },
+        { status: 409 }
+      );
+    }
     console.error('[POST /api/projects]', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }

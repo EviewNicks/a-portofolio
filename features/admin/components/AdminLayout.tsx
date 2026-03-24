@@ -1,107 +1,187 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { LayoutDashboard, FolderOpen, ArrowLeft, Menu, X } from 'lucide-react';
-import { useState } from 'react';
+import { usePathname, useSearchParams } from 'next/navigation';
+import { useTheme } from 'next-themes';
+import {
+  LayoutDashboard,
+  FolderOpen,
+  ArrowLeft,
+  Sun,
+  Moon,
+  ChevronLeft,
+  ChevronRight,
+} from 'lucide-react';
+import { useState, useEffect, Suspense } from 'react';
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 
 interface AdminLayoutProps {
   children: React.ReactNode;
-  secret: string;
 }
 
-export function AdminLayout({ children, secret }: AdminLayoutProps) {
-  const pathname = usePathname();
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+const NAV_LINKS = [
+  { path: '/admin', label: 'Overview', icon: LayoutDashboard, exact: true },
+  { path: '/admin/projects', label: 'Projects', icon: FolderOpen, exact: false },
+];
 
-  // Helper: build admin URL with secret passthrough
-  const adminUrl = (path: string) => `${path}?secret=${secret}`;
-
-  const navLinks = [
-    {
-      href: adminUrl('/admin'),
-      label: 'Overview',
-      icon: LayoutDashboard,
-      active: pathname === '/admin',
-    },
-    {
-      href: adminUrl('/admin/projects'),
-      label: 'Projects',
-      icon: FolderOpen,
-      active: pathname.startsWith('/admin/projects'),
-    },
-  ];
+function ThemeToggle() {
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
 
   return (
-    <div className="min-h-screen bg-gray-950 text-gray-100 flex">
-      {/* Mobile overlay */}
-      {sidebarOpen && (
-        <div
-          className="fixed inset-0 bg-black/50 z-20 lg:hidden"
-          onClick={() => setSidebarOpen(false)}
-        />
+    <button
+      onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+      aria-label="Toggle theme"
+      className="p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-foreground/5 transition-colors"
+    >
+      {mounted ? (
+        theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />
+      ) : (
+        <Moon size={16} />
       )}
+    </button>
+  );
+}
 
-      {/* Sidebar */}
-      <aside
-        className={`fixed top-0 left-0 h-full w-64 bg-gray-900 border-r border-gray-800 z-30 transform transition-transform duration-200
-          ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0 lg:static lg:z-auto`}
-      >
-        <div className="p-4 border-b border-gray-800 flex items-center justify-between">
-          <span className="font-semibold text-sm text-gray-400 uppercase tracking-wider">
+function SidebarContent({
+  collapsed,
+  secret,
+  pathname,
+}: {
+  collapsed: boolean;
+  secret: string;
+  pathname: string;
+}) {
+  const adminUrl = (path: string) => `${path}?secret=${secret}`;
+
+  return (
+    <div className="flex flex-col h-full">
+      {/* Logo / Brand */}
+      <div className={`p-4 border-b border-border flex items-center ${collapsed ? 'justify-center' : 'gap-2'}`}>
+        {!collapsed && (
+          <span className="font-semibold text-sm text-muted-foreground uppercase tracking-wider">
             Admin Panel
           </span>
-          <button
-            onClick={() => setSidebarOpen(false)}
-            className="lg:hidden text-gray-400 hover:text-white"
-          >
-            <X size={18} />
-          </button>
-        </div>
+        )}
+        {collapsed && (
+          <span className="text-xs font-bold text-primary">A</span>
+        )}
+      </div>
 
-        <nav className="p-3 space-y-1">
-          {navLinks.map((link) => (
+      {/* Nav */}
+      <nav className="flex-1 p-2 space-y-1">
+        {NAV_LINKS.map(({ path, label, icon: Icon, exact }) => {
+          const active = exact ? pathname === path : pathname.startsWith(path);
+          return (
             <Link
-              key={link.href}
-              href={link.href}
+              key={path}
+              href={adminUrl(path)}
+              title={collapsed ? label : undefined}
               className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors
-                ${link.active
-                  ? 'bg-blue-600/20 text-blue-400'
-                  : 'text-gray-400 hover:text-white hover:bg-gray-800'
+                ${collapsed ? 'justify-center' : ''}
+                ${active
+                  ? 'bg-primary/10 text-primary'
+                  : 'text-muted-foreground hover:text-foreground hover:bg-foreground/5'
                 }`}
             >
-              <link.icon size={16} />
-              {link.label}
+              <Icon size={16} className="shrink-0" />
+              {!collapsed && <span>{label}</span>}
             </Link>
-          ))}
-        </nav>
+          );
+        })}
+      </nav>
 
-        <div className="absolute bottom-4 left-0 right-0 px-3">
-          <Link
-            href="/"
-            className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-gray-500 hover:text-white hover:bg-gray-800 transition-colors"
-          >
-            <ArrowLeft size={16} />
-            Back to Portfolio
-          </Link>
-        </div>
+      {/* Back to portfolio */}
+      <div className="p-2 border-t border-border">
+        <Link
+          href="/"
+          title={collapsed ? 'Back to Portfolio' : undefined}
+          className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-muted-foreground hover:text-foreground hover:bg-foreground/5 transition-colors ${collapsed ? 'justify-center' : ''}`}
+        >
+          <ArrowLeft size={16} className="shrink-0" />
+          {!collapsed && <span>Back to Portfolio</span>}
+        </Link>
+      </div>
+    </div>
+  );
+}
+
+function AdminLayoutInner({ children }: AdminLayoutProps) {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const secret = searchParams.get('secret') ?? '';
+
+  const [collapsed, setCollapsed] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    return localStorage.getItem('admin-sidebar-collapsed') === 'true';
+  });
+
+  const toggleCollapsed = () => {
+    setCollapsed((prev) => {
+      const next = !prev;
+      localStorage.setItem('admin-sidebar-collapsed', String(next));
+      return next;
+    });
+  };
+
+  return (
+    <div className="min-h-screen bg-background text-foreground flex">
+      {/* Desktop Sidebar */}
+      <aside
+        className={`hidden lg:flex flex-col h-screen sticky top-0 bg-sidebar border-r border-border transition-all duration-200 shrink-0
+          ${collapsed ? 'w-16' : 'w-64'}`}
+      >
+        <SidebarContent collapsed={collapsed} secret={secret} pathname={pathname} />
       </aside>
 
       {/* Main content */}
       <div className="flex-1 flex flex-col min-w-0">
-        {/* Top bar (mobile) */}
-        <header className="lg:hidden flex items-center gap-3 px-4 py-3 bg-gray-900 border-b border-gray-800">
+        {/* Topbar */}
+        <header className="sticky top-0 z-20 flex items-center gap-3 px-4 h-14 bg-background/80 backdrop-blur-md border-b border-border">
+          {/* Bubble toggle — desktop collapse, mobile sheet trigger */}
+          <div className="lg:hidden">
+            <Sheet>
+              <SheetTrigger asChild>
+                <button
+                  aria-label="Open sidebar"
+                  className="p-2 rounded-full bg-primary/10 text-primary hover:bg-primary/20 transition-colors shadow-sm"
+                >
+                  <LayoutDashboard size={16} />
+                </button>
+              </SheetTrigger>
+              <SheetContent side="left" className="p-0 w-64 bg-sidebar border-border">
+                <SidebarContent collapsed={false} secret={secret} pathname={pathname} />
+              </SheetContent>
+            </Sheet>
+          </div>
+
+          {/* Desktop collapse bubble */}
           <button
-            onClick={() => setSidebarOpen(true)}
-            className="text-gray-400 hover:text-white"
+            onClick={toggleCollapsed}
+            aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+            className="hidden lg:flex p-2 rounded-full bg-primary/10 text-primary hover:bg-primary/20 transition-colors shadow-sm"
           >
-            <Menu size={20} />
+            {collapsed ? <ChevronRight size={14} /> : <ChevronLeft size={14} />}
           </button>
-          <span className="font-medium text-sm">Admin Panel</span>
+
+          <span className="flex-1 text-sm font-medium text-foreground">
+            Admin Panel
+          </span>
+
+          <ThemeToggle />
         </header>
 
         <main className="flex-1 p-6 overflow-auto">{children}</main>
       </div>
     </div>
+  );
+}
+
+export function AdminLayout({ children }: AdminLayoutProps) {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-background" />}>
+      <AdminLayoutInner>{children}</AdminLayoutInner>
+    </Suspense>
   );
 }

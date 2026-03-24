@@ -1,6 +1,6 @@
 import type { TimelineEntry } from '@/features/projects/types';
 import { groupEntriesBySprint } from '@/features/projects/utils/timeline';
-import { SprintCard } from './SprintCard';
+import { SprintNode } from './SprintNode';
 
 interface TimelineSectionProps {
   entries: TimelineEntry[];
@@ -12,7 +12,6 @@ export function TimelineSection({ entries }: TimelineSectionProps) {
   if (sprints.length === 0) {
     return (
       <section data-testid="timeline-section" className="py-8">
-        <h2 className="text-xl font-bold text-foreground mb-4">Development Timeline</h2>
         <div data-testid="timeline-empty" className="text-center py-12 text-muted-foreground border border-border rounded-xl">
           No timeline entries yet.
         </div>
@@ -21,11 +20,15 @@ export function TimelineSection({ entries }: TimelineSectionProps) {
   }
 
   return (
-    <section data-testid="timeline-section" className="py-8">
-      <h2 className="text-xl font-bold text-foreground mb-6">Development Timeline</h2>
-      <div className="space-y-6">
-        {sprints.map((sprint) => (
-          <SprintCard key={sprint.number} sprint={sprint} />
+    <section data-testid="timeline-section" className="py-4">
+      <div className="relative">
+        {sprints.map((sprint, index) => (
+          <SprintNode
+            key={sprint.number}
+            sprint={sprint}
+            side={index % 2 === 0 ? 'left' : 'right'}
+            isLast={index === sprints.length - 1}
+          />
         ))}
       </div>
     </section>

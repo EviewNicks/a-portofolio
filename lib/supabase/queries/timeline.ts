@@ -2,6 +2,13 @@ import prisma from '@/prisma/lib/client';
 import type { Prisma } from '@/generated/prisma';
 
 /**
+ * Get a single timeline entry by ID.
+ */
+export async function getTimelineEntryById(id: string) {
+  return prisma.timelineEntry.findUnique({ where: { id } });
+}
+
+/**
  * Get all timeline entries for a project, sorted by sprint_number asc then date asc.
  * Requirements: 4.4, 4.6
  */

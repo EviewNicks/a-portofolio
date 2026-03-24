@@ -1,3 +1,6 @@
+'use client';
+
+import { useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import type { TimelineEntry, EntryType } from '@/features/projects/types';
 
@@ -28,13 +31,24 @@ interface TimelineEntryCardProps {
 
 export function TimelineEntryCard({ entry }: TimelineEntryCardProps) {
   const config = TYPE_CONFIG[entry.entry_type];
+  const router = useRouter();
 
   return (
     <div
+      role="button"
+      tabIndex={0}
       data-testid="timeline-entry-card"
       data-entry-type={entry.entry_type}
+      onClick={() => router.push(`/projects/${entry.project_id}/timeline/${entry.id}`)}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          router.push(`/projects/${entry.project_id}/timeline/${entry.id}`);
+        }
+      }}
       className={cn(
-        'rounded-lg glass-card p-4',
+        'rounded-lg glass-card p-4 transition-all duration-200 cursor-pointer',
+        'hover:shadow-md hover:border-primary/30 hover:bg-primary/5',
+        'active:scale-[0.99]',
         entry.is_featured && 'border-primary/40 bg-primary/5'
       )}
     >
@@ -67,7 +81,6 @@ export function TimelineEntryCard({ entry }: TimelineEntryCardProps) {
             <p className="text-xs text-muted-foreground mt-1 line-clamp-2">{entry.description}</p>
           )}
 
-          {/* YouTube thumbnail */}
           {entry.entry_type === 'video' && entry.media_preview && (
             // eslint-disable-next-line @next/next/no-img-element
             <img
@@ -87,6 +100,7 @@ export function TimelineEntryCard({ entry }: TimelineEntryCardProps) {
                 target="_blank"
                 rel="noopener noreferrer"
                 data-testid="entry-external-link"
+                onClick={(e) => e.stopPropagation()}
                 className="text-xs text-primary hover:text-primary/80 transition-colors"
               >
                 {entry.entry_type === 'pr' ? 'View PR' :

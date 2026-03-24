@@ -16,16 +16,6 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
         <ProjectStatusBadge status={project.status} />
       </div>
 
-      {project.long_description ? (
-        <p data-testid="project-description" className="text-muted-foreground leading-relaxed mb-4">
-          {project.long_description}
-        </p>
-      ) : (
-        <p data-testid="project-description" className="text-muted-foreground leading-relaxed mb-4">
-          {project.short_description}
-        </p>
-      )}
-
       {/* Tech stack */}
       <div data-testid="project-tech-stack" className="flex flex-wrap gap-2 mb-4">
         {project.tech_stack.map((tech) => (

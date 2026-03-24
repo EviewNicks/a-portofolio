@@ -6,7 +6,7 @@ import { createServerClient } from '@/lib/supabase/server';
 import { ProjectHeader } from '@/features/projects/components/dynamic/ProjectHeader';
 import { GitHubStatsPanel } from '@/features/projects/components/dynamic/GitHubStats';
 import { MediaGallery } from '@/features/projects/components/dynamic/MediaGallery';
-import { TimelineSection } from '@/features/projects/components/dynamic/TimelineSection';
+import { ProjectDetailTabs } from '@/features/projects/components/dynamic/ProjectDetailTabs';
 import type { DynamicProject, TimelineEntry, ProjectMedia, ProjectStatus, EntryType, PRStatus } from '@/features/projects/types';
 import Link from 'next/link';
 
@@ -88,7 +88,7 @@ export default async function ProjectDetailPage({ params }: PageProps) {
 
   return (
     <main className="min-h-screen bg-background">
-      <div className="container mx-auto px-4 py-12 max-w-4xl">
+      <div className="container mx-auto px-4 py-12 max-w-5xl">
         <Link href="/projects" className="text-sm text-muted-foreground hover:text-foreground transition-colors mb-8 inline-block">
           ← Back to Projects
         </Link>
@@ -99,7 +99,7 @@ export default async function ProjectDetailPage({ params }: PageProps) {
 
         <MediaGallery media={media} videoEntries={videoEntries} />
 
-        <TimelineSection entries={entries} />
+        <ProjectDetailTabs project={project} entries={entries} />
       </div>
     </main>
   );

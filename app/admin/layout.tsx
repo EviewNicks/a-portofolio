@@ -1,23 +1,22 @@
-import { validateAdminSecret } from '@/features/projects/utils/timeline';
+import { headers } from 'next/headers';
 import { AdminLayout } from '@/features/admin/components/AdminLayout';
 import { UnauthorizedPage } from '@/features/admin/components/UnauthorizedPage';
+import { validateAdminSecret } from '@/features/projects/utils/timeline';
 
 interface AdminRootLayoutProps {
   children: React.ReactNode;
-  // Next.js v16 passes searchParams to layouts via props
-  searchParams: Promise<{ secret?: string }>;
 }
 
-export default async function AdminRootLayout({
-  children,
-  searchParams,
-}: AdminRootLayoutProps) {
-  const params = await searchParams;
-  const secret = params?.secret ?? '';
+export default async function AdminRootLayout({ children }: AdminRootLayoutProps) {
+  // proxy.ts forwards ?secret= as x-admin-secret header for RSC access.
+  // This is the secure validation boundary — proxy only handles fast-path
+  // redirect when secret param is absent entirely.
+  const headersList = await headers();
+  const secret = headersList.get('x-admin-secret') ?? '';
 
   if (!validateAdminSecret(secret)) {
     return <UnauthorizedPage />;
   }
 
-  return <AdminLayout secret={secret}>{children}</AdminLayout>;
+  return <AdminLayout>{children}</AdminLayout>;
 }

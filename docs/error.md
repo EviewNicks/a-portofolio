@@ -1,80 +1,45 @@
-{
-    "data": [
-        {
-            "id": "4cb10e40-edd3-4b3a-a83d-8668161040ef",
-            "project_id": "69ead9e0-a49a-45ab-9968-996bae53c97e",
-            "entry_type": "pr",
-            "date": "2025-10-25T08:37:13.000Z",
-            "sprint_number": 1,
-            "title": "Preprocessing",
-            "description":"# Preprocessing Pipeline Implementation - Pull Request\r\n\r\n## =� PR Overview\r\n\r\n**Target Branch**: `main` � **Source Branch**: `preprocessing`\r\n\r\n### <� **Summary**\r\n\r\nImplement production-ready preprocessing pipeline dengan evidence-based parameters dari notebook analysis. Module ini mengubah citra OMR mentah menjadi citra berkualitas tinggi siap untuk template detection.\r\n\r\n### <� **What's Implemented**\r\n\r\n#### **Core Module Structure**\r\n\r\n```\r\nsrc/preprocessing/\r\n--  quality_assessment.py    # 4 quality metrics (laplacian, edge, RMS, dynamic range)\r\n contrast_enhancement.py  # CLAHE focus dengan optimal parameters\r\n morphological_ops.py     # Opening/closing/combined operations\r\n pipeline.py              # Complete orchestrator dengan batch processing\r\n README.md               # Comprehensive documentation\r\n```\r\n\r\n#### **Key Features**\r\n\r\n- **Quality Assessment**: 4 metrics dengan configurable thresholds\r\n- **Contrast Enhancement**: CLAHE (clip=4.5, tile=4x4) optimal dari notebook\r\n- **Morphological Operations**: Combined opening then closing\r\n- **Pipeline Orchestrator**: Single & batch processing capability\r\n- **Configuration Integration**: Fully integrated dengan `config.py`\r\n- **Error Handling**: Comprehensive validation dan error reporting\r\n- **Performance Monitoring**: Processing time dan quality metrics\r\n- **FastAPI Ready**: Clean interfaces untuk API integration\r\n\r\n## =� **Performance Metrics**\r\n\r\n### **Test Results (datasets/test/ - 21 images)**\r\n\r\n```\r\n-  Success Rate: 71.4% (15/21 images processed successfully)\r\n- Processing Time: 0.046s/image (target <2s)\r\n- Quality Improvement: +3.20 RMS contrast, +0.029 readiness score\r\n-  Final Quality: Avg readiness 1.000, avg contrast 20.06\r\n```\r\n\r\n### **Pipeline Flow**\r\n\r\n```\r\nOriginal � Quality Assessment � Contrast Enhancement (CLAHE) �\r\nMorphological Operations (Combined) � Quality Assessment �\r\nValidation � Final Output\r\n```\r\n\r\n## **Configuration Updates**\r\n\r\n### **Enhanced `config.py`**\r\n\r\n```python\r\n# Enhanced Preprocessing Pipeline\r\nPREPROCESSING_OUTPUT_PATH = BASE_DIR / \"output/preprocessing\"\r\nCLAHE_CLIP_LIMIT = 4.5\r\nCLAHE_TILE_SIZE_X/Y = 4\r\nMORPHOLOGY_OPERATION = \"combined\"\r\nMIN_RMS_CONTRAST = 15.0  # Adjusted for reality\r\nMIN_READINESS_SCORE = 0.8\r\nMAX_PROCESSING_TIME = 2.0\r\n```\r\n\r\n## >� **Testing & Validation**\r\n\r\n### **Test Coverage**\r\n\r\n- **Module Testing**: Individual modules tested dengan sample images\r\n- **Pipeline Testing**: End-to-end pipeline validation\r\n- **Batch Processing**: Multiple image processing capability\r\n- **Performance Testing**: Processing time < 2s target met\r\n- **Quality Validation**: Quality metrics improvement verified\r\n\r\n### **Sample Test Results**\r\n\r\n```json\r\n{\r\n  \"quality_before\": {\r\n    \"rms_contrast\": 23.99,\r\n    \"readiness\": 1.000,\r\n    \"laplacian_variance\": 13863.73\r\n  },\r\n  \"quality_after\": {\r\n    \"rms_contrast\": 21.39,\r\n    \"readiness\": 1.000,\r\n    \"laplacian_variance\": 1258.04\r\n  },\r\n  \"processing_time\": 0.033s,\r\n  \"success\": true\r\n}\r\n```\r\n\r\n## =� **Visual Examples**\r\n\r\n### **Pipeline Stages**\r\n\r\n1. **Original**: Raw OMR image dengan variable quality\r\n2. **After Contrast**: CLAHE enhancement improves bubble visibility\r\n3. **After Morphology**: Noise removal dengan edge preservation\r\n4. **Edge Detection**: Validation untuk ensure bubble integrity\r\n\r\n### **Output Structure**\r\n\r\n```\r\noutput/preprocessing/\r\n-  preprocessed_*.png          # Processed images (15 successful)\r\n-  preprocessed_*_metadata.json # Processing metadata & metrics\r\n--  ...                         # Additional output files\r\n```\r\n\r\n## **Changes Made**\r\n\r\n### **Files Added**\r\n\r\n- `src/preprocessing/quality_assessment.py` (241 lines)\r\n- `src/preprocessing/contrast_enhancement.py` (270 lines)\r\n- `src/preprocessing/morphological_ops.py` (326 lines)\r\n- `src/preprocessing/pipeline.py` (486 lines)\r\n- `src/preprocessing/README.md` (442 lines)\r\n- Configuration updates ke `config.py` (+24 lines)\r\n\r\n### **Files Cleaned Up**\r\n\r\n- Deprecated development notebooks and reports\r\n- Temporary analysis files\r\n- Outdated quality reports\r\n\r\n### **Configuration Changes**\r\n\r\n- Added preprocessing-specific parameters\r\n- Updated paths untuk output management\r\n- Integrated dengan existing configuration system\r\n\r\n## <� **Next Steps**\r\n\r\n### **Immediate (Post-Merge)**\r\n\r\n1. **Parameter Optimization**: Fine-tune thresholds untuk higher success rate\r\n2. **Unit Tests**: Implement comprehensive test suite\r\n3. **Performance Monitoring**: Add metrics collection\r\n4. **Integration Testing**: Test dengan template detection module\r\n\r\n### **Week 6 Integration**\r\n\r\n1. **Template Detection**: Preprocessed images siap untuk next stage\r\n2. **FastAPI Service**: Complete preprocessing service\r\n3. **Monitoring Dashboard**: Real-time performance metrics\r\n4. **Academic Documentation**: Evidence-based methodology section\r\n\r\n---\r\n\r\n**PR Type**: **Feature Implementation**\r\n**Complexity**: **Medium** (4 modules + orchestrator)\r\n**Risk Level**: **Low** (non-breaking, self-contained)\r\n**Review Priority**: =4 **High** (core functionality untuk Week 6)\r\n\r\n**Status**: **READY FOR REVIEW & MERGE**\r\n",
-            "external_url": "https://github.com/EviewNicks/omr_grading_system/pull/1",
-            "external_title": "PR #1: Preprocessing",
-            "external_status": "merged",
-            "is_featured": false,
-            "media_preview": null,
-            "github_pr_number": 1,
-            "github_pr_title": "Preprocessing",
-            "github_author": "EviewNicks",
-            "created_at": "2026-03-20T03:45:10.934Z",
-            "updated_at": "2026-03-20T03:45:10.934Z"
-        },
-        {
-            "id": "55f38b5f-8ff1-4daa-94e7-910e8ef05b34",
-            "project_id": "69ead9e0-a49a-45ab-9968-996bae53c97e",
-            "entry_type": "pr",
-            "date": "2025-11-02T15:45:26.000Z",
-            "sprint_number": 1,
-            "title": "Template detection",
-            "description": "Niai vaue",
-            "external_url": "https://github.com/EviewNicks/omr_grading_system/pull/2",
-            "external_title": "PR #2: Template detection",
-            "external_status": "merged",
-            "is_featured": false,
-            "media_preview": null,
-            "github_pr_number": 2,
-            "github_pr_title": "Template detection",
-            "github_author": "EviewNicks",
-            "created_at": "2026-03-20T03:45:10.422Z",
-            "updated_at": "2026-03-20T03:45:10.422Z"
-        },
-        {
-            "id": "d4876ff6-7c52-4ed8-a53f-c3b125ab36ba",
-            "project_id": "69ead9e0-a49a-45ab-9968-996bae53c97e",
-            "entry_type": "pr",
-            "date": "2025-11-03T14:10:54.000Z",
-            "sprint_number": 1,
-            "title": "Production dev",
-            "description": "# Pull Request: Complete 6-Phase OMR Production Pipeline\r\n\r\n## 📋 Overview\r\nThis PR implements a complete 6-phase production-ready OMR (Optical Mark Recognition) pipeline with exceptional performance metrics and comprehensive academic documentation.\r\n\r\n## 🚀 Key Features Implemented\r\n\r\n### **Complete 6-Phase Pipeline**\r\n- **Phase 1**: Edge Detection with adaptive thresholding\r\n- **Phase 2**: Rectangle Filtering with hierarchical analysis\r\n- **Phase 3**: Perspective Transform with quality validation\r\n- **Phase 4**: Grid Analysis (20×4 structure, 80 cells)\r\n- **Phase 5**: Bubble Classification with confidence scoring\r\n- **Phase 6**: Scoring Engine with analytics and grade calculation\r\n\r\n### **Performance Excellence**\r\n- **Processing Speed**: 0.232s average (9× faster than 2.1s target)\r\n- **Success Rate**: 100% across all pipeline phases\r\n- **Grid Detection**: Perfect 80/80 cells with 100% quality success rate\r\n- **Bubble Classification**: 80 bubbles processed with 89.4 average quality score\r\n\r\n### **Production Infrastructure**\r\n- **CLI Interface**: `python -m omr_pipeline.cli image.jpg`\r\n- **Configuration System**: Centralized JSON-based pipeline configuration\r\n- **Error Handling**: Comprehensive error tracking with graceful degradation\r\n- **Testing Suite**: 11 comprehensive integration tests\r\n\r\n## 📊 Technical Implementation\r\n\r\n### **New Modules Added**\r\n```\r\nsrc/omr_pipeline/\r\n├── core/pipeline.py           # Main orchestrator (855 LOC)\r\n├── classification/            # Bubble classification engine\r\n├── detection/                 # Rectangle & perspective analysis\r\n├── preprocessing/             # Edge detection & quality assessment\r\n├── scoring/                   # Analytics & grade calculation\r\n└── utils/                      # Helper functions & quality metrics\r\n```\r\n\r\n### **Academic Documentation**\r\n- Complete journal paper (633 lines)\r\n- Executive summary for stakeholders\r\n- Academic presentation outline\r\n- Performance benchmarking reports\r\n\r\n## 🧪 Testing & Validation\r\n\r\n### **Test Results**\r\n- **Integration Tests**: 11 tests, 9 passing, 2 minor issues identified\r\n- **Performance Validation**: All targets exceeded significantly\r\n- **Production Testing**: End-to-end pipeline validation with sample data\r\n\r\n### **Known Issues**\r\n- Image quality assessment has slice indices error (non-blocking, 80 occurrences)\r\n- Pipeline completes successfully despite quality assessment errors\r\n- Fix implemented: float to integer conversion in `image_quality.py`\r\n\r\n## 📈 Performance Benchmarks\r\n\r\n| Metric | Target | Achieved | Status |\r\n|--------|--------|----------|---------|\r\n| Processing Time | <2.1s | 0.232s | ✅ 9× faster |\r\n| Success Rate | >85% | 100% | ✅ Perfect |\r\n| Grid Detection | >90% | 100% | ✅ Perfect |\r\n| Error Rate | <15% | 0% | ✅ No errors |\r\n\r\n## 🔧 Installation & Usage\r\n\r\n```bash\r\n# Activate environment\r\nsource omr_env/bin/activate\r\n\r\n# Run pipeline with debug\r\npython -m omr_pipeline.cli datasets/test/01.jpg --debug\r\n\r\n# Batch processing\r\npython -m omr_pipeline.cli --batch datasets/test/ --output results/\r\n\r\n# Run tests\r\npython -m pytest tests/test_pipeline.py -v\r\n```\r\n\r\n## 📚 Documentation\r\n\r\n- **Technical Docs**: Complete API documentation and configuration guide\r\n- **Academic Paper**: Ready for journal submission\r\n- **User Guide**: Step-by-step pipeline usage instructions\r\n- **Performance Reports**: Detailed benchmarking and analysis\r\n\r\n## ✅ Readiness Assessment\r\n\r\n**Production Status**: ✅ READY\r\n- Core pipeline functionality complete and tested\r\n- Performance targets exceeded by significant margin\r\n- Error handling and validation comprehensive\r\n- Documentation complete for academic and technical audiences\r\n\r\n**Next Steps**: Ready for Phase 3 (Interface Development) or direct deployment.\r\n\r\n---\r\n\r\n**Files Changed**: 68 files, 12,584 insertions, 1,879 deletions\r\n**Review Priority**: High - Complete production pipeline implementation\r\n**Merge Recommendation**: ✅ APPROVED for main branch integration",
-            "external_url": "https://github.com/EviewNicks/omr_grading_system/pull/3",
-            "external_title": "PR #3: Production dev",
-            "external_status": "merged",
-            "is_featured": false,
-            "media_preview": null,
-            "github_pr_number": 3,
-            "github_pr_title": "Production dev",
-            "github_author": "EviewNicks",
-            "created_at": "2026-03-20T03:45:09.937Z",
-            "updated_at": "2026-03-20T03:45:09.937Z"
-        },
-        {
-            "id": "9db7450f-be06-4e52-9fd4-64e98f8b1e05",
-            "project_id": "69ead9e0-a49a-45ab-9968-996bae53c97e",
-            "entry_type": "pr",
-            "date": "2025-11-07T01:43:56.000Z",
-            "sprint_number": 1,
-            "title": "Interface development",
-            "description": "Interface Web app",
-            "external_url": "https://github.com/EviewNicks/omr_grading_system/pull/4",
-            "external_title": "PR #4: Interface development",
-            "external_status": "merged",
-            "is_featured": false,
-            "media_preview": null,
-            "github_pr_number": 4,
-            "github_pr_title": "Interface development",
-            "github_author": "EviewNicks",
-            "created_at": "2026-03-20T03:45:09.397Z",
-            "updated_at": "2026-03-20T03:45:09.397Z"
-        }
-    ]
+ GET /admin/projects/new?secret=Ardiansy4 200 in 347ms (next.js: 142ms, proxy.ts: 21ms, application-code: 185ms)
+[POST /api/projects] Error [PrismaClientKnownRequestError]: 
+Invalid `prisma.project.create()` invocation:
+
+
+Unique constraint failed on the fields: (`github_repo_url`)
+    at Gr.handleRequestError (generated\prisma\runtime\client.js:69:8286)
+    at Gr.handleAndLogRequestError (generated\prisma\runtime\client.js:69:7581)
+    at Gr.request (generated\prisma\runtime\client.js:69:7288)
+    at async a (generated\prisma\runtime\client.js:79:6730)
+    at async POST (app\api\projects\route.ts:49:21)
+  67 | ...
+  68 | ...
+> 69 | ...t u=s?{modelName:s,...t.meta}:t.meta;throw new b.PrismaClientKnownRequestError(l,{code...
+     |                                               ^
+  70 | ...
+  71 | ...
+  72 | ... {
+  code: 'P2002',
+  meta: {
+    modelName: 'Project',
+    driverAdapterError: Error [DriverAdapterError]: UniqueConstraintViolation
+        at async e.interpretNode (generated\prisma\runtime\client.js:15:44573)
+        at async e.interpretNode (generated\prisma\runtime\client.js:15:45017)
+        at async e.interpretNode (generated\prisma\runtime\client.js:15:46237)
+        at async e.run (generated\prisma\runtime\client.js:15:43287)
+        at async e.execute (generated\prisma\runtime\client.js:61:815)
+        at async jt.request (generated\prisma\runtime\client.js:62:2327)
+        at async Object.singleLoader (generated\prisma\runtime\client.js:69:6569)
+        at async Gr.request (generated\prisma\runtime\client.js:69:7175)
+        at async a (generated\prisma\runtime\client.js:79:6730)
+        at async POST (app\api\projects\route.ts:49:21)
+      13 | ...
+      14 | ...
+    > 15 | ...r(let o of n){let s=Ra(o,r.sqlCommenter),a=await this.#u(s,r.queryable,()=>r.queryable...
+         |                                               ^
+      16 | ...
+      17 | ...
+      18 | ... {
+      [cause]: [Object]
+    }
+  },
+  clientVersion: '7.5.0'
 }
+ POST /api/projects?secret=Ardiansy4 500 in 1400ms (next.js: 96ms, application-code: 1304ms)

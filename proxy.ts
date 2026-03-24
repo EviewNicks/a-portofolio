@@ -21,17 +21,19 @@ export function proxy(request: NextRequest) {
     const secret = searchParams.get('secret');
 
     // If secret param is completely absent, redirect to unauthorized page.
-    // The actual secret value comparison is done server-side in layout.tsx —
-    // never in proxy, to avoid exposing timing or value information at the
-    // network boundary.
     if (!secret) {
       const url = request.nextUrl.clone();
       url.pathname = '/admin';
       url.searchParams.set('error', 'unauthorized');
-      // Preserve the original destination so the user can re-auth and return
       url.searchParams.set('next', pathname);
       return NextResponse.redirect(url);
     }
+
+    // Forward the secret as a custom header so layout.tsx (RSC) can validate it.
+    // Query params are not reliably available in layouts in Next.js v16.
+    const requestHeaders = new Headers(request.headers);
+    requestHeaders.set('x-admin-secret', secret);
+    return NextResponse.next({ request: { headers: requestHeaders } });
   }
 
   return NextResponse.next();
