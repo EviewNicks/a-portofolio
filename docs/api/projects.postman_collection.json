@@ -1,0 +1,326 @@
+{
+    "info": {
+        "name": "Dynamic Project Timeline — Projects & Timeline",
+        "description": "CRUD untuk projects dan timeline entries. Self-contained: POST project dulu → id tersimpan otomatis → lanjut GET/PUT/DELETE.",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "variable": [
+        {
+            "key": "baseUrl",
+            "value": "http://localhost:3000"
+        },
+        {
+            "key": "adminSecret",
+            "value": "Ardiansy4"
+        },
+        {
+            "key": "projectId",
+            "value": ""
+        },
+        {
+            "key": "entryId",
+            "value": ""
+        }
+    ],
+    "item": [
+        {
+            "name": "Projects",
+            "item": [
+                {
+                    "name": "GET /api/projects — list all",
+                    "request": {
+                        "method": "GET",
+                        "url": "{{baseUrl}}/api/projects"
+                    }
+                },
+                {
+                    "name": "GET /api/projects?status=active — filter by status",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{baseUrl}}/api/projects?status=active",
+                            "query": [
+                                {
+                                    "key": "status",
+                                    "value": "active"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "GET /api/projects?query=next — search",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{baseUrl}}/api/projects?query=next",
+                            "query": [
+                                {
+                                    "key": "query",
+                                    "value": "next"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "POST /api/projects — create project",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "const res = pm.response.json();",
+                                    "if (res.data && res.data.id) {",
+                                    "  pm.collectionVariables.set('projectId', res.data.id);",
+                                    "  console.log('projectId saved:', res.data.id);",
+                                    "}"
+                                ]
+                            }
+                        }
+                    ],
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "x-admin-secret",
+                                "value": "{{adminSecret}}"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"title\": \"Test Project Postman\",\n  \"short_description\": \"Project untuk API testing via Postman\",\n  \"long_description\": \"Deskripsi panjang project test ini dibuat untuk keperluan API testing.\",\n  \"tech_stack\": [\"Next.js\", \"TypeScript\", \"Supabase\"],\n  \"status\": \"active\",\n  \"github_repo_url\": \"https://github.com/octocat/Hello-World\"\n}"
+                        },
+                        "url": "{{baseUrl}}/api/projects"
+                    }
+                },
+                {
+                    "name": "POST /api/projects — 400 empty title",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "x-admin-secret",
+                                "value": "{{adminSecret}}"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"title\": \"   \",\n  \"short_description\": \"Valid description\",\n  \"tech_stack\": [\"React\"]\n}"
+                        },
+                        "url": "{{baseUrl}}/api/projects"
+                    }
+                },
+                {
+                    "name": "POST /api/projects — 401 no secret",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"title\": \"Should fail\",\n  \"short_description\": \"No auth\",\n  \"tech_stack\": []\n}"
+                        },
+                        "url": "{{baseUrl}}/api/projects"
+                    }
+                },
+                {
+                    "name": "GET /api/projects/:projectId",
+                    "request": {
+                        "method": "GET",
+                        "url": "{{baseUrl}}/api/projects/{{projectId}}"
+                    }
+                },
+                {
+                    "name": "PUT /api/projects/:projectId — update status",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "x-admin-secret",
+                                "value": "{{adminSecret}}"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"status\": \"maintenance\",\n  \"short_description\": \"Updated via Postman\"\n}"
+                        },
+                        "url": "{{baseUrl}}/api/projects/{{projectId}}"
+                    }
+                },
+                {
+                    "name": "GET /api/projects/nonexistent — 404",
+                    "request": {
+                        "method": "GET",
+                        "url": "{{baseUrl}}/api/projects/nonexistent-id-xyz"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Timeline Entries",
+            "item": [
+                {
+                    "name": "GET /api/projects/:projectId/timeline — list entries",
+                    "request": {
+                        "method": "GET",
+                        "url": "{{baseUrl}}/api/projects/{{projectId}}/timeline"
+                    }
+                },
+                {
+                    "name": "POST /api/projects/:projectId/timeline — create PR entry",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "const res = pm.response.json();",
+                                    "if (res.data && res.data.id) {",
+                                    "  pm.collectionVariables.set('entryId', res.data.id);",
+                                    "  console.log('entryId saved:', res.data.id);",
+                                    "}"
+                                ]
+                            }
+                        }
+                    ],
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "x-admin-secret",
+                                "value": "{{adminSecret}}"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"entry_type\": \"pr\",\n  \"date\": \"2026-03-01T10:00:00Z\",\n  \"sprint_number\": 1,\n  \"title\": \"PR #1: Initial setup\",\n  \"description\": \"Setup project foundation\",\n  \"external_url\": \"https://github.com/octocat/Hello-World/pull/1\",\n  \"external_status\": \"merged\",\n  \"github_pr_number\": 1,\n  \"github_author\": \"octocat\",\n  \"is_featured\": true\n}"
+                        },
+                        "url": "{{baseUrl}}/api/projects/{{projectId}}/timeline"
+                    }
+                },
+                {
+                    "name": "POST /api/projects/:projectId/timeline — create milestone entry",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "x-admin-secret",
+                                "value": "{{adminSecret}}"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"entry_type\": \"milestone\",\n  \"date\": \"2026-03-10T00:00:00Z\",\n  \"sprint_number\": 1,\n  \"title\": \"Sprint 1 Complete\",\n  \"description\": \"Semua task sprint 1 selesai\",\n  \"is_featured\": false\n}"
+                        },
+                        "url": "{{baseUrl}}/api/projects/{{projectId}}/timeline"
+                    }
+                },
+                {
+                    "name": "POST /api/projects/:projectId/timeline — 400 sprint_number < 1",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "x-admin-secret",
+                                "value": "{{adminSecret}}"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"entry_type\": \"milestone\",\n  \"date\": \"2026-03-10T00:00:00Z\",\n  \"sprint_number\": 0,\n  \"title\": \"Invalid sprint\"\n}"
+                        },
+                        "url": "{{baseUrl}}/api/projects/{{projectId}}/timeline"
+                    }
+                },
+                {
+                    "name": "PUT /api/projects/:projectId/timeline/:entryId — update entry",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "x-admin-secret",
+                                "value": "{{adminSecret}}"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"title\": \"PR #1: Initial setup (updated)\",\n  \"sprint_number\": 2,\n  \"is_featured\": false\n}"
+                        },
+                        "url": "{{baseUrl}}/api/projects/{{projectId}}/timeline/{{entryId}}"
+                    }
+                },
+                {
+                    "name": "DELETE /api/projects/:projectId/timeline/:entryId",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "x-admin-secret",
+                                "value": "{{adminSecret}}"
+                            }
+                        ],
+                        "url": "{{baseUrl}}/api/projects/{{projectId}}/timeline/{{entryId}}"
+                    }
+                },
+                {
+                    "name": "DELETE /api/projects/:projectId/timeline — delete ALL entries",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "x-admin-secret",
+                                "value": "{{adminSecret}}"
+                            }
+                        ],
+                        "url": "{{baseUrl}}/api/projects/{{projectId}}/timeline"
+                    }
+                },
+                {
+                    "name": "DELETE /api/projects/:projectId — cleanup",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "x-admin-secret",
+                                "value": "{{adminSecret}}"
+                            }
+                        ],
+                        "url": "{{baseUrl}}/api/projects/{{projectId}}"
+                    }
+                }
+            ]
+        }
+    ]
+}

@@ -130,6 +130,8 @@ export interface LearningItem {
   progress: number;
   target_date: string;
   reason: string;
+  platform?: string;
+  url?: string;
 }
 
 export interface Certification {

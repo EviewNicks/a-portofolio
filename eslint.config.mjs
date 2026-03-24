@@ -12,6 +12,11 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Prisma generated output — tidak perlu di-lint
+    "generated/**",
+    "prisma/lib/singleton.ts",
+    // Third-party UI library components — tidak perlu di-lint
+    "components/reactbits/**",
   ]),
 ]);
 

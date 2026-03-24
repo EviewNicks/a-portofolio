@@ -47,9 +47,9 @@ const LearningCard: React.FC<LearningCardProps> = ({ item, index }) => {
           <div className="flex-1">
             <h4 className="font-bold text-foreground text-xl mb-2">{item.name}</h4>
             {/* Platform badge if available */}
-            {(item as any).platform && (
+            {item.platform && (
               <span className="inline-block px-3 py-1 bg-primary/10 text-primary text-sm font-medium rounded-full mb-3">
-                {(item as any).platform}
+                {item.platform}
               </span>
             )}
           </div>
@@ -89,10 +89,10 @@ const LearningCard: React.FC<LearningCardProps> = ({ item, index }) => {
         </p>
 
         {/* Course URL if available */}
-        {(item as any).url && (
+        {item.url && (
           <div className="mt-auto pt-4 border-t border-border/50">
             <a
-              href={(item as any).url}
+              href={item.url}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center text-sm text-primary hover:text-primary/80 transition-colors"

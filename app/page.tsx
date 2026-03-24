@@ -1,11 +1,10 @@
 import { HeroSection } from '@/features/hero';
 import { AboutSection } from '@/features/about';
 import { SkillsSection } from '@/features/skills';
-import { ProjectsSection } from '@/features/projects';
+import { HomepageProjectsSection } from '@/features/projects/components/HomepageProjectsSection';
 import { ExperienceSection } from '@/features/experience';
 import { ContactSection } from '@/features/contact';
 import { PortfolioLayout } from '@/components/layout';
-// import { AccessibilityDemo } from '@/components/demo/AccessibilityDemo';
 import { ContactSectionData } from '@/lib/types/portfolio';
 import contactDataRaw from '@/docs/data/contact-section.json';
 
@@ -17,9 +16,8 @@ export default function Home() {
       <HeroSection />
       <AboutSection />
       <SkillsSection />
-      <ProjectsSection />
+      <HomepageProjectsSection />
       <ExperienceSection />
-      {/* <AccessibilityDemo /> */}
       <ContactSection data={contactData} />
     </PortfolioLayout>
   );

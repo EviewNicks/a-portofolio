@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { ProjectsData, Project } from '@/lib/types/portfolio';
 import { ProjectCard } from './ProjectCard';
-import { ProjectFilters } from './ProjectFilters';
+
 
 interface ProjectSectionProps {
   title: string;
@@ -59,8 +59,8 @@ export const ProjectsContent: React.FC<ProjectsContentProps> = ({
   projectsData,
   className,
 }) => {
-  const [activeCategory, setActiveCategory] = useState('all');
-  const [activeStatus, setActiveStatus] = useState('all');
+  const [activeCategory] = useState('all');
+  const [activeStatus] = useState('all');
 
   // Combine all projects from different sections
   const allProjects = useMemo(() => {

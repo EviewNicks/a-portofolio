@@ -103,11 +103,11 @@
   /* Warm Beige */
   --foreground: #1a2938;
   /* Deep Navy */
-  --card: #f5f1e8;
-  /* Lighter Beige */
+  --card: #faf7f2;
+  /* Lighter Beige - slightly more contrast */
   --card-foreground: #1a2938;
   /* Deep Navy */
-  --popover: #f5f1e8;
+  --popover: #faf7f2;
   /* Lighter Beige */
   --popover-foreground: #1a2938;
   /* Deep Navy */
@@ -129,8 +129,8 @@
   /* White */
   --destructive: #dc2626;
   /* Red-600 */
-  --border: #e2e8f0;
-  /* Slate-200 */
+  --border: #d4c9b8;
+  /* Warm border - more visible on beige */
   --input: #f1f5f9;
   /* Slate-50 */
   --ring: #ea580c;
@@ -353,9 +353,34 @@
   }
 }
 
-@layer components {
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
 
-  /* Accessibility Utilities */
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Animated gradient background for projects page */
+.projects-bg-gradient {
+  background: linear-gradient(135deg, #EAE0CF 0%, #f5f1e8 35%, #e8d9c0 65%, #EAE0CF 100%);
+  background-size: 400% 400%;
+  animation: gradientShift 12s ease infinite;
+}
+
+.dark .projects-bg-gradient {
+  background: linear-gradient(135deg, #213448 0%, #1a2938 35%, #1e3347 65%, #213448 100%);
+  background-size: 400% 400%;
+  animation: gradientShift 12s ease infinite;
+}
+
+@layer components {
   .sr-only {
     position: absolute;
     width: 1px;
@@ -422,6 +447,21 @@
     border: 1px solid var(--glass-border);
     border-radius: 20px;
     box-shadow: 0 16px 64px rgba(0, 0, 0, 0.15);
+  }
+
+  /* High-contrast glassmorphism for project cards - light mode friendly */
+  .glass-card {
+    background: rgba(255, 255, 255, 0.65);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.85);
+    box-shadow: 0 4px 24px rgba(33, 52, 72, 0.08);
+  }
+
+  .dark .glass-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
   }
 
   /* Responsive Glassmorphism */

@@ -3,19 +3,21 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
+import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 
 interface NavigationItem {
   id: string;
   label: string;
   href: string;
+  external?: boolean; // true = navigate to a page, false = scroll to section
 }
 
 const navigationItems: NavigationItem[] = [
   { id: 'hero', label: 'Home', href: '#hero' },
   { id: 'about', label: 'About', href: '#about' },
   { id: 'skills', label: 'Skills', href: '#skills' },
-  { id: 'projects', label: 'Projects', href: '#projects' },
+  { id: 'projects', label: 'Projects', href: '/projects', external: true },
   { id: 'experience', label: 'Experience', href: '#experience' },
   { id: 'contact', label: 'Contact', href: '#contact' },
 ];
@@ -113,21 +115,31 @@ export function Navigation() {
 
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center gap-1">
-              {navigationItems.map((item) => (
-                <motion.button
-                  key={item.id}
-                  onClick={() => scrollToSection(item.href)}
-                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
-                    activeSection === item.id
-                      ? 'bg-primary text-primary-foreground'
-                      : 'text-muted-foreground hover:text-foreground hover:bg-accent'
-                  }`}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  {item.label}
-                </motion.button>
-              ))}
+              {navigationItems.map((item) =>
+                item.external ? (
+                  <Link
+                    key={item.id}
+                    href={item.href}
+                    className="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 text-muted-foreground hover:text-foreground hover:bg-accent"
+                  >
+                    {item.label}
+                  </Link>
+                ) : (
+                  <motion.button
+                    key={item.id}
+                    onClick={() => scrollToSection(item.href)}
+                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
+                      activeSection === item.id
+                        ? 'bg-primary text-primary-foreground'
+                        : 'text-muted-foreground hover:text-foreground hover:bg-accent'
+                    }`}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    {item.label}
+                  </motion.button>
+                )
+              )}
             </div>
 
             {/* Mobile Menu Button */}
@@ -165,22 +177,33 @@ export function Navigation() {
             {/* Menu Content */}
             <div className="absolute right-0 top-0 bottom-0 w-64 bg-background border-l border-border shadow-2xl">
               <div className="flex flex-col h-full pt-20 px-4">
-                {navigationItems.map((item, index) => (
-                  <motion.button
-                    key={item.id}
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.1 }}
-                    onClick={() => scrollToSection(item.href)}
-                    className={`w-full text-left px-4 py-3 rounded-lg text-base font-medium transition-all duration-300 ${
-                      activeSection === item.id
-                        ? 'bg-primary text-primary-foreground'
-                        : 'text-muted-foreground hover:text-foreground hover:bg-accent'
-                    }`}
-                  >
-                    {item.label}
-                  </motion.button>
-                ))}
+                {navigationItems.map((item, index) =>
+                  item.external ? (
+                    <Link
+                      key={item.id}
+                      href={item.href}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="w-full text-left px-4 py-3 rounded-lg text-base font-medium transition-all duration-300 text-muted-foreground hover:text-foreground hover:bg-accent"
+                    >
+                      {item.label}
+                    </Link>
+                  ) : (
+                    <motion.button
+                      key={item.id}
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: index * 0.1 }}
+                      onClick={() => scrollToSection(item.href)}
+                      className={`w-full text-left px-4 py-3 rounded-lg text-base font-medium transition-all duration-300 ${
+                        activeSection === item.id
+                          ? 'bg-primary text-primary-foreground'
+                          : 'text-muted-foreground hover:text-foreground hover:bg-accent'
+                      }`}
+                    >
+                      {item.label}
+                    </motion.button>
+                  )
+                )}
               </div>
             </div>
           </motion.div>
