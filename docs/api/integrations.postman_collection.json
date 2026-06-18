@@ -1,6 +1,6 @@
 {
     "info": {
-        "name": "Dynamic Project Timeline — Integrations",
+        "name": "Dynamic Project Github and Youtube Preview",
         "description": "GitHub sync dan YouTube preview. Jalankan SETELAH collection Projects — butuh projectId yang sudah tersimpan di collection variables.",
         "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
     },

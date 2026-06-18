@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { validateAdminSecret } from '@/features/projects/utils/timeline'
-import { deleteFeatureMediaFromStorage } from '@/features/features/services/media/api'
+import { deleteFeatureMediaFromStorage } from '@/features/feature/services/media/api'
 import { deleteFeatureMedia } from '@/lib/supabase/queries/features'
 import prisma from '@/prisma/lib/client'
 

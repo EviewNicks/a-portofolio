@@ -3,7 +3,7 @@ import { validateAdminSecret } from '@/features/projects/utils/timeline'
 import {
   validateFeatureMediaFile,
   uploadFeatureMediaToStorage,
-} from '@/features/features/services/media/api'
+} from '@/features/feature/services/media/api'
 import { getFeatureById } from '@/lib/supabase/queries/features'
 import { createFeatureMedia } from '@/lib/supabase/queries/features'
 
