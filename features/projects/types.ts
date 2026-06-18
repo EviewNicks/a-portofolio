@@ -112,3 +112,43 @@ export type CreateTimelineEntryInput = Omit<
 export type UpdateTimelineEntryInput = Partial<
   Omit<CreateTimelineEntryInput, 'project_id'>
 >;
+
+// Project Feature Showcase Types
+export interface ProjectFeature {
+  id: string;
+  project_id: string;
+  title: string;
+  description?: string | null;
+  youtube_url?: string | null;
+  tech_stack: string[];
+  display_order: number;
+  is_featured: boolean;
+  demo_url?: string | null;
+  created_at: string;
+  updated_at: string;
+  media?: ProjectFeatureMedia[];  // Optional, populated in queries
+  thumbnail?: ProjectFeatureMedia;  // Optional, first media for cards
+}
+
+export interface ProjectFeatureMedia {
+  id: string;
+  feature_id: string;
+  storage_path: string;
+  public_url: string;
+  file_name: string;
+  display_order: number;
+  created_at: string;
+}
+
+export type CreateFeatureInput = Omit<
+  ProjectFeature,
+  'id' | 'created_at' | 'updated_at' | 'media' | 'thumbnail'
+>;
+
+export type UpdateFeatureInput = Partial<CreateFeatureInput>;
+
+export interface FeatureValidationResult {
+  valid: boolean;
+  errors: Record<string, string>;  // field -> error message
+}
+

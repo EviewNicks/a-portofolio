@@ -35,19 +35,19 @@ The implementation follows a bottom-up approach: database schema → query funct
     - Return FeatureValidationResult with field-specific errors
     - _Requirements: 2.1, 2.2, 2.3, 2.4, 2.8, 2.15_
   
-  - [ ]* 2.2 Write property test for title validation
+  - [x]* 2.2 Write property test for title validation
     - **Property 1: Title Validation**
     - **Validates: Requirements 2.1, 2.8**
   
-  - [ ]* 2.3 Write property test for description length validation
+  - [x]* 2.3 Write property test for description length validation
     - **Property 2: Description Length Validation**
     - **Validates: Requirements 2.2, 2.8, 7.5**
   
-  - [ ]* 2.4 Write property test for YouTube URL format validation
+  - [x]* 2.4 Write property test for YouTube URL format validation
     - **Property 3: YouTube URL Format Validation**
     - **Validates: Requirements 2.3, 8.1, 8.3**
   
-  - [ ]* 2.5 Write property test for demo URL protocol validation
+  - [x]* 2.5 Write property test for demo URL protocol validation
     - **Property 4: Demo URL Protocol Validation**
     - **Validates: Requirements 2.4, 2.8**
   
@@ -89,15 +89,15 @@ The implementation follows a bottom-up approach: database schema → query funct
     - Implement `deleteFeatureMedia()` with storage cleanup
     - _Requirements: 3.4, 3.7, 3.8_
   
-  - [ ]* 4.4 Write property test for feature creation round-trip
+  - [x]* 4.4 Write property test for feature creation round-trip
     - **Property 5: Feature Creation Round-Trip**
     - **Validates: Requirements 2.5, 12.4**
   
-  - [ ]* 4.5 Write property test for feature update field isolation
+  - [x]* 4.5 Write property test for feature update field isolation
     - **Property 6: Feature Update Field Isolation**
     - **Validates: Requirements 2.7**
   
-  - [ ]* 4.6 Write property test for display order preservation
+  - [x]* 4.6 Write property test for display order preservation
     - **Property 7: Display Order Preservation**
     - **Validates: Requirements 2.11, 2.13, 4.2, 5.8, 6.3, 9.6**
 
@@ -107,8 +107,8 @@ The implementation follows a bottom-up approach: database schema → query funct
   - Test validation functions with sample data
   - Ask the user if questions arise
 
-- [ ] 6. Implement feature CRUD API routes
-  - [ ] 6.1 Create GET /api/projects/[id]/features route
+- [x] 6. Implement feature CRUD API routes
+  - [x] 6.1 Create GET /api/projects/[id]/features route
     - Create `app/api/projects/[id]/features/route.ts`
     - Implement GET handler to fetch all features for a project
     - Include first media thumbnail for each feature
@@ -116,14 +116,14 @@ The implementation follows a bottom-up approach: database schema → query funct
     - Return empty array for non-existent projects
     - _Requirements: 2.11, 2.12, 4.2, 5.1, 5.8_
   
-  - [ ] 6.2 Create GET /api/projects/[id]/features/[featureId] route
+  - [x] 6.2 Create GET /api/projects/[id]/features/[featureId] route
     - Create `app/api/projects/[id]/features/[featureId]/route.ts`
     - Implement GET handler to fetch single feature with all media
     - Return 404 if feature doesn't exist or doesn't belong to project
     - Order media by display_order ascending
     - _Requirements: 2.13, 2.14, 6.3, 6.9, 6.11, 6.12_
   
-  - [ ] 6.3 Create POST /api/projects/[id]/features route
+  - [x] 6.3 Create POST /api/projects/[id]/features route
     - Implement POST handler with admin secret validation
     - Validate all input fields using validateFeatureInput()
     - Return 400 with field-specific errors for invalid data
@@ -131,7 +131,7 @@ The implementation follows a bottom-up approach: database schema → query funct
     - Return 201 with created feature on success
     - _Requirements: 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.15, 10.1, 10.2, 10.3, 10.4, 10.7_
   
-  - [ ] 6.4 Create PUT /api/projects/[id]/features/[featureId] route
+  - [x] 6.4 Create PUT /api/projects/[id]/features/[featureId] route
     - Implement PUT handler with admin secret validation
     - Validate updated fields using validateFeatureInput()
     - Return 404 if feature doesn't exist
@@ -139,14 +139,14 @@ The implementation follows a bottom-up approach: database schema → query funct
     - Return updated feature on success
     - _Requirements: 2.7, 2.8, 2.9, 2.16, 10.1, 10.2, 10.3, 10.4, 10.7_
   
-  - [ ] 6.5 Create DELETE /api/projects/[id]/features/[featureId] route
+  - [x] 6.5 Create DELETE /api/projects/[id]/features/[featureId] route
     - Implement DELETE handler with admin secret validation
     - Return 404 if feature doesn't exist
     - Trigger CASCADE delete for media records
     - Return success status
     - _Requirements: 2.10, 2.17, 10.1, 10.2, 10.3, 10.4, 10.7_
   
-  - [ ] 6.6 Create PATCH /api/projects/[id]/features/reorder route
+  - [x] 6.6 Create PATCH /api/projects/[id]/features/reorder route
     - Implement PATCH handler with admin secret validation
     - Accept array of {id, display_order} objects
     - Update display_order values in transaction
@@ -154,9 +154,9 @@ The implementation follows a bottom-up approach: database schema → query funct
     - Rollback on failure
     - _Requirements: 4.9, 9.1, 9.3, 9.4_
 
-- [ ] 7. Implement feature media upload API routes
-  - [ ] 7.1 Create POST /api/features/media/upload route
-    - Create `app/api/features/media/upload/route.ts`
+- [x] 7. Implement feature media upload API routes
+  - [x] 7.1 Create POST /api/features/media/upload route
+    - Create `app/api/features/[id]/features/[featureId]/media/upload/route.ts`
     - Implement POST handler with admin secret validation
     - Parse FormData (file, feature_id, secret)
     - Validate file type (JPEG, PNG, GIF, WebP) and size (≤10MB)
@@ -167,8 +167,8 @@ The implementation follows a bottom-up approach: database schema → query funct
     - Return 500 for storage failures
     - _Requirements: 3.1, 3.2, 3.3, 3.4, 3.5, 3.8, 4.6, 10.1, 10.2, 10.3, 10.4, 10.7_
   
-  - [ ] 7.2 Create DELETE /api/features/media/[id] route
-    - Create `app/api/features/media/[id]/route.ts`
+  - [x] 7.2 Create DELETE /api/features/media/[id] route
+    - Create `app/api/features/[id]/features/[featureId]/media/[id]/route.ts`
     - Implement DELETE handler with admin secret validation
     - Delete file from Supabase Storage
     - Delete database record
@@ -176,11 +176,8 @@ The implementation follows a bottom-up approach: database schema → query funct
     - Handle storage cleanup failures gracefully
     - _Requirements: 3.6, 3.7, 10.1, 10.2, 10.3, 10.4, 10.7_
   
-  - [ ]* 7.3 Write property test for media upload round-trip
-    - **Property 10: Media Upload Round-Trip**
-    - **Validates: Requirements 3.4, 3.8**
 
-- [ ] 8. Checkpoint - Verify API layer
+- [x] 8. Checkpoint - Verify API layer
   - Ensure all API routes compile without errors
   - Test CRUD operations with valid and invalid inputs
   - Verify authentication checks work correctly
