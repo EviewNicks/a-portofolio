@@ -4,7 +4,7 @@ import { deleteFeatureMediaFromStorage } from '@/features/feature/services/media
 import { deleteFeatureMedia } from '@/lib/supabase/queries/features'
 import prisma from '@/prisma/lib/client'
 
-type Params = { params: Promise<{ id: string }> }
+type Params = { params: Promise<{ id: string; mediaid: string }> }
 
 /**
  * DELETE /api/features/media/[id]
@@ -24,11 +24,11 @@ export async function DELETE(request: NextRequest, { params }: Params) {
   }
 
   try {
-    const { id } = await params
+    const { mediaid } = await params
 
     // Get media record to retrieve storage_path before deletion
     const media = await prisma.projectFeatureMedia.findUnique({
-      where: { id },
+      where: { id: mediaid },
     })
 
     if (!media) {
@@ -41,14 +41,14 @@ export async function DELETE(request: NextRequest, { params }: Params) {
       await deleteFeatureMediaFromStorage(media.storage_path)
     } catch (error) {
       console.error(
-        `[DELETE /api/features/media/${id}] Storage cleanup failed:`,
+        `[DELETE /api/features/media/${mediaid}] Storage cleanup failed:`,
         error
       )
       // Continue with database deletion even if storage cleanup fails
     }
 
     // Delete database record
-    await deleteFeatureMedia(id)
+    await deleteFeatureMedia(mediaid)
 
     return NextResponse.json({ success: true })
   } catch (error) {

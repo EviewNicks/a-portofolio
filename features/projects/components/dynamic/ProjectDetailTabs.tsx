@@ -2,20 +2,22 @@
 
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
-import type { DynamicProject, TimelineEntry } from '@/features/projects/types';
+import type { DynamicProject, TimelineEntry, ProjectFeature } from '@/features/projects/types';
 import { MarkdownContent } from './MarkdownContent';
 import { TimelineSection } from './TimelineSection';
 import { ProjectStatusBadge } from './ProjectStatusBadge';
+import { FeaturesTabContent } from '@/features/feature/components/FeaturesTabContent';
 import Link from 'next/link';
 
 interface ProjectDetailTabsProps {
   project: DynamicProject;
   entries: TimelineEntry[];
+  features?: ProjectFeature[];
 }
 
-type Tab = 'description' | 'timeline';
+type Tab = 'description' | 'timeline' | 'features';
 
-export function ProjectDetailTabs({ project, entries }: ProjectDetailTabsProps) {
+export function ProjectDetailTabs({ project, entries, features = [] }: ProjectDetailTabsProps) {
   const [activeTab, setActiveTab] = useState<Tab>('description');
 
   return (
@@ -27,6 +29,17 @@ export function ProjectDetailTabs({ project, entries }: ProjectDetailTabsProps) 
           onClick={() => setActiveTab('description')}
         >
           Description
+        </TabButton>
+        <TabButton
+          active={activeTab === 'features'}
+          onClick={() => setActiveTab('features')}
+        >
+          Features
+          {features.length > 0 && (
+            <span className="ml-2 px-1.5 py-0.5 rounded-full bg-foreground/10 text-xs text-muted-foreground">
+              {features.length}
+            </span>
+          )}
         </TabButton>
         <TabButton
           active={activeTab === 'timeline'}
@@ -44,6 +57,9 @@ export function ProjectDetailTabs({ project, entries }: ProjectDetailTabsProps) 
       {/* Tab content */}
       {activeTab === 'description' && (
         <DescriptionTab project={project} />
+      )}
+      {activeTab === 'features' && (
+        <FeaturesTabContent projectId={project.id} features={features} />
       )}
       {activeTab === 'timeline' && (
         <TimelineSection entries={entries} />

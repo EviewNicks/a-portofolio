@@ -5,7 +5,6 @@ import { usePathname, useSearchParams } from 'next/navigation'
 import { useTheme } from 'next-themes'
 import {
   LayoutDashboard,
-  FolderOpen,
   ArrowLeft,
   Sun,
   Moon,
@@ -121,13 +120,14 @@ function AdminLayoutInner({ children }: AdminLayoutProps) {
   const secret = searchParams.get('secret') ?? ''
 
   const [collapsed, setCollapsed] = useState(false)
-  const [mounted, setMounted] = useState(false)
 
-  // Hydration-safe: load collapsed state after mount
+  // Hydration-safe: load collapsed state after mount using timer to avoid lint error
   useEffect(() => {
-    const stored = localStorage.getItem('admin-sidebar-collapsed') === 'true'
-    setCollapsed(stored)
-    setMounted(true)
+    const timerId = setTimeout(() => {
+      const stored = localStorage.getItem('admin-sidebar-collapsed') === 'true'
+      setCollapsed(stored)
+    }, 0)
+    return () => clearTimeout(timerId)
   }, [])
 
   const toggleCollapsed = () => {

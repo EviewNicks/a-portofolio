@@ -9,6 +9,7 @@ import { MediaGallery } from '@/features/projects/components/dynamic/MediaGaller
 import { ProjectDetailTabs } from '@/features/projects/components/dynamic/ProjectDetailTabs'
 import { AdminActionBar } from '@/features/projects/components/dynamic/AdminActionBar'
 import { SuccessBanner } from '@/features/projects/components/dynamic/SuccessBanner'
+import { getFeaturesByProjectId } from '@/lib/supabase/queries/features'
 import type {
   DynamicProject,
   TimelineEntry,
@@ -16,6 +17,7 @@ import type {
   ProjectStatus,
   EntryType,
   PRStatus,
+  ProjectFeature,
 } from '@/features/projects/types'
 import Link from 'next/link'
 
@@ -109,6 +111,31 @@ export default async function ProjectDetailPage({
 
   const videoEntries = entries.filter(e => e.entry_type === 'video')
 
+  // Fetch project features
+  const rawFeatures = await getFeaturesByProjectId(id)
+  const features: ProjectFeature[] = rawFeatures.map((f) => ({
+    id: f.id,
+    project_id: f.project_id,
+    title: f.title,
+    description: f.description,
+    youtube_url: f.youtube_url,
+    tech_stack: f.tech_stack,
+    display_order: f.display_order,
+    is_featured: f.is_featured,
+    demo_url: f.demo_url,
+    created_at: f.created_at.toISOString(),
+    updated_at: f.updated_at.toISOString(),
+    media: f.media.map((m) => ({
+      id: m.id,
+      feature_id: m.feature_id,
+      storage_path: m.storage_path,
+      public_url: m.public_url,
+      file_name: m.file_name,
+      display_order: m.display_order,
+      created_at: m.created_at.toISOString(),
+    })),
+  }))
+
   return (
     <main className="bg-background min-h-screen">
       <div className="container mx-auto max-w-5xl px-4 py-12">
@@ -133,7 +160,7 @@ export default async function ProjectDetailPage({
 
         <MediaGallery media={media} videoEntries={videoEntries} />
 
-        <ProjectDetailTabs project={project} entries={entries} />
+        <ProjectDetailTabs project={project} entries={entries} features={features} />
       </div>
     </main>
   )
