@@ -164,6 +164,30 @@ exports.Prisma.ProjectMediaScalarFieldEnum = {
   created_at: 'created_at'
 };
 
+exports.Prisma.ProjectFeatureScalarFieldEnum = {
+  id: 'id',
+  project_id: 'project_id',
+  title: 'title',
+  description: 'description',
+  youtube_url: 'youtube_url',
+  tech_stack: 'tech_stack',
+  display_order: 'display_order',
+  is_featured: 'is_featured',
+  demo_url: 'demo_url',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+};
+
+exports.Prisma.ProjectFeatureMediaScalarFieldEnum = {
+  id: 'id',
+  feature_id: 'feature_id',
+  storage_path: 'storage_path',
+  public_url: 'public_url',
+  file_name: 'file_name',
+  display_order: 'display_order',
+  created_at: 'created_at'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -202,7 +226,9 @@ exports.PRStatus = exports.$Enums.PRStatus = {
 exports.Prisma.ModelName = {
   Project: 'Project',
   TimelineEntry: 'TimelineEntry',
-  ProjectMedia: 'ProjectMedia'
+  ProjectMedia: 'ProjectMedia',
+  ProjectFeature: 'ProjectFeature',
+  ProjectFeatureMedia: 'ProjectFeatureMedia'
 };
 
 /**

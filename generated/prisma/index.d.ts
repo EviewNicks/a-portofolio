@@ -28,6 +28,16 @@ export type TimelineEntry = $Result.DefaultSelection<Prisma.$TimelineEntryPayloa
  * 
  */
 export type ProjectMedia = $Result.DefaultSelection<Prisma.$ProjectMediaPayload>
+/**
+ * Model ProjectFeature
+ * 
+ */
+export type ProjectFeature = $Result.DefaultSelection<Prisma.$ProjectFeaturePayload>
+/**
+ * Model ProjectFeatureMedia
+ * 
+ */
+export type ProjectFeatureMedia = $Result.DefaultSelection<Prisma.$ProjectFeatureMediaPayload>
 
 /**
  * Enums
@@ -226,6 +236,26 @@ export class PrismaClient<
     * ```
     */
   get projectMedia(): Prisma.ProjectMediaDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.projectFeature`: Exposes CRUD operations for the **ProjectFeature** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ProjectFeatures
+    * const projectFeatures = await prisma.projectFeature.findMany()
+    * ```
+    */
+  get projectFeature(): Prisma.ProjectFeatureDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.projectFeatureMedia`: Exposes CRUD operations for the **ProjectFeatureMedia** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ProjectFeatureMedias
+    * const projectFeatureMedias = await prisma.projectFeatureMedia.findMany()
+    * ```
+    */
+  get projectFeatureMedia(): Prisma.ProjectFeatureMediaDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -662,7 +692,9 @@ export namespace Prisma {
   export const ModelName: {
     Project: 'Project',
     TimelineEntry: 'TimelineEntry',
-    ProjectMedia: 'ProjectMedia'
+    ProjectMedia: 'ProjectMedia',
+    ProjectFeature: 'ProjectFeature',
+    ProjectFeatureMedia: 'ProjectFeatureMedia'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -678,7 +710,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "project" | "timelineEntry" | "projectMedia"
+      modelProps: "project" | "timelineEntry" | "projectMedia" | "projectFeature" | "projectFeatureMedia"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -904,6 +936,154 @@ export namespace Prisma {
           }
         }
       }
+      ProjectFeature: {
+        payload: Prisma.$ProjectFeaturePayload<ExtArgs>
+        fields: Prisma.ProjectFeatureFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ProjectFeatureFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectFeaturePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ProjectFeatureFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectFeaturePayload>
+          }
+          findFirst: {
+            args: Prisma.ProjectFeatureFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectFeaturePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ProjectFeatureFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectFeaturePayload>
+          }
+          findMany: {
+            args: Prisma.ProjectFeatureFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectFeaturePayload>[]
+          }
+          create: {
+            args: Prisma.ProjectFeatureCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectFeaturePayload>
+          }
+          createMany: {
+            args: Prisma.ProjectFeatureCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ProjectFeatureCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectFeaturePayload>[]
+          }
+          delete: {
+            args: Prisma.ProjectFeatureDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectFeaturePayload>
+          }
+          update: {
+            args: Prisma.ProjectFeatureUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectFeaturePayload>
+          }
+          deleteMany: {
+            args: Prisma.ProjectFeatureDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ProjectFeatureUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ProjectFeatureUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectFeaturePayload>[]
+          }
+          upsert: {
+            args: Prisma.ProjectFeatureUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectFeaturePayload>
+          }
+          aggregate: {
+            args: Prisma.ProjectFeatureAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateProjectFeature>
+          }
+          groupBy: {
+            args: Prisma.ProjectFeatureGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ProjectFeatureGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ProjectFeatureCountArgs<ExtArgs>
+            result: $Utils.Optional<ProjectFeatureCountAggregateOutputType> | number
+          }
+        }
+      }
+      ProjectFeatureMedia: {
+        payload: Prisma.$ProjectFeatureMediaPayload<ExtArgs>
+        fields: Prisma.ProjectFeatureMediaFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ProjectFeatureMediaFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectFeatureMediaPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ProjectFeatureMediaFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectFeatureMediaPayload>
+          }
+          findFirst: {
+            args: Prisma.ProjectFeatureMediaFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectFeatureMediaPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ProjectFeatureMediaFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectFeatureMediaPayload>
+          }
+          findMany: {
+            args: Prisma.ProjectFeatureMediaFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectFeatureMediaPayload>[]
+          }
+          create: {
+            args: Prisma.ProjectFeatureMediaCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectFeatureMediaPayload>
+          }
+          createMany: {
+            args: Prisma.ProjectFeatureMediaCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ProjectFeatureMediaCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectFeatureMediaPayload>[]
+          }
+          delete: {
+            args: Prisma.ProjectFeatureMediaDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectFeatureMediaPayload>
+          }
+          update: {
+            args: Prisma.ProjectFeatureMediaUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectFeatureMediaPayload>
+          }
+          deleteMany: {
+            args: Prisma.ProjectFeatureMediaDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ProjectFeatureMediaUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ProjectFeatureMediaUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectFeatureMediaPayload>[]
+          }
+          upsert: {
+            args: Prisma.ProjectFeatureMediaUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectFeatureMediaPayload>
+          }
+          aggregate: {
+            args: Prisma.ProjectFeatureMediaAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateProjectFeatureMedia>
+          }
+          groupBy: {
+            args: Prisma.ProjectFeatureMediaGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ProjectFeatureMediaGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ProjectFeatureMediaCountArgs<ExtArgs>
+            result: $Utils.Optional<ProjectFeatureMediaCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1015,6 +1195,8 @@ export namespace Prisma {
     project?: ProjectOmit
     timelineEntry?: TimelineEntryOmit
     projectMedia?: ProjectMediaOmit
+    projectFeature?: ProjectFeatureOmit
+    projectFeatureMedia?: ProjectFeatureMediaOmit
   }
 
   /* Types for Logging */
@@ -1097,11 +1279,13 @@ export namespace Prisma {
   export type ProjectCountOutputType = {
     timeline_entries: number
     project_media: number
+    features: number
   }
 
   export type ProjectCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     timeline_entries?: boolean | ProjectCountOutputTypeCountTimeline_entriesArgs
     project_media?: boolean | ProjectCountOutputTypeCountProject_mediaArgs
+    features?: boolean | ProjectCountOutputTypeCountFeaturesArgs
   }
 
   // Custom InputTypes
@@ -1127,6 +1311,44 @@ export namespace Prisma {
    */
   export type ProjectCountOutputTypeCountProject_mediaArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ProjectMediaWhereInput
+  }
+
+  /**
+   * ProjectCountOutputType without action
+   */
+  export type ProjectCountOutputTypeCountFeaturesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ProjectFeatureWhereInput
+  }
+
+
+  /**
+   * Count Type ProjectFeatureCountOutputType
+   */
+
+  export type ProjectFeatureCountOutputType = {
+    media: number
+  }
+
+  export type ProjectFeatureCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    media?: boolean | ProjectFeatureCountOutputTypeCountMediaArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * ProjectFeatureCountOutputType without action
+   */
+  export type ProjectFeatureCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectFeatureCountOutputType
+     */
+    select?: ProjectFeatureCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * ProjectFeatureCountOutputType without action
+   */
+  export type ProjectFeatureCountOutputTypeCountMediaArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ProjectFeatureMediaWhereInput
   }
 
 
@@ -1352,6 +1574,7 @@ export namespace Prisma {
     updated_at?: boolean
     timeline_entries?: boolean | Project$timeline_entriesArgs<ExtArgs>
     project_media?: boolean | Project$project_mediaArgs<ExtArgs>
+    features?: boolean | Project$featuresArgs<ExtArgs>
     _count?: boolean | ProjectCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["project"]>
 
@@ -1404,6 +1627,7 @@ export namespace Prisma {
   export type ProjectInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     timeline_entries?: boolean | Project$timeline_entriesArgs<ExtArgs>
     project_media?: boolean | Project$project_mediaArgs<ExtArgs>
+    features?: boolean | Project$featuresArgs<ExtArgs>
     _count?: boolean | ProjectCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ProjectIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -1414,6 +1638,7 @@ export namespace Prisma {
     objects: {
       timeline_entries: Prisma.$TimelineEntryPayload<ExtArgs>[]
       project_media: Prisma.$ProjectMediaPayload<ExtArgs>[]
+      features: Prisma.$ProjectFeaturePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -1824,6 +2049,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     timeline_entries<T extends Project$timeline_entriesArgs<ExtArgs> = {}>(args?: Subset<T, Project$timeline_entriesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TimelineEntryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     project_media<T extends Project$project_mediaArgs<ExtArgs> = {}>(args?: Subset<T, Project$project_mediaArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProjectMediaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    features<T extends Project$featuresArgs<ExtArgs> = {}>(args?: Subset<T, Project$featuresArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProjectFeaturePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2303,6 +2529,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: ProjectMediaScalarFieldEnum | ProjectMediaScalarFieldEnum[]
+  }
+
+  /**
+   * Project.features
+   */
+  export type Project$featuresArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectFeature
+     */
+    select?: ProjectFeatureSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectFeature
+     */
+    omit?: ProjectFeatureOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProjectFeatureInclude<ExtArgs> | null
+    where?: ProjectFeatureWhereInput
+    orderBy?: ProjectFeatureOrderByWithRelationInput | ProjectFeatureOrderByWithRelationInput[]
+    cursor?: ProjectFeatureWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ProjectFeatureScalarFieldEnum | ProjectFeatureScalarFieldEnum[]
   }
 
   /**
@@ -4658,6 +4908,2330 @@ export namespace Prisma {
 
 
   /**
+   * Model ProjectFeature
+   */
+
+  export type AggregateProjectFeature = {
+    _count: ProjectFeatureCountAggregateOutputType | null
+    _avg: ProjectFeatureAvgAggregateOutputType | null
+    _sum: ProjectFeatureSumAggregateOutputType | null
+    _min: ProjectFeatureMinAggregateOutputType | null
+    _max: ProjectFeatureMaxAggregateOutputType | null
+  }
+
+  export type ProjectFeatureAvgAggregateOutputType = {
+    display_order: number | null
+  }
+
+  export type ProjectFeatureSumAggregateOutputType = {
+    display_order: number | null
+  }
+
+  export type ProjectFeatureMinAggregateOutputType = {
+    id: string | null
+    project_id: string | null
+    title: string | null
+    description: string | null
+    youtube_url: string | null
+    display_order: number | null
+    is_featured: boolean | null
+    demo_url: string | null
+    created_at: Date | null
+    updated_at: Date | null
+  }
+
+  export type ProjectFeatureMaxAggregateOutputType = {
+    id: string | null
+    project_id: string | null
+    title: string | null
+    description: string | null
+    youtube_url: string | null
+    display_order: number | null
+    is_featured: boolean | null
+    demo_url: string | null
+    created_at: Date | null
+    updated_at: Date | null
+  }
+
+  export type ProjectFeatureCountAggregateOutputType = {
+    id: number
+    project_id: number
+    title: number
+    description: number
+    youtube_url: number
+    tech_stack: number
+    display_order: number
+    is_featured: number
+    demo_url: number
+    created_at: number
+    updated_at: number
+    _all: number
+  }
+
+
+  export type ProjectFeatureAvgAggregateInputType = {
+    display_order?: true
+  }
+
+  export type ProjectFeatureSumAggregateInputType = {
+    display_order?: true
+  }
+
+  export type ProjectFeatureMinAggregateInputType = {
+    id?: true
+    project_id?: true
+    title?: true
+    description?: true
+    youtube_url?: true
+    display_order?: true
+    is_featured?: true
+    demo_url?: true
+    created_at?: true
+    updated_at?: true
+  }
+
+  export type ProjectFeatureMaxAggregateInputType = {
+    id?: true
+    project_id?: true
+    title?: true
+    description?: true
+    youtube_url?: true
+    display_order?: true
+    is_featured?: true
+    demo_url?: true
+    created_at?: true
+    updated_at?: true
+  }
+
+  export type ProjectFeatureCountAggregateInputType = {
+    id?: true
+    project_id?: true
+    title?: true
+    description?: true
+    youtube_url?: true
+    tech_stack?: true
+    display_order?: true
+    is_featured?: true
+    demo_url?: true
+    created_at?: true
+    updated_at?: true
+    _all?: true
+  }
+
+  export type ProjectFeatureAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ProjectFeature to aggregate.
+     */
+    where?: ProjectFeatureWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProjectFeatures to fetch.
+     */
+    orderBy?: ProjectFeatureOrderByWithRelationInput | ProjectFeatureOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ProjectFeatureWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProjectFeatures from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProjectFeatures.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ProjectFeatures
+    **/
+    _count?: true | ProjectFeatureCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ProjectFeatureAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ProjectFeatureSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ProjectFeatureMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ProjectFeatureMaxAggregateInputType
+  }
+
+  export type GetProjectFeatureAggregateType<T extends ProjectFeatureAggregateArgs> = {
+        [P in keyof T & keyof AggregateProjectFeature]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateProjectFeature[P]>
+      : GetScalarType<T[P], AggregateProjectFeature[P]>
+  }
+
+
+
+
+  export type ProjectFeatureGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ProjectFeatureWhereInput
+    orderBy?: ProjectFeatureOrderByWithAggregationInput | ProjectFeatureOrderByWithAggregationInput[]
+    by: ProjectFeatureScalarFieldEnum[] | ProjectFeatureScalarFieldEnum
+    having?: ProjectFeatureScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ProjectFeatureCountAggregateInputType | true
+    _avg?: ProjectFeatureAvgAggregateInputType
+    _sum?: ProjectFeatureSumAggregateInputType
+    _min?: ProjectFeatureMinAggregateInputType
+    _max?: ProjectFeatureMaxAggregateInputType
+  }
+
+  export type ProjectFeatureGroupByOutputType = {
+    id: string
+    project_id: string
+    title: string
+    description: string | null
+    youtube_url: string | null
+    tech_stack: string[]
+    display_order: number
+    is_featured: boolean
+    demo_url: string | null
+    created_at: Date
+    updated_at: Date
+    _count: ProjectFeatureCountAggregateOutputType | null
+    _avg: ProjectFeatureAvgAggregateOutputType | null
+    _sum: ProjectFeatureSumAggregateOutputType | null
+    _min: ProjectFeatureMinAggregateOutputType | null
+    _max: ProjectFeatureMaxAggregateOutputType | null
+  }
+
+  type GetProjectFeatureGroupByPayload<T extends ProjectFeatureGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ProjectFeatureGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ProjectFeatureGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ProjectFeatureGroupByOutputType[P]>
+            : GetScalarType<T[P], ProjectFeatureGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ProjectFeatureSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    project_id?: boolean
+    title?: boolean
+    description?: boolean
+    youtube_url?: boolean
+    tech_stack?: boolean
+    display_order?: boolean
+    is_featured?: boolean
+    demo_url?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+    project?: boolean | ProjectDefaultArgs<ExtArgs>
+    media?: boolean | ProjectFeature$mediaArgs<ExtArgs>
+    _count?: boolean | ProjectFeatureCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["projectFeature"]>
+
+  export type ProjectFeatureSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    project_id?: boolean
+    title?: boolean
+    description?: boolean
+    youtube_url?: boolean
+    tech_stack?: boolean
+    display_order?: boolean
+    is_featured?: boolean
+    demo_url?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+    project?: boolean | ProjectDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["projectFeature"]>
+
+  export type ProjectFeatureSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    project_id?: boolean
+    title?: boolean
+    description?: boolean
+    youtube_url?: boolean
+    tech_stack?: boolean
+    display_order?: boolean
+    is_featured?: boolean
+    demo_url?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+    project?: boolean | ProjectDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["projectFeature"]>
+
+  export type ProjectFeatureSelectScalar = {
+    id?: boolean
+    project_id?: boolean
+    title?: boolean
+    description?: boolean
+    youtube_url?: boolean
+    tech_stack?: boolean
+    display_order?: boolean
+    is_featured?: boolean
+    demo_url?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+  }
+
+  export type ProjectFeatureOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "project_id" | "title" | "description" | "youtube_url" | "tech_stack" | "display_order" | "is_featured" | "demo_url" | "created_at" | "updated_at", ExtArgs["result"]["projectFeature"]>
+  export type ProjectFeatureInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    project?: boolean | ProjectDefaultArgs<ExtArgs>
+    media?: boolean | ProjectFeature$mediaArgs<ExtArgs>
+    _count?: boolean | ProjectFeatureCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type ProjectFeatureIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    project?: boolean | ProjectDefaultArgs<ExtArgs>
+  }
+  export type ProjectFeatureIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    project?: boolean | ProjectDefaultArgs<ExtArgs>
+  }
+
+  export type $ProjectFeaturePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ProjectFeature"
+    objects: {
+      project: Prisma.$ProjectPayload<ExtArgs>
+      media: Prisma.$ProjectFeatureMediaPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      project_id: string
+      title: string
+      description: string | null
+      youtube_url: string | null
+      tech_stack: string[]
+      display_order: number
+      is_featured: boolean
+      demo_url: string | null
+      created_at: Date
+      updated_at: Date
+    }, ExtArgs["result"]["projectFeature"]>
+    composites: {}
+  }
+
+  type ProjectFeatureGetPayload<S extends boolean | null | undefined | ProjectFeatureDefaultArgs> = $Result.GetResult<Prisma.$ProjectFeaturePayload, S>
+
+  type ProjectFeatureCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ProjectFeatureFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ProjectFeatureCountAggregateInputType | true
+    }
+
+  export interface ProjectFeatureDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ProjectFeature'], meta: { name: 'ProjectFeature' } }
+    /**
+     * Find zero or one ProjectFeature that matches the filter.
+     * @param {ProjectFeatureFindUniqueArgs} args - Arguments to find a ProjectFeature
+     * @example
+     * // Get one ProjectFeature
+     * const projectFeature = await prisma.projectFeature.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ProjectFeatureFindUniqueArgs>(args: SelectSubset<T, ProjectFeatureFindUniqueArgs<ExtArgs>>): Prisma__ProjectFeatureClient<$Result.GetResult<Prisma.$ProjectFeaturePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ProjectFeature that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ProjectFeatureFindUniqueOrThrowArgs} args - Arguments to find a ProjectFeature
+     * @example
+     * // Get one ProjectFeature
+     * const projectFeature = await prisma.projectFeature.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ProjectFeatureFindUniqueOrThrowArgs>(args: SelectSubset<T, ProjectFeatureFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ProjectFeatureClient<$Result.GetResult<Prisma.$ProjectFeaturePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ProjectFeature that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProjectFeatureFindFirstArgs} args - Arguments to find a ProjectFeature
+     * @example
+     * // Get one ProjectFeature
+     * const projectFeature = await prisma.projectFeature.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ProjectFeatureFindFirstArgs>(args?: SelectSubset<T, ProjectFeatureFindFirstArgs<ExtArgs>>): Prisma__ProjectFeatureClient<$Result.GetResult<Prisma.$ProjectFeaturePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ProjectFeature that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProjectFeatureFindFirstOrThrowArgs} args - Arguments to find a ProjectFeature
+     * @example
+     * // Get one ProjectFeature
+     * const projectFeature = await prisma.projectFeature.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ProjectFeatureFindFirstOrThrowArgs>(args?: SelectSubset<T, ProjectFeatureFindFirstOrThrowArgs<ExtArgs>>): Prisma__ProjectFeatureClient<$Result.GetResult<Prisma.$ProjectFeaturePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ProjectFeatures that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProjectFeatureFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ProjectFeatures
+     * const projectFeatures = await prisma.projectFeature.findMany()
+     * 
+     * // Get first 10 ProjectFeatures
+     * const projectFeatures = await prisma.projectFeature.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const projectFeatureWithIdOnly = await prisma.projectFeature.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ProjectFeatureFindManyArgs>(args?: SelectSubset<T, ProjectFeatureFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProjectFeaturePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ProjectFeature.
+     * @param {ProjectFeatureCreateArgs} args - Arguments to create a ProjectFeature.
+     * @example
+     * // Create one ProjectFeature
+     * const ProjectFeature = await prisma.projectFeature.create({
+     *   data: {
+     *     // ... data to create a ProjectFeature
+     *   }
+     * })
+     * 
+     */
+    create<T extends ProjectFeatureCreateArgs>(args: SelectSubset<T, ProjectFeatureCreateArgs<ExtArgs>>): Prisma__ProjectFeatureClient<$Result.GetResult<Prisma.$ProjectFeaturePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ProjectFeatures.
+     * @param {ProjectFeatureCreateManyArgs} args - Arguments to create many ProjectFeatures.
+     * @example
+     * // Create many ProjectFeatures
+     * const projectFeature = await prisma.projectFeature.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ProjectFeatureCreateManyArgs>(args?: SelectSubset<T, ProjectFeatureCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ProjectFeatures and returns the data saved in the database.
+     * @param {ProjectFeatureCreateManyAndReturnArgs} args - Arguments to create many ProjectFeatures.
+     * @example
+     * // Create many ProjectFeatures
+     * const projectFeature = await prisma.projectFeature.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ProjectFeatures and only return the `id`
+     * const projectFeatureWithIdOnly = await prisma.projectFeature.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ProjectFeatureCreateManyAndReturnArgs>(args?: SelectSubset<T, ProjectFeatureCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProjectFeaturePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a ProjectFeature.
+     * @param {ProjectFeatureDeleteArgs} args - Arguments to delete one ProjectFeature.
+     * @example
+     * // Delete one ProjectFeature
+     * const ProjectFeature = await prisma.projectFeature.delete({
+     *   where: {
+     *     // ... filter to delete one ProjectFeature
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ProjectFeatureDeleteArgs>(args: SelectSubset<T, ProjectFeatureDeleteArgs<ExtArgs>>): Prisma__ProjectFeatureClient<$Result.GetResult<Prisma.$ProjectFeaturePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ProjectFeature.
+     * @param {ProjectFeatureUpdateArgs} args - Arguments to update one ProjectFeature.
+     * @example
+     * // Update one ProjectFeature
+     * const projectFeature = await prisma.projectFeature.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ProjectFeatureUpdateArgs>(args: SelectSubset<T, ProjectFeatureUpdateArgs<ExtArgs>>): Prisma__ProjectFeatureClient<$Result.GetResult<Prisma.$ProjectFeaturePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ProjectFeatures.
+     * @param {ProjectFeatureDeleteManyArgs} args - Arguments to filter ProjectFeatures to delete.
+     * @example
+     * // Delete a few ProjectFeatures
+     * const { count } = await prisma.projectFeature.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ProjectFeatureDeleteManyArgs>(args?: SelectSubset<T, ProjectFeatureDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ProjectFeatures.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProjectFeatureUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ProjectFeatures
+     * const projectFeature = await prisma.projectFeature.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ProjectFeatureUpdateManyArgs>(args: SelectSubset<T, ProjectFeatureUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ProjectFeatures and returns the data updated in the database.
+     * @param {ProjectFeatureUpdateManyAndReturnArgs} args - Arguments to update many ProjectFeatures.
+     * @example
+     * // Update many ProjectFeatures
+     * const projectFeature = await prisma.projectFeature.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more ProjectFeatures and only return the `id`
+     * const projectFeatureWithIdOnly = await prisma.projectFeature.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ProjectFeatureUpdateManyAndReturnArgs>(args: SelectSubset<T, ProjectFeatureUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProjectFeaturePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one ProjectFeature.
+     * @param {ProjectFeatureUpsertArgs} args - Arguments to update or create a ProjectFeature.
+     * @example
+     * // Update or create a ProjectFeature
+     * const projectFeature = await prisma.projectFeature.upsert({
+     *   create: {
+     *     // ... data to create a ProjectFeature
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ProjectFeature we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ProjectFeatureUpsertArgs>(args: SelectSubset<T, ProjectFeatureUpsertArgs<ExtArgs>>): Prisma__ProjectFeatureClient<$Result.GetResult<Prisma.$ProjectFeaturePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ProjectFeatures.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProjectFeatureCountArgs} args - Arguments to filter ProjectFeatures to count.
+     * @example
+     * // Count the number of ProjectFeatures
+     * const count = await prisma.projectFeature.count({
+     *   where: {
+     *     // ... the filter for the ProjectFeatures we want to count
+     *   }
+     * })
+    **/
+    count<T extends ProjectFeatureCountArgs>(
+      args?: Subset<T, ProjectFeatureCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ProjectFeatureCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ProjectFeature.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProjectFeatureAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ProjectFeatureAggregateArgs>(args: Subset<T, ProjectFeatureAggregateArgs>): Prisma.PrismaPromise<GetProjectFeatureAggregateType<T>>
+
+    /**
+     * Group by ProjectFeature.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProjectFeatureGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ProjectFeatureGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ProjectFeatureGroupByArgs['orderBy'] }
+        : { orderBy?: ProjectFeatureGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ProjectFeatureGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetProjectFeatureGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ProjectFeature model
+   */
+  readonly fields: ProjectFeatureFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ProjectFeature.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ProjectFeatureClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    project<T extends ProjectDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ProjectDefaultArgs<ExtArgs>>): Prisma__ProjectClient<$Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    media<T extends ProjectFeature$mediaArgs<ExtArgs> = {}>(args?: Subset<T, ProjectFeature$mediaArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProjectFeatureMediaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ProjectFeature model
+   */
+  interface ProjectFeatureFieldRefs {
+    readonly id: FieldRef<"ProjectFeature", 'String'>
+    readonly project_id: FieldRef<"ProjectFeature", 'String'>
+    readonly title: FieldRef<"ProjectFeature", 'String'>
+    readonly description: FieldRef<"ProjectFeature", 'String'>
+    readonly youtube_url: FieldRef<"ProjectFeature", 'String'>
+    readonly tech_stack: FieldRef<"ProjectFeature", 'String[]'>
+    readonly display_order: FieldRef<"ProjectFeature", 'Int'>
+    readonly is_featured: FieldRef<"ProjectFeature", 'Boolean'>
+    readonly demo_url: FieldRef<"ProjectFeature", 'String'>
+    readonly created_at: FieldRef<"ProjectFeature", 'DateTime'>
+    readonly updated_at: FieldRef<"ProjectFeature", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ProjectFeature findUnique
+   */
+  export type ProjectFeatureFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectFeature
+     */
+    select?: ProjectFeatureSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectFeature
+     */
+    omit?: ProjectFeatureOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProjectFeatureInclude<ExtArgs> | null
+    /**
+     * Filter, which ProjectFeature to fetch.
+     */
+    where: ProjectFeatureWhereUniqueInput
+  }
+
+  /**
+   * ProjectFeature findUniqueOrThrow
+   */
+  export type ProjectFeatureFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectFeature
+     */
+    select?: ProjectFeatureSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectFeature
+     */
+    omit?: ProjectFeatureOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProjectFeatureInclude<ExtArgs> | null
+    /**
+     * Filter, which ProjectFeature to fetch.
+     */
+    where: ProjectFeatureWhereUniqueInput
+  }
+
+  /**
+   * ProjectFeature findFirst
+   */
+  export type ProjectFeatureFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectFeature
+     */
+    select?: ProjectFeatureSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectFeature
+     */
+    omit?: ProjectFeatureOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProjectFeatureInclude<ExtArgs> | null
+    /**
+     * Filter, which ProjectFeature to fetch.
+     */
+    where?: ProjectFeatureWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProjectFeatures to fetch.
+     */
+    orderBy?: ProjectFeatureOrderByWithRelationInput | ProjectFeatureOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ProjectFeatures.
+     */
+    cursor?: ProjectFeatureWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProjectFeatures from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProjectFeatures.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ProjectFeatures.
+     */
+    distinct?: ProjectFeatureScalarFieldEnum | ProjectFeatureScalarFieldEnum[]
+  }
+
+  /**
+   * ProjectFeature findFirstOrThrow
+   */
+  export type ProjectFeatureFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectFeature
+     */
+    select?: ProjectFeatureSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectFeature
+     */
+    omit?: ProjectFeatureOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProjectFeatureInclude<ExtArgs> | null
+    /**
+     * Filter, which ProjectFeature to fetch.
+     */
+    where?: ProjectFeatureWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProjectFeatures to fetch.
+     */
+    orderBy?: ProjectFeatureOrderByWithRelationInput | ProjectFeatureOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ProjectFeatures.
+     */
+    cursor?: ProjectFeatureWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProjectFeatures from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProjectFeatures.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ProjectFeatures.
+     */
+    distinct?: ProjectFeatureScalarFieldEnum | ProjectFeatureScalarFieldEnum[]
+  }
+
+  /**
+   * ProjectFeature findMany
+   */
+  export type ProjectFeatureFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectFeature
+     */
+    select?: ProjectFeatureSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectFeature
+     */
+    omit?: ProjectFeatureOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProjectFeatureInclude<ExtArgs> | null
+    /**
+     * Filter, which ProjectFeatures to fetch.
+     */
+    where?: ProjectFeatureWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProjectFeatures to fetch.
+     */
+    orderBy?: ProjectFeatureOrderByWithRelationInput | ProjectFeatureOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ProjectFeatures.
+     */
+    cursor?: ProjectFeatureWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProjectFeatures from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProjectFeatures.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ProjectFeatures.
+     */
+    distinct?: ProjectFeatureScalarFieldEnum | ProjectFeatureScalarFieldEnum[]
+  }
+
+  /**
+   * ProjectFeature create
+   */
+  export type ProjectFeatureCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectFeature
+     */
+    select?: ProjectFeatureSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectFeature
+     */
+    omit?: ProjectFeatureOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProjectFeatureInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ProjectFeature.
+     */
+    data: XOR<ProjectFeatureCreateInput, ProjectFeatureUncheckedCreateInput>
+  }
+
+  /**
+   * ProjectFeature createMany
+   */
+  export type ProjectFeatureCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ProjectFeatures.
+     */
+    data: ProjectFeatureCreateManyInput | ProjectFeatureCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ProjectFeature createManyAndReturn
+   */
+  export type ProjectFeatureCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectFeature
+     */
+    select?: ProjectFeatureSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectFeature
+     */
+    omit?: ProjectFeatureOmit<ExtArgs> | null
+    /**
+     * The data used to create many ProjectFeatures.
+     */
+    data: ProjectFeatureCreateManyInput | ProjectFeatureCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProjectFeatureIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ProjectFeature update
+   */
+  export type ProjectFeatureUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectFeature
+     */
+    select?: ProjectFeatureSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectFeature
+     */
+    omit?: ProjectFeatureOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProjectFeatureInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ProjectFeature.
+     */
+    data: XOR<ProjectFeatureUpdateInput, ProjectFeatureUncheckedUpdateInput>
+    /**
+     * Choose, which ProjectFeature to update.
+     */
+    where: ProjectFeatureWhereUniqueInput
+  }
+
+  /**
+   * ProjectFeature updateMany
+   */
+  export type ProjectFeatureUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ProjectFeatures.
+     */
+    data: XOR<ProjectFeatureUpdateManyMutationInput, ProjectFeatureUncheckedUpdateManyInput>
+    /**
+     * Filter which ProjectFeatures to update
+     */
+    where?: ProjectFeatureWhereInput
+    /**
+     * Limit how many ProjectFeatures to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ProjectFeature updateManyAndReturn
+   */
+  export type ProjectFeatureUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectFeature
+     */
+    select?: ProjectFeatureSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectFeature
+     */
+    omit?: ProjectFeatureOmit<ExtArgs> | null
+    /**
+     * The data used to update ProjectFeatures.
+     */
+    data: XOR<ProjectFeatureUpdateManyMutationInput, ProjectFeatureUncheckedUpdateManyInput>
+    /**
+     * Filter which ProjectFeatures to update
+     */
+    where?: ProjectFeatureWhereInput
+    /**
+     * Limit how many ProjectFeatures to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProjectFeatureIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ProjectFeature upsert
+   */
+  export type ProjectFeatureUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectFeature
+     */
+    select?: ProjectFeatureSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectFeature
+     */
+    omit?: ProjectFeatureOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProjectFeatureInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ProjectFeature to update in case it exists.
+     */
+    where: ProjectFeatureWhereUniqueInput
+    /**
+     * In case the ProjectFeature found by the `where` argument doesn't exist, create a new ProjectFeature with this data.
+     */
+    create: XOR<ProjectFeatureCreateInput, ProjectFeatureUncheckedCreateInput>
+    /**
+     * In case the ProjectFeature was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ProjectFeatureUpdateInput, ProjectFeatureUncheckedUpdateInput>
+  }
+
+  /**
+   * ProjectFeature delete
+   */
+  export type ProjectFeatureDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectFeature
+     */
+    select?: ProjectFeatureSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectFeature
+     */
+    omit?: ProjectFeatureOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProjectFeatureInclude<ExtArgs> | null
+    /**
+     * Filter which ProjectFeature to delete.
+     */
+    where: ProjectFeatureWhereUniqueInput
+  }
+
+  /**
+   * ProjectFeature deleteMany
+   */
+  export type ProjectFeatureDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ProjectFeatures to delete
+     */
+    where?: ProjectFeatureWhereInput
+    /**
+     * Limit how many ProjectFeatures to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ProjectFeature.media
+   */
+  export type ProjectFeature$mediaArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectFeatureMedia
+     */
+    select?: ProjectFeatureMediaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectFeatureMedia
+     */
+    omit?: ProjectFeatureMediaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProjectFeatureMediaInclude<ExtArgs> | null
+    where?: ProjectFeatureMediaWhereInput
+    orderBy?: ProjectFeatureMediaOrderByWithRelationInput | ProjectFeatureMediaOrderByWithRelationInput[]
+    cursor?: ProjectFeatureMediaWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ProjectFeatureMediaScalarFieldEnum | ProjectFeatureMediaScalarFieldEnum[]
+  }
+
+  /**
+   * ProjectFeature without action
+   */
+  export type ProjectFeatureDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectFeature
+     */
+    select?: ProjectFeatureSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectFeature
+     */
+    omit?: ProjectFeatureOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProjectFeatureInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ProjectFeatureMedia
+   */
+
+  export type AggregateProjectFeatureMedia = {
+    _count: ProjectFeatureMediaCountAggregateOutputType | null
+    _avg: ProjectFeatureMediaAvgAggregateOutputType | null
+    _sum: ProjectFeatureMediaSumAggregateOutputType | null
+    _min: ProjectFeatureMediaMinAggregateOutputType | null
+    _max: ProjectFeatureMediaMaxAggregateOutputType | null
+  }
+
+  export type ProjectFeatureMediaAvgAggregateOutputType = {
+    display_order: number | null
+  }
+
+  export type ProjectFeatureMediaSumAggregateOutputType = {
+    display_order: number | null
+  }
+
+  export type ProjectFeatureMediaMinAggregateOutputType = {
+    id: string | null
+    feature_id: string | null
+    storage_path: string | null
+    public_url: string | null
+    file_name: string | null
+    display_order: number | null
+    created_at: Date | null
+  }
+
+  export type ProjectFeatureMediaMaxAggregateOutputType = {
+    id: string | null
+    feature_id: string | null
+    storage_path: string | null
+    public_url: string | null
+    file_name: string | null
+    display_order: number | null
+    created_at: Date | null
+  }
+
+  export type ProjectFeatureMediaCountAggregateOutputType = {
+    id: number
+    feature_id: number
+    storage_path: number
+    public_url: number
+    file_name: number
+    display_order: number
+    created_at: number
+    _all: number
+  }
+
+
+  export type ProjectFeatureMediaAvgAggregateInputType = {
+    display_order?: true
+  }
+
+  export type ProjectFeatureMediaSumAggregateInputType = {
+    display_order?: true
+  }
+
+  export type ProjectFeatureMediaMinAggregateInputType = {
+    id?: true
+    feature_id?: true
+    storage_path?: true
+    public_url?: true
+    file_name?: true
+    display_order?: true
+    created_at?: true
+  }
+
+  export type ProjectFeatureMediaMaxAggregateInputType = {
+    id?: true
+    feature_id?: true
+    storage_path?: true
+    public_url?: true
+    file_name?: true
+    display_order?: true
+    created_at?: true
+  }
+
+  export type ProjectFeatureMediaCountAggregateInputType = {
+    id?: true
+    feature_id?: true
+    storage_path?: true
+    public_url?: true
+    file_name?: true
+    display_order?: true
+    created_at?: true
+    _all?: true
+  }
+
+  export type ProjectFeatureMediaAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ProjectFeatureMedia to aggregate.
+     */
+    where?: ProjectFeatureMediaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProjectFeatureMedias to fetch.
+     */
+    orderBy?: ProjectFeatureMediaOrderByWithRelationInput | ProjectFeatureMediaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ProjectFeatureMediaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProjectFeatureMedias from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProjectFeatureMedias.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ProjectFeatureMedias
+    **/
+    _count?: true | ProjectFeatureMediaCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ProjectFeatureMediaAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ProjectFeatureMediaSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ProjectFeatureMediaMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ProjectFeatureMediaMaxAggregateInputType
+  }
+
+  export type GetProjectFeatureMediaAggregateType<T extends ProjectFeatureMediaAggregateArgs> = {
+        [P in keyof T & keyof AggregateProjectFeatureMedia]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateProjectFeatureMedia[P]>
+      : GetScalarType<T[P], AggregateProjectFeatureMedia[P]>
+  }
+
+
+
+
+  export type ProjectFeatureMediaGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ProjectFeatureMediaWhereInput
+    orderBy?: ProjectFeatureMediaOrderByWithAggregationInput | ProjectFeatureMediaOrderByWithAggregationInput[]
+    by: ProjectFeatureMediaScalarFieldEnum[] | ProjectFeatureMediaScalarFieldEnum
+    having?: ProjectFeatureMediaScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ProjectFeatureMediaCountAggregateInputType | true
+    _avg?: ProjectFeatureMediaAvgAggregateInputType
+    _sum?: ProjectFeatureMediaSumAggregateInputType
+    _min?: ProjectFeatureMediaMinAggregateInputType
+    _max?: ProjectFeatureMediaMaxAggregateInputType
+  }
+
+  export type ProjectFeatureMediaGroupByOutputType = {
+    id: string
+    feature_id: string
+    storage_path: string
+    public_url: string
+    file_name: string
+    display_order: number
+    created_at: Date
+    _count: ProjectFeatureMediaCountAggregateOutputType | null
+    _avg: ProjectFeatureMediaAvgAggregateOutputType | null
+    _sum: ProjectFeatureMediaSumAggregateOutputType | null
+    _min: ProjectFeatureMediaMinAggregateOutputType | null
+    _max: ProjectFeatureMediaMaxAggregateOutputType | null
+  }
+
+  type GetProjectFeatureMediaGroupByPayload<T extends ProjectFeatureMediaGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ProjectFeatureMediaGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ProjectFeatureMediaGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ProjectFeatureMediaGroupByOutputType[P]>
+            : GetScalarType<T[P], ProjectFeatureMediaGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ProjectFeatureMediaSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    feature_id?: boolean
+    storage_path?: boolean
+    public_url?: boolean
+    file_name?: boolean
+    display_order?: boolean
+    created_at?: boolean
+    feature?: boolean | ProjectFeatureDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["projectFeatureMedia"]>
+
+  export type ProjectFeatureMediaSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    feature_id?: boolean
+    storage_path?: boolean
+    public_url?: boolean
+    file_name?: boolean
+    display_order?: boolean
+    created_at?: boolean
+    feature?: boolean | ProjectFeatureDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["projectFeatureMedia"]>
+
+  export type ProjectFeatureMediaSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    feature_id?: boolean
+    storage_path?: boolean
+    public_url?: boolean
+    file_name?: boolean
+    display_order?: boolean
+    created_at?: boolean
+    feature?: boolean | ProjectFeatureDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["projectFeatureMedia"]>
+
+  export type ProjectFeatureMediaSelectScalar = {
+    id?: boolean
+    feature_id?: boolean
+    storage_path?: boolean
+    public_url?: boolean
+    file_name?: boolean
+    display_order?: boolean
+    created_at?: boolean
+  }
+
+  export type ProjectFeatureMediaOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "feature_id" | "storage_path" | "public_url" | "file_name" | "display_order" | "created_at", ExtArgs["result"]["projectFeatureMedia"]>
+  export type ProjectFeatureMediaInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    feature?: boolean | ProjectFeatureDefaultArgs<ExtArgs>
+  }
+  export type ProjectFeatureMediaIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    feature?: boolean | ProjectFeatureDefaultArgs<ExtArgs>
+  }
+  export type ProjectFeatureMediaIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    feature?: boolean | ProjectFeatureDefaultArgs<ExtArgs>
+  }
+
+  export type $ProjectFeatureMediaPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ProjectFeatureMedia"
+    objects: {
+      feature: Prisma.$ProjectFeaturePayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      feature_id: string
+      storage_path: string
+      public_url: string
+      file_name: string
+      display_order: number
+      created_at: Date
+    }, ExtArgs["result"]["projectFeatureMedia"]>
+    composites: {}
+  }
+
+  type ProjectFeatureMediaGetPayload<S extends boolean | null | undefined | ProjectFeatureMediaDefaultArgs> = $Result.GetResult<Prisma.$ProjectFeatureMediaPayload, S>
+
+  type ProjectFeatureMediaCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ProjectFeatureMediaFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ProjectFeatureMediaCountAggregateInputType | true
+    }
+
+  export interface ProjectFeatureMediaDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ProjectFeatureMedia'], meta: { name: 'ProjectFeatureMedia' } }
+    /**
+     * Find zero or one ProjectFeatureMedia that matches the filter.
+     * @param {ProjectFeatureMediaFindUniqueArgs} args - Arguments to find a ProjectFeatureMedia
+     * @example
+     * // Get one ProjectFeatureMedia
+     * const projectFeatureMedia = await prisma.projectFeatureMedia.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ProjectFeatureMediaFindUniqueArgs>(args: SelectSubset<T, ProjectFeatureMediaFindUniqueArgs<ExtArgs>>): Prisma__ProjectFeatureMediaClient<$Result.GetResult<Prisma.$ProjectFeatureMediaPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ProjectFeatureMedia that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ProjectFeatureMediaFindUniqueOrThrowArgs} args - Arguments to find a ProjectFeatureMedia
+     * @example
+     * // Get one ProjectFeatureMedia
+     * const projectFeatureMedia = await prisma.projectFeatureMedia.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ProjectFeatureMediaFindUniqueOrThrowArgs>(args: SelectSubset<T, ProjectFeatureMediaFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ProjectFeatureMediaClient<$Result.GetResult<Prisma.$ProjectFeatureMediaPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ProjectFeatureMedia that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProjectFeatureMediaFindFirstArgs} args - Arguments to find a ProjectFeatureMedia
+     * @example
+     * // Get one ProjectFeatureMedia
+     * const projectFeatureMedia = await prisma.projectFeatureMedia.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ProjectFeatureMediaFindFirstArgs>(args?: SelectSubset<T, ProjectFeatureMediaFindFirstArgs<ExtArgs>>): Prisma__ProjectFeatureMediaClient<$Result.GetResult<Prisma.$ProjectFeatureMediaPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ProjectFeatureMedia that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProjectFeatureMediaFindFirstOrThrowArgs} args - Arguments to find a ProjectFeatureMedia
+     * @example
+     * // Get one ProjectFeatureMedia
+     * const projectFeatureMedia = await prisma.projectFeatureMedia.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ProjectFeatureMediaFindFirstOrThrowArgs>(args?: SelectSubset<T, ProjectFeatureMediaFindFirstOrThrowArgs<ExtArgs>>): Prisma__ProjectFeatureMediaClient<$Result.GetResult<Prisma.$ProjectFeatureMediaPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ProjectFeatureMedias that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProjectFeatureMediaFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ProjectFeatureMedias
+     * const projectFeatureMedias = await prisma.projectFeatureMedia.findMany()
+     * 
+     * // Get first 10 ProjectFeatureMedias
+     * const projectFeatureMedias = await prisma.projectFeatureMedia.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const projectFeatureMediaWithIdOnly = await prisma.projectFeatureMedia.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ProjectFeatureMediaFindManyArgs>(args?: SelectSubset<T, ProjectFeatureMediaFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProjectFeatureMediaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ProjectFeatureMedia.
+     * @param {ProjectFeatureMediaCreateArgs} args - Arguments to create a ProjectFeatureMedia.
+     * @example
+     * // Create one ProjectFeatureMedia
+     * const ProjectFeatureMedia = await prisma.projectFeatureMedia.create({
+     *   data: {
+     *     // ... data to create a ProjectFeatureMedia
+     *   }
+     * })
+     * 
+     */
+    create<T extends ProjectFeatureMediaCreateArgs>(args: SelectSubset<T, ProjectFeatureMediaCreateArgs<ExtArgs>>): Prisma__ProjectFeatureMediaClient<$Result.GetResult<Prisma.$ProjectFeatureMediaPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ProjectFeatureMedias.
+     * @param {ProjectFeatureMediaCreateManyArgs} args - Arguments to create many ProjectFeatureMedias.
+     * @example
+     * // Create many ProjectFeatureMedias
+     * const projectFeatureMedia = await prisma.projectFeatureMedia.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ProjectFeatureMediaCreateManyArgs>(args?: SelectSubset<T, ProjectFeatureMediaCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ProjectFeatureMedias and returns the data saved in the database.
+     * @param {ProjectFeatureMediaCreateManyAndReturnArgs} args - Arguments to create many ProjectFeatureMedias.
+     * @example
+     * // Create many ProjectFeatureMedias
+     * const projectFeatureMedia = await prisma.projectFeatureMedia.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ProjectFeatureMedias and only return the `id`
+     * const projectFeatureMediaWithIdOnly = await prisma.projectFeatureMedia.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ProjectFeatureMediaCreateManyAndReturnArgs>(args?: SelectSubset<T, ProjectFeatureMediaCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProjectFeatureMediaPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a ProjectFeatureMedia.
+     * @param {ProjectFeatureMediaDeleteArgs} args - Arguments to delete one ProjectFeatureMedia.
+     * @example
+     * // Delete one ProjectFeatureMedia
+     * const ProjectFeatureMedia = await prisma.projectFeatureMedia.delete({
+     *   where: {
+     *     // ... filter to delete one ProjectFeatureMedia
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ProjectFeatureMediaDeleteArgs>(args: SelectSubset<T, ProjectFeatureMediaDeleteArgs<ExtArgs>>): Prisma__ProjectFeatureMediaClient<$Result.GetResult<Prisma.$ProjectFeatureMediaPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ProjectFeatureMedia.
+     * @param {ProjectFeatureMediaUpdateArgs} args - Arguments to update one ProjectFeatureMedia.
+     * @example
+     * // Update one ProjectFeatureMedia
+     * const projectFeatureMedia = await prisma.projectFeatureMedia.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ProjectFeatureMediaUpdateArgs>(args: SelectSubset<T, ProjectFeatureMediaUpdateArgs<ExtArgs>>): Prisma__ProjectFeatureMediaClient<$Result.GetResult<Prisma.$ProjectFeatureMediaPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ProjectFeatureMedias.
+     * @param {ProjectFeatureMediaDeleteManyArgs} args - Arguments to filter ProjectFeatureMedias to delete.
+     * @example
+     * // Delete a few ProjectFeatureMedias
+     * const { count } = await prisma.projectFeatureMedia.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ProjectFeatureMediaDeleteManyArgs>(args?: SelectSubset<T, ProjectFeatureMediaDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ProjectFeatureMedias.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProjectFeatureMediaUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ProjectFeatureMedias
+     * const projectFeatureMedia = await prisma.projectFeatureMedia.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ProjectFeatureMediaUpdateManyArgs>(args: SelectSubset<T, ProjectFeatureMediaUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ProjectFeatureMedias and returns the data updated in the database.
+     * @param {ProjectFeatureMediaUpdateManyAndReturnArgs} args - Arguments to update many ProjectFeatureMedias.
+     * @example
+     * // Update many ProjectFeatureMedias
+     * const projectFeatureMedia = await prisma.projectFeatureMedia.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more ProjectFeatureMedias and only return the `id`
+     * const projectFeatureMediaWithIdOnly = await prisma.projectFeatureMedia.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ProjectFeatureMediaUpdateManyAndReturnArgs>(args: SelectSubset<T, ProjectFeatureMediaUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProjectFeatureMediaPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one ProjectFeatureMedia.
+     * @param {ProjectFeatureMediaUpsertArgs} args - Arguments to update or create a ProjectFeatureMedia.
+     * @example
+     * // Update or create a ProjectFeatureMedia
+     * const projectFeatureMedia = await prisma.projectFeatureMedia.upsert({
+     *   create: {
+     *     // ... data to create a ProjectFeatureMedia
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ProjectFeatureMedia we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ProjectFeatureMediaUpsertArgs>(args: SelectSubset<T, ProjectFeatureMediaUpsertArgs<ExtArgs>>): Prisma__ProjectFeatureMediaClient<$Result.GetResult<Prisma.$ProjectFeatureMediaPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ProjectFeatureMedias.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProjectFeatureMediaCountArgs} args - Arguments to filter ProjectFeatureMedias to count.
+     * @example
+     * // Count the number of ProjectFeatureMedias
+     * const count = await prisma.projectFeatureMedia.count({
+     *   where: {
+     *     // ... the filter for the ProjectFeatureMedias we want to count
+     *   }
+     * })
+    **/
+    count<T extends ProjectFeatureMediaCountArgs>(
+      args?: Subset<T, ProjectFeatureMediaCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ProjectFeatureMediaCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ProjectFeatureMedia.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProjectFeatureMediaAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ProjectFeatureMediaAggregateArgs>(args: Subset<T, ProjectFeatureMediaAggregateArgs>): Prisma.PrismaPromise<GetProjectFeatureMediaAggregateType<T>>
+
+    /**
+     * Group by ProjectFeatureMedia.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProjectFeatureMediaGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ProjectFeatureMediaGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ProjectFeatureMediaGroupByArgs['orderBy'] }
+        : { orderBy?: ProjectFeatureMediaGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ProjectFeatureMediaGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetProjectFeatureMediaGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ProjectFeatureMedia model
+   */
+  readonly fields: ProjectFeatureMediaFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ProjectFeatureMedia.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ProjectFeatureMediaClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    feature<T extends ProjectFeatureDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ProjectFeatureDefaultArgs<ExtArgs>>): Prisma__ProjectFeatureClient<$Result.GetResult<Prisma.$ProjectFeaturePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ProjectFeatureMedia model
+   */
+  interface ProjectFeatureMediaFieldRefs {
+    readonly id: FieldRef<"ProjectFeatureMedia", 'String'>
+    readonly feature_id: FieldRef<"ProjectFeatureMedia", 'String'>
+    readonly storage_path: FieldRef<"ProjectFeatureMedia", 'String'>
+    readonly public_url: FieldRef<"ProjectFeatureMedia", 'String'>
+    readonly file_name: FieldRef<"ProjectFeatureMedia", 'String'>
+    readonly display_order: FieldRef<"ProjectFeatureMedia", 'Int'>
+    readonly created_at: FieldRef<"ProjectFeatureMedia", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ProjectFeatureMedia findUnique
+   */
+  export type ProjectFeatureMediaFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectFeatureMedia
+     */
+    select?: ProjectFeatureMediaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectFeatureMedia
+     */
+    omit?: ProjectFeatureMediaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProjectFeatureMediaInclude<ExtArgs> | null
+    /**
+     * Filter, which ProjectFeatureMedia to fetch.
+     */
+    where: ProjectFeatureMediaWhereUniqueInput
+  }
+
+  /**
+   * ProjectFeatureMedia findUniqueOrThrow
+   */
+  export type ProjectFeatureMediaFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectFeatureMedia
+     */
+    select?: ProjectFeatureMediaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectFeatureMedia
+     */
+    omit?: ProjectFeatureMediaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProjectFeatureMediaInclude<ExtArgs> | null
+    /**
+     * Filter, which ProjectFeatureMedia to fetch.
+     */
+    where: ProjectFeatureMediaWhereUniqueInput
+  }
+
+  /**
+   * ProjectFeatureMedia findFirst
+   */
+  export type ProjectFeatureMediaFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectFeatureMedia
+     */
+    select?: ProjectFeatureMediaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectFeatureMedia
+     */
+    omit?: ProjectFeatureMediaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProjectFeatureMediaInclude<ExtArgs> | null
+    /**
+     * Filter, which ProjectFeatureMedia to fetch.
+     */
+    where?: ProjectFeatureMediaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProjectFeatureMedias to fetch.
+     */
+    orderBy?: ProjectFeatureMediaOrderByWithRelationInput | ProjectFeatureMediaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ProjectFeatureMedias.
+     */
+    cursor?: ProjectFeatureMediaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProjectFeatureMedias from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProjectFeatureMedias.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ProjectFeatureMedias.
+     */
+    distinct?: ProjectFeatureMediaScalarFieldEnum | ProjectFeatureMediaScalarFieldEnum[]
+  }
+
+  /**
+   * ProjectFeatureMedia findFirstOrThrow
+   */
+  export type ProjectFeatureMediaFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectFeatureMedia
+     */
+    select?: ProjectFeatureMediaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectFeatureMedia
+     */
+    omit?: ProjectFeatureMediaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProjectFeatureMediaInclude<ExtArgs> | null
+    /**
+     * Filter, which ProjectFeatureMedia to fetch.
+     */
+    where?: ProjectFeatureMediaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProjectFeatureMedias to fetch.
+     */
+    orderBy?: ProjectFeatureMediaOrderByWithRelationInput | ProjectFeatureMediaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ProjectFeatureMedias.
+     */
+    cursor?: ProjectFeatureMediaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProjectFeatureMedias from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProjectFeatureMedias.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ProjectFeatureMedias.
+     */
+    distinct?: ProjectFeatureMediaScalarFieldEnum | ProjectFeatureMediaScalarFieldEnum[]
+  }
+
+  /**
+   * ProjectFeatureMedia findMany
+   */
+  export type ProjectFeatureMediaFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectFeatureMedia
+     */
+    select?: ProjectFeatureMediaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectFeatureMedia
+     */
+    omit?: ProjectFeatureMediaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProjectFeatureMediaInclude<ExtArgs> | null
+    /**
+     * Filter, which ProjectFeatureMedias to fetch.
+     */
+    where?: ProjectFeatureMediaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProjectFeatureMedias to fetch.
+     */
+    orderBy?: ProjectFeatureMediaOrderByWithRelationInput | ProjectFeatureMediaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ProjectFeatureMedias.
+     */
+    cursor?: ProjectFeatureMediaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProjectFeatureMedias from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProjectFeatureMedias.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ProjectFeatureMedias.
+     */
+    distinct?: ProjectFeatureMediaScalarFieldEnum | ProjectFeatureMediaScalarFieldEnum[]
+  }
+
+  /**
+   * ProjectFeatureMedia create
+   */
+  export type ProjectFeatureMediaCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectFeatureMedia
+     */
+    select?: ProjectFeatureMediaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectFeatureMedia
+     */
+    omit?: ProjectFeatureMediaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProjectFeatureMediaInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ProjectFeatureMedia.
+     */
+    data: XOR<ProjectFeatureMediaCreateInput, ProjectFeatureMediaUncheckedCreateInput>
+  }
+
+  /**
+   * ProjectFeatureMedia createMany
+   */
+  export type ProjectFeatureMediaCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ProjectFeatureMedias.
+     */
+    data: ProjectFeatureMediaCreateManyInput | ProjectFeatureMediaCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ProjectFeatureMedia createManyAndReturn
+   */
+  export type ProjectFeatureMediaCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectFeatureMedia
+     */
+    select?: ProjectFeatureMediaSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectFeatureMedia
+     */
+    omit?: ProjectFeatureMediaOmit<ExtArgs> | null
+    /**
+     * The data used to create many ProjectFeatureMedias.
+     */
+    data: ProjectFeatureMediaCreateManyInput | ProjectFeatureMediaCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProjectFeatureMediaIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ProjectFeatureMedia update
+   */
+  export type ProjectFeatureMediaUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectFeatureMedia
+     */
+    select?: ProjectFeatureMediaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectFeatureMedia
+     */
+    omit?: ProjectFeatureMediaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProjectFeatureMediaInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ProjectFeatureMedia.
+     */
+    data: XOR<ProjectFeatureMediaUpdateInput, ProjectFeatureMediaUncheckedUpdateInput>
+    /**
+     * Choose, which ProjectFeatureMedia to update.
+     */
+    where: ProjectFeatureMediaWhereUniqueInput
+  }
+
+  /**
+   * ProjectFeatureMedia updateMany
+   */
+  export type ProjectFeatureMediaUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ProjectFeatureMedias.
+     */
+    data: XOR<ProjectFeatureMediaUpdateManyMutationInput, ProjectFeatureMediaUncheckedUpdateManyInput>
+    /**
+     * Filter which ProjectFeatureMedias to update
+     */
+    where?: ProjectFeatureMediaWhereInput
+    /**
+     * Limit how many ProjectFeatureMedias to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ProjectFeatureMedia updateManyAndReturn
+   */
+  export type ProjectFeatureMediaUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectFeatureMedia
+     */
+    select?: ProjectFeatureMediaSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectFeatureMedia
+     */
+    omit?: ProjectFeatureMediaOmit<ExtArgs> | null
+    /**
+     * The data used to update ProjectFeatureMedias.
+     */
+    data: XOR<ProjectFeatureMediaUpdateManyMutationInput, ProjectFeatureMediaUncheckedUpdateManyInput>
+    /**
+     * Filter which ProjectFeatureMedias to update
+     */
+    where?: ProjectFeatureMediaWhereInput
+    /**
+     * Limit how many ProjectFeatureMedias to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProjectFeatureMediaIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ProjectFeatureMedia upsert
+   */
+  export type ProjectFeatureMediaUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectFeatureMedia
+     */
+    select?: ProjectFeatureMediaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectFeatureMedia
+     */
+    omit?: ProjectFeatureMediaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProjectFeatureMediaInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ProjectFeatureMedia to update in case it exists.
+     */
+    where: ProjectFeatureMediaWhereUniqueInput
+    /**
+     * In case the ProjectFeatureMedia found by the `where` argument doesn't exist, create a new ProjectFeatureMedia with this data.
+     */
+    create: XOR<ProjectFeatureMediaCreateInput, ProjectFeatureMediaUncheckedCreateInput>
+    /**
+     * In case the ProjectFeatureMedia was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ProjectFeatureMediaUpdateInput, ProjectFeatureMediaUncheckedUpdateInput>
+  }
+
+  /**
+   * ProjectFeatureMedia delete
+   */
+  export type ProjectFeatureMediaDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectFeatureMedia
+     */
+    select?: ProjectFeatureMediaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectFeatureMedia
+     */
+    omit?: ProjectFeatureMediaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProjectFeatureMediaInclude<ExtArgs> | null
+    /**
+     * Filter which ProjectFeatureMedia to delete.
+     */
+    where: ProjectFeatureMediaWhereUniqueInput
+  }
+
+  /**
+   * ProjectFeatureMedia deleteMany
+   */
+  export type ProjectFeatureMediaDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ProjectFeatureMedias to delete
+     */
+    where?: ProjectFeatureMediaWhereInput
+    /**
+     * Limit how many ProjectFeatureMedias to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ProjectFeatureMedia without action
+   */
+  export type ProjectFeatureMediaDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectFeatureMedia
+     */
+    select?: ProjectFeatureMediaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectFeatureMedia
+     */
+    omit?: ProjectFeatureMediaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProjectFeatureMediaInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -4722,6 +7296,36 @@ export namespace Prisma {
   };
 
   export type ProjectMediaScalarFieldEnum = (typeof ProjectMediaScalarFieldEnum)[keyof typeof ProjectMediaScalarFieldEnum]
+
+
+  export const ProjectFeatureScalarFieldEnum: {
+    id: 'id',
+    project_id: 'project_id',
+    title: 'title',
+    description: 'description',
+    youtube_url: 'youtube_url',
+    tech_stack: 'tech_stack',
+    display_order: 'display_order',
+    is_featured: 'is_featured',
+    demo_url: 'demo_url',
+    created_at: 'created_at',
+    updated_at: 'updated_at'
+  };
+
+  export type ProjectFeatureScalarFieldEnum = (typeof ProjectFeatureScalarFieldEnum)[keyof typeof ProjectFeatureScalarFieldEnum]
+
+
+  export const ProjectFeatureMediaScalarFieldEnum: {
+    id: 'id',
+    feature_id: 'feature_id',
+    storage_path: 'storage_path',
+    public_url: 'public_url',
+    file_name: 'file_name',
+    display_order: 'display_order',
+    created_at: 'created_at'
+  };
+
+  export type ProjectFeatureMediaScalarFieldEnum = (typeof ProjectFeatureMediaScalarFieldEnum)[keyof typeof ProjectFeatureMediaScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -4879,6 +7483,7 @@ export namespace Prisma {
     updated_at?: DateTimeFilter<"Project"> | Date | string
     timeline_entries?: TimelineEntryListRelationFilter
     project_media?: ProjectMediaListRelationFilter
+    features?: ProjectFeatureListRelationFilter
   }
 
   export type ProjectOrderByWithRelationInput = {
@@ -4896,6 +7501,7 @@ export namespace Prisma {
     updated_at?: SortOrder
     timeline_entries?: TimelineEntryOrderByRelationAggregateInput
     project_media?: ProjectMediaOrderByRelationAggregateInput
+    features?: ProjectFeatureOrderByRelationAggregateInput
   }
 
   export type ProjectWhereUniqueInput = Prisma.AtLeast<{
@@ -4916,6 +7522,7 @@ export namespace Prisma {
     updated_at?: DateTimeFilter<"Project"> | Date | string
     timeline_entries?: TimelineEntryListRelationFilter
     project_media?: ProjectMediaListRelationFilter
+    features?: ProjectFeatureListRelationFilter
   }, "id" | "github_repo_url">
 
   export type ProjectOrderByWithAggregationInput = {
@@ -5132,6 +7739,163 @@ export namespace Prisma {
     created_at?: DateTimeWithAggregatesFilter<"ProjectMedia"> | Date | string
   }
 
+  export type ProjectFeatureWhereInput = {
+    AND?: ProjectFeatureWhereInput | ProjectFeatureWhereInput[]
+    OR?: ProjectFeatureWhereInput[]
+    NOT?: ProjectFeatureWhereInput | ProjectFeatureWhereInput[]
+    id?: StringFilter<"ProjectFeature"> | string
+    project_id?: StringFilter<"ProjectFeature"> | string
+    title?: StringFilter<"ProjectFeature"> | string
+    description?: StringNullableFilter<"ProjectFeature"> | string | null
+    youtube_url?: StringNullableFilter<"ProjectFeature"> | string | null
+    tech_stack?: StringNullableListFilter<"ProjectFeature">
+    display_order?: IntFilter<"ProjectFeature"> | number
+    is_featured?: BoolFilter<"ProjectFeature"> | boolean
+    demo_url?: StringNullableFilter<"ProjectFeature"> | string | null
+    created_at?: DateTimeFilter<"ProjectFeature"> | Date | string
+    updated_at?: DateTimeFilter<"ProjectFeature"> | Date | string
+    project?: XOR<ProjectScalarRelationFilter, ProjectWhereInput>
+    media?: ProjectFeatureMediaListRelationFilter
+  }
+
+  export type ProjectFeatureOrderByWithRelationInput = {
+    id?: SortOrder
+    project_id?: SortOrder
+    title?: SortOrder
+    description?: SortOrderInput | SortOrder
+    youtube_url?: SortOrderInput | SortOrder
+    tech_stack?: SortOrder
+    display_order?: SortOrder
+    is_featured?: SortOrder
+    demo_url?: SortOrderInput | SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+    project?: ProjectOrderByWithRelationInput
+    media?: ProjectFeatureMediaOrderByRelationAggregateInput
+  }
+
+  export type ProjectFeatureWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: ProjectFeatureWhereInput | ProjectFeatureWhereInput[]
+    OR?: ProjectFeatureWhereInput[]
+    NOT?: ProjectFeatureWhereInput | ProjectFeatureWhereInput[]
+    project_id?: StringFilter<"ProjectFeature"> | string
+    title?: StringFilter<"ProjectFeature"> | string
+    description?: StringNullableFilter<"ProjectFeature"> | string | null
+    youtube_url?: StringNullableFilter<"ProjectFeature"> | string | null
+    tech_stack?: StringNullableListFilter<"ProjectFeature">
+    display_order?: IntFilter<"ProjectFeature"> | number
+    is_featured?: BoolFilter<"ProjectFeature"> | boolean
+    demo_url?: StringNullableFilter<"ProjectFeature"> | string | null
+    created_at?: DateTimeFilter<"ProjectFeature"> | Date | string
+    updated_at?: DateTimeFilter<"ProjectFeature"> | Date | string
+    project?: XOR<ProjectScalarRelationFilter, ProjectWhereInput>
+    media?: ProjectFeatureMediaListRelationFilter
+  }, "id">
+
+  export type ProjectFeatureOrderByWithAggregationInput = {
+    id?: SortOrder
+    project_id?: SortOrder
+    title?: SortOrder
+    description?: SortOrderInput | SortOrder
+    youtube_url?: SortOrderInput | SortOrder
+    tech_stack?: SortOrder
+    display_order?: SortOrder
+    is_featured?: SortOrder
+    demo_url?: SortOrderInput | SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+    _count?: ProjectFeatureCountOrderByAggregateInput
+    _avg?: ProjectFeatureAvgOrderByAggregateInput
+    _max?: ProjectFeatureMaxOrderByAggregateInput
+    _min?: ProjectFeatureMinOrderByAggregateInput
+    _sum?: ProjectFeatureSumOrderByAggregateInput
+  }
+
+  export type ProjectFeatureScalarWhereWithAggregatesInput = {
+    AND?: ProjectFeatureScalarWhereWithAggregatesInput | ProjectFeatureScalarWhereWithAggregatesInput[]
+    OR?: ProjectFeatureScalarWhereWithAggregatesInput[]
+    NOT?: ProjectFeatureScalarWhereWithAggregatesInput | ProjectFeatureScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ProjectFeature"> | string
+    project_id?: StringWithAggregatesFilter<"ProjectFeature"> | string
+    title?: StringWithAggregatesFilter<"ProjectFeature"> | string
+    description?: StringNullableWithAggregatesFilter<"ProjectFeature"> | string | null
+    youtube_url?: StringNullableWithAggregatesFilter<"ProjectFeature"> | string | null
+    tech_stack?: StringNullableListFilter<"ProjectFeature">
+    display_order?: IntWithAggregatesFilter<"ProjectFeature"> | number
+    is_featured?: BoolWithAggregatesFilter<"ProjectFeature"> | boolean
+    demo_url?: StringNullableWithAggregatesFilter<"ProjectFeature"> | string | null
+    created_at?: DateTimeWithAggregatesFilter<"ProjectFeature"> | Date | string
+    updated_at?: DateTimeWithAggregatesFilter<"ProjectFeature"> | Date | string
+  }
+
+  export type ProjectFeatureMediaWhereInput = {
+    AND?: ProjectFeatureMediaWhereInput | ProjectFeatureMediaWhereInput[]
+    OR?: ProjectFeatureMediaWhereInput[]
+    NOT?: ProjectFeatureMediaWhereInput | ProjectFeatureMediaWhereInput[]
+    id?: StringFilter<"ProjectFeatureMedia"> | string
+    feature_id?: StringFilter<"ProjectFeatureMedia"> | string
+    storage_path?: StringFilter<"ProjectFeatureMedia"> | string
+    public_url?: StringFilter<"ProjectFeatureMedia"> | string
+    file_name?: StringFilter<"ProjectFeatureMedia"> | string
+    display_order?: IntFilter<"ProjectFeatureMedia"> | number
+    created_at?: DateTimeFilter<"ProjectFeatureMedia"> | Date | string
+    feature?: XOR<ProjectFeatureScalarRelationFilter, ProjectFeatureWhereInput>
+  }
+
+  export type ProjectFeatureMediaOrderByWithRelationInput = {
+    id?: SortOrder
+    feature_id?: SortOrder
+    storage_path?: SortOrder
+    public_url?: SortOrder
+    file_name?: SortOrder
+    display_order?: SortOrder
+    created_at?: SortOrder
+    feature?: ProjectFeatureOrderByWithRelationInput
+  }
+
+  export type ProjectFeatureMediaWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: ProjectFeatureMediaWhereInput | ProjectFeatureMediaWhereInput[]
+    OR?: ProjectFeatureMediaWhereInput[]
+    NOT?: ProjectFeatureMediaWhereInput | ProjectFeatureMediaWhereInput[]
+    feature_id?: StringFilter<"ProjectFeatureMedia"> | string
+    storage_path?: StringFilter<"ProjectFeatureMedia"> | string
+    public_url?: StringFilter<"ProjectFeatureMedia"> | string
+    file_name?: StringFilter<"ProjectFeatureMedia"> | string
+    display_order?: IntFilter<"ProjectFeatureMedia"> | number
+    created_at?: DateTimeFilter<"ProjectFeatureMedia"> | Date | string
+    feature?: XOR<ProjectFeatureScalarRelationFilter, ProjectFeatureWhereInput>
+  }, "id">
+
+  export type ProjectFeatureMediaOrderByWithAggregationInput = {
+    id?: SortOrder
+    feature_id?: SortOrder
+    storage_path?: SortOrder
+    public_url?: SortOrder
+    file_name?: SortOrder
+    display_order?: SortOrder
+    created_at?: SortOrder
+    _count?: ProjectFeatureMediaCountOrderByAggregateInput
+    _avg?: ProjectFeatureMediaAvgOrderByAggregateInput
+    _max?: ProjectFeatureMediaMaxOrderByAggregateInput
+    _min?: ProjectFeatureMediaMinOrderByAggregateInput
+    _sum?: ProjectFeatureMediaSumOrderByAggregateInput
+  }
+
+  export type ProjectFeatureMediaScalarWhereWithAggregatesInput = {
+    AND?: ProjectFeatureMediaScalarWhereWithAggregatesInput | ProjectFeatureMediaScalarWhereWithAggregatesInput[]
+    OR?: ProjectFeatureMediaScalarWhereWithAggregatesInput[]
+    NOT?: ProjectFeatureMediaScalarWhereWithAggregatesInput | ProjectFeatureMediaScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ProjectFeatureMedia"> | string
+    feature_id?: StringWithAggregatesFilter<"ProjectFeatureMedia"> | string
+    storage_path?: StringWithAggregatesFilter<"ProjectFeatureMedia"> | string
+    public_url?: StringWithAggregatesFilter<"ProjectFeatureMedia"> | string
+    file_name?: StringWithAggregatesFilter<"ProjectFeatureMedia"> | string
+    display_order?: IntWithAggregatesFilter<"ProjectFeatureMedia"> | number
+    created_at?: DateTimeWithAggregatesFilter<"ProjectFeatureMedia"> | Date | string
+  }
+
   export type ProjectCreateInput = {
     id?: string
     title: string
@@ -5147,6 +7911,7 @@ export namespace Prisma {
     updated_at?: Date | string
     timeline_entries?: TimelineEntryCreateNestedManyWithoutProjectInput
     project_media?: ProjectMediaCreateNestedManyWithoutProjectInput
+    features?: ProjectFeatureCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectUncheckedCreateInput = {
@@ -5164,6 +7929,7 @@ export namespace Prisma {
     updated_at?: Date | string
     timeline_entries?: TimelineEntryUncheckedCreateNestedManyWithoutProjectInput
     project_media?: ProjectMediaUncheckedCreateNestedManyWithoutProjectInput
+    features?: ProjectFeatureUncheckedCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectUpdateInput = {
@@ -5181,6 +7947,7 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     timeline_entries?: TimelineEntryUpdateManyWithoutProjectNestedInput
     project_media?: ProjectMediaUpdateManyWithoutProjectNestedInput
+    features?: ProjectFeatureUpdateManyWithoutProjectNestedInput
   }
 
   export type ProjectUncheckedUpdateInput = {
@@ -5198,6 +7965,7 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     timeline_entries?: TimelineEntryUncheckedUpdateManyWithoutProjectNestedInput
     project_media?: ProjectMediaUncheckedUpdateManyWithoutProjectNestedInput
+    features?: ProjectFeatureUncheckedUpdateManyWithoutProjectNestedInput
   }
 
   export type ProjectCreateManyInput = {
@@ -5446,6 +8214,176 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type ProjectFeatureCreateInput = {
+    id?: string
+    title: string
+    description?: string | null
+    youtube_url?: string | null
+    tech_stack?: ProjectFeatureCreatetech_stackInput | string[]
+    display_order?: number
+    is_featured?: boolean
+    demo_url?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+    project: ProjectCreateNestedOneWithoutFeaturesInput
+    media?: ProjectFeatureMediaCreateNestedManyWithoutFeatureInput
+  }
+
+  export type ProjectFeatureUncheckedCreateInput = {
+    id?: string
+    project_id: string
+    title: string
+    description?: string | null
+    youtube_url?: string | null
+    tech_stack?: ProjectFeatureCreatetech_stackInput | string[]
+    display_order?: number
+    is_featured?: boolean
+    demo_url?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+    media?: ProjectFeatureMediaUncheckedCreateNestedManyWithoutFeatureInput
+  }
+
+  export type ProjectFeatureUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    youtube_url?: NullableStringFieldUpdateOperationsInput | string | null
+    tech_stack?: ProjectFeatureUpdatetech_stackInput | string[]
+    display_order?: IntFieldUpdateOperationsInput | number
+    is_featured?: BoolFieldUpdateOperationsInput | boolean
+    demo_url?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    project?: ProjectUpdateOneRequiredWithoutFeaturesNestedInput
+    media?: ProjectFeatureMediaUpdateManyWithoutFeatureNestedInput
+  }
+
+  export type ProjectFeatureUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    project_id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    youtube_url?: NullableStringFieldUpdateOperationsInput | string | null
+    tech_stack?: ProjectFeatureUpdatetech_stackInput | string[]
+    display_order?: IntFieldUpdateOperationsInput | number
+    is_featured?: BoolFieldUpdateOperationsInput | boolean
+    demo_url?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    media?: ProjectFeatureMediaUncheckedUpdateManyWithoutFeatureNestedInput
+  }
+
+  export type ProjectFeatureCreateManyInput = {
+    id?: string
+    project_id: string
+    title: string
+    description?: string | null
+    youtube_url?: string | null
+    tech_stack?: ProjectFeatureCreatetech_stackInput | string[]
+    display_order?: number
+    is_featured?: boolean
+    demo_url?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
+  export type ProjectFeatureUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    youtube_url?: NullableStringFieldUpdateOperationsInput | string | null
+    tech_stack?: ProjectFeatureUpdatetech_stackInput | string[]
+    display_order?: IntFieldUpdateOperationsInput | number
+    is_featured?: BoolFieldUpdateOperationsInput | boolean
+    demo_url?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProjectFeatureUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    project_id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    youtube_url?: NullableStringFieldUpdateOperationsInput | string | null
+    tech_stack?: ProjectFeatureUpdatetech_stackInput | string[]
+    display_order?: IntFieldUpdateOperationsInput | number
+    is_featured?: BoolFieldUpdateOperationsInput | boolean
+    demo_url?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProjectFeatureMediaCreateInput = {
+    id?: string
+    storage_path: string
+    public_url: string
+    file_name: string
+    display_order?: number
+    created_at?: Date | string
+    feature: ProjectFeatureCreateNestedOneWithoutMediaInput
+  }
+
+  export type ProjectFeatureMediaUncheckedCreateInput = {
+    id?: string
+    feature_id: string
+    storage_path: string
+    public_url: string
+    file_name: string
+    display_order?: number
+    created_at?: Date | string
+  }
+
+  export type ProjectFeatureMediaUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    storage_path?: StringFieldUpdateOperationsInput | string
+    public_url?: StringFieldUpdateOperationsInput | string
+    file_name?: StringFieldUpdateOperationsInput | string
+    display_order?: IntFieldUpdateOperationsInput | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    feature?: ProjectFeatureUpdateOneRequiredWithoutMediaNestedInput
+  }
+
+  export type ProjectFeatureMediaUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    feature_id?: StringFieldUpdateOperationsInput | string
+    storage_path?: StringFieldUpdateOperationsInput | string
+    public_url?: StringFieldUpdateOperationsInput | string
+    file_name?: StringFieldUpdateOperationsInput | string
+    display_order?: IntFieldUpdateOperationsInput | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProjectFeatureMediaCreateManyInput = {
+    id?: string
+    feature_id: string
+    storage_path: string
+    public_url: string
+    file_name: string
+    display_order?: number
+    created_at?: Date | string
+  }
+
+  export type ProjectFeatureMediaUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    storage_path?: StringFieldUpdateOperationsInput | string
+    public_url?: StringFieldUpdateOperationsInput | string
+    file_name?: StringFieldUpdateOperationsInput | string
+    display_order?: IntFieldUpdateOperationsInput | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProjectFeatureMediaUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    feature_id?: StringFieldUpdateOperationsInput | string
+    storage_path?: StringFieldUpdateOperationsInput | string
+    public_url?: StringFieldUpdateOperationsInput | string
+    file_name?: StringFieldUpdateOperationsInput | string
+    display_order?: IntFieldUpdateOperationsInput | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -5525,6 +8463,12 @@ export namespace Prisma {
     none?: ProjectMediaWhereInput
   }
 
+  export type ProjectFeatureListRelationFilter = {
+    every?: ProjectFeatureWhereInput
+    some?: ProjectFeatureWhereInput
+    none?: ProjectFeatureWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -5535,6 +8479,10 @@ export namespace Prisma {
   }
 
   export type ProjectMediaOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ProjectFeatureOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -5863,6 +8811,107 @@ export namespace Prisma {
     created_at?: SortOrder
   }
 
+  export type ProjectFeatureMediaListRelationFilter = {
+    every?: ProjectFeatureMediaWhereInput
+    some?: ProjectFeatureMediaWhereInput
+    none?: ProjectFeatureMediaWhereInput
+  }
+
+  export type ProjectFeatureMediaOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ProjectFeatureCountOrderByAggregateInput = {
+    id?: SortOrder
+    project_id?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    youtube_url?: SortOrder
+    tech_stack?: SortOrder
+    display_order?: SortOrder
+    is_featured?: SortOrder
+    demo_url?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+  }
+
+  export type ProjectFeatureAvgOrderByAggregateInput = {
+    display_order?: SortOrder
+  }
+
+  export type ProjectFeatureMaxOrderByAggregateInput = {
+    id?: SortOrder
+    project_id?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    youtube_url?: SortOrder
+    display_order?: SortOrder
+    is_featured?: SortOrder
+    demo_url?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+  }
+
+  export type ProjectFeatureMinOrderByAggregateInput = {
+    id?: SortOrder
+    project_id?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    youtube_url?: SortOrder
+    display_order?: SortOrder
+    is_featured?: SortOrder
+    demo_url?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+  }
+
+  export type ProjectFeatureSumOrderByAggregateInput = {
+    display_order?: SortOrder
+  }
+
+  export type ProjectFeatureScalarRelationFilter = {
+    is?: ProjectFeatureWhereInput
+    isNot?: ProjectFeatureWhereInput
+  }
+
+  export type ProjectFeatureMediaCountOrderByAggregateInput = {
+    id?: SortOrder
+    feature_id?: SortOrder
+    storage_path?: SortOrder
+    public_url?: SortOrder
+    file_name?: SortOrder
+    display_order?: SortOrder
+    created_at?: SortOrder
+  }
+
+  export type ProjectFeatureMediaAvgOrderByAggregateInput = {
+    display_order?: SortOrder
+  }
+
+  export type ProjectFeatureMediaMaxOrderByAggregateInput = {
+    id?: SortOrder
+    feature_id?: SortOrder
+    storage_path?: SortOrder
+    public_url?: SortOrder
+    file_name?: SortOrder
+    display_order?: SortOrder
+    created_at?: SortOrder
+  }
+
+  export type ProjectFeatureMediaMinOrderByAggregateInput = {
+    id?: SortOrder
+    feature_id?: SortOrder
+    storage_path?: SortOrder
+    public_url?: SortOrder
+    file_name?: SortOrder
+    display_order?: SortOrder
+    created_at?: SortOrder
+  }
+
+  export type ProjectFeatureMediaSumOrderByAggregateInput = {
+    display_order?: SortOrder
+  }
+
   export type ProjectCreatetech_stackInput = {
     set: string[]
   }
@@ -5881,6 +8930,13 @@ export namespace Prisma {
     connect?: ProjectMediaWhereUniqueInput | ProjectMediaWhereUniqueInput[]
   }
 
+  export type ProjectFeatureCreateNestedManyWithoutProjectInput = {
+    create?: XOR<ProjectFeatureCreateWithoutProjectInput, ProjectFeatureUncheckedCreateWithoutProjectInput> | ProjectFeatureCreateWithoutProjectInput[] | ProjectFeatureUncheckedCreateWithoutProjectInput[]
+    connectOrCreate?: ProjectFeatureCreateOrConnectWithoutProjectInput | ProjectFeatureCreateOrConnectWithoutProjectInput[]
+    createMany?: ProjectFeatureCreateManyProjectInputEnvelope
+    connect?: ProjectFeatureWhereUniqueInput | ProjectFeatureWhereUniqueInput[]
+  }
+
   export type TimelineEntryUncheckedCreateNestedManyWithoutProjectInput = {
     create?: XOR<TimelineEntryCreateWithoutProjectInput, TimelineEntryUncheckedCreateWithoutProjectInput> | TimelineEntryCreateWithoutProjectInput[] | TimelineEntryUncheckedCreateWithoutProjectInput[]
     connectOrCreate?: TimelineEntryCreateOrConnectWithoutProjectInput | TimelineEntryCreateOrConnectWithoutProjectInput[]
@@ -5893,6 +8949,13 @@ export namespace Prisma {
     connectOrCreate?: ProjectMediaCreateOrConnectWithoutProjectInput | ProjectMediaCreateOrConnectWithoutProjectInput[]
     createMany?: ProjectMediaCreateManyProjectInputEnvelope
     connect?: ProjectMediaWhereUniqueInput | ProjectMediaWhereUniqueInput[]
+  }
+
+  export type ProjectFeatureUncheckedCreateNestedManyWithoutProjectInput = {
+    create?: XOR<ProjectFeatureCreateWithoutProjectInput, ProjectFeatureUncheckedCreateWithoutProjectInput> | ProjectFeatureCreateWithoutProjectInput[] | ProjectFeatureUncheckedCreateWithoutProjectInput[]
+    connectOrCreate?: ProjectFeatureCreateOrConnectWithoutProjectInput | ProjectFeatureCreateOrConnectWithoutProjectInput[]
+    createMany?: ProjectFeatureCreateManyProjectInputEnvelope
+    connect?: ProjectFeatureWhereUniqueInput | ProjectFeatureWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -5948,6 +9011,20 @@ export namespace Prisma {
     deleteMany?: ProjectMediaScalarWhereInput | ProjectMediaScalarWhereInput[]
   }
 
+  export type ProjectFeatureUpdateManyWithoutProjectNestedInput = {
+    create?: XOR<ProjectFeatureCreateWithoutProjectInput, ProjectFeatureUncheckedCreateWithoutProjectInput> | ProjectFeatureCreateWithoutProjectInput[] | ProjectFeatureUncheckedCreateWithoutProjectInput[]
+    connectOrCreate?: ProjectFeatureCreateOrConnectWithoutProjectInput | ProjectFeatureCreateOrConnectWithoutProjectInput[]
+    upsert?: ProjectFeatureUpsertWithWhereUniqueWithoutProjectInput | ProjectFeatureUpsertWithWhereUniqueWithoutProjectInput[]
+    createMany?: ProjectFeatureCreateManyProjectInputEnvelope
+    set?: ProjectFeatureWhereUniqueInput | ProjectFeatureWhereUniqueInput[]
+    disconnect?: ProjectFeatureWhereUniqueInput | ProjectFeatureWhereUniqueInput[]
+    delete?: ProjectFeatureWhereUniqueInput | ProjectFeatureWhereUniqueInput[]
+    connect?: ProjectFeatureWhereUniqueInput | ProjectFeatureWhereUniqueInput[]
+    update?: ProjectFeatureUpdateWithWhereUniqueWithoutProjectInput | ProjectFeatureUpdateWithWhereUniqueWithoutProjectInput[]
+    updateMany?: ProjectFeatureUpdateManyWithWhereWithoutProjectInput | ProjectFeatureUpdateManyWithWhereWithoutProjectInput[]
+    deleteMany?: ProjectFeatureScalarWhereInput | ProjectFeatureScalarWhereInput[]
+  }
+
   export type TimelineEntryUncheckedUpdateManyWithoutProjectNestedInput = {
     create?: XOR<TimelineEntryCreateWithoutProjectInput, TimelineEntryUncheckedCreateWithoutProjectInput> | TimelineEntryCreateWithoutProjectInput[] | TimelineEntryUncheckedCreateWithoutProjectInput[]
     connectOrCreate?: TimelineEntryCreateOrConnectWithoutProjectInput | TimelineEntryCreateOrConnectWithoutProjectInput[]
@@ -5974,6 +9051,20 @@ export namespace Prisma {
     update?: ProjectMediaUpdateWithWhereUniqueWithoutProjectInput | ProjectMediaUpdateWithWhereUniqueWithoutProjectInput[]
     updateMany?: ProjectMediaUpdateManyWithWhereWithoutProjectInput | ProjectMediaUpdateManyWithWhereWithoutProjectInput[]
     deleteMany?: ProjectMediaScalarWhereInput | ProjectMediaScalarWhereInput[]
+  }
+
+  export type ProjectFeatureUncheckedUpdateManyWithoutProjectNestedInput = {
+    create?: XOR<ProjectFeatureCreateWithoutProjectInput, ProjectFeatureUncheckedCreateWithoutProjectInput> | ProjectFeatureCreateWithoutProjectInput[] | ProjectFeatureUncheckedCreateWithoutProjectInput[]
+    connectOrCreate?: ProjectFeatureCreateOrConnectWithoutProjectInput | ProjectFeatureCreateOrConnectWithoutProjectInput[]
+    upsert?: ProjectFeatureUpsertWithWhereUniqueWithoutProjectInput | ProjectFeatureUpsertWithWhereUniqueWithoutProjectInput[]
+    createMany?: ProjectFeatureCreateManyProjectInputEnvelope
+    set?: ProjectFeatureWhereUniqueInput | ProjectFeatureWhereUniqueInput[]
+    disconnect?: ProjectFeatureWhereUniqueInput | ProjectFeatureWhereUniqueInput[]
+    delete?: ProjectFeatureWhereUniqueInput | ProjectFeatureWhereUniqueInput[]
+    connect?: ProjectFeatureWhereUniqueInput | ProjectFeatureWhereUniqueInput[]
+    update?: ProjectFeatureUpdateWithWhereUniqueWithoutProjectInput | ProjectFeatureUpdateWithWhereUniqueWithoutProjectInput[]
+    updateMany?: ProjectFeatureUpdateManyWithWhereWithoutProjectInput | ProjectFeatureUpdateManyWithWhereWithoutProjectInput[]
+    deleteMany?: ProjectFeatureScalarWhereInput | ProjectFeatureScalarWhereInput[]
   }
 
   export type ProjectCreateNestedOneWithoutTimeline_entriesInput = {
@@ -6030,6 +9121,85 @@ export namespace Prisma {
     upsert?: ProjectUpsertWithoutProject_mediaInput
     connect?: ProjectWhereUniqueInput
     update?: XOR<XOR<ProjectUpdateToOneWithWhereWithoutProject_mediaInput, ProjectUpdateWithoutProject_mediaInput>, ProjectUncheckedUpdateWithoutProject_mediaInput>
+  }
+
+  export type ProjectFeatureCreatetech_stackInput = {
+    set: string[]
+  }
+
+  export type ProjectCreateNestedOneWithoutFeaturesInput = {
+    create?: XOR<ProjectCreateWithoutFeaturesInput, ProjectUncheckedCreateWithoutFeaturesInput>
+    connectOrCreate?: ProjectCreateOrConnectWithoutFeaturesInput
+    connect?: ProjectWhereUniqueInput
+  }
+
+  export type ProjectFeatureMediaCreateNestedManyWithoutFeatureInput = {
+    create?: XOR<ProjectFeatureMediaCreateWithoutFeatureInput, ProjectFeatureMediaUncheckedCreateWithoutFeatureInput> | ProjectFeatureMediaCreateWithoutFeatureInput[] | ProjectFeatureMediaUncheckedCreateWithoutFeatureInput[]
+    connectOrCreate?: ProjectFeatureMediaCreateOrConnectWithoutFeatureInput | ProjectFeatureMediaCreateOrConnectWithoutFeatureInput[]
+    createMany?: ProjectFeatureMediaCreateManyFeatureInputEnvelope
+    connect?: ProjectFeatureMediaWhereUniqueInput | ProjectFeatureMediaWhereUniqueInput[]
+  }
+
+  export type ProjectFeatureMediaUncheckedCreateNestedManyWithoutFeatureInput = {
+    create?: XOR<ProjectFeatureMediaCreateWithoutFeatureInput, ProjectFeatureMediaUncheckedCreateWithoutFeatureInput> | ProjectFeatureMediaCreateWithoutFeatureInput[] | ProjectFeatureMediaUncheckedCreateWithoutFeatureInput[]
+    connectOrCreate?: ProjectFeatureMediaCreateOrConnectWithoutFeatureInput | ProjectFeatureMediaCreateOrConnectWithoutFeatureInput[]
+    createMany?: ProjectFeatureMediaCreateManyFeatureInputEnvelope
+    connect?: ProjectFeatureMediaWhereUniqueInput | ProjectFeatureMediaWhereUniqueInput[]
+  }
+
+  export type ProjectFeatureUpdatetech_stackInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type ProjectUpdateOneRequiredWithoutFeaturesNestedInput = {
+    create?: XOR<ProjectCreateWithoutFeaturesInput, ProjectUncheckedCreateWithoutFeaturesInput>
+    connectOrCreate?: ProjectCreateOrConnectWithoutFeaturesInput
+    upsert?: ProjectUpsertWithoutFeaturesInput
+    connect?: ProjectWhereUniqueInput
+    update?: XOR<XOR<ProjectUpdateToOneWithWhereWithoutFeaturesInput, ProjectUpdateWithoutFeaturesInput>, ProjectUncheckedUpdateWithoutFeaturesInput>
+  }
+
+  export type ProjectFeatureMediaUpdateManyWithoutFeatureNestedInput = {
+    create?: XOR<ProjectFeatureMediaCreateWithoutFeatureInput, ProjectFeatureMediaUncheckedCreateWithoutFeatureInput> | ProjectFeatureMediaCreateWithoutFeatureInput[] | ProjectFeatureMediaUncheckedCreateWithoutFeatureInput[]
+    connectOrCreate?: ProjectFeatureMediaCreateOrConnectWithoutFeatureInput | ProjectFeatureMediaCreateOrConnectWithoutFeatureInput[]
+    upsert?: ProjectFeatureMediaUpsertWithWhereUniqueWithoutFeatureInput | ProjectFeatureMediaUpsertWithWhereUniqueWithoutFeatureInput[]
+    createMany?: ProjectFeatureMediaCreateManyFeatureInputEnvelope
+    set?: ProjectFeatureMediaWhereUniqueInput | ProjectFeatureMediaWhereUniqueInput[]
+    disconnect?: ProjectFeatureMediaWhereUniqueInput | ProjectFeatureMediaWhereUniqueInput[]
+    delete?: ProjectFeatureMediaWhereUniqueInput | ProjectFeatureMediaWhereUniqueInput[]
+    connect?: ProjectFeatureMediaWhereUniqueInput | ProjectFeatureMediaWhereUniqueInput[]
+    update?: ProjectFeatureMediaUpdateWithWhereUniqueWithoutFeatureInput | ProjectFeatureMediaUpdateWithWhereUniqueWithoutFeatureInput[]
+    updateMany?: ProjectFeatureMediaUpdateManyWithWhereWithoutFeatureInput | ProjectFeatureMediaUpdateManyWithWhereWithoutFeatureInput[]
+    deleteMany?: ProjectFeatureMediaScalarWhereInput | ProjectFeatureMediaScalarWhereInput[]
+  }
+
+  export type ProjectFeatureMediaUncheckedUpdateManyWithoutFeatureNestedInput = {
+    create?: XOR<ProjectFeatureMediaCreateWithoutFeatureInput, ProjectFeatureMediaUncheckedCreateWithoutFeatureInput> | ProjectFeatureMediaCreateWithoutFeatureInput[] | ProjectFeatureMediaUncheckedCreateWithoutFeatureInput[]
+    connectOrCreate?: ProjectFeatureMediaCreateOrConnectWithoutFeatureInput | ProjectFeatureMediaCreateOrConnectWithoutFeatureInput[]
+    upsert?: ProjectFeatureMediaUpsertWithWhereUniqueWithoutFeatureInput | ProjectFeatureMediaUpsertWithWhereUniqueWithoutFeatureInput[]
+    createMany?: ProjectFeatureMediaCreateManyFeatureInputEnvelope
+    set?: ProjectFeatureMediaWhereUniqueInput | ProjectFeatureMediaWhereUniqueInput[]
+    disconnect?: ProjectFeatureMediaWhereUniqueInput | ProjectFeatureMediaWhereUniqueInput[]
+    delete?: ProjectFeatureMediaWhereUniqueInput | ProjectFeatureMediaWhereUniqueInput[]
+    connect?: ProjectFeatureMediaWhereUniqueInput | ProjectFeatureMediaWhereUniqueInput[]
+    update?: ProjectFeatureMediaUpdateWithWhereUniqueWithoutFeatureInput | ProjectFeatureMediaUpdateWithWhereUniqueWithoutFeatureInput[]
+    updateMany?: ProjectFeatureMediaUpdateManyWithWhereWithoutFeatureInput | ProjectFeatureMediaUpdateManyWithWhereWithoutFeatureInput[]
+    deleteMany?: ProjectFeatureMediaScalarWhereInput | ProjectFeatureMediaScalarWhereInput[]
+  }
+
+  export type ProjectFeatureCreateNestedOneWithoutMediaInput = {
+    create?: XOR<ProjectFeatureCreateWithoutMediaInput, ProjectFeatureUncheckedCreateWithoutMediaInput>
+    connectOrCreate?: ProjectFeatureCreateOrConnectWithoutMediaInput
+    connect?: ProjectFeatureWhereUniqueInput
+  }
+
+  export type ProjectFeatureUpdateOneRequiredWithoutMediaNestedInput = {
+    create?: XOR<ProjectFeatureCreateWithoutMediaInput, ProjectFeatureUncheckedCreateWithoutMediaInput>
+    connectOrCreate?: ProjectFeatureCreateOrConnectWithoutMediaInput
+    upsert?: ProjectFeatureUpsertWithoutMediaInput
+    connect?: ProjectFeatureWhereUniqueInput
+    update?: XOR<XOR<ProjectFeatureUpdateToOneWithWhereWithoutMediaInput, ProjectFeatureUpdateWithoutMediaInput>, ProjectFeatureUncheckedUpdateWithoutMediaInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -6358,6 +9528,44 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type ProjectFeatureCreateWithoutProjectInput = {
+    id?: string
+    title: string
+    description?: string | null
+    youtube_url?: string | null
+    tech_stack?: ProjectFeatureCreatetech_stackInput | string[]
+    display_order?: number
+    is_featured?: boolean
+    demo_url?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+    media?: ProjectFeatureMediaCreateNestedManyWithoutFeatureInput
+  }
+
+  export type ProjectFeatureUncheckedCreateWithoutProjectInput = {
+    id?: string
+    title: string
+    description?: string | null
+    youtube_url?: string | null
+    tech_stack?: ProjectFeatureCreatetech_stackInput | string[]
+    display_order?: number
+    is_featured?: boolean
+    demo_url?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+    media?: ProjectFeatureMediaUncheckedCreateNestedManyWithoutFeatureInput
+  }
+
+  export type ProjectFeatureCreateOrConnectWithoutProjectInput = {
+    where: ProjectFeatureWhereUniqueInput
+    create: XOR<ProjectFeatureCreateWithoutProjectInput, ProjectFeatureUncheckedCreateWithoutProjectInput>
+  }
+
+  export type ProjectFeatureCreateManyProjectInputEnvelope = {
+    data: ProjectFeatureCreateManyProjectInput | ProjectFeatureCreateManyProjectInput[]
+    skipDuplicates?: boolean
+  }
+
   export type TimelineEntryUpsertWithWhereUniqueWithoutProjectInput = {
     where: TimelineEntryWhereUniqueInput
     update: XOR<TimelineEntryUpdateWithoutProjectInput, TimelineEntryUncheckedUpdateWithoutProjectInput>
@@ -6425,6 +9633,39 @@ export namespace Prisma {
     created_at?: DateTimeFilter<"ProjectMedia"> | Date | string
   }
 
+  export type ProjectFeatureUpsertWithWhereUniqueWithoutProjectInput = {
+    where: ProjectFeatureWhereUniqueInput
+    update: XOR<ProjectFeatureUpdateWithoutProjectInput, ProjectFeatureUncheckedUpdateWithoutProjectInput>
+    create: XOR<ProjectFeatureCreateWithoutProjectInput, ProjectFeatureUncheckedCreateWithoutProjectInput>
+  }
+
+  export type ProjectFeatureUpdateWithWhereUniqueWithoutProjectInput = {
+    where: ProjectFeatureWhereUniqueInput
+    data: XOR<ProjectFeatureUpdateWithoutProjectInput, ProjectFeatureUncheckedUpdateWithoutProjectInput>
+  }
+
+  export type ProjectFeatureUpdateManyWithWhereWithoutProjectInput = {
+    where: ProjectFeatureScalarWhereInput
+    data: XOR<ProjectFeatureUpdateManyMutationInput, ProjectFeatureUncheckedUpdateManyWithoutProjectInput>
+  }
+
+  export type ProjectFeatureScalarWhereInput = {
+    AND?: ProjectFeatureScalarWhereInput | ProjectFeatureScalarWhereInput[]
+    OR?: ProjectFeatureScalarWhereInput[]
+    NOT?: ProjectFeatureScalarWhereInput | ProjectFeatureScalarWhereInput[]
+    id?: StringFilter<"ProjectFeature"> | string
+    project_id?: StringFilter<"ProjectFeature"> | string
+    title?: StringFilter<"ProjectFeature"> | string
+    description?: StringNullableFilter<"ProjectFeature"> | string | null
+    youtube_url?: StringNullableFilter<"ProjectFeature"> | string | null
+    tech_stack?: StringNullableListFilter<"ProjectFeature">
+    display_order?: IntFilter<"ProjectFeature"> | number
+    is_featured?: BoolFilter<"ProjectFeature"> | boolean
+    demo_url?: StringNullableFilter<"ProjectFeature"> | string | null
+    created_at?: DateTimeFilter<"ProjectFeature"> | Date | string
+    updated_at?: DateTimeFilter<"ProjectFeature"> | Date | string
+  }
+
   export type ProjectCreateWithoutTimeline_entriesInput = {
     id?: string
     title: string
@@ -6439,6 +9680,7 @@ export namespace Prisma {
     created_at?: Date | string
     updated_at?: Date | string
     project_media?: ProjectMediaCreateNestedManyWithoutProjectInput
+    features?: ProjectFeatureCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectUncheckedCreateWithoutTimeline_entriesInput = {
@@ -6455,6 +9697,7 @@ export namespace Prisma {
     created_at?: Date | string
     updated_at?: Date | string
     project_media?: ProjectMediaUncheckedCreateNestedManyWithoutProjectInput
+    features?: ProjectFeatureUncheckedCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectCreateOrConnectWithoutTimeline_entriesInput = {
@@ -6487,6 +9730,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     project_media?: ProjectMediaUpdateManyWithoutProjectNestedInput
+    features?: ProjectFeatureUpdateManyWithoutProjectNestedInput
   }
 
   export type ProjectUncheckedUpdateWithoutTimeline_entriesInput = {
@@ -6503,6 +9747,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     project_media?: ProjectMediaUncheckedUpdateManyWithoutProjectNestedInput
+    features?: ProjectFeatureUncheckedUpdateManyWithoutProjectNestedInput
   }
 
   export type ProjectCreateWithoutProject_mediaInput = {
@@ -6519,6 +9764,7 @@ export namespace Prisma {
     created_at?: Date | string
     updated_at?: Date | string
     timeline_entries?: TimelineEntryCreateNestedManyWithoutProjectInput
+    features?: ProjectFeatureCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectUncheckedCreateWithoutProject_mediaInput = {
@@ -6535,6 +9781,7 @@ export namespace Prisma {
     created_at?: Date | string
     updated_at?: Date | string
     timeline_entries?: TimelineEntryUncheckedCreateNestedManyWithoutProjectInput
+    features?: ProjectFeatureUncheckedCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectCreateOrConnectWithoutProject_mediaInput = {
@@ -6567,6 +9814,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     timeline_entries?: TimelineEntryUpdateManyWithoutProjectNestedInput
+    features?: ProjectFeatureUpdateManyWithoutProjectNestedInput
   }
 
   export type ProjectUncheckedUpdateWithoutProject_mediaInput = {
@@ -6583,6 +9831,220 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     timeline_entries?: TimelineEntryUncheckedUpdateManyWithoutProjectNestedInput
+    features?: ProjectFeatureUncheckedUpdateManyWithoutProjectNestedInput
+  }
+
+  export type ProjectCreateWithoutFeaturesInput = {
+    id?: string
+    title: string
+    short_description: string
+    long_description?: string | null
+    tech_stack?: ProjectCreatetech_stackInput | string[]
+    status?: $Enums.ProjectStatus
+    github_repo_url?: string | null
+    github_owner?: string | null
+    github_repo?: string | null
+    last_sync_at?: Date | string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+    timeline_entries?: TimelineEntryCreateNestedManyWithoutProjectInput
+    project_media?: ProjectMediaCreateNestedManyWithoutProjectInput
+  }
+
+  export type ProjectUncheckedCreateWithoutFeaturesInput = {
+    id?: string
+    title: string
+    short_description: string
+    long_description?: string | null
+    tech_stack?: ProjectCreatetech_stackInput | string[]
+    status?: $Enums.ProjectStatus
+    github_repo_url?: string | null
+    github_owner?: string | null
+    github_repo?: string | null
+    last_sync_at?: Date | string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+    timeline_entries?: TimelineEntryUncheckedCreateNestedManyWithoutProjectInput
+    project_media?: ProjectMediaUncheckedCreateNestedManyWithoutProjectInput
+  }
+
+  export type ProjectCreateOrConnectWithoutFeaturesInput = {
+    where: ProjectWhereUniqueInput
+    create: XOR<ProjectCreateWithoutFeaturesInput, ProjectUncheckedCreateWithoutFeaturesInput>
+  }
+
+  export type ProjectFeatureMediaCreateWithoutFeatureInput = {
+    id?: string
+    storage_path: string
+    public_url: string
+    file_name: string
+    display_order?: number
+    created_at?: Date | string
+  }
+
+  export type ProjectFeatureMediaUncheckedCreateWithoutFeatureInput = {
+    id?: string
+    storage_path: string
+    public_url: string
+    file_name: string
+    display_order?: number
+    created_at?: Date | string
+  }
+
+  export type ProjectFeatureMediaCreateOrConnectWithoutFeatureInput = {
+    where: ProjectFeatureMediaWhereUniqueInput
+    create: XOR<ProjectFeatureMediaCreateWithoutFeatureInput, ProjectFeatureMediaUncheckedCreateWithoutFeatureInput>
+  }
+
+  export type ProjectFeatureMediaCreateManyFeatureInputEnvelope = {
+    data: ProjectFeatureMediaCreateManyFeatureInput | ProjectFeatureMediaCreateManyFeatureInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ProjectUpsertWithoutFeaturesInput = {
+    update: XOR<ProjectUpdateWithoutFeaturesInput, ProjectUncheckedUpdateWithoutFeaturesInput>
+    create: XOR<ProjectCreateWithoutFeaturesInput, ProjectUncheckedCreateWithoutFeaturesInput>
+    where?: ProjectWhereInput
+  }
+
+  export type ProjectUpdateToOneWithWhereWithoutFeaturesInput = {
+    where?: ProjectWhereInput
+    data: XOR<ProjectUpdateWithoutFeaturesInput, ProjectUncheckedUpdateWithoutFeaturesInput>
+  }
+
+  export type ProjectUpdateWithoutFeaturesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    short_description?: StringFieldUpdateOperationsInput | string
+    long_description?: NullableStringFieldUpdateOperationsInput | string | null
+    tech_stack?: ProjectUpdatetech_stackInput | string[]
+    status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
+    github_repo_url?: NullableStringFieldUpdateOperationsInput | string | null
+    github_owner?: NullableStringFieldUpdateOperationsInput | string | null
+    github_repo?: NullableStringFieldUpdateOperationsInput | string | null
+    last_sync_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    timeline_entries?: TimelineEntryUpdateManyWithoutProjectNestedInput
+    project_media?: ProjectMediaUpdateManyWithoutProjectNestedInput
+  }
+
+  export type ProjectUncheckedUpdateWithoutFeaturesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    short_description?: StringFieldUpdateOperationsInput | string
+    long_description?: NullableStringFieldUpdateOperationsInput | string | null
+    tech_stack?: ProjectUpdatetech_stackInput | string[]
+    status?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
+    github_repo_url?: NullableStringFieldUpdateOperationsInput | string | null
+    github_owner?: NullableStringFieldUpdateOperationsInput | string | null
+    github_repo?: NullableStringFieldUpdateOperationsInput | string | null
+    last_sync_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    timeline_entries?: TimelineEntryUncheckedUpdateManyWithoutProjectNestedInput
+    project_media?: ProjectMediaUncheckedUpdateManyWithoutProjectNestedInput
+  }
+
+  export type ProjectFeatureMediaUpsertWithWhereUniqueWithoutFeatureInput = {
+    where: ProjectFeatureMediaWhereUniqueInput
+    update: XOR<ProjectFeatureMediaUpdateWithoutFeatureInput, ProjectFeatureMediaUncheckedUpdateWithoutFeatureInput>
+    create: XOR<ProjectFeatureMediaCreateWithoutFeatureInput, ProjectFeatureMediaUncheckedCreateWithoutFeatureInput>
+  }
+
+  export type ProjectFeatureMediaUpdateWithWhereUniqueWithoutFeatureInput = {
+    where: ProjectFeatureMediaWhereUniqueInput
+    data: XOR<ProjectFeatureMediaUpdateWithoutFeatureInput, ProjectFeatureMediaUncheckedUpdateWithoutFeatureInput>
+  }
+
+  export type ProjectFeatureMediaUpdateManyWithWhereWithoutFeatureInput = {
+    where: ProjectFeatureMediaScalarWhereInput
+    data: XOR<ProjectFeatureMediaUpdateManyMutationInput, ProjectFeatureMediaUncheckedUpdateManyWithoutFeatureInput>
+  }
+
+  export type ProjectFeatureMediaScalarWhereInput = {
+    AND?: ProjectFeatureMediaScalarWhereInput | ProjectFeatureMediaScalarWhereInput[]
+    OR?: ProjectFeatureMediaScalarWhereInput[]
+    NOT?: ProjectFeatureMediaScalarWhereInput | ProjectFeatureMediaScalarWhereInput[]
+    id?: StringFilter<"ProjectFeatureMedia"> | string
+    feature_id?: StringFilter<"ProjectFeatureMedia"> | string
+    storage_path?: StringFilter<"ProjectFeatureMedia"> | string
+    public_url?: StringFilter<"ProjectFeatureMedia"> | string
+    file_name?: StringFilter<"ProjectFeatureMedia"> | string
+    display_order?: IntFilter<"ProjectFeatureMedia"> | number
+    created_at?: DateTimeFilter<"ProjectFeatureMedia"> | Date | string
+  }
+
+  export type ProjectFeatureCreateWithoutMediaInput = {
+    id?: string
+    title: string
+    description?: string | null
+    youtube_url?: string | null
+    tech_stack?: ProjectFeatureCreatetech_stackInput | string[]
+    display_order?: number
+    is_featured?: boolean
+    demo_url?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+    project: ProjectCreateNestedOneWithoutFeaturesInput
+  }
+
+  export type ProjectFeatureUncheckedCreateWithoutMediaInput = {
+    id?: string
+    project_id: string
+    title: string
+    description?: string | null
+    youtube_url?: string | null
+    tech_stack?: ProjectFeatureCreatetech_stackInput | string[]
+    display_order?: number
+    is_featured?: boolean
+    demo_url?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
+  export type ProjectFeatureCreateOrConnectWithoutMediaInput = {
+    where: ProjectFeatureWhereUniqueInput
+    create: XOR<ProjectFeatureCreateWithoutMediaInput, ProjectFeatureUncheckedCreateWithoutMediaInput>
+  }
+
+  export type ProjectFeatureUpsertWithoutMediaInput = {
+    update: XOR<ProjectFeatureUpdateWithoutMediaInput, ProjectFeatureUncheckedUpdateWithoutMediaInput>
+    create: XOR<ProjectFeatureCreateWithoutMediaInput, ProjectFeatureUncheckedCreateWithoutMediaInput>
+    where?: ProjectFeatureWhereInput
+  }
+
+  export type ProjectFeatureUpdateToOneWithWhereWithoutMediaInput = {
+    where?: ProjectFeatureWhereInput
+    data: XOR<ProjectFeatureUpdateWithoutMediaInput, ProjectFeatureUncheckedUpdateWithoutMediaInput>
+  }
+
+  export type ProjectFeatureUpdateWithoutMediaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    youtube_url?: NullableStringFieldUpdateOperationsInput | string | null
+    tech_stack?: ProjectFeatureUpdatetech_stackInput | string[]
+    display_order?: IntFieldUpdateOperationsInput | number
+    is_featured?: BoolFieldUpdateOperationsInput | boolean
+    demo_url?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    project?: ProjectUpdateOneRequiredWithoutFeaturesNestedInput
+  }
+
+  export type ProjectFeatureUncheckedUpdateWithoutMediaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    project_id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    youtube_url?: NullableStringFieldUpdateOperationsInput | string | null
+    tech_stack?: ProjectFeatureUpdatetech_stackInput | string[]
+    display_order?: IntFieldUpdateOperationsInput | number
+    is_featured?: BoolFieldUpdateOperationsInput | boolean
+    demo_url?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type TimelineEntryCreateManyProjectInput = {
@@ -6610,6 +10072,19 @@ export namespace Prisma {
     public_url: string
     file_name: string
     created_at?: Date | string
+  }
+
+  export type ProjectFeatureCreateManyProjectInput = {
+    id?: string
+    title: string
+    description?: string | null
+    youtube_url?: string | null
+    tech_stack?: ProjectFeatureCreatetech_stackInput | string[]
+    display_order?: number
+    is_featured?: boolean
+    demo_url?: string | null
+    created_at?: Date | string
+    updated_at?: Date | string
   }
 
   export type TimelineEntryUpdateWithoutProjectInput = {
@@ -6690,6 +10165,83 @@ export namespace Prisma {
     storage_path?: StringFieldUpdateOperationsInput | string
     public_url?: StringFieldUpdateOperationsInput | string
     file_name?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProjectFeatureUpdateWithoutProjectInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    youtube_url?: NullableStringFieldUpdateOperationsInput | string | null
+    tech_stack?: ProjectFeatureUpdatetech_stackInput | string[]
+    display_order?: IntFieldUpdateOperationsInput | number
+    is_featured?: BoolFieldUpdateOperationsInput | boolean
+    demo_url?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    media?: ProjectFeatureMediaUpdateManyWithoutFeatureNestedInput
+  }
+
+  export type ProjectFeatureUncheckedUpdateWithoutProjectInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    youtube_url?: NullableStringFieldUpdateOperationsInput | string | null
+    tech_stack?: ProjectFeatureUpdatetech_stackInput | string[]
+    display_order?: IntFieldUpdateOperationsInput | number
+    is_featured?: BoolFieldUpdateOperationsInput | boolean
+    demo_url?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    media?: ProjectFeatureMediaUncheckedUpdateManyWithoutFeatureNestedInput
+  }
+
+  export type ProjectFeatureUncheckedUpdateManyWithoutProjectInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    youtube_url?: NullableStringFieldUpdateOperationsInput | string | null
+    tech_stack?: ProjectFeatureUpdatetech_stackInput | string[]
+    display_order?: IntFieldUpdateOperationsInput | number
+    is_featured?: BoolFieldUpdateOperationsInput | boolean
+    demo_url?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProjectFeatureMediaCreateManyFeatureInput = {
+    id?: string
+    storage_path: string
+    public_url: string
+    file_name: string
+    display_order?: number
+    created_at?: Date | string
+  }
+
+  export type ProjectFeatureMediaUpdateWithoutFeatureInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    storage_path?: StringFieldUpdateOperationsInput | string
+    public_url?: StringFieldUpdateOperationsInput | string
+    file_name?: StringFieldUpdateOperationsInput | string
+    display_order?: IntFieldUpdateOperationsInput | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProjectFeatureMediaUncheckedUpdateWithoutFeatureInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    storage_path?: StringFieldUpdateOperationsInput | string
+    public_url?: StringFieldUpdateOperationsInput | string
+    file_name?: StringFieldUpdateOperationsInput | string
+    display_order?: IntFieldUpdateOperationsInput | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProjectFeatureMediaUncheckedUpdateManyWithoutFeatureInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    storage_path?: StringFieldUpdateOperationsInput | string
+    public_url?: StringFieldUpdateOperationsInput | string
+    file_name?: StringFieldUpdateOperationsInput | string
+    display_order?: IntFieldUpdateOperationsInput | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
