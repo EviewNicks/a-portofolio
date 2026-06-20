@@ -190,6 +190,7 @@ export const HeroContent: React.FC<HeroContentProps> = ({ heroData }) => {
                 src={heroData.avatar.url}
                 alt={heroData.avatar.alt}
                 fill
+                sizes="(max-width: 768px) 256px, 320px"
                 className="object-cover grayscale transition-all duration-500 hover:grayscale-0"
               />
             </motion.div>

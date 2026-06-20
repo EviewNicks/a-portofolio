@@ -13,6 +13,8 @@
 .claude
 .claudedocs
 
+.open-design
+
 # testing
 /coverage
 

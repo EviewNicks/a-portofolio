@@ -1,4 +1,7 @@
+import { cache } from 'react'
 import { notFound } from 'next/navigation'
+import Link from 'next/link'
+import { ArrowLeft } from 'lucide-react'
 import { getProjectById } from '@/lib/supabase/queries/projects'
 import { getTimelineEntriesByProjectId } from '@/lib/supabase/queries/timeline'
 import { fetchGitHubStats } from '@/features/projects/services/github/api'
@@ -7,6 +10,9 @@ import { ProjectHeader } from '@/features/projects/components/dynamic/ProjectHea
 import { GitHubStatsPanel } from '@/features/projects/components/dynamic/GitHubStats'
 import { MediaGallery } from '@/features/projects/components/dynamic/MediaGallery'
 import { ProjectDetailTabs } from '@/features/projects/components/dynamic/ProjectDetailTabs'
+import { ProjectDetailFeaturedWork } from '@/features/projects/components/dynamic/ProjectDetailFeaturedWork'
+import { ProjectDetailCta } from '@/features/projects/components/dynamic/ProjectDetailCta'
+import { ProjectDetailFooter } from '@/features/projects/components/dynamic/ProjectDetailFooter'
 import { AdminActionBar } from '@/features/projects/components/dynamic/AdminActionBar'
 import { SuccessBanner } from '@/features/projects/components/dynamic/SuccessBanner'
 import { getFeaturesByProjectId } from '@/lib/supabase/queries/features'
@@ -19,7 +25,11 @@ import type {
   PRStatus,
   ProjectFeature,
 } from '@/features/projects/types'
-import Link from 'next/link'
+
+// Cache database queries to prevent duplicate fetches
+const getCachedProject = cache(getProjectById)
+const getCachedTimelineEntries = cache(getTimelineEntriesByProjectId)
+const getCachedFeatures = cache(getFeaturesByProjectId)
 
 interface PageProps {
   params: Promise<{ id: string }>
@@ -33,11 +43,24 @@ export default async function ProjectDetailPage({
   const { id } = await params
   const { secret, created } = await searchParams
 
-  // Check if user is admin
   const isAdmin = secret && secret === process.env.ADMIN_SECRET_KEY
   const showSuccessBanner = isAdmin && created === '1'
 
-  const raw = await getProjectById(id)
+  // Parallelize database queries instead of running them sequentially
+  const [raw, rawEntries, rawFeatures, supabaseResult] = await Promise.all([
+    getCachedProject(id),
+    getCachedTimelineEntries(id),
+    getCachedFeatures(id),
+    (async () => {
+      const supabase = createServerClient()
+      return supabase
+        .from('project_media')
+        .select('*')
+        .eq('project_id', id)
+        .order('created_at', { ascending: true })
+    })(),
+  ])
+
   if (!raw) notFound()
 
   const project: DynamicProject = {
@@ -55,8 +78,6 @@ export default async function ProjectDetailPage({
     updated_at: raw.updated_at.toISOString(),
   }
 
-  // Fetch timeline entries
-  const rawEntries = await getTimelineEntriesByProjectId(id)
   const entries: TimelineEntry[] = rawEntries.map(e => ({
     id: e.id,
     project_id: e.project_id,
@@ -77,7 +98,7 @@ export default async function ProjectDetailPage({
     updated_at: e.updated_at.toISOString(),
   }))
 
-  // Fetch GitHub stats (non-blocking)
+  // GitHub stats fetch (non-blocking, optional)
   let githubStats = null
   if (project.github_owner && project.github_repo) {
     try {
@@ -86,17 +107,11 @@ export default async function ProjectDetailPage({
         project.github_repo
       )
     } catch {
-      // silently fail — show nothing if GitHub is unavailable
+      // GitHub stats are optional; the detail page still renders without them.
     }
   }
 
-  // Fetch project media from Supabase Storage records
-  const supabase = createServerClient()
-  const { data: mediaRows } = await supabase
-    .from('project_media')
-    .select('*')
-    .eq('project_id', id)
-    .order('created_at', { ascending: true })
+  const { data: mediaRows } = supabaseResult
 
   const media: ProjectMedia[] = (mediaRows ?? []).map(
     (m: Record<string, string>) => ({
@@ -111,9 +126,7 @@ export default async function ProjectDetailPage({
 
   const videoEntries = entries.filter(e => e.entry_type === 'video')
 
-  // Fetch project features
-  const rawFeatures = await getFeaturesByProjectId(id)
-  const features: ProjectFeature[] = rawFeatures.map((f) => ({
+  const features: ProjectFeature[] = rawFeatures.map(f => ({
     id: f.id,
     project_id: f.project_id,
     title: f.title,
@@ -125,7 +138,7 @@ export default async function ProjectDetailPage({
     demo_url: f.demo_url,
     created_at: f.created_at.toISOString(),
     updated_at: f.updated_at.toISOString(),
-    media: f.media.map((m) => ({
+    media: f.media.map(m => ({
       id: m.id,
       feature_id: m.feature_id,
       storage_path: m.storage_path,
@@ -137,15 +150,17 @@ export default async function ProjectDetailPage({
   }))
 
   return (
-    <main className="bg-background min-h-screen">
-      <div className="container mx-auto max-w-5xl px-4 py-12">
-        <Link
-          href="/projects"
-          className="text-muted-foreground hover:text-foreground mb-8 inline-block text-sm transition-colors"
-        >
-          ← Back to Projects
-        </Link>
+    <main className="editorial-bg relative min-h-screen overflow-hidden">
+      <div
+        className="bg-line pointer-events-none absolute inset-x-0 top-0 z-0 h-px"
+        aria-hidden="true"
+      />
+      <div
+        className="bg-line pointer-events-none absolute bottom-0 left-0 z-0 h-px"
+        aria-hidden="true"
+      />
 
+      <div className="relative z-10 mx-auto flex min-h-screen max-w-7xl flex-col px-4 py-10 sm:px-6 lg:px-10">
         {showSuccessBanner && (
           <SuccessBanner projectTitle={project.title} show={true} />
         )}
@@ -160,7 +175,17 @@ export default async function ProjectDetailPage({
 
         <MediaGallery media={media} videoEntries={videoEntries} />
 
-        <ProjectDetailTabs project={project} entries={entries} features={features} />
+        <ProjectDetailTabs
+          project={project}
+          entries={entries}
+          features={features}
+        />
+
+        <ProjectDetailFeaturedWork currentProjectId={project.id} />
+
+        <ProjectDetailCta />
+
+        <ProjectDetailFooter />
       </div>
     </main>
   )

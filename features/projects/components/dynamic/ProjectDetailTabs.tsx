@@ -1,152 +1,142 @@
-'use client';
+'use client'
 
-import { useState } from 'react';
-import { cn } from '@/lib/utils';
-import type { DynamicProject, TimelineEntry, ProjectFeature } from '@/features/projects/types';
-import { MarkdownContent } from './MarkdownContent';
-import { TimelineSection } from './TimelineSection';
-import { ProjectStatusBadge } from './ProjectStatusBadge';
-import { FeaturesTabContent } from '@/features/feature/components/FeaturesTabContent';
-import Link from 'next/link';
+import { useState } from 'react'
+import { cn } from '@/lib/utils'
+import type {
+  DynamicProject,
+  TimelineEntry,
+  ProjectFeature,
+} from '@/features/projects/types'
+import { MarkdownContent } from './MarkdownContent'
+import { TimelineSection } from './TimelineSection'
+import { FeaturesTabContent } from '@/features/feature/components/FeaturesTabContent'
 
 interface ProjectDetailTabsProps {
-  project: DynamicProject;
-  entries: TimelineEntry[];
-  features?: ProjectFeature[];
+  project: DynamicProject
+  entries: TimelineEntry[]
+  features?: ProjectFeature[]
 }
 
-type Tab = 'description' | 'timeline' | 'features';
+type Tab = 'description' | 'timeline' | 'features'
 
-export function ProjectDetailTabs({ project, entries, features = [] }: ProjectDetailTabsProps) {
-  const [activeTab, setActiveTab] = useState<Tab>('description');
+const tabs: Array<{ id: Tab; label: string }> = [
+  { id: 'description', label: 'Description' },
+  { id: 'features', label: 'Features' },
+  { id: 'timeline', label: 'Dev Timeline' },
+]
+
+export function ProjectDetailTabs({
+  project,
+  entries,
+  features = [],
+}: ProjectDetailTabsProps) {
+  const [activeTab, setActiveTab] = useState<Tab>('description')
 
   return (
-    <div>
-      {/* Tab bar */}
-      <div className="flex gap-1 border-b border-border mb-6">
-        <TabButton
-          active={activeTab === 'description'}
-          onClick={() => setActiveTab('description')}
-        >
-          Description
-        </TabButton>
-        <TabButton
-          active={activeTab === 'features'}
-          onClick={() => setActiveTab('features')}
-        >
-          Features
-          {features.length > 0 && (
-            <span className="ml-2 px-1.5 py-0.5 rounded-full bg-foreground/10 text-xs text-muted-foreground">
-              {features.length}
-            </span>
-          )}
-        </TabButton>
-        <TabButton
-          active={activeTab === 'timeline'}
-          onClick={() => setActiveTab('timeline')}
-        >
-          Development Timeline
-          {entries.length > 0 && (
-            <span className="ml-2 px-1.5 py-0.5 rounded-full bg-foreground/10 text-xs text-muted-foreground">
-              {entries.length}
-            </span>
-          )}
-        </TabButton>
+    <section
+      className="relative isolate mb-10 pt-2"
+      aria-label="Project details"
+    >
+      <div className="border-line mb-8 flex flex-wrap items-center justify-between gap-4 border-b pb-4">
+        <span className="editorial-meta">Details / Tabs</span>
+        <span className="text-coral font-editorial-serif italic">In-depth</span>
+        <span className="editorial-meta">003 / 004</span>
       </div>
 
-      {/* Tab content */}
-      {activeTab === 'description' && (
-        <DescriptionTab project={project} />
-      )}
-      {activeTab === 'features' && (
-        <FeaturesTabContent projectId={project.id} features={features} />
-      )}
-      {activeTab === 'timeline' && (
-        <TimelineSection entries={entries} />
-      )}
-    </div>
-  );
-}
+      <div
+        className="border-line mb-10 flex overflow-x-auto border-b pb-0"
+        role="tablist"
+        aria-label="Project sections"
+      >
+        {tabs.map(tab => {
+          const active = activeTab === tab.id
+          const count =
+            tab.id === 'features'
+              ? features.length
+              : tab.id === 'timeline'
+                ? entries.length
+                : null
 
-function TabButton({
-  active,
-  onClick,
-  children,
-}: {
-  active: boolean;
-  onClick: () => void;
-  children: React.ReactNode;
-}) {
-  return (
-    <button
-      onClick={onClick}
-      className={cn(
-        'flex items-center px-4 py-2.5 text-sm font-medium transition-colors border-b-2 -mb-px',
-        active
-          ? 'border-primary text-foreground'
-          : 'border-transparent text-muted-foreground hover:text-foreground hover:border-border'
-      )}
-    >
-      {children}
-    </button>
-  );
+          return (
+            <button
+              key={tab.id}
+              id={`tab-${tab.id}`}
+              role="tab"
+              type="button"
+              aria-selected={active}
+              aria-controls={`panel-${tab.id}`}
+              onClick={() => setActiveTab(tab.id)}
+              className={cn(
+                'font-editorial-tight focus-visible:ring-coral/40 min-h-11 px-4 py-3 text-sm font-medium whitespace-nowrap transition-colors focus:outline-none focus-visible:ring-2',
+                active ? 'text-ink' : 'text-ink-faint hover:text-ink-soft'
+              )}
+            >
+              {tab.label}
+              {count !== null && (
+                <span
+                  className={cn(
+                    'font-editorial-mono ml-2 rounded-full px-2 py-0.5 text-[0.62rem] tracking-[0.04em]',
+                    active
+                      ? 'bg-coral/10 text-coral'
+                      : 'bg-foreground/10 text-ink-faint'
+                  )}
+                >
+                  {count}
+                </span>
+              )}
+              {active && (
+                <span
+                  className="bg-coral absolute right-4 bottom-0 left-4 h-px"
+                  aria-hidden="true"
+                />
+              )}
+            </button>
+          )
+        })}
+      </div>
+
+      <div
+        id="panel-description"
+        role="tabpanel"
+        aria-labelledby="tab-description"
+        hidden={activeTab !== 'description'}
+      >
+        {activeTab === 'description' && <DescriptionTab project={project} />}
+      </div>
+      <div
+        id="panel-features"
+        role="tabpanel"
+        aria-labelledby="tab-features"
+        hidden={activeTab !== 'features'}
+      >
+        {activeTab === 'features' && (
+          <FeaturesTabContent projectId={project.id} features={features} />
+        )}
+      </div>
+      <div
+        id="panel-timeline"
+        role="tabpanel"
+        aria-labelledby="tab-timeline"
+        hidden={activeTab !== 'timeline'}
+      >
+        {activeTab === 'timeline' && <TimelineSection entries={entries} />}
+      </div>
+    </section>
+  )
 }
 
 function DescriptionTab({ project }: { project: DynamicProject }) {
-  const description = project.long_description || project.short_description;
+  const description = project.long_description || project.short_description
 
   return (
-    <div className="space-y-6">
-      {/* Status + meta */}
-      <div className="flex flex-wrap items-center gap-3">
-        <ProjectStatusBadge status={project.status} />
-        <span className="text-xs text-muted-foreground">
-          Created {new Date(project.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
-        </span>
-        {project.last_sync_at && (
-          <span className="text-xs text-muted-foreground">
-            · Last synced {new Date(project.last_sync_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
-          </span>
-        )}
-      </div>
-
-      {/* Tech stack */}
-      {project.tech_stack.length > 0 && (
-        <div>
-          <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-2">Tech Stack</p>
-          <div className="flex flex-wrap gap-2">
-            {project.tech_stack.map((tech) => (
-              <span
-                key={tech}
-                className="px-3 py-1 rounded-full bg-foreground/8 text-foreground/70 text-sm border border-border"
-              >
-                {tech}
-              </span>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {/* GitHub link */}
-      {project.github_repo_url && (
-        <div>
-          <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-2">Repository</p>
-          <Link
-            href={project.github_repo_url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-sm text-primary hover:text-primary/80 transition-colors"
-          >
-            {project.github_repo_url} →
-          </Link>
-        </div>
-      )}
-
-      {/* Description — rendered as markdown */}
-      <div>
-        <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-3">About</p>
-        <MarkdownContent content={description} />
-      </div>
+    <div className="grid gap-8 lg:items-start">
+      <article className="editorial-surface p-6 sm:p-8">
+        <span className="editorial-label mb-6">About</span>
+        <MarkdownContent
+          content={description}
+          className="project-detail-markdown w-full"
+        />
+      </article>
     </div>
-  );
+  )
 }

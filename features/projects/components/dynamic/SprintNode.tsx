@@ -12,13 +12,12 @@ export function SprintNode({ sprint, side, isLast }: SprintNodeProps) {
   const isLeft = side === 'left';
 
   return (
-    <div className="relative flex items-start gap-0">
-      {/* Left side */}
-      <div className={cn('flex-1 min-w-0', isLeft ? 'pr-6' : 'pr-0')}>
+    <div className="relative grid gap-6 md:grid-cols-[1fr_auto_1fr] md:items-start">
+      <div className={cn('min-w-0', isLeft ? 'md:pr-10' : 'md:order-3 md:pl-10')}>
         {isLeft && (
-          <div className="flex flex-col items-end gap-2">
+          <div className="flex flex-col gap-2">
             <SprintLabel number={sprint.number} align="right" />
-            <div className="w-full space-y-2">
+            <div className="mt-4 space-y-4">
               {sprint.entries.map((entry) => (
                 <TimelineEntryCard key={entry.id} entry={entry} />
               ))}
@@ -27,20 +26,16 @@ export function SprintNode({ sprint, side, isLast }: SprintNodeProps) {
         )}
       </div>
 
-      {/* Center spine + dot */}
-      <div className="relative flex flex-col items-center flex-shrink-0 w-8">
-        <div className="w-3 h-3 rounded-full bg-primary border-2 border-background ring-2 ring-primary/30 z-10 mt-1.5" />
-        {!isLast && (
-          <div className="w-px flex-1 bg-border mt-1 min-h-8" />
-        )}
+      <div className="relative flex flex-col items-center">
+        <div className="z-10 h-5 w-5 rounded-full border-2 border-coral bg-paper shadow-sm" aria-hidden="true" />
+        {!isLast && <div className="mt-4 h-full w-px flex-1 bg-line" aria-hidden="true" />}
       </div>
 
-      {/* Right side */}
-      <div className={cn('flex-1 min-w-0', !isLeft ? 'pl-6' : 'pl-0')}>
+      <div className={cn('min-w-0', !isLeft ? 'md:order-1 md:pl-10' : 'md:order-3')}>
         {!isLeft && (
-          <div className="flex flex-col items-start gap-2">
+          <div className="flex flex-col gap-2">
             <SprintLabel number={sprint.number} align="left" />
-            <div className="w-full space-y-2">
+            <div className="mt-4 space-y-4">
               {sprint.entries.map((entry) => (
                 <TimelineEntryCard key={entry.id} entry={entry} />
               ))}
@@ -56,13 +51,12 @@ function SprintLabel({ number, align }: { number: number; align: 'left' | 'right
   return (
     <div
       className={cn(
-        'inline-flex items-center gap-1.5 px-3 py-1 rounded-full',
-        'bg-foreground/8 border border-border',
-        'text-xs font-semibold text-foreground',
-        align === 'right' ? 'self-end' : 'self-start'
+        'inline-flex items-center gap-2 rounded-full border border-line bg-paper px-3 py-1 shadow-sm',
+        'font-editorial-tight text-[0.65rem] font-bold uppercase tracking-[0.14em] text-ink',
+        align === 'right' ? 'md:self-end' : 'md:self-start'
       )}
     >
-      <span className="w-1.5 h-1.5 rounded-full bg-primary inline-block" />
+      <span className="h-2 w-2 rounded-full bg-coral" aria-hidden="true" />
       Sprint {number}
     </div>
   );

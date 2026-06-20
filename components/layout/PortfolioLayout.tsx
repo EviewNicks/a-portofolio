@@ -1,17 +1,17 @@
-'use client';
+'use client'
 
-import React, { Suspense } from 'react';
-import { ErrorBoundary } from 'react-error-boundary';
-import { Navigation } from './Navigation';
-import { ScrollIndicator } from './ScrollIndicator';
-import { ScrollToTop } from './ScrollToTop';
-import { SectionIndicator } from './SectionIndicator';
-import { KeyboardShortcuts } from './KeyboardShortcuts';
-import { SkipLinks } from '@/components/accessibility/SkipLinks';
-import { useNavigation } from '@/lib/hooks/useNavigation';
-import { useKeyboardNavigation } from '@/lib/hooks/useKeyboardNavigation';
-import { useAccessibilityPreferences } from '@/lib/hooks/useAccessibility';
-import { useResponsive } from '@/lib/hooks/useResponsive';
+import React, { Suspense } from 'react'
+import { ErrorBoundary } from 'react-error-boundary'
+import { Navigation } from './Navigation'
+import { ScrollIndicator } from './ScrollIndicator'
+import { ScrollToTop } from './ScrollToTop'
+import { SectionIndicator } from './SectionIndicator'
+import { KeyboardShortcuts } from './KeyboardShortcuts'
+import { SkipLinks } from '@/components/accessibility/SkipLinks'
+import { useNavigation } from '@/lib/hooks/useNavigation'
+import { useKeyboardNavigation } from '@/lib/hooks/useKeyboardNavigation'
+import { useAccessibilityPreferences } from '@/lib/hooks/useAccessibility'
+import { useResponsive } from '@/lib/hooks/useResponsive'
 
 const navigationItems = [
   { id: 'hero', label: 'Home', href: '#hero' },
@@ -20,17 +20,23 @@ const navigationItems = [
   { id: 'projects', label: 'Projects', href: '#projects' },
   { id: 'experience', label: 'Experience', href: '#experience' },
   { id: 'contact', label: 'Contact', href: '#contact' },
-];
+]
 
 interface PortfolioLayoutProps {
-  children: React.ReactNode;
+  children: React.ReactNode
 }
 
-function ErrorFallback({ error, resetErrorBoundary }: { error: Error; resetErrorBoundary: () => void }) {
+function ErrorFallback({
+  error,
+  resetErrorBoundary,
+}: {
+  error: Error
+  resetErrorBoundary: () => void
+}) {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
+    <div className="bg-background flex min-h-screen items-center justify-center">
       <div className="text-center">
-        <h2 className="text-2xl font-bold text-foreground mb-4">
+        <h2 className="text-foreground mb-4 text-2xl font-bold">
           Something went wrong
         </h2>
         <p className="text-muted-foreground mb-6">
@@ -38,24 +44,24 @@ function ErrorFallback({ error, resetErrorBoundary }: { error: Error; resetError
         </p>
         <button
           onClick={resetErrorBoundary}
-          className="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors"
+          className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-md px-4 py-2 transition-colors"
         >
           Try again
         </button>
       </div>
     </div>
-  );
+  )
 }
 
 function LoadingFallback() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
+    <div className="bg-background flex min-h-screen items-center justify-center">
       <div className="text-center">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
+        <div className="border-primary mx-auto mb-4 h-8 w-8 animate-spin rounded-full border-b-2"></div>
         <p className="text-muted-foreground">Loading...</p>
       </div>
     </div>
-  );
+  )
 }
 
 export function PortfolioLayout({ children }: PortfolioLayoutProps) {
@@ -65,21 +71,21 @@ export function PortfolioLayout({ children }: PortfolioLayoutProps) {
         <PortfolioLayoutContent>{children}</PortfolioLayoutContent>
       </Suspense>
     </ErrorBoundary>
-  );
+  )
 }
 
 function PortfolioLayoutContent({ children }: PortfolioLayoutProps) {
-  const { activeSection, scrollToSection } = useNavigation(navigationItems);
-  const { reducedMotion, highContrast } = useAccessibilityPreferences();
-  const { isMobile, isTablet } = useResponsive();
-  
+  const { activeSection, scrollToSection } = useNavigation(navigationItems)
+  const { reducedMotion, highContrast } = useAccessibilityPreferences()
+  const { isMobile, isTablet } = useResponsive()
+
   // Enable keyboard navigation
   useKeyboardNavigation({
     sections: navigationItems,
     onNavigate: scrollToSection,
     activeSection,
     enabled: true,
-  });
+  })
 
   return (
     <>
@@ -100,8 +106,8 @@ function PortfolioLayoutContent({ children }: PortfolioLayoutProps) {
       <KeyboardShortcuts />
 
       {/* Main Content */}
-      <main 
-        className="min-h-screen bg-background"
+      <main
+        className="bg-background min-h-screen"
         data-reduced-motion={reducedMotion}
         data-high-contrast={highContrast}
         data-mobile={isMobile}
@@ -110,5 +116,5 @@ function PortfolioLayoutContent({ children }: PortfolioLayoutProps) {
         {children}
       </main>
     </>
-  );
+  )
 }

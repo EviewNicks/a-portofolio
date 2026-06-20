@@ -12,13 +12,12 @@ export function FeaturesTabContent({
   projectId,
   features,
 }: FeaturesTabContentProps) {
-  // Order features by display_order ascending
   const orderedFeatures = [...features].sort((a, b) => a.display_order - b.display_order)
 
   if (orderedFeatures.length === 0) {
     return (
-      <div className="rounded-xl border border-dashed border-border py-12 text-center">
-        <p className="text-sm text-muted-foreground">
+      <div className="editorial-surface p-8 text-center">
+        <p className="font-editorial-body text-base text-ink-mute">
           No showcase features documented for this project yet.
         </p>
       </div>
@@ -26,17 +25,21 @@ export function FeaturesTabContent({
   }
 
   return (
-    <div className="space-y-6">
-      <div>
-        <h3 className="text-lg font-bold text-foreground mb-1">
-          Project Features & Capabilities
+    <div className="space-y-8">
+      <div className="mb-8">
+        <span className="editorial-label mb-4">
+          Features
+          <span className="ix">· {orderedFeatures.length} capabilities</span>
+        </span>
+        <h3 className="editorial-display text-2xl sm:text-3xl">
+          Project capabilities<span className="dot">.</span>
         </h3>
-        <p className="text-sm text-muted-foreground">
+        <p className="mt-4 max-w-3xl font-editorial-body text-base leading-relaxed text-ink-mute">
           Deep-dive into specific features, technical implementations, and demos.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+      <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
         {orderedFeatures.map((feature) => (
           <FeatureCard
             key={feature.id}

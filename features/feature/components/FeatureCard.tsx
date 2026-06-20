@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
-import { Cpu, ArrowRight } from 'lucide-react'
+import { ArrowRight, Cpu } from 'lucide-react'
 import type { ProjectFeature } from '@/features/projects/types'
 
 interface FeatureCardProps {
@@ -11,15 +11,13 @@ interface FeatureCardProps {
   feature: ProjectFeature;
 }
 
-// Utility to create a plain text excerpt from markdown content
 function getExcerpt(text: string | null | undefined, limit = 150): string {
   if (!text) return 'No description available.'
-  
-  // Basic markdown stripping (headers, bold, links)
+
   const cleanText = text
-    .replace(/[#*`_~]/g, '') // Remove simple formatting characters
-    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1') // Simplify links to just their text
-    .replace(/\s+/g, ' ') // Collapse whitespaces
+    .replace(/[#*`_~]/g, '')
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+    .replace(/\s+/g, ' ')
     .trim()
 
   if (cleanText.length <= limit) return cleanText
@@ -30,21 +28,18 @@ export function FeatureCard({ projectId, feature }: FeatureCardProps) {
   const searchParams = useSearchParams()
   const secret = searchParams?.get('secret') ?? ''
 
-  // Build detail navigation URL
   const detailUrl = `/projects/${projectId}/features/${feature.id}${
     secret ? `?secret=${secret}` : ''
   }`
 
-  // Retrieve the first image from media array as the thumbnail
   const thumbnailUrl = feature.media?.[0]?.public_url
 
   return (
     <Link
       href={detailUrl}
-      className="group relative flex flex-col overflow-hidden rounded-2xl border border-border bg-card transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5"
+      className="group editorial-surface flex flex-col overflow-hidden p-0 transition-all duration-300 hover:-translate-y-1 hover:border-coral/40 hover:shadow-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-coral/40"
     >
-      {/* Media / Thumbnail area */}
-      <div className="relative aspect-video w-full overflow-hidden bg-muted">
+      <div className="relative aspect-video w-full overflow-hidden bg-paper-dark">
         {thumbnailUrl ? (
           <Image
             src={thumbnailUrl}
@@ -55,50 +50,55 @@ export function FeatureCard({ projectId, feature }: FeatureCardProps) {
             unoptimized
           />
         ) : (
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-muted/30 flex items-center justify-center">
-            <Cpu size={40} className="text-primary/40 group-hover:text-primary/60 transition-colors duration-300" />
+          <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-coral/10 via-paper to-ink/5">
+            <Cpu size={40} className="text-coral/50" aria-hidden="true" />
           </div>
         )}
-        
+
         {feature.is_featured && (
-          <span className="absolute top-3 right-3 rounded-full bg-yellow-500/10 backdrop-blur-md px-2.5 py-0.5 text-[10px] font-semibold text-yellow-600 dark:text-yellow-400 border border-yellow-500/20 shadow-sm">
+          <span className="absolute right-3 top-3 rounded-full border border-coral/30 bg-coral/10 px-2.5 py-1 text-[0.62rem] font-bold uppercase tracking-[0.14em] text-coral backdrop-blur">
             Featured
           </span>
         )}
       </div>
 
-      {/* Content area */}
       <div className="flex flex-1 flex-col p-5">
-        <h4 className="text-base font-bold text-foreground group-hover:text-primary transition-colors duration-300 truncate">
+        <div className="mb-3 flex items-center justify-between gap-3">
+          <span className="font-editorial-serif text-sm italic text-coral">
+            {feature.display_order}.
+          </span>
+          <ArrowRight size={16} className="text-ink-faint transition-transform duration-300 group-hover:translate-x-1 group-hover:text-coral" aria-hidden="true" />
+        </div>
+
+        <h4 className="font-editorial-tight text-base font-bold leading-tight tracking-[-0.01em] text-ink group-hover:text-coral">
           {feature.title}
         </h4>
-        
-        <p className="mt-2 flex-1 text-xs text-muted-foreground line-clamp-3 leading-relaxed">
+
+        <p className="mt-3 flex-1 font-editorial-body text-sm leading-relaxed text-ink-mute">
           {getExcerpt(feature.description)}
         </p>
 
-        {/* Tech Stack tags */}
         {feature.tech_stack.length > 0 && (
-          <div className="mt-4 flex flex-wrap gap-1.5">
+          <div className="mt-5 flex flex-wrap gap-1.5">
             {feature.tech_stack.slice(0, 3).map((tech) => (
               <span
                 key={tech}
-                className="rounded-md bg-muted px-2 py-0.5 text-[10px] font-medium text-muted-foreground border border-border/50"
+                className="editorial-code border border-line/40 px-2 py-1 text-[0.62rem]"
               >
                 {tech}
               </span>
             ))}
             {feature.tech_stack.length > 3 && (
-              <span className="text-[9px] text-muted-foreground self-center">
+              <span className="self-center font-editorial-mono text-[0.62rem] tracking-[0.04em] text-ink-faint">
                 +{feature.tech_stack.length - 3} more
               </span>
             )}
           </div>
         )}
 
-        <div className="mt-4 pt-4 border-t border-border/50 flex items-center justify-between text-xs font-semibold text-primary">
+        <div className="mt-5 flex items-center justify-between border-t border-line pt-4 font-editorial-tight text-xs font-bold uppercase tracking-[0.14em] text-coral">
           <span>Explore Details</span>
-          <ArrowRight size={14} className="transition-transform duration-300 group-hover:translate-x-1" />
+          <ArrowRight size={14} aria-hidden="true" />
         </div>
       </div>
     </Link>

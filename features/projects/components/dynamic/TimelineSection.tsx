@@ -11,16 +11,18 @@ export function TimelineSection({ entries }: TimelineSectionProps) {
 
   if (sprints.length === 0) {
     return (
-      <section data-testid="timeline-section" className="py-8">
-        <div data-testid="timeline-empty" className="text-center py-12 text-muted-foreground border border-border rounded-xl">
-          No timeline entries yet.
+      <section data-testid="timeline-section" className="py-4">
+        <div data-testid="timeline-empty" className="editorial-surface p-8 text-center">
+          <p className="font-editorial-body text-base text-ink-mute">
+            No timeline entries yet. Development milestones will appear here once the project has sprint or PR activity.
+          </p>
         </div>
       </section>
     );
   }
 
   return (
-    <section data-testid="timeline-section" className="py-4">
+    <section data-testid="timeline-section" className="relative py-2">
       <div className="relative">
         {sprints.map((sprint, index) => (
           <SprintNode

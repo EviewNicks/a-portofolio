@@ -1,16 +1,16 @@
-'use client';
+'use client'
 
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X } from 'lucide-react';
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
+import React, { useState, useEffect } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { Menu, X } from 'lucide-react'
+import Link from 'next/link'
+import { Button } from '@/components/ui/button'
 
 interface NavigationItem {
-  id: string;
-  label: string;
-  href: string;
-  external?: boolean; // true = navigate to a page, false = scroll to section
+  id: string
+  label: string
+  href: string
+  external?: boolean // true = navigate to a page, false = scroll to section
 }
 
 const navigationItems: NavigationItem[] = [
@@ -20,73 +20,73 @@ const navigationItems: NavigationItem[] = [
   { id: 'projects', label: 'Projects', href: '/projects', external: true },
   { id: 'experience', label: 'Experience', href: '#experience' },
   { id: 'contact', label: 'Contact', href: '#contact' },
-];
+]
 
 export function Navigation() {
-  const [activeSection, setActiveSection] = useState('hero');
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState('hero')
+  const [isScrolled, setIsScrolled] = useState(false)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   // Handle scroll to update active section and navbar background
   useEffect(() => {
     const handleScroll = () => {
       // Update navbar background on scroll
-      setIsScrolled(window.scrollY > 50);
+      setIsScrolled(window.scrollY > 50)
 
       // Find active section based on scroll position
-      const sections = navigationItems.map(item => 
+      const sections = navigationItems.map(item =>
         document.getElementById(item.id.replace('#', ''))
-      );
+      )
 
-      const scrollPosition = window.scrollY + window.innerHeight / 3;
+      const scrollPosition = window.scrollY + window.innerHeight / 3
 
       for (let i = sections.length - 1; i >= 0; i--) {
-        const section = sections[i];
+        const section = sections[i]
         if (section && section.offsetTop <= scrollPosition) {
-          setActiveSection(navigationItems[i].id);
-          break;
+          setActiveSection(navigationItems[i].id)
+          break
         }
       }
-    };
+    }
 
-    window.addEventListener('scroll', handleScroll);
-    handleScroll(); // Initial check
+    window.addEventListener('scroll', handleScroll)
+    handleScroll() // Initial check
 
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   // Handle smooth scroll to section
   const scrollToSection = (href: string) => {
-    const sectionId = href.replace('#', '');
-    const section = document.getElementById(sectionId);
-    
+    const sectionId = href.replace('#', '')
+    const section = document.getElementById(sectionId)
+
     if (section) {
-      const offset = 80; // Offset for fixed navbar
-      const sectionTop = section.offsetTop - offset;
-      
+      const offset = 80 // Offset for fixed navbar
+      const sectionTop = section.offsetTop - offset
+
       window.scrollTo({
         top: sectionTop,
         behavior: 'smooth',
-      });
+      })
 
       // Update URL hash without triggering scroll
       if (window.history.pushState) {
-        window.history.pushState(null, '', href);
+        window.history.pushState(null, '', href)
       }
     }
 
-    setIsMobileMenuOpen(false);
-  };
+    setIsMobileMenuOpen(false)
+  }
 
   // Handle URL hash navigation
   useEffect(() => {
-    const hash = window.location.hash;
+    const hash = window.location.hash
     if (hash) {
       setTimeout(() => {
-        scrollToSection(hash);
-      }, 100);
+        scrollToSection(hash)
+      }, 100)
     }
-  }, []);
+  }, [])
 
   return (
     <>
@@ -95,18 +95,18 @@ export function Navigation() {
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.5 }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        className={`fixed top-0 right-0 left-0 z-50 transition-all duration-300 ${
           isScrolled
-            ? 'bg-background/80 backdrop-blur-lg border-b border-border shadow-lg'
+            ? 'bg-background/80 border-border border-b shadow-lg backdrop-blur-lg'
             : 'bg-transparent'
         }`}
       >
         <div className="container mx-auto px-4">
-          <div className="flex items-center justify-between h-16 md:h-20">
+          <div className="flex h-16 items-center justify-between md:h-20">
             {/* Logo/Brand */}
             <motion.button
               onClick={() => scrollToSection('#hero')}
-              className="text-xl md:text-2xl font-bold bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent"
+              className="from-primary via-secondary to-accent bg-gradient-to-r bg-clip-text text-xl font-bold text-transparent md:text-2xl"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -114,21 +114,21 @@ export function Navigation() {
             </motion.button>
 
             {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center gap-1">
-              {navigationItems.map((item) =>
+            <div className="hidden items-center gap-1 md:flex">
+              {navigationItems.map((item, index) =>
                 item.external ? (
                   <Link
-                    key={item.id}
+                    key={`nav-${item.id}-${index}`}
                     href={item.href}
-                    className="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 text-muted-foreground hover:text-foreground hover:bg-accent"
+                    className="text-muted-foreground hover:text-foreground hover:bg-accent rounded-lg px-4 py-2 text-sm font-medium transition-all duration-300"
                   >
                     {item.label}
                   </Link>
                 ) : (
                   <motion.button
-                    key={item.id}
+                    key={`nav-${item.id}-${index}`}
                     onClick={() => scrollToSection(item.href)}
-                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
+                    className={`rounded-lg px-4 py-2 text-sm font-medium transition-all duration-300 ${
                       activeSection === item.id
                         ? 'bg-primary text-primary-foreground'
                         : 'text-muted-foreground hover:text-foreground hover:bg-accent'
@@ -170,31 +170,31 @@ export function Navigation() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="absolute inset-0 bg-background/80 backdrop-blur-lg"
+              className="bg-background/80 absolute inset-0 backdrop-blur-lg"
               onClick={() => setIsMobileMenuOpen(false)}
             />
 
             {/* Menu Content */}
-            <div className="absolute right-0 top-0 bottom-0 w-64 bg-background border-l border-border shadow-2xl">
-              <div className="flex flex-col h-full pt-20 px-4">
+            <div className="bg-background border-border absolute top-0 right-0 bottom-0 w-64 border-l shadow-2xl">
+              <div className="flex h-full flex-col px-4 pt-20">
                 {navigationItems.map((item, index) =>
                   item.external ? (
                     <Link
-                      key={item.id}
+                      key={`mobile-nav-${item.id}-${index}`}
                       href={item.href}
                       onClick={() => setIsMobileMenuOpen(false)}
-                      className="w-full text-left px-4 py-3 rounded-lg text-base font-medium transition-all duration-300 text-muted-foreground hover:text-foreground hover:bg-accent"
+                      className="text-muted-foreground hover:text-foreground hover:bg-accent w-full rounded-lg px-4 py-3 text-left text-base font-medium transition-all duration-300"
                     >
                       {item.label}
                     </Link>
                   ) : (
                     <motion.button
-                      key={item.id}
+                      key={`mobile-nav-${item.id}-${index}`}
                       initial={{ opacity: 0, x: 20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: index * 0.1 }}
                       onClick={() => scrollToSection(item.href)}
-                      className={`w-full text-left px-4 py-3 rounded-lg text-base font-medium transition-all duration-300 ${
+                      className={`w-full rounded-lg px-4 py-3 text-left text-base font-medium transition-all duration-300 ${
                         activeSection === item.id
                           ? 'bg-primary text-primary-foreground'
                           : 'text-muted-foreground hover:text-foreground hover:bg-accent'
@@ -213,5 +213,5 @@ export function Navigation() {
       {/* Spacer to prevent content from going under fixed navbar */}
       <div className="h-16 md:h-20" />
     </>
-  );
+  )
 }
