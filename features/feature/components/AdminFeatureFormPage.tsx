@@ -42,12 +42,12 @@ export function AdminFeatureFormPage({
   const shouldLoadFeature = Boolean(featureId && !initialFeature)
   const [loadingFeature, setLoadingFeature] = useState(shouldLoadFeature)
   const [loadError, setLoadError] = useState('')
+  const [saving, setSaving] = useState(false)
   const [draft, setDraft] = useState<FeatureFormDraft>({
     title: initialFeature?.title ?? '',
+    shortDescription: initialFeature?.short_description ?? '',
     description: initialFeature?.description ?? '',
     youtubeUrl: initialFeature?.youtube_url ?? '',
-    demoUrl: initialFeature?.demo_url ?? '',
-    techStack: initialFeature?.tech_stack ?? [],
   })
 
   const isCreate = mode === 'create'
@@ -93,8 +93,8 @@ export function AdminFeatureFormPage({
   const completeness = useMemo(() => {
     const checks = [
       Boolean(draft.title.trim()),
+      Boolean(draft.shortDescription.trim()),
       Boolean(draft.description.trim()),
-      draft.techStack.length > 0,
       Boolean(feature?.media?.length),
     ]
     return Math.round((checks.filter(Boolean).length / checks.length) * 100)
@@ -179,7 +179,7 @@ export function AdminFeatureFormPage({
               </h1>
               <p className="font-editorial-body text-muted-foreground mt-6 max-w-3xl text-base leading-relaxed">
                 {isCreate
-                  ? 'Document a new Maguru capability before it becomes a public case-study detail page: title, proof points, demo links, stack, and implementation notes.'
+                  ? 'Document a new Maguru capability before it becomes a public case-study detail page: title, proof points, YouTube demo, and implementation notes.'
                   : 'Update an existing showcase feature while keeping the public detail page clear, specific, and easy to maintain.'}
               </p>
 
@@ -214,10 +214,10 @@ export function AdminFeatureFormPage({
               </div>
               <div className="space-y-4">
                 <BriefStat label="Title" value="Required" />
-                <BriefStat label="Description" value="Required" />
+                <BriefStat label="Short description" value="200 chars" />
+                <BriefStat label="Implementation notes" value="Markdown" />
+                <BriefStat label="YouTube demo" value="Optional" />
                 <BriefStat label="Media" value="After save" />
-                <BriefStat label="Demo links" value="Optional" />
-                <BriefStat label="Tech stack" value="Chips" />
               </div>
               <div className="border-coral/20 bg-coral/5 text-muted-foreground mt-6 rounded-xl border p-4 text-sm leading-relaxed">
                 Required fields keep the public handoff complete. Media is
@@ -256,8 +256,10 @@ export function AdminFeatureFormPage({
                 projectId={projectId}
                 secret={secret}
                 feature={feature}
+                formId="feature-submit-form"
+                saving={saving}
+                onSavingChange={setSaving}
                 onSuccess={handleSuccess}
-                onCancel={handleCancel}
                 onFormChange={setDraft}
               />
 
@@ -336,12 +338,13 @@ export function AdminFeatureFormPage({
 
               <div className="mt-8 grid gap-3">
                 <button
-                  type="button"
-                  onClick={handleCancel}
-                  className="border-border text-foreground hover:border-primary/40 hover:text-primary inline-flex items-center justify-center gap-2 rounded-xl border px-4 py-3 text-sm font-semibold transition-all"
+                  type="submit"
+                  form="feature-submit-form"
+                  disabled={saving}
+                  className="bg-primary text-primary-foreground hover:bg-primary/90 inline-flex items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold transition-all disabled:cursor-not-allowed disabled:opacity-60"
                 >
-                  <ArrowLeft size={16} />
-                  Cancel and return
+                  <CheckCircle2 size={16} />
+                  {saving ? 'Saving...' : isCreate ? 'Save Feature' : 'Save Changes'}
                 </button>
                 <button
                   type="button"
@@ -350,10 +353,17 @@ export function AdminFeatureFormPage({
                       .getElementById('feature-form')
                       ?.scrollIntoView({ behavior: 'smooth', block: 'start' })
                   }
-                  className="bg-primary text-primary-foreground hover:bg-primary/90 inline-flex items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold transition-all"
+                  className="border-border text-foreground hover:border-primary/40 hover:text-primary inline-flex items-center justify-center gap-2 rounded-xl border px-4 py-3 text-sm font-semibold transition-all"
                 >
-                  <CheckCircle2 size={16} />
                   Review readiness
+                </button>
+                <button
+                  type="button"
+                  onClick={handleCancel}
+                  className="border-border text-foreground hover:border-primary/40 hover:text-primary inline-flex items-center justify-center gap-2 rounded-xl border px-4 py-3 text-sm font-semibold transition-all"
+                >
+                  <ArrowLeft size={16} />
+                  Cancel and return
                 </button>
               </div>
             </aside>

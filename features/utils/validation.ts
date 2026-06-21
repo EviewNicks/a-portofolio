@@ -1,5 +1,9 @@
 import { FeatureValidationResult } from '@/features/projects/types'
 
+const SHORT_DESCRIPTION_LIMIT = 200
+const DESCRIPTION_LIMIT = 50000
+const YOUTUBE_URL_LIMIT = 2048
+
 export function validateFeatureInput(data: unknown): FeatureValidationResult {
   const errors: Record<string, string> = {}
 
@@ -23,18 +27,26 @@ export function validateFeatureInput(data: unknown): FeatureValidationResult {
   }
 
   // Short description validation
-  if (input.short_description && typeof input.short_description === 'string') {
-    if (input.short_description.length > 200) {
-      errors.short_description =
-        'Short description must not exceed 200 characters'
-    }
+  if (
+    !input.short_description ||
+    typeof input.short_description !== 'string' ||
+    input.short_description.trim() === ''
+  ) {
+    errors.short_description = 'Short description is required'
+  } else if (input.short_description.length > SHORT_DESCRIPTION_LIMIT) {
+    errors.short_description =
+      'Short description must not exceed 200 characters'
   }
 
   // Description (markdown) validation
-  if (input.description && typeof input.description === 'string') {
-    if (input.description.length > 50000) {
-      errors.description = 'Description must not exceed 50000 characters'
-    }
+  if (
+    !input.description ||
+    typeof input.description !== 'string' ||
+    input.description.trim() === ''
+  ) {
+    errors.description = 'Description is required'
+  } else if (input.description.length > DESCRIPTION_LIMIT) {
+    errors.description = 'Description must not exceed 50000 characters'
   }
 
   // YouTube URL validation
@@ -43,7 +55,7 @@ export function validateFeatureInput(data: unknown): FeatureValidationResult {
       /^https:\/\/(www\.youtube\.com\/watch\?v=|youtu\.be\/).+$/
     if (!youtubePattern.test(input.youtube_url)) {
       errors.youtube_url = 'Invalid YouTube URL format'
-    } else if (input.youtube_url.length > 2048) {
+    } else if (input.youtube_url.length > YOUTUBE_URL_LIMIT) {
       errors.youtube_url = 'YouTube URL must not exceed 2048 characters'
     }
   }

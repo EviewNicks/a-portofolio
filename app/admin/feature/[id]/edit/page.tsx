@@ -16,19 +16,20 @@ interface PageProps {
   }>
 }
 
-function toProjectFeature(raw: Awaited<ReturnType<typeof getFeatureById>>): ProjectFeature | null {
+function toProjectFeature(
+  raw: Awaited<ReturnType<typeof getFeatureById>>
+): ProjectFeature | null {
   if (!raw) return null
 
   return {
     id: raw.id,
     project_id: raw.project_id,
     title: raw.title,
+    short_description: raw.short_description ?? undefined,
     description: raw.description ?? undefined,
     youtube_url: raw.youtube_url ?? undefined,
-    tech_stack: raw.tech_stack,
     display_order: raw.display_order,
     is_featured: raw.is_featured,
-    demo_url: raw.demo_url ?? undefined,
     created_at: raw.created_at.toISOString(),
     updated_at: raw.updated_at.toISOString(),
     media: raw.media.map(media => ({

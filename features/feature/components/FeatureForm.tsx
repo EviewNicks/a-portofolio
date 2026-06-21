@@ -2,24 +2,22 @@
 
 import { useEffect, useMemo, useState } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
-import { Check, X } from 'lucide-react'
 import type { ProjectFeature } from '@/features/projects/types'
 import { validateFeatureInput } from '@/features/utils/validation'
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Switch } from '@/components/ui/switch'
 import { Textarea } from '@/components/ui/textarea'
 import { cn } from '@/lib/utils'
 
 const DEFAULT_DISPLAY_ORDER = 1
+const SHORT_DESCRIPTION_LIMIT = 200
+const DESCRIPTION_LIMIT = 50000
 
 export interface FeatureFormDraft {
   title: string
+  shortDescription: string
   description: string
   youtubeUrl: string
-  demoUrl: string
-  techStack: string[]
 }
 
 interface FeatureFormProps {
@@ -27,7 +25,9 @@ interface FeatureFormProps {
   secret: string
   feature?: ProjectFeature | null
   onSuccess: (savedFeature: ProjectFeature) => void
-  onCancel: () => void
+  formId: string
+  saving: boolean
+  onSavingChange: (saving: boolean) => void
   onFormChange?: (draft: FeatureFormDraft) => void
 }
 
@@ -36,67 +36,36 @@ export function FeatureForm({
   secret,
   feature,
   onSuccess,
-  onCancel,
+  formId,
+  onSavingChange,
   onFormChange,
 }: FeatureFormProps) {
   const reduceMotion = useReducedMotion()
   const [title, setTitle] = useState(feature?.title ?? '')
+  const [shortDescription, setShortDescription] = useState(
+    feature?.short_description ?? ''
+  )
   const [description, setDescription] = useState(feature?.description ?? '')
   const [youtubeUrl, setYoutubeUrl] = useState(feature?.youtube_url ?? '')
-  const [demoUrl, setDemoUrl] = useState(feature?.demo_url ?? '')
-  const [techStack, setTechStack] = useState(feature?.tech_stack ?? [])
-  const [techInput, setTechInput] = useState('')
   const [isFeatured, setIsFeatured] = useState(feature?.is_featured ?? false)
   const [displayOrder, setDisplayOrder] = useState(
     feature?.display_order ?? DEFAULT_DISPLAY_ORDER
   )
   const [errors, setErrors] = useState<Record<string, string>>({})
-  const [saving, setSaving] = useState(false)
 
   const draft = useMemo(
     () => ({
       title,
+      shortDescription,
       description,
       youtubeUrl,
-      demoUrl,
-      techStack,
     }),
-    [demoUrl, description, techStack, title, youtubeUrl]
+    [description, shortDescription, title, youtubeUrl]
   )
 
   useEffect(() => {
     onFormChange?.(draft)
   }, [draft, onFormChange])
-
-  const addTechStackItem = (rawValue = techInput) => {
-    const nextItems = rawValue
-      .split(',')
-      .map(item => item.trim())
-      .filter(Boolean)
-
-    if (nextItems.length === 0) return
-
-    setTechStack(current => {
-      const merged = [...current]
-      nextItems.forEach(item => {
-        if (
-          !merged.some(
-            existing => existing.toLowerCase() === item.toLowerCase()
-          )
-        ) {
-          merged.push(item)
-        }
-      })
-      return merged
-    })
-    setTechInput('')
-  }
-
-  const removeTechStackItem = (value: string) => {
-    setTechStack(current =>
-      current.filter(item => item.toLowerCase() !== value.toLowerCase())
-    )
-  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -104,10 +73,9 @@ export function FeatureForm({
 
     const payload = {
       title,
+      short_description: shortDescription,
       description,
       youtube_url: youtubeUrl || null,
-      demo_url: demoUrl || null,
-      tech_stack: techStack,
       is_featured: isFeatured,
       display_order: displayOrder,
     }
@@ -118,7 +86,7 @@ export function FeatureForm({
       return
     }
 
-    setSaving(true)
+    onSavingChange(true)
     try {
       let res: Response
       if (feature?.id) {
@@ -154,12 +122,12 @@ export function FeatureForm({
     } catch {
       setErrors({ global: 'Network error. Please try again.' })
     } finally {
-      setSaving(false)
+      onSavingChange(false)
     }
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-10">
+    <form id={formId} onSubmit={handleSubmit} className="space-y-10">
       {errors.global && (
         <motion.div
           role="alert"
@@ -251,71 +219,81 @@ export function FeatureForm({
       </FormSection>
 
       <FormSection
-        title="II. Demo links"
-        description="Optional URLs for live demo and video walkthrough."
+        title="II. Short description"
+        description="A concise public summary used by cards and feature previews."
         delay={1}
         reduceMotion={reduceMotion}
       >
-        <div className="grid gap-6 md:grid-cols-2">
-          <Field label="Live demo URL" error={errors.demo_url}>
-            <Input
-              id="demo-url"
-              type="url"
-              value={demoUrl}
-              onChange={e => setDemoUrl(e.target.value)}
-              placeholder="https://demo.example.com/payment"
-              aria-invalid={Boolean(errors.demo_url)}
-              className={cn(
-                'bg-paper text-ink focus-visible:bg-paper-warm rounded-xl px-4 py-3 transition-colors',
-                fieldClass(errors.demo_url)
-              )}
-            />
-            <FieldError id="demo-url-error">{errors.demo_url}</FieldError>
-          </Field>
-
-          <Field label="YouTube URL" error={errors.youtube_url}>
-            <Input
-              id="youtube-url"
-              type="url"
-              value={youtubeUrl}
-              onChange={e => setYoutubeUrl(e.target.value)}
-              placeholder="https://youtube.com/watch?v=abc123"
-              aria-invalid={Boolean(errors.youtube_url)}
-              className={cn(
-                'bg-paper text-ink focus-visible:bg-paper-warm rounded-xl px-4 py-3 transition-colors',
-                fieldClass(errors.youtube_url)
-              )}
-            />
-            <FieldError id="youtube-url-error">{errors.youtube_url}</FieldError>
-          </Field>
-        </div>
-      </FormSection>
-
-      <FormSection
-        title="III. Tech stack"
-        description="Typed chips become the detail-page pill row."
-        delay={2}
-        reduceMotion={reduceMotion}
-      >
         <Field
-          label="Add technology"
-          error={errors.tech_stack}
-          hint="Type a stack item, then press Enter. Suggested: Clerk, Next.js Middleware, Prisma, TypeScript, Supabase."
+          label="Short description"
+          required
+          error={errors.short_description}
+          hint={`Max ${SHORT_DESCRIPTION_LIMIT} characters. Keep it specific and outcome-focused.`}
         >
-          <ChipInput
-            items={techStack}
-            input={techInput}
-            onInputChange={setTechInput}
-            onAdd={() => addTechStackItem()}
-            onRemove={removeTechStackItem}
-            invalid={Boolean(errors.tech_stack)}
+          <Textarea
+            id="short-description"
+            value={shortDescription}
+            onChange={e => setShortDescription(e.target.value)}
+            placeholder="Builds a reusable payment flow that validates sessions before checkout."
+            rows={3}
+            aria-invalid={Boolean(errors.short_description)}
+            aria-describedby="short-description-help"
+            className={cn(
+              'bg-paper text-ink focus-visible:bg-paper-warm rounded-xl px-4 py-3 transition-colors',
+              fieldClass(errors.short_description)
+            )}
+            maxLength={SHORT_DESCRIPTION_LIMIT}
+            required
           />
-          <FieldError id="tech-stack-error">{errors.tech_stack}</FieldError>
+          <div className="flex items-center justify-between gap-4">
+            <FieldError id="short-description-error">
+              {errors.short_description}
+            </FieldError>
+            <span
+              id="short-description-help"
+              className={cn(
+                'text-xs',
+                shortDescription.length > SHORT_DESCRIPTION_LIMIT
+                  ? 'text-coral'
+                  : 'text-ink-mute'
+              )}
+            >
+              {shortDescription.length}/{SHORT_DESCRIPTION_LIMIT}
+            </span>
+          </div>
         </Field>
       </FormSection>
 
       <FormSection
-        title="V. Implementation details"
+        title="III. Demo link"
+        description="Upload the feature walkthrough to YouTube, then paste that YouTube URL here."
+        delay={2}
+        reduceMotion={reduceMotion}
+      >
+        <Field
+          label="YouTube URL"
+          error={errors.youtube_url}
+          hint="Optional. This is the public demo link shown on the website."
+        >
+          <Input
+            id="youtube-url"
+            type="url"
+            value={youtubeUrl}
+            onChange={e => setYoutubeUrl(e.target.value)}
+            placeholder="https://youtube.com/watch?v=abc123"
+            aria-invalid={Boolean(errors.youtube_url)}
+            aria-describedby="youtube-url-help"
+            className={cn(
+              'bg-paper text-ink focus-visible:bg-paper-warm rounded-xl px-4 py-3 transition-colors',
+              fieldClass(errors.youtube_url)
+            )}
+          />
+          <FieldError id="youtube-url-error">{errors.youtube_url}</FieldError>
+        </Field>
+      </FormSection>
+
+      <FormSection
+        title="IV. Implementation details"
         description="Markdown content for architecture, decisions, and testing notes."
         delay={3}
         reduceMotion={reduceMotion}
@@ -324,7 +302,7 @@ export function FeatureForm({
           label="Markdown implementation notes"
           required
           error={errors.description}
-          hint="Supports headings, bullets, links, and inline code on the detail page."
+          hint={`Supports headings, bullets, links, and inline code on the detail page. Max ${DESCRIPTION_LIMIT} characters.`}
         >
           <Textarea
             id="implementation-markdown"
@@ -338,34 +316,27 @@ export function FeatureForm({
               'font-editorial-mono bg-paper text-ink focus-visible:bg-paper-warm min-h-52 resize-y rounded-xl px-4 py-3 transition-colors',
               fieldClass(errors.description)
             )}
+            maxLength={DESCRIPTION_LIMIT}
             required
           />
           <div className="flex items-center justify-between gap-4">
             <FieldError id="implementation-markdown-error">
               {errors.description}
             </FieldError>
+            <span
+              id="implementation-markdown-help"
+              className={cn(
+                'text-xs',
+                description.length > DESCRIPTION_LIMIT
+                  ? 'text-coral'
+                  : 'text-ink-mute'
+              )}
+            >
+              {description.length}/{DESCRIPTION_LIMIT}
+            </span>
           </div>
         </Field>
       </FormSection>
-
-      <div className="border-line-soft flex flex-col-reverse justify-end gap-3 border-t pt-6 sm:flex-row">
-        <Button
-          type="button"
-          variant="outline"
-          onClick={onCancel}
-          className="hover:border-coral/50 hover:bg-coral/5 hover:text-coral border-line text-ink-soft bg-transparent"
-        >
-          Cancel
-        </Button>
-        <Button
-          type="submit"
-          disabled={saving}
-          className="bg-coral shadow-coral/20 text-white shadow-lg hover:bg-[#e25e4a]"
-        >
-          <Check size={16} />
-          {saving ? 'Saving...' : 'Save Feature'}
-        </Button>
-      </div>
     </form>
   )
 }
@@ -449,67 +420,6 @@ function FieldError({
     <p id={id} className="text-coral min-h-4.5 text-xs">
       {children}
     </p>
-  )
-}
-
-function ChipInput({
-  items,
-  input,
-  onInputChange,
-  onAdd,
-  onRemove,
-  invalid,
-}: {
-  items: string[]
-  input: string
-  onInputChange: (value: string) => void
-  onAdd: () => void
-  onRemove: (value: string) => void
-  invalid: boolean
-}) {
-  return (
-    <div
-      className={cn(
-        'focus-within:border-coral/60 bg-paper focus-within:bg-paper-warm border transition-colors',
-        invalid
-          ? 'border-coral ring-coral/10 ring-3'
-          : 'hover:border-coral/50 border-line'
-      )}
-    >
-      <div className="flex min-h-12 flex-wrap gap-2 p-2">
-        {items.map(item => (
-          <Badge
-            key={item}
-            variant="outline"
-            className="font-editorial-mono border-line bg-bone text-ink-soft"
-          >
-            {item}
-            <button
-              type="button"
-              onClick={() => onRemove(item)}
-              className="text-coral hover:bg-coral/10 ml-1 rounded-full p-0.5 transition-colors"
-              aria-label={`Remove ${item}`}
-            >
-              <X size={14} />
-            </button>
-          </Badge>
-        ))}
-        <Input
-          value={input}
-          onChange={e => onInputChange(e.target.value)}
-          onKeyDown={e => {
-            if (e.key === 'Enter' || e.key === ',') {
-              e.preventDefault()
-              onAdd()
-            }
-          }}
-          onBlur={() => onAdd()}
-          placeholder="Type a stack item, then press Enter"
-          className="text-ink min-h-8 flex-1 border-0 bg-transparent px-2 py-1 shadow-none focus-visible:ring-0"
-          aria-label="Add technology"
-        />
-      </div>
-    </div>
   )
 }
 

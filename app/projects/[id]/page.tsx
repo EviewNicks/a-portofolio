@@ -128,12 +128,11 @@ export default async function ProjectDetailPage({
     id: f.id,
     project_id: f.project_id,
     title: f.title,
+    short_description: f.short_description,
     description: f.description,
     youtube_url: f.youtube_url,
-    tech_stack: f.tech_stack,
     display_order: f.display_order,
     is_featured: f.is_featured,
-    demo_url: f.demo_url,
     created_at: f.created_at.toISOString(),
     updated_at: f.updated_at.toISOString(),
     media: f.media.map(m => ({

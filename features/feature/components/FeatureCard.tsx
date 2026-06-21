@@ -78,23 +78,9 @@ export function FeatureCard({ projectId, feature }: FeatureCardProps) {
           {getExcerpt(feature.description)}
         </p>
 
-        {feature.tech_stack.length > 0 && (
-          <div className="mt-5 flex flex-wrap gap-1.5">
-            {feature.tech_stack.slice(0, 3).map((tech) => (
-              <span
-                key={tech}
-                className="editorial-code border border-line/40 px-2 py-1 text-[0.62rem]"
-              >
-                {tech}
-              </span>
-            ))}
-            {feature.tech_stack.length > 3 && (
-              <span className="self-center font-editorial-mono text-[0.62rem] tracking-[0.04em] text-ink-faint">
-                +{feature.tech_stack.length - 3} more
-              </span>
-            )}
-          </div>
-        )}
+        <p className="mt-3 font-editorial-mono text-xs leading-relaxed text-ink-faint">
+          {feature.short_description || 'Short description is not available yet.'}
+        </p>
 
         <div className="mt-5 flex items-center justify-between border-t border-line pt-4 font-editorial-tight text-xs font-bold uppercase tracking-[0.14em] text-coral">
           <span>Explore Details</span>

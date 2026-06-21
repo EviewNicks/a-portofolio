@@ -1,6 +1,8 @@
 'use client'
 
+import { useState } from 'react'
 import {
+  CheckCircle2,
   Plus,
   Pencil,
   Trash2,
@@ -26,6 +28,8 @@ export function AdminFeaturesManagement({
   initialFeatures,
   initialEditFeatureId,
 }: AdminFeaturesManagementProps) {
+  const [saving, setSaving] = useState(false)
+
   const {
     features,
     error,
@@ -112,19 +116,12 @@ export function AdminFeaturesManagement({
                     <span>Order: {feature.display_order}</span>
                     <span>•</span>
                     <span>{feature.media?.length || 0} media files</span>
-                    {feature.tech_stack.length > 0 && (
+                    {feature.short_description && (
                       <>
                         <span>•</span>
-                        <div className="flex flex-wrap gap-1">
-                          {feature.tech_stack.map(t => (
-                            <span
-                              key={t}
-                              className="bg-foreground/5 py-0.2 border-border rounded-md border px-1.5 text-[10px]"
-                            >
-                              {t}
-                            </span>
-                          ))}
-                        </div>
+                        <span className="truncate">
+                          {feature.short_description}
+                        </span>
                       </>
                     )}
                   </div>
@@ -185,9 +182,29 @@ export function AdminFeaturesManagement({
                 projectId={projectId}
                 secret={secret}
                 feature={editFeature}
+                formId="admin-feature-modal-form"
+                saving={saving}
+                onSavingChange={setSaving}
                 onSuccess={handleFormSubmitSuccess}
-                onCancel={closeForm}
               />
+            </div>
+            <div className="border-border flex justify-end gap-3 border-t px-6 py-4">
+              <button
+                type="button"
+                onClick={closeForm}
+                className="border-border text-foreground hover:bg-muted/50 hover:text-foreground rounded-lg border px-4 py-2 text-sm font-medium transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                form="admin-feature-modal-form"
+                disabled={saving}
+                className="bg-primary text-primary-foreground hover:bg-primary/90 inline-flex items-center gap-1.5 rounded-lg px-4 py-2 text-sm font-medium shadow-sm transition-colors disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                <CheckCircle2 size={16} />
+                {saving ? 'Saving...' : 'Save Feature'}
+              </button>
             </div>
           </div>
         </div>

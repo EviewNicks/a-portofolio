@@ -6,7 +6,7 @@ import { validateFeatureInput } from '@/features/utils/validation'
 // Safe date generator
 const safeDateArb = fc
   .date({ min: new Date('2020-01-01'), max: new Date('2030-01-01') })
-  .filter(d => !isNaN(d.getTime()))
+  .filter(d => !Number.isNaN(d.getTime()))
 
 // Safe YouTube URL generator
 const youtubeUrlArb = fc.oneof(
@@ -24,22 +24,22 @@ const youtubeUrlArb = fc.oneof(
     .map(id => `https://youtu.be/${id}`)
 )
 
-// Tech Stack generator (up to 50 items)
-const techStackArb = fc.array(
-  fc.string({ minLength: 1, maxLength: 30 }),
-  { minLength: 0, maxLength: 50 }
-)
+// Short description generator aligned with the 200-character backend limit
+const shortDescriptionArb = fc
+  .string({
+    minLength: 1,
+    maxLength: 200,
+  })
+  .filter(shortDescription => shortDescription.trim().length > 0)
 
 // Helper feature data builder
 const featureDataArb = fc.record({
   title: fc.string({ minLength: 1, maxLength: 200 }),
-  description: fc.option(fc.string({ minLength: 0, maxLength: 10000 }), { nil: undefined }),
+  short_description: shortDescriptionArb,
+  description: fc.option(fc.string({ minLength: 1, maxLength: 10000 }), {
+    nil: undefined,
+  }),
   youtube_url: fc.option(youtubeUrlArb, { nil: undefined }),
-  demo_url: fc.option(
-    fc.string({ minLength: 5, maxLength: 100 }).map(path => `https://demo.example.com/${path}`),
-    { nil: undefined }
-  ),
-  tech_stack: techStackArb,
   is_featured: fc.boolean(),
   display_order: fc.integer({ min: 0, max: 100000 }),
   created_at: safeDateArb,
@@ -49,18 +49,17 @@ const featureDataArb = fc.record({
 // ─── Test Suite ──────────────────────────────────────────────────────────────
 
 describe('Feature Showcase Property Tests', () => {
-  // Property 13: Tech Stack Badge Rendering
-  // Validates: Requirements 6.6
-  describe('Property 13: Tech Stack Badge Rendering', () => {
-    it('tech stack array elements are mapped exactly with correct lengths and types', () => {
+  // Property 13: Short Description Rendering
+  // Validates: Requirements 2.2, 2.8
+  describe('Property 13: Short Description Rendering', () => {
+    it('short description values are preserved exactly with correct length and type', () => {
       fc.assert(
-        fc.property(techStackArb, techStack => {
-          // If we map tech stack elements to badges, the badge count must exactly equal the array length,
-          // and each element must be a valid non-empty string.
-          const badges = techStack.map(tech => tech.trim())
+        fc.property(shortDescriptionArb, shortDescription => {
+          const trimmed = shortDescription.trim()
           return (
-            badges.length === techStack.length &&
-            badges.every((val, idx) => typeof val === 'string' && val === techStack[idx].trim())
+            trimmed.length > 0 &&
+            trimmed.length <= 200 &&
+            typeof trimmed === 'string'
           )
         }),
         { numRuns: 100 }
@@ -69,19 +68,20 @@ describe('Feature Showcase Property Tests', () => {
   })
 
   // Property 14: YouTube URL Storage Preservation
-  // Validates: Requirements 8.2
+  // Validates: Requirements 2.3, 8.2
   describe('Property 14: YouTube URL Storage Preservation', () => {
     it('youtube URL is validated successfully and preserved exactly without modification', () => {
       fc.assert(
         fc.property(youtubeUrlArb, url => {
           const inputData = {
             title: 'Sample Feature',
+            short_description: 'A concise feature summary.',
+            description: 'Markdown implementation notes.',
             youtube_url: url,
           }
           const validation = validateFeatureInput(inputData)
-          
-          // Must pass validation (valid: true)
-          // And URL must be exactly identical to the input and less than 2048 chars
+
+          // Must pass validation and keep the URL unchanged
           return (
             validation.valid === true &&
             inputData.youtube_url === url &&
@@ -98,10 +98,9 @@ describe('Feature Showcase Property Tests', () => {
   describe('Property 15: Data Serialization Round-Trip', () => {
     interface TestFeatureData {
       title: string
+      short_description: string
       description?: string
       youtube_url?: string
-      demo_url?: string
-      tech_stack: string[]
       is_featured: boolean
       display_order: number
       created_at: Date
@@ -110,10 +109,9 @@ describe('Feature Showcase Property Tests', () => {
 
     interface SerializedTestFeatureData {
       title: string
+      short_description: string
       description?: string
       youtube_url?: string
-      demo_url?: string
-      tech_stack: string[]
       is_featured: boolean
       display_order: number
       created_at: string
@@ -156,10 +154,9 @@ describe('Feature Showcase Property Tests', () => {
 
           const otherPropsEqual =
             parsed.title === originalFeature.title &&
+            parsed.short_description === originalFeature.short_description &&
             parsed.description === originalFeature.description &&
             parsed.youtube_url === originalFeature.youtube_url &&
-            parsed.demo_url === originalFeature.demo_url &&
-            JSON.stringify(parsed.tech_stack) === JSON.stringify(originalFeature.tech_stack) &&
             parsed.is_featured === originalFeature.is_featured &&
             parsed.display_order === originalFeature.display_order
 

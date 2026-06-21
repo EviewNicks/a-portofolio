@@ -50,6 +50,10 @@ function stripMarkdown(value: string) {
 }
 
 function getLead(feature: ProjectFeature) {
+  if (feature.short_description) {
+    return feature.short_description
+  }
+
   if (!feature.description) {
     return 'Technical implementation breakdown for this portfolio feature.'
   }
@@ -345,17 +349,16 @@ export function FeatureDetail({
                   )}
                 </div>
 
-                {feature.tech_stack.length > 0 && (
-                  <div className="mt-8 flex flex-wrap gap-2">
-                    {feature.tech_stack.map(tech => (
-                      <span
-                        key={tech}
-                        className="border-line font-editorial-mono text-ink-soft hover:border-coral hover:bg-ink/5 hover:text-coral inline-flex rounded-full border px-4 py-2 text-xs transition-colors"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
+                {feature.youtube_url && (
+                  <Link
+                    href={feature.youtube_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="border-line bg-paper hover:border-coral/60 hover:text-coral mt-8 inline-flex items-center gap-2 rounded-full border px-5 py-3 text-sm font-medium transition-colors"
+                  >
+                    Watch demo on YouTube
+                    <ExternalLink size={14} />
+                  </Link>
                 )}
               </div>
 
@@ -399,18 +402,6 @@ export function FeatureDetail({
                     </span>
                   </div>
                 </div>
-
-                {feature.demo_url && (
-                  <Link
-                    href={feature.demo_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="editorial-surface bg-coral text-paper mt-6 flex w-full items-center justify-center gap-2 rounded-full px-5 py-3.5 text-sm font-medium shadow-none transition-transform hover:-translate-y-0.5 hover:bg-[#e25e4a] active:scale-[0.98]"
-                  >
-                    Live Demonstration
-                    <ExternalLink size={14} />
-                  </Link>
-                )}
               </aside>
             </div>
           </div>

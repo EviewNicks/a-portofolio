@@ -7,7 +7,8 @@ import { validateFeatureInput, validateMediaFile } from './validation'
 
 const validFeature = {
   title: 'Valid Title',
-  description: 'A concise proof point for the feature showcase.',
+  short_description: 'A concise proof point for the feature showcase.',
+  description: 'Markdown implementation notes for the feature showcase.',
 }
 
 describe('validateFeatureInput', () => {
@@ -62,9 +63,60 @@ describe('validateFeatureInput', () => {
     )
   })
 
-  // Feature: project-features-showcase, Property 2: Description Validation
+  // Feature: project-features-showcase, Property 2: Short Description Validation
   // Validates: Requirements 2.2, 2.8
-  it('Property 2: requires a short description', () => {
+  it('Property 2: requires short_description and validates max 200 characters', () => {
+    const invalidDescriptions = ['', '   ']
+
+    for (const invalidDescription of invalidDescriptions) {
+      const result = validateFeatureInput({
+        ...validFeature,
+        short_description: invalidDescription,
+      })
+      expect(result.valid).toBe(false)
+      expect(result.errors.short_description).toBe(
+        'Short description is required'
+      )
+    }
+
+    fc.assert(
+      fc.property(
+        fc
+          .string({ minLength: 1, maxLength: 200 })
+          .filter(description => description.trim().length > 0),
+        validDescription => {
+          const result = validateFeatureInput({
+            ...validFeature,
+            short_description: validDescription,
+          })
+          expect(result.valid).toBe(true)
+          expect(result.errors.short_description).toBeUndefined()
+        }
+      ),
+      { numRuns: 100 }
+    )
+
+    fc.assert(
+      fc.property(
+        fc.string({ minLength: 201, maxLength: 300 }),
+        longDescription => {
+          const result = validateFeatureInput({
+            ...validFeature,
+            short_description: longDescription,
+          })
+          expect(result.valid).toBe(false)
+          expect(result.errors.short_description).toBe(
+            'Short description must not exceed 200 characters'
+          )
+        }
+      ),
+      { numRuns: 100 }
+    )
+  })
+
+  // Feature: project-features-showcase, Property 3: Description Validation
+  // Validates: Requirements 2.2, 2.8
+  it('Property 3: requires description and validates max 50000 characters', () => {
     const invalidDescriptions = ['', '   ']
 
     for (const invalidDescription of invalidDescriptions) {
@@ -73,13 +125,13 @@ describe('validateFeatureInput', () => {
         description: invalidDescription,
       })
       expect(result.valid).toBe(false)
-      expect(result.errors.description).toBe('Short description is required')
+      expect(result.errors.description).toBe('Description is required')
     }
 
     fc.assert(
       fc.property(
         fc
-          .string({ minLength: 1 })
+          .string({ minLength: 1, maxLength: 1000 })
           .filter(description => description.trim().length > 0),
         validDescription => {
           const result = validateFeatureInput({
@@ -92,17 +144,30 @@ describe('validateFeatureInput', () => {
       ),
       { numRuns: 100 }
     )
+
+    const extremelyLongDescription = 'a'.repeat(50001)
+    const result = validateFeatureInput({
+      ...validFeature,
+      description: extremelyLongDescription,
+    })
+    expect(result.valid).toBe(false)
+    expect(result.errors.description).toBe(
+      'Description must not exceed 50000 characters'
+    )
   })
 
-  // Feature: project-features-showcase, Property 3: YouTube URL Format Validation
+  // Feature: project-features-showcase, Property 4: YouTube URL Format Validation
   // Validates: Requirements 2.3, 8.1, 8.3
-  it('Property 3: accepts only valid YouTube URL formats', () => {
+  it('Property 4: accepts optional valid YouTube URL formats', () => {
     const validYouTubeUrls = [
       'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
       'https://youtu.be/dQw4w9WgXcQ',
       'https://www.youtube.com/watch?v=123_456-abc',
       'https://youtu.be/123-abc_XYZ',
     ]
+
+    // Omitting YouTube URL is valid because it is optional
+    expect(validateFeatureInput(validFeature).valid).toBe(true)
 
     // Valid ones pass
     for (const url of validYouTubeUrls) {
@@ -147,77 +212,6 @@ describe('validateFeatureInput', () => {
     expect(result.errors.youtube_url).toBe(
       'YouTube URL must not exceed 2048 characters'
     )
-  })
-
-  // Feature: project-features-showcase, Property 4: Demo URL Protocol Validation
-  // Validates: Requirements 2.4, 2.8
-  it('Property 4: accepts only URLs starting with http:// or https://', () => {
-    // Valid HTTP/HTTPS URLs pass
-    fc.assert(
-      fc.property(
-        fc.constantFrom('http://', 'https://'),
-        fc
-          .string({ minLength: 1, maxLength: 50 })
-          .filter(domain => !domain.includes('/') && domain.length > 0),
-        (protocol, domain) => {
-          const url = `${protocol}${domain}`
-          const result = validateFeatureInput({
-            ...validFeature,
-            demo_url: url,
-          })
-          expect(result.valid).toBe(true)
-          expect(result.errors.demo_url).toBeUndefined()
-        }
-      ),
-      { numRuns: 100 }
-    )
-
-    // Invalid protocols fail
-    fc.assert(
-      fc.property(
-        fc
-          .string()
-          .filter(
-            s =>
-              s.trim().length > 0 &&
-              !s.startsWith('http://') &&
-              !s.startsWith('https://')
-          ),
-        invalidUrl => {
-          const result = validateFeatureInput({
-            ...validFeature,
-            demo_url: invalidUrl,
-          })
-          expect(result.valid).toBe(false)
-          expect(result.errors.demo_url).toBe(
-            'Demo URL must start with http:// or https://'
-          )
-        }
-      ),
-      { numRuns: 100 }
-    )
-
-    // Exceeding 2048 characters fails
-    const extremelyLongUrl = 'https://' + 'a'.repeat(2045)
-    const result = validateFeatureInput({
-      ...validFeature,
-      demo_url: extremelyLongUrl,
-    })
-    expect(result.valid).toBe(false)
-    expect(result.errors.demo_url).toBe(
-      'Demo URL must not exceed 2048 characters'
-    )
-  })
-
-  // Tech stack validation test
-  it('rejects tech stack with more than 50 items', () => {
-    const tooManyTags = Array(51).fill('React')
-    const result = validateFeatureInput({
-      ...validFeature,
-      tech_stack: tooManyTags,
-    })
-    expect(result.valid).toBe(false)
-    expect(result.errors.tech_stack).toBe('Tech stack must not exceed 50 items')
   })
 })
 
