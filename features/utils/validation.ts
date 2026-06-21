@@ -22,13 +22,19 @@ export function validateFeatureInput(data: unknown): FeatureValidationResult {
     errors.title = 'Title must not exceed 200 characters'
   }
 
-  // Description validation
-  if (
-    !input.description ||
-    typeof input.description !== 'string' ||
-    input.description.trim() === ''
-  ) {
-    errors.description = 'Short description is required'
+  // Short description validation
+  if (input.short_description && typeof input.short_description === 'string') {
+    if (input.short_description.length > 200) {
+      errors.short_description =
+        'Short description must not exceed 200 characters'
+    }
+  }
+
+  // Description (markdown) validation
+  if (input.description && typeof input.description === 'string') {
+    if (input.description.length > 50000) {
+      errors.description = 'Description must not exceed 50000 characters'
+    }
   }
 
   // YouTube URL validation
@@ -40,24 +46,6 @@ export function validateFeatureInput(data: unknown): FeatureValidationResult {
     } else if (input.youtube_url.length > 2048) {
       errors.youtube_url = 'YouTube URL must not exceed 2048 characters'
     }
-  }
-
-  // Demo URL validation
-  if (input.demo_url && typeof input.demo_url === 'string') {
-    if (!/^https?:\/\/.+$/.test(input.demo_url)) {
-      errors.demo_url = 'Demo URL must start with http:// or https://'
-    } else if (input.demo_url.length > 2048) {
-      errors.demo_url = 'Demo URL must not exceed 2048 characters'
-    }
-  }
-
-  // Tech stack validation
-  if (
-    input.tech_stack &&
-    Array.isArray(input.tech_stack) &&
-    input.tech_stack.length > 50
-  ) {
-    errors.tech_stack = 'Tech stack must not exceed 50 items'
   }
 
   return {

@@ -100,17 +100,16 @@ model ProjectMedia {
 }
 
 model ProjectFeature {
-  id            String   @id @default(dbgenerated("gen_random_uuid()::text"))
-  project_id    String
-  title         String   @db.VarChar(200)
-  description   String?  @db.Text
-  youtube_url   String?  @db.VarChar(2048)
-  tech_stack    String[] @default([])
-  display_order Int      @default(0)
-  is_featured   Boolean  @default(false)
-  demo_url      String?  @db.VarChar(2048)
-  created_at    DateTime @default(now())
-  updated_at    DateTime @updatedAt
+  id                String   @id @default(dbgenerated("gen_random_uuid()::text"))
+  project_id        String
+  title             String   @db.VarChar(200)
+  short_description String?  @db.VarChar(200)
+  description       String?  @db.Text
+  youtube_url       String?  @db.VarChar(2048)
+  display_order     Int      @default(0)
+  is_featured       Boolean  @default(false)
+  created_at        DateTime @default(now())
+  updated_at        DateTime @updatedAt
 
   project Project               @relation(fields: [project_id], references: [id], onDelete: Cascade)
   media   ProjectFeatureMedia[]

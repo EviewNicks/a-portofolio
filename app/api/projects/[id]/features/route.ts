@@ -48,14 +48,13 @@ export async function POST(request: NextRequest, { params }: Params) {
     const feature = await createFeature({
       project_id: id,
       title: body.title.trim(),
+      short_description: body.short_description?.trim() ?? null,
       description: body.description?.trim() ?? null,
       youtube_url: body.youtube_url?.trim() ?? null,
-      tech_stack: Array.isArray(body.tech_stack) ? body.tech_stack : [],
       display_order:
         typeof body.display_order === 'number' ? body.display_order : 0,
       is_featured:
         typeof body.is_featured === 'boolean' ? body.is_featured : false,
-      demo_url: body.demo_url?.trim() ?? null,
     })
 
     return NextResponse.json({ data: feature }, { status: 201 })

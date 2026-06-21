@@ -69,25 +69,23 @@ export async function PUT(request: NextRequest, { params }: Params) {
 
     const updateData: Partial<{
       title: string
+      short_description: string | null
       description: string | null
       youtube_url: string | null
-      tech_stack: string[]
       display_order: number
       is_featured: boolean
-      demo_url: string | null
     }> = {}
     if (body.title !== undefined) updateData.title = body.title.trim()
+    if (body.short_description !== undefined)
+      updateData.short_description = body.short_description?.trim() ?? null
     if (body.description !== undefined)
       updateData.description = body.description?.trim() ?? null
     if (body.youtube_url !== undefined)
       updateData.youtube_url = body.youtube_url?.trim() ?? null
-    if (body.tech_stack !== undefined) updateData.tech_stack = body.tech_stack
     if (body.display_order !== undefined)
       updateData.display_order = body.display_order
     if (body.is_featured !== undefined)
       updateData.is_featured = body.is_featured
-    if (body.demo_url !== undefined)
-      updateData.demo_url = body.demo_url?.trim() ?? null
 
     const feature = await updateFeature(featureId, updateData)
     return NextResponse.json({ data: feature })

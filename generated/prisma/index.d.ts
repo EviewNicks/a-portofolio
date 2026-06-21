@@ -199,7 +199,7 @@ export class PrismaClient<
    * 
    * Read more in our [docs](https://www.prisma.io/docs/orm/prisma-client/queries/transactions).
    */
-  $transaction<P extends Prisma.PrismaPromise<any>[]>(arg: [...P], options?: { isolationLevel?: Prisma.TransactionIsolationLevel }): $Utils.JsPromise<runtime.Types.Utils.UnwrapTuple<P>>
+  $transaction<P extends Prisma.PrismaPromise<any>[]>(arg: [...P], options?: { maxWait?: number, timeout?: number, isolationLevel?: Prisma.TransactionIsolationLevel }): $Utils.JsPromise<runtime.Types.Utils.UnwrapTuple<P>>
 
   $transaction<R>(fn: (prisma: Omit<PrismaClient, runtime.ITXClientDenyList>) => $Utils.JsPromise<R>, options?: { maxWait?: number, timeout?: number, isolationLevel?: Prisma.TransactionIsolationLevel }): $Utils.JsPromise<R>
 
@@ -306,8 +306,8 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 7.5.0
-   * Query Engine version: 280c870be64f457428992c43c1f6d557fab6e29e
+   * Prisma Client JS version: 7.8.0
+   * Query Engine version: 3c6e192761c0362d496ed980de936e2f3cebcd3a
    */
   export type PrismaVersion = {
     client: string
@@ -4931,11 +4931,11 @@ export namespace Prisma {
     id: string | null
     project_id: string | null
     title: string | null
+    short_description: string | null
     description: string | null
     youtube_url: string | null
     display_order: number | null
     is_featured: boolean | null
-    demo_url: string | null
     created_at: Date | null
     updated_at: Date | null
   }
@@ -4944,11 +4944,11 @@ export namespace Prisma {
     id: string | null
     project_id: string | null
     title: string | null
+    short_description: string | null
     description: string | null
     youtube_url: string | null
     display_order: number | null
     is_featured: boolean | null
-    demo_url: string | null
     created_at: Date | null
     updated_at: Date | null
   }
@@ -4957,12 +4957,11 @@ export namespace Prisma {
     id: number
     project_id: number
     title: number
+    short_description: number
     description: number
     youtube_url: number
-    tech_stack: number
     display_order: number
     is_featured: number
-    demo_url: number
     created_at: number
     updated_at: number
     _all: number
@@ -4981,11 +4980,11 @@ export namespace Prisma {
     id?: true
     project_id?: true
     title?: true
+    short_description?: true
     description?: true
     youtube_url?: true
     display_order?: true
     is_featured?: true
-    demo_url?: true
     created_at?: true
     updated_at?: true
   }
@@ -4994,11 +4993,11 @@ export namespace Prisma {
     id?: true
     project_id?: true
     title?: true
+    short_description?: true
     description?: true
     youtube_url?: true
     display_order?: true
     is_featured?: true
-    demo_url?: true
     created_at?: true
     updated_at?: true
   }
@@ -5007,12 +5006,11 @@ export namespace Prisma {
     id?: true
     project_id?: true
     title?: true
+    short_description?: true
     description?: true
     youtube_url?: true
-    tech_stack?: true
     display_order?: true
     is_featured?: true
-    demo_url?: true
     created_at?: true
     updated_at?: true
     _all?: true
@@ -5108,12 +5106,11 @@ export namespace Prisma {
     id: string
     project_id: string
     title: string
+    short_description: string | null
     description: string | null
     youtube_url: string | null
-    tech_stack: string[]
     display_order: number
     is_featured: boolean
-    demo_url: string | null
     created_at: Date
     updated_at: Date
     _count: ProjectFeatureCountAggregateOutputType | null
@@ -5141,12 +5138,11 @@ export namespace Prisma {
     id?: boolean
     project_id?: boolean
     title?: boolean
+    short_description?: boolean
     description?: boolean
     youtube_url?: boolean
-    tech_stack?: boolean
     display_order?: boolean
     is_featured?: boolean
-    demo_url?: boolean
     created_at?: boolean
     updated_at?: boolean
     project?: boolean | ProjectDefaultArgs<ExtArgs>
@@ -5158,12 +5154,11 @@ export namespace Prisma {
     id?: boolean
     project_id?: boolean
     title?: boolean
+    short_description?: boolean
     description?: boolean
     youtube_url?: boolean
-    tech_stack?: boolean
     display_order?: boolean
     is_featured?: boolean
-    demo_url?: boolean
     created_at?: boolean
     updated_at?: boolean
     project?: boolean | ProjectDefaultArgs<ExtArgs>
@@ -5173,12 +5168,11 @@ export namespace Prisma {
     id?: boolean
     project_id?: boolean
     title?: boolean
+    short_description?: boolean
     description?: boolean
     youtube_url?: boolean
-    tech_stack?: boolean
     display_order?: boolean
     is_featured?: boolean
-    demo_url?: boolean
     created_at?: boolean
     updated_at?: boolean
     project?: boolean | ProjectDefaultArgs<ExtArgs>
@@ -5188,17 +5182,16 @@ export namespace Prisma {
     id?: boolean
     project_id?: boolean
     title?: boolean
+    short_description?: boolean
     description?: boolean
     youtube_url?: boolean
-    tech_stack?: boolean
     display_order?: boolean
     is_featured?: boolean
-    demo_url?: boolean
     created_at?: boolean
     updated_at?: boolean
   }
 
-  export type ProjectFeatureOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "project_id" | "title" | "description" | "youtube_url" | "tech_stack" | "display_order" | "is_featured" | "demo_url" | "created_at" | "updated_at", ExtArgs["result"]["projectFeature"]>
+  export type ProjectFeatureOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "project_id" | "title" | "short_description" | "description" | "youtube_url" | "display_order" | "is_featured" | "created_at" | "updated_at", ExtArgs["result"]["projectFeature"]>
   export type ProjectFeatureInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     project?: boolean | ProjectDefaultArgs<ExtArgs>
     media?: boolean | ProjectFeature$mediaArgs<ExtArgs>
@@ -5221,12 +5214,11 @@ export namespace Prisma {
       id: string
       project_id: string
       title: string
+      short_description: string | null
       description: string | null
       youtube_url: string | null
-      tech_stack: string[]
       display_order: number
       is_featured: boolean
-      demo_url: string | null
       created_at: Date
       updated_at: Date
     }, ExtArgs["result"]["projectFeature"]>
@@ -5657,12 +5649,11 @@ export namespace Prisma {
     readonly id: FieldRef<"ProjectFeature", 'String'>
     readonly project_id: FieldRef<"ProjectFeature", 'String'>
     readonly title: FieldRef<"ProjectFeature", 'String'>
+    readonly short_description: FieldRef<"ProjectFeature", 'String'>
     readonly description: FieldRef<"ProjectFeature", 'String'>
     readonly youtube_url: FieldRef<"ProjectFeature", 'String'>
-    readonly tech_stack: FieldRef<"ProjectFeature", 'String[]'>
     readonly display_order: FieldRef<"ProjectFeature", 'Int'>
     readonly is_featured: FieldRef<"ProjectFeature", 'Boolean'>
-    readonly demo_url: FieldRef<"ProjectFeature", 'String'>
     readonly created_at: FieldRef<"ProjectFeature", 'DateTime'>
     readonly updated_at: FieldRef<"ProjectFeature", 'DateTime'>
   }
@@ -7302,12 +7293,11 @@ export namespace Prisma {
     id: 'id',
     project_id: 'project_id',
     title: 'title',
+    short_description: 'short_description',
     description: 'description',
     youtube_url: 'youtube_url',
-    tech_stack: 'tech_stack',
     display_order: 'display_order',
     is_featured: 'is_featured',
-    demo_url: 'demo_url',
     created_at: 'created_at',
     updated_at: 'updated_at'
   };
@@ -7746,12 +7736,11 @@ export namespace Prisma {
     id?: StringFilter<"ProjectFeature"> | string
     project_id?: StringFilter<"ProjectFeature"> | string
     title?: StringFilter<"ProjectFeature"> | string
+    short_description?: StringNullableFilter<"ProjectFeature"> | string | null
     description?: StringNullableFilter<"ProjectFeature"> | string | null
     youtube_url?: StringNullableFilter<"ProjectFeature"> | string | null
-    tech_stack?: StringNullableListFilter<"ProjectFeature">
     display_order?: IntFilter<"ProjectFeature"> | number
     is_featured?: BoolFilter<"ProjectFeature"> | boolean
-    demo_url?: StringNullableFilter<"ProjectFeature"> | string | null
     created_at?: DateTimeFilter<"ProjectFeature"> | Date | string
     updated_at?: DateTimeFilter<"ProjectFeature"> | Date | string
     project?: XOR<ProjectScalarRelationFilter, ProjectWhereInput>
@@ -7762,12 +7751,11 @@ export namespace Prisma {
     id?: SortOrder
     project_id?: SortOrder
     title?: SortOrder
+    short_description?: SortOrderInput | SortOrder
     description?: SortOrderInput | SortOrder
     youtube_url?: SortOrderInput | SortOrder
-    tech_stack?: SortOrder
     display_order?: SortOrder
     is_featured?: SortOrder
-    demo_url?: SortOrderInput | SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
     project?: ProjectOrderByWithRelationInput
@@ -7781,12 +7769,11 @@ export namespace Prisma {
     NOT?: ProjectFeatureWhereInput | ProjectFeatureWhereInput[]
     project_id?: StringFilter<"ProjectFeature"> | string
     title?: StringFilter<"ProjectFeature"> | string
+    short_description?: StringNullableFilter<"ProjectFeature"> | string | null
     description?: StringNullableFilter<"ProjectFeature"> | string | null
     youtube_url?: StringNullableFilter<"ProjectFeature"> | string | null
-    tech_stack?: StringNullableListFilter<"ProjectFeature">
     display_order?: IntFilter<"ProjectFeature"> | number
     is_featured?: BoolFilter<"ProjectFeature"> | boolean
-    demo_url?: StringNullableFilter<"ProjectFeature"> | string | null
     created_at?: DateTimeFilter<"ProjectFeature"> | Date | string
     updated_at?: DateTimeFilter<"ProjectFeature"> | Date | string
     project?: XOR<ProjectScalarRelationFilter, ProjectWhereInput>
@@ -7797,12 +7784,11 @@ export namespace Prisma {
     id?: SortOrder
     project_id?: SortOrder
     title?: SortOrder
+    short_description?: SortOrderInput | SortOrder
     description?: SortOrderInput | SortOrder
     youtube_url?: SortOrderInput | SortOrder
-    tech_stack?: SortOrder
     display_order?: SortOrder
     is_featured?: SortOrder
-    demo_url?: SortOrderInput | SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
     _count?: ProjectFeatureCountOrderByAggregateInput
@@ -7819,12 +7805,11 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"ProjectFeature"> | string
     project_id?: StringWithAggregatesFilter<"ProjectFeature"> | string
     title?: StringWithAggregatesFilter<"ProjectFeature"> | string
+    short_description?: StringNullableWithAggregatesFilter<"ProjectFeature"> | string | null
     description?: StringNullableWithAggregatesFilter<"ProjectFeature"> | string | null
     youtube_url?: StringNullableWithAggregatesFilter<"ProjectFeature"> | string | null
-    tech_stack?: StringNullableListFilter<"ProjectFeature">
     display_order?: IntWithAggregatesFilter<"ProjectFeature"> | number
     is_featured?: BoolWithAggregatesFilter<"ProjectFeature"> | boolean
-    demo_url?: StringNullableWithAggregatesFilter<"ProjectFeature"> | string | null
     created_at?: DateTimeWithAggregatesFilter<"ProjectFeature"> | Date | string
     updated_at?: DateTimeWithAggregatesFilter<"ProjectFeature"> | Date | string
   }
@@ -8217,12 +8202,11 @@ export namespace Prisma {
   export type ProjectFeatureCreateInput = {
     id?: string
     title: string
+    short_description?: string | null
     description?: string | null
     youtube_url?: string | null
-    tech_stack?: ProjectFeatureCreatetech_stackInput | string[]
     display_order?: number
     is_featured?: boolean
-    demo_url?: string | null
     created_at?: Date | string
     updated_at?: Date | string
     project: ProjectCreateNestedOneWithoutFeaturesInput
@@ -8233,12 +8217,11 @@ export namespace Prisma {
     id?: string
     project_id: string
     title: string
+    short_description?: string | null
     description?: string | null
     youtube_url?: string | null
-    tech_stack?: ProjectFeatureCreatetech_stackInput | string[]
     display_order?: number
     is_featured?: boolean
-    demo_url?: string | null
     created_at?: Date | string
     updated_at?: Date | string
     media?: ProjectFeatureMediaUncheckedCreateNestedManyWithoutFeatureInput
@@ -8247,12 +8230,11 @@ export namespace Prisma {
   export type ProjectFeatureUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
+    short_description?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     youtube_url?: NullableStringFieldUpdateOperationsInput | string | null
-    tech_stack?: ProjectFeatureUpdatetech_stackInput | string[]
     display_order?: IntFieldUpdateOperationsInput | number
     is_featured?: BoolFieldUpdateOperationsInput | boolean
-    demo_url?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     project?: ProjectUpdateOneRequiredWithoutFeaturesNestedInput
@@ -8263,12 +8245,11 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     project_id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
+    short_description?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     youtube_url?: NullableStringFieldUpdateOperationsInput | string | null
-    tech_stack?: ProjectFeatureUpdatetech_stackInput | string[]
     display_order?: IntFieldUpdateOperationsInput | number
     is_featured?: BoolFieldUpdateOperationsInput | boolean
-    demo_url?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     media?: ProjectFeatureMediaUncheckedUpdateManyWithoutFeatureNestedInput
@@ -8278,12 +8259,11 @@ export namespace Prisma {
     id?: string
     project_id: string
     title: string
+    short_description?: string | null
     description?: string | null
     youtube_url?: string | null
-    tech_stack?: ProjectFeatureCreatetech_stackInput | string[]
     display_order?: number
     is_featured?: boolean
-    demo_url?: string | null
     created_at?: Date | string
     updated_at?: Date | string
   }
@@ -8291,12 +8271,11 @@ export namespace Prisma {
   export type ProjectFeatureUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
+    short_description?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     youtube_url?: NullableStringFieldUpdateOperationsInput | string | null
-    tech_stack?: ProjectFeatureUpdatetech_stackInput | string[]
     display_order?: IntFieldUpdateOperationsInput | number
     is_featured?: BoolFieldUpdateOperationsInput | boolean
-    demo_url?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -8305,12 +8284,11 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     project_id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
+    short_description?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     youtube_url?: NullableStringFieldUpdateOperationsInput | string | null
-    tech_stack?: ProjectFeatureUpdatetech_stackInput | string[]
     display_order?: IntFieldUpdateOperationsInput | number
     is_featured?: BoolFieldUpdateOperationsInput | boolean
-    demo_url?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -8825,12 +8803,11 @@ export namespace Prisma {
     id?: SortOrder
     project_id?: SortOrder
     title?: SortOrder
+    short_description?: SortOrder
     description?: SortOrder
     youtube_url?: SortOrder
-    tech_stack?: SortOrder
     display_order?: SortOrder
     is_featured?: SortOrder
-    demo_url?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
   }
@@ -8843,11 +8820,11 @@ export namespace Prisma {
     id?: SortOrder
     project_id?: SortOrder
     title?: SortOrder
+    short_description?: SortOrder
     description?: SortOrder
     youtube_url?: SortOrder
     display_order?: SortOrder
     is_featured?: SortOrder
-    demo_url?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
   }
@@ -8856,11 +8833,11 @@ export namespace Prisma {
     id?: SortOrder
     project_id?: SortOrder
     title?: SortOrder
+    short_description?: SortOrder
     description?: SortOrder
     youtube_url?: SortOrder
     display_order?: SortOrder
     is_featured?: SortOrder
-    demo_url?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
   }
@@ -9123,10 +9100,6 @@ export namespace Prisma {
     update?: XOR<XOR<ProjectUpdateToOneWithWhereWithoutProject_mediaInput, ProjectUpdateWithoutProject_mediaInput>, ProjectUncheckedUpdateWithoutProject_mediaInput>
   }
 
-  export type ProjectFeatureCreatetech_stackInput = {
-    set: string[]
-  }
-
   export type ProjectCreateNestedOneWithoutFeaturesInput = {
     create?: XOR<ProjectCreateWithoutFeaturesInput, ProjectUncheckedCreateWithoutFeaturesInput>
     connectOrCreate?: ProjectCreateOrConnectWithoutFeaturesInput
@@ -9145,11 +9118,6 @@ export namespace Prisma {
     connectOrCreate?: ProjectFeatureMediaCreateOrConnectWithoutFeatureInput | ProjectFeatureMediaCreateOrConnectWithoutFeatureInput[]
     createMany?: ProjectFeatureMediaCreateManyFeatureInputEnvelope
     connect?: ProjectFeatureMediaWhereUniqueInput | ProjectFeatureMediaWhereUniqueInput[]
-  }
-
-  export type ProjectFeatureUpdatetech_stackInput = {
-    set?: string[]
-    push?: string | string[]
   }
 
   export type ProjectUpdateOneRequiredWithoutFeaturesNestedInput = {
@@ -9531,12 +9499,11 @@ export namespace Prisma {
   export type ProjectFeatureCreateWithoutProjectInput = {
     id?: string
     title: string
+    short_description?: string | null
     description?: string | null
     youtube_url?: string | null
-    tech_stack?: ProjectFeatureCreatetech_stackInput | string[]
     display_order?: number
     is_featured?: boolean
-    demo_url?: string | null
     created_at?: Date | string
     updated_at?: Date | string
     media?: ProjectFeatureMediaCreateNestedManyWithoutFeatureInput
@@ -9545,12 +9512,11 @@ export namespace Prisma {
   export type ProjectFeatureUncheckedCreateWithoutProjectInput = {
     id?: string
     title: string
+    short_description?: string | null
     description?: string | null
     youtube_url?: string | null
-    tech_stack?: ProjectFeatureCreatetech_stackInput | string[]
     display_order?: number
     is_featured?: boolean
-    demo_url?: string | null
     created_at?: Date | string
     updated_at?: Date | string
     media?: ProjectFeatureMediaUncheckedCreateNestedManyWithoutFeatureInput
@@ -9656,12 +9622,11 @@ export namespace Prisma {
     id?: StringFilter<"ProjectFeature"> | string
     project_id?: StringFilter<"ProjectFeature"> | string
     title?: StringFilter<"ProjectFeature"> | string
+    short_description?: StringNullableFilter<"ProjectFeature"> | string | null
     description?: StringNullableFilter<"ProjectFeature"> | string | null
     youtube_url?: StringNullableFilter<"ProjectFeature"> | string | null
-    tech_stack?: StringNullableListFilter<"ProjectFeature">
     display_order?: IntFilter<"ProjectFeature"> | number
     is_featured?: BoolFilter<"ProjectFeature"> | boolean
-    demo_url?: StringNullableFilter<"ProjectFeature"> | string | null
     created_at?: DateTimeFilter<"ProjectFeature"> | Date | string
     updated_at?: DateTimeFilter<"ProjectFeature"> | Date | string
   }
@@ -9978,12 +9943,11 @@ export namespace Prisma {
   export type ProjectFeatureCreateWithoutMediaInput = {
     id?: string
     title: string
+    short_description?: string | null
     description?: string | null
     youtube_url?: string | null
-    tech_stack?: ProjectFeatureCreatetech_stackInput | string[]
     display_order?: number
     is_featured?: boolean
-    demo_url?: string | null
     created_at?: Date | string
     updated_at?: Date | string
     project: ProjectCreateNestedOneWithoutFeaturesInput
@@ -9993,12 +9957,11 @@ export namespace Prisma {
     id?: string
     project_id: string
     title: string
+    short_description?: string | null
     description?: string | null
     youtube_url?: string | null
-    tech_stack?: ProjectFeatureCreatetech_stackInput | string[]
     display_order?: number
     is_featured?: boolean
-    demo_url?: string | null
     created_at?: Date | string
     updated_at?: Date | string
   }
@@ -10022,12 +9985,11 @@ export namespace Prisma {
   export type ProjectFeatureUpdateWithoutMediaInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
+    short_description?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     youtube_url?: NullableStringFieldUpdateOperationsInput | string | null
-    tech_stack?: ProjectFeatureUpdatetech_stackInput | string[]
     display_order?: IntFieldUpdateOperationsInput | number
     is_featured?: BoolFieldUpdateOperationsInput | boolean
-    demo_url?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     project?: ProjectUpdateOneRequiredWithoutFeaturesNestedInput
@@ -10037,12 +9999,11 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     project_id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
+    short_description?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     youtube_url?: NullableStringFieldUpdateOperationsInput | string | null
-    tech_stack?: ProjectFeatureUpdatetech_stackInput | string[]
     display_order?: IntFieldUpdateOperationsInput | number
     is_featured?: BoolFieldUpdateOperationsInput | boolean
-    demo_url?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -10077,12 +10038,11 @@ export namespace Prisma {
   export type ProjectFeatureCreateManyProjectInput = {
     id?: string
     title: string
+    short_description?: string | null
     description?: string | null
     youtube_url?: string | null
-    tech_stack?: ProjectFeatureCreatetech_stackInput | string[]
     display_order?: number
     is_featured?: boolean
-    demo_url?: string | null
     created_at?: Date | string
     updated_at?: Date | string
   }
@@ -10171,12 +10131,11 @@ export namespace Prisma {
   export type ProjectFeatureUpdateWithoutProjectInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
+    short_description?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     youtube_url?: NullableStringFieldUpdateOperationsInput | string | null
-    tech_stack?: ProjectFeatureUpdatetech_stackInput | string[]
     display_order?: IntFieldUpdateOperationsInput | number
     is_featured?: BoolFieldUpdateOperationsInput | boolean
-    demo_url?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     media?: ProjectFeatureMediaUpdateManyWithoutFeatureNestedInput
@@ -10185,12 +10144,11 @@ export namespace Prisma {
   export type ProjectFeatureUncheckedUpdateWithoutProjectInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
+    short_description?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     youtube_url?: NullableStringFieldUpdateOperationsInput | string | null
-    tech_stack?: ProjectFeatureUpdatetech_stackInput | string[]
     display_order?: IntFieldUpdateOperationsInput | number
     is_featured?: BoolFieldUpdateOperationsInput | boolean
-    demo_url?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     media?: ProjectFeatureMediaUncheckedUpdateManyWithoutFeatureNestedInput
@@ -10199,12 +10157,11 @@ export namespace Prisma {
   export type ProjectFeatureUncheckedUpdateManyWithoutProjectInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
+    short_description?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     youtube_url?: NullableStringFieldUpdateOperationsInput | string | null
-    tech_stack?: ProjectFeatureUpdatetech_stackInput | string[]
     display_order?: IntFieldUpdateOperationsInput | number
     is_featured?: BoolFieldUpdateOperationsInput | boolean
-    demo_url?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
