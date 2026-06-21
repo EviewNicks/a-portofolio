@@ -4,6 +4,7 @@ import {
   ArrowRight,
   ExternalLink,
   FileText,
+  Pencil,
   Star,
 } from 'lucide-react'
 import type { ProjectFeature, ProjectStatus } from '@/features/projects/types'
@@ -122,13 +123,13 @@ function EditorialNav() {
         className="border-line-faint fixed inset-y-0 right-0 z-30 hidden w-9 items-center justify-center border-l xl:flex"
         aria-hidden="true"
       >
-        <span className="font-editorial-tight text-ink-faint [transform:rotate(180deg)] text-[0.625rem] font-semibold tracking-[0.42em] uppercase [writing-mode:vertical-rl]">
+        <span className="font-editorial-tight text-ink-faint transform-[rotate(180deg)] text-[0.625rem] font-semibold tracking-[0.42em] uppercase [writing-mode:vertical-rl]">
           Ardiansyah — Feature Detail — Engineering the Essential
         </span>
       </div>
 
       <header className="border-line bg-paper relative z-40 border-b">
-        <div className="mx-auto max-w-[1360px] px-16">
+        <div className="mx-auto max-w-340 px-16">
           <div className="font-editorial-tight text-ink-faint flex flex-wrap items-center justify-between gap-x-6 gap-y-2 py-2 text-[0.65625rem] font-medium tracking-[0.18em] uppercase">
             <span>
               <strong className="text-ink font-semibold">Vol. 01</strong> /
@@ -153,7 +154,7 @@ function EditorialNav() {
       </header>
 
       <nav className="bg-paper/95 sticky top-0 z-50 border-b border-transparent backdrop-blur-md transition-all">
-        <div className="mx-auto flex max-w-[1360px] items-center justify-between gap-6 px-16 py-6">
+        <div className="mx-auto flex max-w-340 items-center justify-between gap-6 px-16 py-6">
           <Link
             key="logo-home"
             href="/"
@@ -234,7 +235,10 @@ export function FeatureDetail({
   featureCount,
   secret,
 }: FeatureDetailProps) {
-  const backUrl = `/projects/${projectId}${secret ? `?secret=${secret}` : ''}`
+  const backUrl = `/projects/${projectId}${secret ? `?secret=${encodeURIComponent(secret)}` : ''}`
+  const editFeatureUrl = secret
+    ? `/admin/feature/${feature.id}/edit?projectId=${projectId}&secret=${encodeURIComponent(secret)}`
+    : ''
   const hasMedia = feature.media && feature.media.length > 0
   const statusLabel = getStatusLabel(projectStatus)
   const statusClass = getStatusClass(projectStatus)
@@ -247,7 +251,7 @@ export function FeatureDetail({
       <EditorialNav />
 
       <section className="border-line border-b px-16 pt-8">
-        <div className="mx-auto max-w-[1360px] pb-6">
+        <div className="mx-auto max-w-340 pb-6">
           <Link
             href={backUrl}
             className="font-editorial-tight text-ink-soft hover:text-coral inline-flex items-center gap-2.5 py-2.5 text-sm font-medium transition-colors"
@@ -281,12 +285,33 @@ export function FeatureDetail({
             <span className="text-coral">·</span>
             <span className="text-ink">{feature.title}</span>
           </nav>
+
+          {secret && (
+            <div className="border-border bg-amber-500/5 mt-6 flex flex-wrap items-center gap-3 rounded-2xl border p-3 shadow-sm">
+              <span className="text-muted-foreground mr-1 text-xs font-semibold uppercase tracking-[0.14em]">
+                Admin
+              </span>
+              <Link
+                href={editFeatureUrl}
+                className="bg-background hover:bg-muted border-border text-muted-foreground hover:text-foreground inline-flex items-center gap-1.5 rounded-xl border px-3 py-2 text-sm transition-all"
+              >
+                <Pencil size={14} />
+                Edit Feature
+              </Link>
+              <Link
+                href={backUrl}
+                className="text-muted-foreground hover:text-foreground inline-flex items-center gap-1.5 rounded-xl px-3 py-2 text-sm transition-colors"
+              >
+                Cancel
+              </Link>
+            </div>
+          )}
         </div>
       </section>
 
       <article>
         <section className="px-16 py-20">
-          <div className="mx-auto max-w-[1360px]">
+          <div className="mx-auto max-w-340">
             <SectionRule
               roman={romanSections[0]}
               eyebrow="Feature / Detail"
@@ -393,7 +418,7 @@ export function FeatureDetail({
 
         {hasMedia && (
           <section id="gallery" className="px-16 py-20">
-            <div className="mx-auto max-w-[1360px]">
+            <div className="mx-auto max-w-340">
               <SectionRule
                 roman={romanSections[1]}
                 eyebrow="Gallery / Screenshots"
@@ -417,7 +442,7 @@ export function FeatureDetail({
 
         {feature.youtube_url && (
           <section id="video" className="px-16 py-20">
-            <div className="mx-auto max-w-[1360px]">
+            <div className="mx-auto max-w-340">
               <SectionRule
                 roman={romanSections[2]}
                 eyebrow="Video / Demonstration"
@@ -440,7 +465,7 @@ export function FeatureDetail({
         )}
 
         <section id="implementation" className="px-16 py-20">
-          <div className="mx-auto max-w-[1360px]">
+          <div className="mx-auto max-w-340">
             <SectionRule
               roman={romanSections[3]}
               eyebrow="Implementation / Details"
@@ -479,7 +504,7 @@ export function FeatureDetail({
         </section>
 
         <section id="contact" className="px-16 py-20">
-          <div className="mx-auto max-w-[1360px]">
+          <div className="mx-auto max-w-340">
             <SectionRule
               roman={romanSections[4]}
               eyebrow="Contact / Conversation"
@@ -531,7 +556,7 @@ export function FeatureDetail({
         </section>
 
         <footer className="border-line border-t px-16 pt-16 pb-10">
-          <div className="mx-auto grid max-w-[1360px] grid-cols-1 gap-10 md:grid-cols-[2fr_1fr_1fr_1fr_1fr]">
+          <div className="mx-auto grid max-w-340 grid-cols-1 gap-10 md:grid-cols-[2fr_1fr_1fr_1fr_1fr]">
             <div>
               <Link
                 key="footer-home"
@@ -584,7 +609,7 @@ export function FeatureDetail({
             />
           </div>
 
-          <div className="editorial-meta border-line mx-auto mt-16 flex max-w-[1360px] items-center justify-between border-t pt-6">
+          <div className="editorial-meta border-line mx-auto mt-16 flex max-w-340 items-center justify-between border-t pt-6">
             <span>
               <span className="editorial-pulse mr-1.5 inline-block h-1.5 w-1.5 p-0" />
               © MMXXVI Ardiansyah. Engineering the Essential.
@@ -595,7 +620,7 @@ export function FeatureDetail({
             </div>
           </div>
 
-          <div className="border-line mx-auto mt-16 max-w-[1360px] overflow-hidden border-t pt-12 pb-3">
+          <div className="border-line mx-auto mt-16 max-w-340 overflow-hidden border-t pt-12 pb-3">
             <p className="font-editorial-tight text-ink text-[clamp(4rem,13vw,13rem)] leading-[0.9] font-black tracking-[-0.06em] whitespace-nowrap">
               <em className="font-editorial-serif text-coral">Ardiansyah</em>.
             </p>

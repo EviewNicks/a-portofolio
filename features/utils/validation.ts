@@ -24,11 +24,11 @@ export function validateFeatureInput(data: unknown): FeatureValidationResult {
 
   // Description validation
   if (
-    input.description &&
-    typeof input.description === 'string' &&
-    input.description.length > 50000
+    !input.description ||
+    typeof input.description !== 'string' ||
+    input.description.trim() === ''
   ) {
-    errors.description = 'Description must not exceed 50000 characters'
+    errors.description = 'Short description is required'
   }
 
   // YouTube URL validation

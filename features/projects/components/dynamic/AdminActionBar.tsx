@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
-import { Pencil, GitBranch, Trash2 } from 'lucide-react'
+import { Pencil, GitBranch, Trash2, Plus } from 'lucide-react'
 import type { DynamicProject } from '@/features/projects/types'
 
 interface AdminActionBarProps {
@@ -52,6 +52,13 @@ export function AdminActionBar({ project, secret }: AdminActionBarProps) {
           </div>
 
           <div className="flex flex-wrap gap-2">
+            <Link
+              href={`/admin/feature/new?projectId=${project.id}&secret=${secret}`}
+              data-testid="btn-create-feature"
+              className="bg-primary/10 hover:bg-primary/20 border-primary/20 text-primary flex items-center gap-1.5 rounded-xl border px-3 py-2 text-sm transition-all"
+            >
+              <Plus size={14} /> Create Feature
+            </Link>
             <Link
               href={`/admin/projects/${project.id}/edit?secret=${secret}`}
               data-testid="btn-edit-project"

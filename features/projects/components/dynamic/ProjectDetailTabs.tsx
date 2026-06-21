@@ -4,8 +4,8 @@ import { useState } from 'react'
 import { cn } from '@/lib/utils'
 import type {
   DynamicProject,
-  TimelineEntry,
   ProjectFeature,
+  TimelineEntry,
 } from '@/features/projects/types'
 import { MarkdownContent } from './MarkdownContent'
 import { TimelineSection } from './TimelineSection'
@@ -15,6 +15,7 @@ interface ProjectDetailTabsProps {
   project: DynamicProject
   entries: TimelineEntry[]
   features?: ProjectFeature[]
+  secret?: string
 }
 
 type Tab = 'description' | 'timeline' | 'features'
@@ -29,6 +30,7 @@ export function ProjectDetailTabs({
   project,
   entries,
   features = [],
+  secret = '',
 }: ProjectDetailTabsProps) {
   const [activeTab, setActiveTab] = useState<Tab>('description')
 
@@ -110,7 +112,11 @@ export function ProjectDetailTabs({
         hidden={activeTab !== 'features'}
       >
         {activeTab === 'features' && (
-          <FeaturesTabContent projectId={project.id} features={features} />
+          <FeaturesTabContent
+            projectId={project.id}
+            features={features}
+            secret={secret}
+          />
         )}
       </div>
       <div

@@ -22,13 +22,14 @@ export function DynamicProjectFilters() {
 
   // Local state for search input to avoid router calls on every keystroke
   const [searchValue, setSearchValue] = useState(currentQuery)
-  const debounceRef = useRef<NodeJS.Timeout>()
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   // Debounced search function
   const debouncedSearch = useCallback(
     (query: string) => {
       if (debounceRef.current) {
         clearTimeout(debounceRef.current)
+        debounceRef.current = null
       }
 
       debounceRef.current = setTimeout(() => {
@@ -56,6 +57,7 @@ export function DynamicProjectFilters() {
     return () => {
       if (debounceRef.current) {
         clearTimeout(debounceRef.current)
+        debounceRef.current = null
       }
     }
   }, [])

@@ -50,7 +50,7 @@ export function FeatureCard({ projectId, feature }: FeatureCardProps) {
             unoptimized
           />
         ) : (
-          <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-coral/10 via-paper to-ink/5">
+          <div className="absolute inset-0 flex items-center justify-center bg-linear-to-br from-coral/10 via-paper to-ink/5">
             <Cpu size={40} className="text-coral/50" aria-hidden="true" />
           </div>
         )}

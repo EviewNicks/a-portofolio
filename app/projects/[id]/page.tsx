@@ -1,7 +1,5 @@
 import { cache } from 'react'
 import { notFound } from 'next/navigation'
-import Link from 'next/link'
-import { ArrowLeft } from 'lucide-react'
 import { getProjectById } from '@/lib/supabase/queries/projects'
 import { getTimelineEntriesByProjectId } from '@/lib/supabase/queries/timeline'
 import { fetchGitHubStats } from '@/features/projects/services/github/api'
@@ -179,6 +177,7 @@ export default async function ProjectDetailPage({
           project={project}
           entries={entries}
           features={features}
+          secret={isAdmin && secret ? secret : ''}
         />
 
         <ProjectDetailFeaturedWork currentProjectId={project.id} />

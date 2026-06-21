@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { CheckCircle2, X } from 'lucide-react'
 
 interface SuccessBannerProps {
@@ -10,10 +10,6 @@ interface SuccessBannerProps {
 
 export function SuccessBanner({ projectTitle, show }: SuccessBannerProps) {
   const [visible, setVisible] = useState(show)
-
-  useEffect(() => {
-    setVisible(show)
-  }, [show])
 
   if (!visible) return null
 

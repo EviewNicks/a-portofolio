@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { X, Plus, Github, FileText, Tag, Link2, Activity } from 'lucide-react'
 import type { DynamicProject } from '@/features/projects/types'
@@ -34,17 +34,6 @@ export function AdminProjectForm({ secret, project }: AdminProjectFormProps) {
   const [error, setError] = useState('')
   const [saving, setSaving] = useState(false)
 
-  // Sync form state when project prop changes (for edit mode)
-  useEffect(() => {
-    if (project) {
-      setTitle(project.title ?? '')
-      setShortDesc(project.short_description ?? '')
-      setLongDesc(project.long_description ?? '')
-      setGithubUrl(project.github_repo_url ?? '')
-      setStatus(project.status ?? 'active')
-      setTechStack(project.tech_stack ?? [])
-    }
-  }, [project])
 
   const addTag = () => {
     const tag = tagInput.trim()

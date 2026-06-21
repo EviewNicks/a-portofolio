@@ -7,21 +7,29 @@ interface UseFeatureManagementOptions {
   projectId: string
   secret: string
   initialFeatures: ProjectFeature[]
+  initialEditFeatureId?: string
 }
 
 export function useFeatureManagement({
   projectId,
   secret,
   initialFeatures,
+  initialEditFeatureId,
 }: UseFeatureManagementOptions) {
+  const initialEditFeature = initialEditFeatureId
+    ? initialFeatures.find(item => item.id === initialEditFeatureId) ?? null
+    : null
+
   // Feature list state
   const [features, setFeatures] = useState<ProjectFeature[]>(initialFeatures)
   const [error, setError] = useState('')
   const [isSavingOrder, setIsSavingOrder] = useState(false)
 
   // Modal / panel visibility state
-  const [showForm, setShowForm] = useState(false)
-  const [editFeature, setEditFeature] = useState<ProjectFeature | null>(null)
+  const [showForm, setShowForm] = useState(Boolean(initialEditFeature))
+  const [editFeature, setEditFeature] = useState<ProjectFeature | null>(
+    initialEditFeature
+  )
   const [mediaUploadFeature, setMediaUploadFeature] =
     useState<ProjectFeature | null>(null)
   const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null)

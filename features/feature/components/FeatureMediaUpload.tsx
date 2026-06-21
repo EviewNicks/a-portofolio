@@ -46,7 +46,7 @@ export function FeatureMediaUpload({
   return (
     <div className="space-y-6">
       {error && (
-        <div className="flex items-center gap-2 rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-400">
+        <div className="flex items-center gap-2 rounded-lg border border-coral/30 bg-coral/10 px-4 py-3 text-sm text-coral">
           <AlertTriangle size={16} />
           <span>{error}</span>
         </div>
@@ -61,7 +61,7 @@ export function FeatureMediaUpload({
         className={`relative flex flex-col items-center justify-center rounded-xl border-2 border-dashed p-8 text-center transition-all ${
           dragActive
             ? 'border-primary bg-primary/5'
-            : 'border-border bg-background/50 hover:bg-muted/10'
+            : 'border-line bg-paper hover:border-coral/50 hover:bg-paper-warm'
         }`}
       >
         <input
@@ -73,15 +73,15 @@ export function FeatureMediaUpload({
           disabled={uploading}
         />
         <div className="pointer-events-none flex flex-col items-center justify-center space-y-2">
-          <div className="bg-muted text-muted-foreground rounded-full p-3">
+          <div className="bg-bone text-ink-mute rounded-full p-3">
             <Upload size={24} />
           </div>
-          <p className="text-foreground text-sm font-semibold">
+          <p className="text-ink text-sm font-semibold">
             {uploading
               ? 'Uploading your file...'
               : 'Drag & drop image here or click to browse'}
           </p>
-          <p className="text-muted-foreground text-xs">
+          <p className="text-ink-mute text-xs">
             Supports JPEG, PNG, GIF, WebP up to 10MB (Max 20 images)
           </p>
         </div>
@@ -89,20 +89,20 @@ export function FeatureMediaUpload({
 
       {/* Upload progress indicator */}
       {uploading && (
-        <div className="text-muted-foreground flex animate-pulse items-center gap-2 text-xs">
-          <div className="bg-primary h-2 w-2 animate-ping rounded-full" />
+        <div className="text-ink-mute flex animate-pulse items-center gap-2 text-xs">
+          <div className="bg-coral h-2 w-2 animate-ping rounded-full" />
           <span>Processing upload...</span>
         </div>
       )}
 
       {/* Gallery list */}
       <div>
-        <h4 className="text-foreground mb-3 text-sm font-bold">
+        <h4 className="text-ink mb-3 text-sm font-bold">
           Gallery Thumbnails ({media.length}/20)
         </h4>
 
         {media.length === 0 ? (
-          <p className="text-muted-foreground text-sm italic">
+          <p className="text-ink-mute text-sm italic">
             No images uploaded yet.
           </p>
         ) : (
@@ -114,7 +114,7 @@ export function FeatureMediaUpload({
                 onDragStart={e => handleThumbDragStart(e, index)}
                 onDragOver={handleThumbDragOver}
                 onDrop={e => handleThumbDrop(e, index)}
-                className={`bg-muted border-border group relative aspect-square cursor-move overflow-hidden rounded-lg border transition-all select-none ${
+                className={`bg-bone border-line group relative aspect-square cursor-move overflow-hidden rounded-lg border transition-all select-none ${
                   draggingIndex === index ? 'border-primary opacity-30' : ''
                 }`}
               >
@@ -132,7 +132,7 @@ export function FeatureMediaUpload({
                   <button
                     type="button"
                     onClick={() => setConfirmDeleteId(item.id)}
-                    className="rounded-lg bg-red-600 p-1.5 text-white transition-colors hover:bg-red-500"
+                    className="rounded-lg bg-coral p-1.5 text-white transition-colors hover:bg-[#e25e4a]"
                     title="Delete Image"
                   >
                     <Trash2 size={14} />
@@ -152,7 +152,7 @@ export function FeatureMediaUpload({
         <button
           type="button"
           onClick={() => onClose(media)}
-          className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-lg px-4 py-2 text-sm font-semibold transition-all"
+          className="bg-coral text-white hover:bg-[#e25e4a] rounded-lg px-4 py-2 text-sm font-semibold transition-all"
         >
           Close & Save Gallery
         </button>
@@ -160,23 +160,23 @@ export function FeatureMediaUpload({
 
       {/* Delete Image Confirmation */}
       {confirmDeleteId && (
-        <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm">
-          <div className="bg-card border-border w-full max-w-sm space-y-4 rounded-xl border p-6 shadow-2xl">
-            <h3 className="text-foreground text-lg font-bold">Delete Image?</h3>
-            <p className="text-muted-foreground text-sm">
+        <div className="fixed inset-0 z-60 flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm">
+          <div className="border-line bg-bone text-ink w-full max-w-sm space-y-4 rounded-xl border p-6 shadow-2xl">
+            <h3 className="text-ink text-lg font-bold">Delete Image?</h3>
+            <p className="text-ink-mute text-sm">
               Are you sure you want to permanently delete this image from
               Supabase storage? This action cannot be undone.
             </p>
             <div className="flex justify-end gap-3">
               <button
                 onClick={() => setConfirmDeleteId(null)}
-                className="bg-muted text-foreground hover:bg-muted/80 rounded-lg px-4 py-2 text-sm font-semibold transition-all"
+                className="bg-paper text-ink-soft hover:bg-paper-warm rounded-lg px-4 py-2 text-sm font-semibold transition-all"
               >
                 Cancel
               </button>
               <button
                 onClick={() => handleDelete(confirmDeleteId)}
-                className="rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white transition-all hover:bg-red-500"
+                className="rounded-lg bg-coral px-4 py-2 text-sm font-semibold text-white transition-all hover:bg-[#e25e4a]"
               >
                 Delete
               </button>

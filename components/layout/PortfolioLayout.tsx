@@ -26,11 +26,15 @@ interface PortfolioLayoutProps {
   children: React.ReactNode
 }
 
+function getErrorMessage(error: unknown) {
+  return error instanceof Error ? error.message : 'An unexpected error occurred'
+}
+
 function ErrorFallback({
   error,
   resetErrorBoundary,
 }: {
-  error: Error
+  error: unknown
   resetErrorBoundary: () => void
 }) {
   return (
@@ -40,7 +44,7 @@ function ErrorFallback({
           Something went wrong
         </h2>
         <p className="text-muted-foreground mb-6">
-          {error.message || 'An unexpected error occurred'}
+          {getErrorMessage(error)}
         </p>
         <button
           onClick={resetErrorBoundary}

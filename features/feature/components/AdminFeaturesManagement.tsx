@@ -17,12 +17,14 @@ interface AdminFeaturesManagementProps {
   projectId: string
   secret: string
   initialFeatures: ProjectFeature[]
+  initialEditFeatureId?: string
 }
 
 export function AdminFeaturesManagement({
   projectId,
   secret,
   initialFeatures,
+  initialEditFeatureId,
 }: AdminFeaturesManagementProps) {
   const {
     features,
@@ -49,6 +51,7 @@ export function AdminFeaturesManagement({
     projectId,
     secret,
     initialFeatures,
+    initialEditFeatureId,
   })
 
   return (

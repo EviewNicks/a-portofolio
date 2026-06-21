@@ -1,67 +1,411 @@
-You are an expert UI/UX Designer and Design Systems Specialist.
+Tentu. Sebelum berbicara tentang fitur, aplikasi, atau teknologi, kita perlu mendefinisikan terlebih dahulu **apa sebenarnya bisnis Bicket**.
 
-**Project Context:**
-You are redesigning the Project Detail Page projects/[id]  for a developer portfolio website. The current page showcases the project "Maguru – Sistem Manajemen Penyewaan Pakaian". This page must fully follow the existing design system that has been used across the portfolio (including color palette, typography scale, spacing system, component styles, card treatment, button styles, and overall visual language).
+---
 
-**Design Goal:**
-Improve the UI/UX of the Project Detail Page by strictly adhering to the existing design system. Enhance visual hierarchy, information architecture, readability, spacing consistency, and content scanning experience while maintaining complete consistency with the current design language of the portfolio. Make the page more polished and easier to use without deviating from established design patterns and components.
+# Apa Itu Bicket?
 
-**UX Goals:**
-- Strengthen visual hierarchy while preserving information density appropriate for a portfolio project detail page.
-- Improve content readability and scannability.
-- Create better flow between sections and within tabs.
-- Deliver a cohesive experience that feels part of the same portfolio ecosystem.
+## Definisi Sederhana
 
-**Information Architecture (Must Preserve):**
-- Back Navigation ("← Back to Projects")
-- Project Header (Title, Short Description, Status Badge, Created Date)
-- GitHub Stats Panel (Stars, Forks, Contributors, Last Commit, Last Updated)
-- Media Gallery section
-- Three Tabs: Description (default), Features, Development Timeline
-- All content within each tab must be fully preserved
+**Bicket adalah marketplace lokal yang membantu masyarakat menemukan, membandingkan, dan memesan hadiah handmade dari creator lokal dengan mudah, transparan, dan terpercaya.**
 
-**Required Components & Sections:**
-- Project Header with large title and status
-- GitHub Stats in card/grid layout sesuai design system
-- Media Gallery dengan responsive grid dan lightbox
-- Tab Navigation sesuai design system
-- Description Tab: Status info, Tech Stack pills, Repository link, Long Description
-- Features Tab: Feature cards with title, description, media preview, and status
-- Development Timeline Tab: Chronological timeline entries
-- Preserve all empty states, loading skeletons, and admin-only elements
+Pada tahap awal, Bicket hanya berfokus pada **Bucket Bunga di Makassar**.
 
-**Data Requirements (Must Remain Visible):**
-- Full project title and short/long description
-- Complete tech stack list as pills/tags
-- GitHub repository link and stats
-- All media from the gallery
-- All features with their details
-- All timeline entries with dates, types, titles, and descriptions
+Sederhananya, jika saat ini seseorang ingin membeli bucket bunga, mereka biasanya harus:
 
-**Responsive Requirements:**
-- Follow the existing responsive behavior and breakpoints from the current design system (desktop, tablet, mobile).
+1. Mencari akun Instagram satu per satu.
+2. Menghubungi banyak seller.
+3. Menanyakan harga satu per satu.
+4. Menunggu balasan.
+5. Membandingkan secara manual.
+6. Belum tentu percaya dengan kualitas produknya.
 
-**Interaction Requirements:**
-- Clickable back link
-- Functional tabs with smooth switching
-- Clickable GitHub links
-- Media gallery with lightbox/modal
-- Hover states sesuai design system
-- Preserve admin action buttons (Edit/Delete)
+Bicket ingin mengubah proses tersebut menjadi:
 
-**Visual Improvement Goals:**
-- Apply consistent spacing, typography, and color usage sesuai existing design system
-- Strengthen visual hierarchy (especially project title and section separation)
-- Improve layout balance and content breathing room
-- Enhance component presentation (cards, pills, tabs, timeline, gallery) tanpa mengubah karakter desain system
-- Maintain clean and cohesive appearance yang selaras dengan halaman-halaman portfolio lainnya
+> Cari → Bandingkan → Pesan → Ambil / Diantar
 
-**Constraints:**
-- DO NOT remove any features, sections, or data points.
-- DO NOT simplify or reduce functionality.
-- Strictly follow the existing design system — jangan introduce visual style baru yang berbeda.
-- Preserve all business requirements and information architecture intent.
-- All existing content from the data structure must remain visible and accessible.
-- Maintain the three-tab structure exactly.
+dalam satu platform.
 
-Generate a comprehensive design description with detailed layout specifications, component breakdowns, spacing guidelines, and visual recommendations that respect and build upon the current design system.
+---
+
+# Masalah yang Sebenarnya Diselesaikan Bicket
+
+Banyak founder berpikir mereka menjual produk.
+
+Padahal sebenarnya mereka menyelesaikan masalah.
+
+Mari kita lihat.
+
+## Masalah Saat Ini
+
+Misalnya saya ingin memberi hadiah wisuda kepada teman.
+
+Saya ingin membeli bucket bunga.
+
+Yang terjadi sekarang:
+
+### Langkah 1
+
+Saya membuka Instagram.
+
+Mencari:
+
+> bucket makassar
+
+---
+
+### Langkah 2
+
+Muncul puluhan akun.
+
+Saya bingung.
+
+Mana yang bagus?
+
+Mana yang murah?
+
+Mana yang terpercaya?
+
+---
+
+### Langkah 3
+
+Saya harus chat satu per satu.
+
+Contoh:
+
+"Ka, bucket ini berapa?"
+
+"Ka, bisa untuk hari Jumat?"
+
+"Ka, bisa custom?"
+
+---
+
+### Langkah 4
+
+Saya membuat perbandingan sendiri.
+
+Toko A = 80 ribu
+
+Toko B = 120 ribu
+
+Toko C = 100 ribu
+
+Toko D = belum balas
+
+---
+
+### Langkah 5
+
+Belum ada jaminan kualitas.
+
+Foto bisa saja bagus.
+
+Hasil aslinya belum tentu.
+
+---
+
+# Pain Point Utama
+
+Dari cerita di atas, sebenarnya masalah customer adalah:
+
+### Discovery Problem
+
+Sulit menemukan creator yang sesuai.
+
+---
+
+### Comparison Problem
+
+Sulit membandingkan harga.
+
+---
+
+### Trust Problem
+
+Sulit mengetahui kualitas seller.
+
+---
+
+### Ordering Problem
+
+Pemesanan masih manual.
+
+---
+
+### Custom Problem
+
+Permintaan custom sulit dilakukan.
+
+---
+
+# Solusi Bicket
+
+Bicket menjadi tempat berkumpulnya seluruh creator bucket bunga lokal Makassar.
+
+Ketika customer membuka Bicket, mereka dapat:
+
+* Melihat berbagai bucket
+* Melihat harga
+* Melihat rating
+* Melihat review
+* Melihat lokasi
+* Melihat estimasi pengerjaan
+* Memesan
+* Mengajukan custom order
+
+Tanpa perlu berpindah-pindah akun Instagram.
+
+---
+
+# Siapa Customer Bicket?
+
+## Customer Utama
+
+### Mahasiswa
+
+Contoh:
+
+* Wisuda
+* Ulang tahun teman
+* Anniversary
+
+---
+
+### Pelajar SMA
+
+Contoh:
+
+* Perpisahan
+* Ulang tahun sahabat
+
+---
+
+### Pasangan
+
+Contoh:
+
+* Anniversary
+* Valentine
+* Birthday
+
+---
+
+### Gift Buyer
+
+Orang yang membutuhkan hadiah secara cepat.
+
+---
+
+# Siapa Seller Bicket?
+
+Seller adalah:
+
+### Creator Bucket Bunga
+
+Contoh:
+
+* UMKM Bucket
+* Pengrajin Rumahan
+* Toko Bucket Lokal
+* Freelancer Handmade
+
+---
+
+Mereka biasanya:
+
+* Memiliki Instagram
+* Menerima pesanan lewat WhatsApp
+* Belum memiliki website sendiri
+
+---
+
+# Nilai Utama Bagi Customer
+
+## Sebelum Bicket
+
+Customer harus:
+
+* Cari akun
+* Chat satu per satu
+* Bandingkan manual
+
+Waktu:
+2-3 jam
+
+---
+
+## Setelah Bicket
+
+Customer cukup:
+
+* Buka aplikasi
+* Cari bucket
+* Filter harga
+* Lihat rating
+* Pesan
+
+Waktu:
+5-10 menit
+
+---
+
+Nilai yang dijual Bicket adalah:
+
+> Kemudahan menemukan hadiah yang tepat.
+
+Bukan sekadar bucket bunga.
+
+---
+
+# Nilai Utama Bagi Creator
+
+Creator juga memiliki masalah.
+
+Saat ini mereka:
+
+* Sulit mendapatkan pelanggan baru
+* Bergantung pada Instagram
+* Harus membalas chat berulang
+* Sulit membangun kepercayaan
+
+---
+
+Dengan Bicket:
+
+### Exposure Lebih Besar
+
+Produk tampil ke lebih banyak calon pembeli.
+
+---
+
+### Lead Lebih Banyak
+
+Lebih banyak pesanan masuk.
+
+---
+
+### Review Terpusat
+
+Kepercayaan meningkat.
+
+---
+
+### Pemesanan Lebih Terstruktur
+
+Order tidak lagi berantakan di WhatsApp.
+
+---
+
+# Model Bisnis Bicket
+
+Bicket tidak membuat bucket.
+
+Bicket tidak menjual bucket.
+
+Bicket mempertemukan pembeli dan creator.
+
+Modelnya adalah:
+
+## Marketplace Commission
+
+Contoh:
+
+Harga bucket:
+
+Rp100.000
+
+Komisi Bicket:
+
+10%
+
+Creator menerima:
+
+Rp90.000
+
+Bicket menerima:
+
+Rp10.000
+
+---
+
+# Mengapa Fokus Makassar?
+
+Ini keputusan yang sangat bagus untuk MVP.
+
+Karena:
+
+### Supply Mudah Dikontrol
+
+Creator dapat diverifikasi.
+
+---
+
+### Trust Lebih Tinggi
+
+Lokasi seller jelas.
+
+---
+
+### Operasional Lebih Sederhana
+
+Tidak perlu memikirkan logistik nasional.
+
+---
+
+### Efek Jaringan Lebih Cepat
+
+Semakin banyak creator Makassar bergabung.
+
+Semakin menarik bagi pembeli Makassar.
+
+---
+
+# Apa Sebenarnya Bicket di Masa Depan?
+
+Saat ini:
+
+> Marketplace Bucket Bunga
+
+Tahap berikutnya:
+
+> Marketplace Gift
+
+Contoh:
+
+* Bucket bunga
+* Boneka
+* Hampers
+* Scrapbook
+* Crochet
+* Gift Box
+
+---
+
+Tahap berikutnya:
+
+> Marketplace Handmade
+
+Contoh:
+
+* Aksesori
+* Kerajinan
+* Merchandise Custom
+
+---
+
+Visi jangka panjangnya bisa menjadi:
+
+> "Tempat pertama yang dibuka masyarakat Makassar ketika mencari hadiah."
+
+Bukan:
+
+> "Tempat membeli bucket bunga."
+
+Perbedaan ini sangat penting.
+
+Karena bucket bunga hanyalah produk awal.
+
+Sedangkan kebutuhan sebenarnya adalah **memberi hadiah kepada seseorang**.
+
+Jika Bicket berhasil menguasai kebutuhan tersebut, maka ekspansi ke kategori hadiah lainnya akan jauh lebih mudah dibanding memposisikan diri hanya sebagai marketplace bucket bunga.

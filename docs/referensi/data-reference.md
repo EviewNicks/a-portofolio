@@ -1,360 +1,455 @@
-# 📄 Project Detail Page - Data & UI Reference
+# 📚 Learning Progress & Certifications - Data & UI Reference
 
-## 📍 Halaman: `/projects/[id]` (Project Detail Page)
+## 📍 Component: `LearningProgress` 
+**Lokasi:** `features/skills/components/LearningProgress.tsx`  
+**Parent Component:** `SkillsSection` → Skills Page
 
-Halaman ini menampilkan detail lengkap dari sebuah project. Visitor dapat melihat informasi komprehensif, galeri media, dan perkembangan project.
-
----
-
-## 🎯 Struktur Halaman
-
-Halaman ini terdiri dari beberapa bagian utama:
-
-### 1️⃣ **Back Navigation**
-- **Elemen**: Link text "← Back to Projects"
-- **Fungsi**: Membawa user kembali ke halaman listing `/projects`
-- **Posisi**: Top-left, sebelum main content
+Component ini menampilkan dua bagian utama:
+1. **Currently Learning** - Kursus/materi yang sedang dikerjakan dengan progress indicator
+2. **Certifications** - Sertifikat profesional yang telah diraih dengan visual display
 
 ---
 
-### 2️⃣ **Success Banner** (Opsional - Admin Only)
-- **Tampil jika**: Admin baru saja membuat project baru
-- **Isi**: Pesan sukses "Project created successfully"
-- **Posisi**: Di bawah back link
-- **Note**: Hanya admin yang melihat
+## 🎯 Struktur Komponen
 
----
+### **Layout Overview**
 
-### 3️⃣ **Admin Action Bar** (Opsional - Admin Only)
-- **Tampil jika**: User adalah admin (login dengan secret key)
-- **Tombol**:
-  - Edit project
-  - Delete project
-- **Posisi**: Di bawah success banner (jika ada)
-- **Note**: Hanya admin yang melihat
-
----
-
-### 4️⃣ **Project Header**
-Menampilkan informasi dasar project di paling atas.
-
-**Konten:**
-| Elemen | Deskripsi | Contoh |
-|--------|-----------|---------|
-| **Judul** | Nama project yang besar dan bold | "Maguru – Sistem Manajemen Penyewaan Pakaian" |
-| **Deskripsi Singkat** | Penjelasan singkat project (1-2 baris) | "Maguru adalah full-stack web application berbasis Next.js 15 yang dirancang untuk mengelola bisnis penyewaan pakaian UMKM." |
-| **Status Badge** | Warna-warni badge status project | "Active" (hijau), "In Progress" (biru), dll |
-| **Created Date** | Tanggal project dibuat | "Created Mar 24, 2026" |
-
----
-
-### 5️⃣ **GitHub Stats Panel** (Opsional)
-Menampilkan statistik GitHub jika project punya repo.
-
-**Konten:**
-| Metrik | Deskripsi |
-|--------|-----------|
-| ⭐ **Stars** | Jumlah bintang di GitHub |
-| 🔀 **Forks** | Jumlah fork repository |
-| 📝 **Commits** | Jumlah total commit |
-| 📊 **Repository Link** | Link ke GitHub repo |
-
-**Note**: Panel ini tidak muncul jika:
-- Project tidak punya GitHub repo
-- GitHub API tidak accessible
-
----
-
-### 6️⃣ **Media Gallery**
-Galeri menampilkan semua media (gambar/video) project.
-
-**Fitur:**
-| Fitur | Deskripsi |
-|-------|-----------|
-| **Grid Display** | Thumbnail gambar ditampilkan dalam grid |
-| **Lightbox/Modal** | Klik gambar → zoom/full screen view |
-| **Video Support** | Video dari timeline juga ditampilkan |
-| **Empty State** | Pesan "No media yet" jika belum ada upload |
-
----
-
-### 7️⃣ **Tab Navigation Section** ⭐
-Bagian paling penting - 3 tab untuk explore project details.
-
----
-
-## 🗂️ **3 Tab Navigation**
-
-### **Tab 1️⃣: Description** (Default Tab)
-
-**Fungsi**: Menampilkan penjelasan lengkap project.
-
-**Konten yang ditampilkan:**
-
-| Elemen | Deskripsi | Contoh |
-|--------|-----------|---------|
-| **Status + Dates** | Status badge + tanggal dibuat + last sync | "Active" · Created Mar 24, 2026 · Last synced Mar 24, 2026 |
-| **Tech Stack** | Daftar teknologi dalam bentuk tag/pill | Next.js, TypeScript, Tailwind, Supabase, Clerk, Jest, Playwright |
-| **Repository Link** | Link ke GitHub repository | `https://github.com/EviewNicks/rental-baju →` |
-| **About Section** | Deskripsi lengkap project (bisa markdown) | Penjelasan detail masalah yang diselesaikan, fitur, teknologi, hasil |
-
-**Visual Hierarchy:**
 ```
-Status Badge | Created Date | Last Sync Date
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-Tech Stack
-[Next.js] [TypeScript] [Tailwind] [Supabase] ...
-
-Repository
-https://github.com/EviewNicks/rental-baju →
-
-About
-(Long markdown text dengan formatting)
+┌─ LearningProgress Component ─────────────────────────────┐
+│                                                          │
+│ 📖 CURRENTLY LEARNING SECTION (jika ada data)          │
+│ ├─ Header: "Currently Learning"                        │
+│ │  └─ Subtitle: "Skills and technologies I'm..."      │
+│ │                                                      │
+│ └─ Grid Layout (Responsive):                           │
+│    ├─ [LearningCard] [LearningCard] [LearningCard]    │
+│    └─ (Mobile: 1 col | Tablet: 2 col | Desktop: 3 col)│
+│                                                        │
+│ 🎓 CERTIFICATIONS SECTION (jika ada data)             │
+│ ├─ Header: "Certifications"                           │
+│ │  └─ Subtitle: "Professional certifications..."      │
+│ │                                                     │
+│ └─ Grid Layout (Responsive):                          │
+│    ├─ [CertCard] [CertCard] [CertCard]               │
+│    └─ (Mobile: 1 col | Tablet: 2 col | Desktop: 3 col)│
+│                                                        │
+└──────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-### **Tab 2️⃣: Features**
+## 📦 **Section 1: Currently Learning Cards**
 
-**Fungsi**: Menampilkan daftar fitur-fitur project dengan detail.
+### **Learning Card Anatomy**
 
-**Konten yang ditampilkan:**
+Setiap card menampilkan informasi satu item pembelajaran dengan visual progress indicator.
 
-| Elemen | Deskripsi |
-|--------|-----------|
-| **Feature List** | Daftar semua fitur project |
-| **Feature Counter** | Badge menunjukkan jumlah total fitur | 
-| **Per Feature Info** | Untuk setiap fitur ditampilkan: |
-| | - Nama fitur (Title) |
-| | - Deskripsi singkat |
-| | - Media preview (screenshot) |
-| | - Status |
-| **Empty State** | "No features added yet" jika kosong |
-
-**Contoh Data Fitur:**
 ```
-Feature 1: Role-Based Access Control
-└─ Description: Three-tier access (Owner, Producer, Kasir)
-└─ Media: Screenshot form login
-└─ Status: Completed
-
-Feature 2: Product Management
-└─ Description: Manage product categories, colors, status
-└─ Media: Screenshot dashboard produk
-└─ Status: Completed
-
-Feature 3: Payment Integration
-└─ Description: Integrated payment gateway
-└─ Media: Screenshot payment page
-└─ Status: In Progress
+╔════════════════════════════════════════╗
+║ Learning Item Card                     ║
+╠════════════════════════════════════════╣
+║                                        ║
+║  📌 The AI Engineer Course 2025  ┌──┐ ║
+║     [UDEMY] Badge                │06│ ║  ← Badges & Status
+║                                  │25│ ║
+║                                  └──┘ ║
+║                                        ║
+║  📊 Progress                      40%  ║
+║  ████████░░░░░░░░░░░░░░░░░░░░░░░░░   ║  ← Progress Bar
+║                                        ║
+║  Complete AI Engineer bootcamp to      ║
+║  enhance practical AI development      ║  ← Description
+║  skills and master modern AI tools     ║
+║                                        ║
+║  ─────────────────────────────────────  ║
+║  🔗 View Course                        ║  ← Call to Action
+║                                        ║
+╚════════════════════════════════════════╝
 ```
 
 ---
 
-### **Tab 3️⃣: Development Timeline**
+### **Learning Card - Data Fields & UI Display**
 
-**Fungsi**: Menampilkan progression/journey project dari awal hingga sekarang.
+| Field | Tipe Data | Contoh | Fungsi UI | Wajib? |
+|-------|-----------|--------|-----------|--------|
+| **name** | String | "The AI Engineer Course 2025" | Judul card, bold dan besar | ✅ |
+| **platform** | String (Optional) | "Udemy", "Coursera", "YouTube" | Badge dengan background warna di sebelah kanan judul | ⚠️ |
+| **target_date** | String (YYYY-MM) | "2025-06" | Status badge di top-right, format "Jun 2025" | ✅ |
+| **progress** | Number (0-100) | 40 | Ditampilkan sebagai persentase teks + progress bar animated | ✅ |
+| **reason** | String (Markdown) | "Complete AI Engineer bootcamp to enhance..." | Deskripsi pembelajaran dalam paragraph | ✅ |
+| **url** | String (URL, Optional) | "https://www.udemy.com/course/..." | Tombol "View Course" dengan link external | ⚠️ |
 
-**Konten yang ditampilkan:**
+---
 
-| Elemen | Deskripsi |
-|--------|-----------|
-| **Timeline Entries** | Daftar semua milestone/event perkembangan |
-| **Entry Counter** | Badge menunjukkan jumlah total entries |
-| **Per Entry Info** | Untuk setiap entry ditampilkan: |
-| | - Tanggal (Date) |
-| | - Tipe entry (Sprint, PR, Release, dll) |
-| | - Judul/Title |
-| | - Deskripsi singkat |
-| | - Link eksternal (jika ada) |
-| | - GitHub PR info (jika PR) |
-| | - Featured badge (jika disorot) |
-| **Chronological Order** | Diurutkan dari yang terakhir ke terdahulu |
-| **Empty State** | "No timeline entries yet" jika kosong |
+### **Learning Card - Visual Details**
 
-**Contoh Data Timeline:**
+#### **1. Header Section**
 ```
-Timeline Entry 1: Sprint 5 Completed
-├─ Date: Mar 24, 2026
-├─ Type: Sprint
-├─ Title: Final Testing & Deployment
-└─ Description: Completed E2E tests and deployed to production
+┌─ NAME & PLATFORM BADGES ─────────────────┐
+│                                           │
+│  Judul Kursus (text-xl, font-bold)       │
+│  [PLATFORM BADGE]                        │
+│                                           │
+│                         [TARGET DATE]    │
+│                                           │
+└───────────────────────────────────────────┘
+```
 
-Timeline Entry 2: PR Merged - Auth System
-├─ Date: Mar 20, 2026
-├─ Type: PR
-├─ Title: Implement Clerk Role-based Auth
-├─ GitHub PR: #45 by @developer
-└─ Status: Merged
+**Field Details:**
 
-Timeline Entry 3: Sprint 4 Started
-├─ Date: Mar 15, 2026
-├─ Type: Sprint
-├─ Title: Payment Integration
-└─ Description: Integrating Stripe payment gateway
+| Element | Tampilan | Kondisi |
+|---------|----------|---------|
+| **Judul (name)** | 20px font, bold, color: foreground | Always |
+| **Platform Badge** | Inline pill dengan background primary/10, text primary | Jika `platform` ada |
+| **Target Date** | Format: "Jun 2025" (short month + year) | Always |
+| **Date Status Color** | 🔴 Merah jika tanggal sudah lewat (overdue) | Overdue check: `targetDate < today()` |
+| | 🔵 Biru jika masih on-track (belum lewat) | On-track check: `targetDate >= today()` |
+
+---
+
+#### **2. Progress Section**
+```
+┌─ PROGRESS INDICATOR ──────────────┐
+│                                   │
+│  Progress              40%        │
+│  ████████░░░░░░░░░░░░░░░░░░░░░  │  ← Color depends on overdue status
+│                                   │
+└───────────────────────────────────┘
+```
+
+**Field Details:**
+
+| Element | Tampilan | Kondisi |
+|---------|----------|---------|
+| **Label** | "Progress" (muted gray text) | Always |
+| **Percentage** | "40%" (large, bold, right-aligned) | Always |
+| **Progress Bar** | Animated fill dari 0 ke progress value | Always |
+| **Bar Color** | 🔴 Red (#ef4444) jika overdue | Jika overdue |
+| | 🔵 Blue (#3b82f6) jika on-track | Jika on-track |
+| **Bar Animation** | Smooth fill animation | On page load + hover |
+
+---
+
+#### **3. Description Section**
+```
+┌─ REASON / MOTIVATION ────────────────────┐
+│                                          │
+│  Complete AI Engineer bootcamp to        │
+│  enhance practical AI development        │
+│  skills and master modern AI tools       │
+│  using industry-standard frameworks      │
+│                                          │
+└──────────────────────────────────────────┘
+```
+
+**Field Details:**
+
+| Element | Tampilan | Kondisi |
+|---------|----------|---------|
+| **Text** | Paragraph dengan muted foreground color, normal weight | Always |
+| **Line Height** | Relaxed spacing untuk readability | Always |
+| **Truncate** | Tidak ada truncate, full text ditampilkan | Always |
+
+---
+
+#### **4. Footer Section (Optional)**
+```
+┌─ CALL TO ACTION ─────────────────┐
+│                                  │
+│  ─ Separator Line ─              │  ← Hanya jika ada URL
+│                                  │
+│  🔗 View Course →                │
+│     (text-primary, hover underline)
+│                                  │
+└──────────────────────────────────┘
+```
+
+**Field Details:**
+
+| Element | Tampilan | Kondisi |
+|---------|----------|---------|
+| **Separator** | Thin border-top, subtle opacity | Jika `url` ada |
+| **Link Text** | "View Course" dengan inline icon | Jika `url` ada |
+| **Link Style** | text-primary, hover berubah lighter | Jika `url` ada |
+| **Link Behavior** | Opens URL di tab baru (target="_blank") | Jika `url` ada |
+
+---
+
+### **Learning Card - States & Interactions**
+
+| State | Visual Change | Trigger |
+|-------|---------------|---------|
+| **Default** | Normal shadow, scale 1.0 | Initial render |
+| **Hover** | Scale naik 1.02, shadow lebih prominent | Mouse hover |
+| **On-Track** | Progress bar biru (#3b82f6) | `target_date >= today()` |
+| **Overdue** | Progress bar & date badge merah (#ef4444) | `target_date < today()` |
+
+---
+
+## 🎓 **Section 2: Certification Cards**
+
+### **Certification Card Anatomy**
+
+Setiap card menampilkan satu sertifikat dengan image dan detail informasi.
+
+```
+╔════════════════════════════════════════╗
+║ Certification Card                     ║
+╠════════════════════════════════════════╣
+║                                        ║
+║  ┌──────────────────────────────────┐ ║
+║  │                                  │ ║
+║  │     [Certificate Image]          │ ║  ← Image dengan aspect ratio
+║  │     (hover: scale up)            │ ║
+║  │                                  │ ║
+║  └──────────────────────────────────┘ ║
+║                                        ║
+║  Belajar Dasar Visualisasi Data       ║
+║                                        ║
+║  dicoding          [✓ Completed]      ║  ← Org + Status Badge
+║                                        ║
+║  Certificate No: 98XW5K5L9PM3         ║
+║  Issued: February 2023                ║  ← Metadata
+║                                        ║
+║  ─────────────────────────────────────  ║
+║                                        ║
+║  Materi yang dipelajari:               ║
+║  Pendahuluan tentang visualisasi       ║
+║  data, tools, dan best practices...    ║  ← Description (truncated)
+║                                        ║
+╚════════════════════════════════════════╝
 ```
 
 ---
 
-## 📊 **Data Structure Reference**
+### **Certification Card - Data Fields & UI Display**
 
-Berikut adalah struktur data yang ditampilkan di halaman:
+| Field | Tipe Data | Contoh | Fungsi UI | Wajib? |
+|-------|-----------|--------|-----------|--------|
+| **name-license** | String | "Belajar Dasar Visualisasi Data" | Judul certificate bold, max 2 lines dengan ellipsis | ✅ |
+| **organisasi** | String | "dicoding" | Nama organisasi penerbit sertifikat | ✅ |
+| **tanggal-terbit** | String (DD/MM/YYYY) | "01/02/2023" | Dikonversi ke "February 2023" format | ✅ |
+| **no** | String | "98XW5K5L9PM3" | Nomor unik sertifikat, monospace font | ✅ |
+| **deksripsi** | String (Markdown) | "Materi yang dipelajari: ..." | Deskripsi konten pembelajaran, max 4 lines | ✅ |
+| **media** | String (Path) | "images/certificate/visualise-data.png" | Gambar sertifikat dengan fallback placeholder | ✅ |
+
+---
+
+
+
+---
+
+## 📊 **Data Structure & JSON Format**
+
+### **Learning Item - JSON Structure**
 
 ```json
 {
-  "project": {
-    "id": "UUID",
-    "title": "string",
-    "short_description": "string",
-    "long_description": "string (markdown)",
-    "tech_stack": ["string"],
-    "status": "active | in-progress | completed | archived",
-    "github_repo_url": "URL",
-    "github_owner": "string",
-    "github_repo": "string",
-    "last_sync_at": "ISO date",
-    "created_at": "ISO date",
-    "updated_at": "ISO date"
-  },
-  "media": [
-    {
-      "id": "UUID",
-      "file_name": "string",
-      "storage_path": "string",
-      "public_url": "URL to image/video"
-    }
-  ],
-  "entries": [
-    {
-      "id": "UUID",
-      "entry_type": "sprint | pr | release | milestone",
-      "date": "ISO date",
-      "title": "string",
-      "description": "string",
-      "is_featured": "boolean",
-      "github_pr_number": "number (optional)",
-      "github_pr_title": "string (optional)",
-      "external_url": "URL (optional)"
-    }
-  ],
-  "features": [
-    {
-      "id": "UUID",
-      "title": "string",
-      "description": "string",
-      "media_preview": "URL (optional)",
-      "status": "planned | in-progress | completed"
-    }
-  ]
+  "name": "The AI Engineer Course 2025",
+  "progress": 40,
+  "target_date": "2025-06",
+  "reason": "Complete AI Engineer bootcamp to enhance practical AI development skills",
+  "platform": "Udemy",
+  "url": "https://www.udemy.com/course/the-ai-engineer-course-complete-ai-engineer-bootcamp/"
 }
 ```
 
----
-
-## 🎨 **UI States & Interactions**
-
-### **Loading States**
-- Gallery media loading → Skeleton shimmer
-- Tab content loading → Spinner atau skeleton
-- GitHub stats loading → Skeleton cards
-
-### **Empty States**
-- No media → "No media uploaded yet"
-- No features → "No features added yet"
-- No timeline → "No timeline entries yet"
-
-### **Error Handling**
-- Project not found → 404 page
-- GitHub API error → Stats panel tidak ditampilkan (graceful degradation)
-- Media load error → Placeholder image
-
----
-
-## 🔐 **Admin-Only Features**
-
-Admin (authenticated dengan secret key) mendapat akses tambahan:
-
-| Feature | Deskripsi |
-|---------|-----------|
-| **Success Banner** | Notifikasi setelah create/edit project |
-| **Admin Action Bar** | Tombol Edit & Delete project |
-| **Edit Page** | Bisa mengubah project details |
-| **Delete Function** | Bisa menghapus project |
-
----
-
-## 📱 **Responsive Design**
-
-- **Desktop (lg)**: 3-4 kolom gallery, full tabs
-- **Tablet (md)**: 2 kolom gallery, stacked tabs jika perlu
-- **Mobile (sm)**: 1 kolom gallery, tabs tetap horizontal dengan scroll
-
----
-
-## ✨ **Example User Journey**
+**Field Specifications:**
 
 ```
-1. User masuk ke /projects
-   ↓
-2. Melihat grid project cards
-   ↓
-3. Klik card "Maguru"
-   ↓
-4. Masuk ke /projects/[id]
-   ↓
-5. Melihat Project Header + GitHub Stats
-   ↓
-6. Scroll down lihat Media Gallery
-   ↓
-7. Explore 3 Tabs:
-   ├─ Tab "Description" → Baca info project
-   ├─ Tab "Features" → Lihat fitur-fitur
-   └─ Tab "Development Timeline" → Lihat progression
-   ↓
-8. Klik Back → Kembali ke /projects
+┌─ FIELD SPECIFICATIONS ──────────────────────────────────┐
+│                                                         │
+│ name: String                                            │
+│   └─ Required, 1-100 chars                             │
+│   └─ Tampil sebagai judul card                         │
+│                                                         │
+│ progress: Number (0-100)                               │
+│   └─ Required, integer                                 │
+│   └─ Tampil sebagai percentage + progress bar          │
+│                                                         │
+│ target_date: String (YYYY-MM format)                   │
+│   └─ Required, format: "2025-06"                       │
+│   └─ Digunakan untuk: status color logic + display     │
+│   └─ Jika lewat hari ini → merah, else → biru         │
+│                                                         │
+│ reason: String                                          │
+│   └─ Required, max 300 chars                           │
+│   └─ Tampil sebagai description paragraph              │
+│                                                         │
+│ platform: String (Optional)                            │
+│   └─ Optional, 1-50 chars                              │
+│   └─ Contoh: "Udemy", "Coursera", "LinkedIn Learning" │
+│   └─ Tampil sebagai badge di header                    │
+│                                                         │
+│ url: String (URL, Optional)                            │
+│   └─ Optional, valid URL format                        │
+│   └─ Jika ada → tampil tombol "View Course"            │
+│   └─ Jika tidak ada → footer section tidak muncul      │
+│                                                         │
+└─────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-## 🎯 **Key Points for UI/UX Designer**
+### **Certification - JSON Structure**
 
-✅ **Visual Hierarchy**: Header → Stats → Gallery → Tabs  
-✅ **Clear Navigation**: Back link prominent, tab buttons jelas  
-✅ **Empty States**: Semua bagian punya empty state message  
-✅ **Responsive**: Works pada mobile, tablet, desktop  
-✅ **Admin Features**: Hidden by default, visible untuk admin  
-✅ **Loading Experience**: Skeleton screens untuk better UX  
-✅ **Graceful Degradation**: GitHub stats tidak required  
-
----
-
-example Data JSON 
-
+```json
 {
-    "data": {
-        "id": "f242882b-7e20-4d03-816c-243a1f79d257",
-        "title": "Maguru – Sistem Manajemen Penyewaan Pakaian",
-        "short_description": "Maguru adalah full-stack web application berbasis Next.js 15 yang dirancang untuk mengelola bisnis penyewaan pakaian (rental baju) UMKM. Sistem ini menyediakan role-based access control (Owner, Producer, Kasir) dengan fitur manajemen produk, transaksi, pelanggan, dan pembayaran yang terintegrasi secara modern dan scalable.",
-        "long_description": "Maguru merupakan proyek full-stack yang saya kembangkan sebagai solusi manajemen penyewaan pakaian untuk UMKM pada tahun 2025. Aplikasi ini dibangun dengan pendekatan feature-first modular monolith menggunakan Next.js 15, bertujuan menciptakan sistem yang efisien, aman, dan mudah dikembangkan lebih lanjut.\n\nMasalah yang diselesaikan\nBisnis rental baju UMKM sering menghadapi tantangan dalam mengelola stok produk, transaksi penyewaan, pelacakan status barang, serta pemisahan akses antar peran (pemilik, penanggung jawab produksi, dan kasir). Maguru menyelesaikan masalah tersebut dengan menyediakan sistem terintegrasi yang mendukung workflow operasional harian secara real-time dan aman.\n\nFitur utama\n- Role-based access control dengan tiga peran: Owner (full access), Producer (manajemen produk), dan Kasir (transaksi)\n- Manajemen produk lengkap (kategori, warna, status: Available, Rented, Maintenance)\n- Sistem transaksi penyewaan dengan manajemen penyewa, item sewa, pembayaran, dan audit trail aktivitas\n- Dashboard analitik bersama yang dapat diakses sesuai role\n- Autentikasi dan otorisasi berbasis Clerk dengan middleware protection\n- Upload file dan penyimpanan aset melalui Supabase Storage\n- Desain responsif dengan Tailwind CSS dan komponen modern\n\nTeknologi yang digunakan\nProject ini dibangun dengan arsitektur 3-tier (Presentation → Business Logic → Data Access) yang sangat terstruktur, didukung oleh testing komprehensif (unit, integration, E2E) dengan target coverage ≥80%.\nHasil / manfaat\nMaguru berhasil menghasilkan sistem manajemen rental yang modular, type-safe, dan siap produksi. Melalui project ini, saya mendemonstrasikan kemampuan dalam merancang arsitektur scalable, menerapkan role-based authorization yang aman, serta mengintegrasikan teknologi modern untuk mendukung operasional UMKM. Sistem ini juga mencakup best practices testing (TDD/BDD) dan error handling yang robust.",
-        "tech_stack": [
-            "Next.js",
-            "typescript",
-            "tailwind",
-            "shadnc",
-            "Prisma",
-            "Supabase",
-            "Clerk",
-            "Jest",
-            "Playwright",
-            "Git & Github"
-        ],
-        "status": "active",
-        "github_repo_url": "https://github.com/EviewNicks/rental-baju",
-        "github_owner": "EviewNicks",
-        "github_repo": "rental-baju",
-        "last_sync_at": "2026-03-24T13:24:55.746Z",
-        "created_at": "2026-03-24T13:02:05.202Z",
-        "updated_at": "2026-03-24T13:24:55.746Z"
-    }
+  "name-license": "Belajar Dasar Visualisasi Data",
+  "organisasi": "dicoding",
+  "tanggal-terbit": "01/02/2023",
+  "no": "98XW5K5L9PM3",
+  "deksripsi": "Materi yang dipelajari: Pendahuluan tentang visualisasi data...",
+  "media": "images/certificate/visualise-data.png"
 }
+```
+
+**Field Specifications:**
+
+```
+┌─ FIELD SPECIFICATIONS ──────────────────────────────────┐
+│                                                         │
+│ name-license: String                                    │
+│   └─ Required, 1-150 chars                             │
+│   └─ Tampil sebagai judul certificate (max 2 lines)   │
+│                                                         │
+│ organisasi: String                                      │
+│   └─ Required, 1-50 chars                              │
+│   └─ Contoh: "dicoding", "Udemy", "Google", "AWS"      │
+│   └─ Tampil sebagai organization name di card          │
+│                                                         │
+│ tanggal-terbit: String (DD/MM/YYYY)                    │
+│   └─ Required, format: "01/02/2023"                    │
+│   └─ Dikonversi ke: "February 2023" untuk display      │
+│   └─ Tampil di metadata section                        │
+│                                                         │
+│ no: String                                              │
+│   └─ Required, unique certificate number               │
+│   └─ Tampil dengan monospace font                      │
+│   └─ Tampil di metadata section                        │
+│                                                         │
+│ deksripsi: String (Plain text atau Markdown)           │
+│   └─ Required, max 500 chars                           │
+│   └─ Tampil sebagai description (max 4 lines truncate) │
+│                                                         │
+│ media: String (Image path)                              │
+│   └─ Required, path format: "images/certificate/..."   │
+│   └─ Image ditampilkan di top card (400x300px)         │
+│   └─ Jika path invalid → show fallback placeholder     │
+│                                                         │
+└─────────────────────────────────────────────────────────┘
+```
+
+
+---
+
+## 📝 **Example Data Sets**
+
+### **Example 1: Learning Item (Complete)**
+
+```json
+{
+  "name": "The AI Engineer Course 2025",
+  "progress": 40,
+  "target_date": "2025-06",
+  "reason": "Complete AI Engineer bootcamp to enhance practical AI development skills and master modern AI frameworks",
+  "platform": "Udemy",
+  "url": "https://www.udemy.com/course/the-ai-engineer-course-complete-ai-engineer-bootcamp/"
+}
+```
+
+**Visual Result:**
+- Card menampilkan: Title + Udemy badge + "Jun 2025" status (blue)
+- Progress bar: 40% filled dengan warna biru
+- Description: Full text terlihat
+- Footer: Tombol "View Course" muncul
+
+---
+
+
+---
+
+## 🔄 **User Journey**
+
+```
+1. User masuk Skills section
+   ↓
+2. Lihat "Currently Learning" section
+   └─ Card cards appear dengan stagger animation
+   └─ Lihat progress bars, platform badges, target dates
+   └─ Optional: Klik "View Course" → open di tab baru
+   ↓
+3. Scroll ke bawah
+   ↓
+4. Lihat "Certifications" section
+   └─ Certification cards appear dengan stagger animation
+   └─ Lihat gambar sertifikat, metadata, deskripsi
+   ↓
+5. Hover card:
+   └─ Card scale up smoothly
+   └─ Jika certificate image → image zoom sedikit
+   ↓
+6. Continue scroll → next section (footer, contact, dsb)
+```
+
+---
+
+## 🎯 **Key Design Principles**
+
+✅ **Visual Hierarchy** - Judul > Badge > Progress > Description  
+✅ **Status Indicator** - Color (Blue/Red) untuk quick understanding  
+✅ **Responsive** - Works perfect di mobile (1 col) → desktop (3 cols)  
+✅ **Progressive Enhancement** - Platform badge & URL optional  
+✅ **Graceful Degradation** - Image error → show placeholder  
+✅ **Information Density** - Max truncation untuk card compactness  
+✅ **Accessibility** - Alt text, ARIA labels, semantic HTML  
+✅ **Micro Interactions** - Hover, animations, smooth transitions  
+
+---
+
+## 🚀 **Implementation Checklist for UI/UX Designer**
+
+### **Learning Cards**
+- [ ] Design card with gradient background (glassmorphism effect)
+- [ ] Create progress bar (blue for on-track, red for overdue)
+- [ ] Design platform badge (pill-shaped with primary color)
+- [ ] Design target date status badge
+- [ ] Create "View Course" button link style
+- [ ] Define hover state (scale + shadow)
+- [ ] Test responsive grid (1/2/3 columns)
+- [ ] Check color contrast WCAG AA minimum
+
+### **Certification Cards**
+- [ ] Design card with image container (400x300px aspect)
+- [ ] Create fallback placeholder for image error
+- [ ] Design organization name + status badge layout
+- [ ] Design certificate number metadata display
+- [ ] Design date display (convert format)
+- [ ] Create description truncation (4 lines max)
+- [ ] Define image hover zoom effect
+- [ ] Test responsive grid (1/2/3 columns)
+
+### **General**
+- [ ] Define animation timing & easing
+- [ ] Set grid gaps & spacing
+- [ ] Color palette: Primary, Red, Blue, Gray
+- [ ] Font sizes & weights hierarchy
+- [ ] Dark mode support (ensure contrast)
+- [ ] Mobile touch targets (min 44x44px)
+
+---
+
+## 📚 **Related Files**
+
+| File | Fungsi |
+|------|--------|
+| `features/skills/components/LearningProgress.tsx` | Main component code |
+| `features/skills/components/ProgressBar.tsx` | Reusable progress bar component |
+| `lib/types/portfolio.ts` | TypeScript interface definitions |
+| `docs/data/skills-section.json` | Data source (learning items + certifications) |
+| `features/skills/components/SkillsSection.tsx` | Parent component |
+
+---
+
+Dokumentasi ini lengkap untuk UI/UX Designer dalam merancang Learning Progress & Certifications section! 🎉

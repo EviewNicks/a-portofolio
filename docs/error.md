@@ -1,39 +1,42 @@
-(base) PS C:\Users\MODERN 14> Invoke-WebRequest -Uri "https://integrate.api.nvidia.com/v1/models" ` -Headers @{"Authorization" = "Bearer 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"} ` -Method GET
+# Contoh isi form Create Feature
 
-Security Warning: Script Execution Risk
-Invoke-WebRequest parses the content of the web page. Script code in the web page might be run when the page is
-parsed.
-      RECOMMENDED ACTION:
-      Use the -UseBasicParsing switch to avoid script code execution.
+Gunakan data berikut untuk mencoba create 1 feature di form admin.
 
-      Do you want to continue?
+## Field form
 
-[Y] Yes  [A] Yes to All  [N] No  [L] No to All  [S] Suspend  [?] Help (default is "N"): y
+```txt
+Feature title:
+AI Workflow Automation
 
+Short description:
+AI workflow automation that turns messy client requests into structured tasks, draft content, approval notes, and measurable delivery updates for a faster production pipeline.
 
-StatusCode        : 200
-StatusDescription : OK
-Content           : {"object":"list","data":[{"id":"01-ai/yi-large","object":"model","created":735790403,"owned_by":"01
-                    -ai"},{"id":"abacusai/dracarys-llama-3.1-70b-instruct","object":"model","created":735790403,"owned_
-                    by...
-RawContent        : HTTP/1.1 200 OK
-                    Transfer-Encoding: chunked
-                    Connection: keep-alive
-                    Vary: Origin
-                    Content-Type: application/json
-                    Date: Sun, 14 Jun 2026 02:56:20 GMT
+Display order:
+1
 
-                    {"object":"list","data":[{"id":"01-ai/yi-large...
-Forms             : {}
-Headers           : {[Transfer-Encoding, chunked], [Connection, keep-alive], [Vary, Origin], [Content-Type,
-                    application/json]...}
-Images            : {}
-InputFields       : {}
-Links             : {}
-ParsedHtml        : mshtml.HTMLDocumentClass
-RawContentLength  : 11634
+Featured feature:
+Off
 
+Live demo URL:
+https://maguru-ai-workflow.example.com
 
+YouTube URL:
+https://www.youtube.com/watch?v=dQw4w9WgXcQ
 
-(base) PS C:\Users\MODERN 14>
+Tech stack chips:
+Next.js
+Supabase
+Clerk
+TypeScript
+Prisma
+Framer Motion
 
+Markdown implementation notes:
+AI workflow automation that turns messy client requests into structured tasks, draft content, approval notes, and measurable delivery updates for a faster production pipeline.
+```
+
+## Catatan
+
+- `Short description` dan `Markdown implementation notes` saat ini memakai source yang sama: `description`.
+- Karena UI membatasi `description` maksimal `180` karakter, contoh di atas dibuat cukup panjang tetapi tetap di bawah batas validasi.
+- Setelah feature berhasil dibuat, form akan redirect ke edit page agar media gallery bisa dikelola dengan `feature_id`.
