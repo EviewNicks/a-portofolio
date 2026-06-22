@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useCallback } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 
 export type Theme = 'light' | 'dark' | 'system'
 
@@ -11,12 +11,20 @@ export function useTheme() {
     return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
   }
 
-  // Initialize theme from localStorage or default to system
-  const [theme, setTheme] = useState<Theme>(() => {
-    if (typeof window === 'undefined' || typeof localStorage === 'undefined') return 'system'
-    const savedTheme = localStorage.getItem('theme') as Theme
-    return savedTheme && ['light', 'dark', 'system'].includes(savedTheme) ? savedTheme : 'system'
-  })
+  // Initialize theme statically as 'system' first to match SSR
+  const [theme, setTheme] = useState<Theme>('system')
+  const [mounted, setMounted] = useState(false)
+
+  // Retrieve saved theme on mount
+  useEffect(() => {
+    if (typeof localStorage !== 'undefined') {
+      const savedTheme = localStorage.getItem('theme') as Theme
+      if (savedTheme && ['light', 'dark', 'system'].includes(savedTheme)) {
+        setTheme(savedTheme)
+      }
+    }
+    setMounted(true)
+  }, [])
 
   // Get resolved theme (actual theme being used)
   const resolvedTheme = theme === 'system' ? getSystemTheme() : theme
@@ -46,6 +54,7 @@ export function useTheme() {
     setTheme: updateTheme,
     toggleTheme,
     isDark: resolvedTheme === 'dark',
-    isLight: resolvedTheme === 'light'
+    isLight: resolvedTheme === 'light',
+    mounted
   }
 }

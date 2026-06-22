@@ -2,7 +2,7 @@
 
 import React, { Suspense } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
-import { Navigation } from './Navigation'
+import { EditorialNavbar } from './EditorialNavbar'
 import { ScrollIndicator } from './ScrollIndicator'
 import { ScrollToTop } from './ScrollToTop'
 import { SectionIndicator } from './SectionIndicator'
@@ -43,9 +43,7 @@ function ErrorFallback({
         <h2 className="text-foreground mb-4 text-2xl font-bold">
           Something went wrong
         </h2>
-        <p className="text-muted-foreground mb-6">
-          {getErrorMessage(error)}
-        </p>
+        <p className="text-muted-foreground mb-6">{getErrorMessage(error)}</p>
         <button
           onClick={resetErrorBoundary}
           className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-md px-4 py-2 transition-colors"
@@ -96,8 +94,10 @@ function PortfolioLayoutContent({ children }: PortfolioLayoutProps) {
       {/* Skip Links for Accessibility */}
       <SkipLinks />
 
-      {/* Navigation Components */}
-      <Navigation />
+      {/* Editorial Navigation Bar */}
+      <EditorialNavbar pageTitle="Portfolio" showSideText={true} />
+
+      {/* Additional Navigation Components */}
       <ScrollIndicator />
       {!isMobile && (
         <SectionIndicator

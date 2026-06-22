@@ -8,6 +8,7 @@ import {
   Star,
 } from 'lucide-react'
 import type { ProjectFeature, ProjectStatus } from '@/features/projects/types'
+// import { EditorialNavbar } from '@/components/layout/EditorialNavbar'
 import { FeatureMediaGallery } from './FeatureMediaGallery'
 import { YouTubeEmbed } from './YouTubeEmbed'
 import { MarkdownContent } from './MarkdownContent'
@@ -112,124 +113,6 @@ function SectionRule({
   )
 }
 
-function EditorialNav() {
-  return (
-    <>
-      <div
-        className="border-line-faint fixed inset-y-0 left-0 z-30 hidden w-9 items-center justify-center border-r xl:flex"
-        aria-hidden="true"
-      >
-        <span className="font-editorial-tight text-ink-faint text-[0.625rem] font-semibold tracking-[0.42em] uppercase [writing-mode:vertical-rl]">
-          AI Research · Web Engineering · Precision · Cloud · Systems
-        </span>
-      </div>
-      <div
-        className="border-line-faint fixed inset-y-0 right-0 z-30 hidden w-9 items-center justify-center border-l xl:flex"
-        aria-hidden="true"
-      >
-        <span className="font-editorial-tight text-ink-faint transform-[rotate(180deg)] text-[0.625rem] font-semibold tracking-[0.42em] uppercase [writing-mode:vertical-rl]">
-          Ardiansyah — Feature Detail — Engineering the Essential
-        </span>
-      </div>
-
-      <header className="border-line bg-paper relative z-40 border-b">
-        <div className="mx-auto max-w-340 px-16">
-          <div className="font-editorial-tight text-ink-faint flex flex-wrap items-center justify-between gap-x-6 gap-y-2 py-2 text-[0.65625rem] font-medium tracking-[0.18em] uppercase">
-            <span>
-              <strong className="text-ink font-semibold">Vol. 01</strong> /
-              Issue Nº 01
-            </span>
-            <div className="hidden items-center gap-6 md:flex">
-              <span>
-                Filed under{' '}
-                <span className="text-coral">AI · Web · Precision</span>
-              </span>
-              <span>
-                <span className="editorial-pulse mr-1.5 inline-block" />
-                Available for engagement
-              </span>
-            </div>
-            <div className="flex items-center gap-4">
-              <span>ID</span>
-              <span>EN</span>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      <nav className="bg-paper/95 sticky top-0 z-50 border-b border-transparent backdrop-blur-md transition-all">
-        <div className="mx-auto flex max-w-340 items-center justify-between gap-6 px-16 py-6">
-          <Link
-            key="logo-home"
-            href="/"
-            className="font-editorial-tight text-ink flex shrink-0 items-center gap-3.5 text-lg font-bold tracking-[-0.01em]"
-          >
-            <span className="border-ink font-editorial-serif flex h-9 w-9 items-center justify-center rounded-full border text-base italic">
-              A
-            </span>
-            Ardiansyah
-            <span className="border-line font-editorial-tight text-ink-faint hidden border-l pl-4 text-[0.625rem] font-medium tracking-[0.18em] uppercase lg:block">
-              <strong className="text-ink block">Precision Architect</strong>
-              AI + Web
-            </span>
-          </Link>
-
-          <ul className="font-editorial-tight text-ink hidden items-center gap-9 text-sm font-medium md:flex">
-            <li>
-              <Link
-                key="nav-home"
-                href="/"
-                className="hover:text-coral transition-colors"
-              >
-                Home
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/#capabilities"
-                className="hover:text-coral transition-colors"
-              >
-                Capabilities
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/projects"
-                className="hover:text-coral transition-colors"
-              >
-                Work
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/#contact"
-                className="hover:text-coral transition-colors"
-              >
-                Contact
-              </Link>
-            </li>
-          </ul>
-
-          <div className="flex items-center gap-4">
-            <span
-              className="border-line flex h-10 w-10 items-center justify-center rounded-full border"
-              aria-hidden="true"
-            >
-              <span className="bg-coral h-2 w-2 rounded-full" />
-            </span>
-            <Link
-              href={`mailto:${CONTACT_EMAIL}`}
-              className="bg-ink font-editorial-tight text-paper hover:bg-ink-soft inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium transition-colors"
-            >
-              Let&apos;s talk <ArrowRight size={14} />
-            </Link>
-          </div>
-        </div>
-      </nav>
-    </>
-  )
-}
-
 export function FeatureDetail({
   projectId,
   projectTitle,
@@ -252,7 +135,7 @@ export function FeatureDetail({
 
   return (
     <div className="relative z-10">
-      <EditorialNav />
+      {/* <EditorialNavbar pageTitle={feature.title} showSideText={true} /> */}
 
       <section className="border-line border-b px-16 pt-8">
         <div className="mx-auto max-w-340 pb-6">
@@ -291,8 +174,8 @@ export function FeatureDetail({
           </nav>
 
           {secret && (
-            <div className="border-border bg-amber-500/5 mt-6 flex flex-wrap items-center gap-3 rounded-2xl border p-3 shadow-sm">
-              <span className="text-muted-foreground mr-1 text-xs font-semibold uppercase tracking-[0.14em]">
+            <div className="border-border mt-6 flex flex-wrap items-center gap-3 rounded-2xl border bg-amber-500/5 p-3 shadow-sm">
+              <span className="text-muted-foreground mr-1 text-xs font-semibold tracking-[0.14em] uppercase">
                 Admin
               </span>
               <Link

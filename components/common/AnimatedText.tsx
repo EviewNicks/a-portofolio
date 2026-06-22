@@ -99,16 +99,14 @@ export const AnimatedText = React.forwardRef<HTMLElement, AnimatedTextProps>(
     },
     ref
   ) => {
-    const [prefersReducedMotion, setPrefersReducedMotion] = useState(() => {
-      if (typeof window !== 'undefined') {
-        return window.matchMedia('(prefers-reduced-motion: reduce)').matches
-      }
-      return false
-    })
+    const [prefersReducedMotion, setPrefersReducedMotion] = useState(false)
 
     // Check for reduced motion preference
     useEffect(() => {
+      if (typeof window === 'undefined') return
+
       const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
+      setPrefersReducedMotion(mediaQuery.matches)
 
       const handleChange = (event: MediaQueryListEvent) => {
         setPrefersReducedMotion(event.matches)

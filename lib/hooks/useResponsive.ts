@@ -3,7 +3,7 @@
  * React hook for handling responsive breakpoints and device detection
  */
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react'
 import {
   getCurrentBreakpoint,
   isBreakpoint,
@@ -12,70 +12,90 @@ import {
   getResponsiveValue,
   type BreakpointName,
   type ResponsiveConfig,
-} from '@/lib/utils/responsive';
+} from '@/lib/utils/responsive'
 
 export interface UseResponsiveReturn {
-  breakpoint: BreakpointName;
-  isMobile: boolean;
-  isTablet: boolean;
-  isDesktop: boolean;
-  isWide: boolean;
-  isTouchDevice: boolean;
-  orientation: 'portrait' | 'landscape';
-  getResponsiveValue: <T>(config: ResponsiveConfig<T>, fallback: T) => T;
+  breakpoint: BreakpointName
+  isMobile: boolean
+  isTablet: boolean
+  isDesktop: boolean
+  isWide: boolean
+  isTouchDevice: boolean
+  orientation: 'portrait' | 'landscape'
+  getResponsiveValue: <T>(config: ResponsiveConfig<T>, fallback: T) => T
 }
 
 /**
  * Hook for responsive design utilities
  */
 export function useResponsive(): UseResponsiveReturn {
-  const [breakpoint, setBreakpoint] = useState<BreakpointName>('desktop');
-  const [isTouch, setIsTouch] = useState(false);
-  const [orientation, setOrientation] = useState<'portrait' | 'landscape'>('portrait');
+  const [breakpoint, setBreakpoint] = useState<BreakpointName>('desktop')
+  const [isTouch, setIsTouch] = useState(false)
+  const [orientation, setOrientation] = useState<'portrait' | 'landscape'>(
+    'portrait'
+  )
 
   useEffect(() => {
     // SSR guard
-    if (typeof window === 'undefined') return;
+    if (typeof window === 'undefined') return
 
     const updateResponsiveState = () => {
-      setBreakpoint(getCurrentBreakpoint());
-      setIsTouch(isTouchDevice());
-      setOrientation(getOrientation());
-    };
+      setBreakpoint(getCurrentBreakpoint())
+      setIsTouch(isTouchDevice())
+      setOrientation(getOrientation())
+    }
 
     // Initial update
-    updateResponsiveState();
+    updateResponsiveState()
 
     // Listen for resize events
     const handleResize = () => {
-      updateResponsiveState();
-    };
+      updateResponsiveState()
+    }
 
     // Listen for orientation changes
     const handleOrientationChange = () => {
       // Small delay to ensure dimensions are updated
-      setTimeout(updateResponsiveState, 100);
-    };
+      setTimeout(updateResponsiveState, 100)
+    }
 
-    window.addEventListener('resize', handleResize);
-    window.addEventListener('orientationchange', handleOrientationChange);
+    window.addEventListener('resize', handleResize)
+    window.addEventListener('orientationchange', handleOrientationChange)
 
     return () => {
-      window.removeEventListener('resize', handleResize);
-      window.removeEventListener('orientationchange', handleOrientationChange);
-    };
-  }, []);
+      window.removeEventListener('resize', handleResize)
+      window.removeEventListener('orientationchange', handleOrientationChange)
+    }
+  }, [])
+
+  const getResponsiveValueLocal = useCallback(
+    <T>(config: ResponsiveConfig<T>, fallback: T): T => {
+      return (
+        config[breakpoint as keyof ResponsiveConfig<T>] ??
+        config.desktop ??
+        config.tablet ??
+        config.mobile ??
+        fallback
+      )
+    },
+    [breakpoint]
+  )
+
+  const isMobile = breakpoint === 'mobile'
+  const isTablet = breakpoint === 'tablet'
+  const isDesktop = breakpoint === 'desktop' || breakpoint === 'wide'
+  const isWide = breakpoint === 'wide'
 
   return {
     breakpoint,
-    isMobile: isBreakpoint('mobile'),
-    isTablet: isBreakpoint('tablet'),
-    isDesktop: isBreakpoint('desktop') || isBreakpoint('wide'),
-    isWide: isBreakpoint('wide'),
+    isMobile,
+    isTablet,
+    isDesktop,
+    isWide,
     isTouchDevice: isTouch,
     orientation,
-    getResponsiveValue,
-  };
+    getResponsiveValue: getResponsiveValueLocal,
+  }
 }
 
 /**
@@ -85,8 +105,8 @@ export function useResponsiveValue<T>(
   config: ResponsiveConfig<T>,
   fallback: T
 ): T {
-  const { getResponsiveValue: getValue } = useResponsive();
-  return getValue(config, fallback);
+  const { getResponsiveValue: getValue } = useResponsive()
+  return getValue(config, fallback)
 }
 
 /**
@@ -94,27 +114,27 @@ export function useResponsiveValue<T>(
  */
 export function useMediaQuery(query: string): boolean {
   const [matches, setMatches] = useState(() => {
-    if (typeof window === 'undefined') return false;
-    return window.matchMedia(query).matches;
-  });
+    if (typeof window === 'undefined') return false
+    return window.matchMedia(query).matches
+  })
 
   useEffect(() => {
-    if (typeof window === 'undefined') return;
+    if (typeof window === 'undefined') return
 
-    const mediaQuery = window.matchMedia(query);
-    
+    const mediaQuery = window.matchMedia(query)
+
     const handleChange = (event: MediaQueryListEvent) => {
-      setMatches(event.matches);
-    };
+      setMatches(event.matches)
+    }
 
-    mediaQuery.addEventListener('change', handleChange);
+    mediaQuery.addEventListener('change', handleChange)
 
     return () => {
-      mediaQuery.removeEventListener('change', handleChange);
-    };
-  }, [query]);
+      mediaQuery.removeEventListener('change', handleChange)
+    }
+  }, [query])
 
-  return matches;
+  return matches
 }
 
 /**
@@ -124,27 +144,27 @@ export function useViewport() {
   const [viewport, setViewport] = useState({
     width: 0,
     height: 0,
-  });
+  })
 
   useEffect(() => {
     const updateViewport = () => {
       setViewport({
         width: window.innerWidth,
         height: window.innerHeight,
-      });
-    };
+      })
+    }
 
     // Initial update
-    updateViewport();
+    updateViewport()
 
-    window.addEventListener('resize', updateViewport);
-    window.addEventListener('orientationchange', updateViewport);
+    window.addEventListener('resize', updateViewport)
+    window.addEventListener('orientationchange', updateViewport)
 
     return () => {
-      window.removeEventListener('resize', updateViewport);
-      window.removeEventListener('orientationchange', updateViewport);
-    };
-  }, []);
+      window.removeEventListener('resize', updateViewport)
+      window.removeEventListener('orientationchange', updateViewport)
+    }
+  }, [])
 
-  return viewport;
+  return viewport
 }

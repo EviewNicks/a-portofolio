@@ -1,24 +1,24 @@
-import { HeroSection } from '@/features/hero';
-import { AboutSection } from '@/features/about';
-import { SkillsSection } from '@/features/skills';
-import { HomepageProjectsSection } from '@/features/projects/components/HomepageProjectsSection';
-import { ExperienceSection } from '@/features/experience';
-import { ContactSection } from '@/features/contact';
-import { PortfolioLayout } from '@/components/layout';
-import { ContactSectionData } from '@/lib/types/portfolio';
-import contactDataRaw from '@/docs/data/contact-section.json';
+import { HeroSection } from '@/features/hero'
+import { AboutSection } from '@/features/about'
+import { SkillsSection } from '@/features/skills'
+import { HomepageProjectsSection } from '@/features/projects/components/HomepageProjectsSection'
+import { ExperienceSection } from '@/features/experience'
+import { ContactSection } from '@/features/contact'
+
+import { ContactSectionData } from '@/lib/types/portfolio'
+import contactDataRaw from '@/docs/data/contact-section.json'
 
 export default function Home() {
-  const contactData = contactDataRaw as ContactSectionData;
-  
+  const contactData = contactDataRaw as ContactSectionData
+
   return (
-    <PortfolioLayout>
+    <>
       <HeroSection />
       <AboutSection />
       <SkillsSection />
       <HomepageProjectsSection />
       <ExperienceSection />
       <ContactSection data={contactData} />
-    </PortfolioLayout>
-  );
+    </>
+  )
 }
