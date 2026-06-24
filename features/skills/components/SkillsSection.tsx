@@ -8,30 +8,31 @@ import { SkillsContent } from './SkillsContent';
 import { LearningProgress } from './LearningProgress';
 import { SkillsLogoLoop } from './SkillsLogoLoop';
 import skillsData from '@/docs/data/skills-section.json';
+import { Course } from '@/features/certificates/types';
 
 interface SkillsSectionProps {
-  className?: string;
+  courses?: Course[]
+  className?: string
 }
 
 /**
  * SkillsSection Component
- * 
+ *
  * Main skills section component that combines:
  * - SkillsContent: Technical skills organized by category with progress indicators
  * - SkillsLogoLoop: Animated showcase of technology icons
- * - LearningProgress: Current learning items and certification plans
- * 
+ * - LearningProgress: Current learning and completed certificates from DB
+ *
  * Features:
- * - JSON data integration from skills-section.json
+ * - JSON data integration from skills-section.json for skill categories
+ * - Course data from DB for LearningProgress (split by status)
  * - Category-specific colors and icons for visual distinction
  * - Animated progress bars with percentage values
  * - Technology logo loop with hover effects
- * - Learning progress indicators with target dates
  * - Responsive layout with proper spacing
- * - Glassmorphism design elements
  * - Smooth animations and transitions
  */
-export const SkillsSection: React.FC<SkillsSectionProps> = ({ className }) => {
+export const SkillsSection: React.FC<SkillsSectionProps> = ({ courses = [], className }) => {
   const { skills } = skillsData as SkillsSectionData;
 
   return (
@@ -74,11 +75,8 @@ export const SkillsSection: React.FC<SkillsSectionProps> = ({ className }) => {
         />
       </div>
 
-      {/* Learning Progress and Certifications */}
-      <LearningProgress
-        learning={skills.learning}
-        certifications={skills.certifications}
-      />
+      {/* Learning Progress and Certifications — from DB */}
+      <LearningProgress courses={courses} />
 
       {/* Section-end rule */}
       <div className="container mx-auto px-6 md:px-8 lg:px-16 mt-20">

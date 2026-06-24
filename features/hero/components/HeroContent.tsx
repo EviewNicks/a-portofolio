@@ -61,13 +61,13 @@ export const HeroContent: React.FC<HeroContentProps> = ({ heroData }) => {
   }
 
   return (
-    <div className="container mx-auto px-6 md:px-8 lg:px-16 w-full flex flex-col justify-between py-4">
+    <div className="container mx-auto px-6 md:px-8 lg:px-16 w-full flex flex-col gap-12 py-4">
       {/* 1. Section Header Rule */}
       <motion.div
         initial={{ opacity: 0, scaleX: 0 }}
         animate={{ opacity: 1, scaleX: 1 }}
         transition={{ duration: 1, ease: easeOutExpo }}
-        className="w-full border-t border-line pt-[18px] mb-12 flex justify-between items-center text-[10.5px] tracking-[0.18em] uppercase text-ink-faint font-sans origin-left"
+        className="w-full border-t border-line pt-[18px] flex justify-between items-center text-[10.5px] tracking-[0.18em] uppercase text-ink-faint font-sans origin-left"
       >
         <span className="roman font-serif italic text-coral text-sm"></span>
         <span className="flex items-center gap-[26px]">

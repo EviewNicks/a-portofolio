@@ -12,6 +12,7 @@ interface FormValues {
   certificate_image: string;
   platform: string;
   url: string;
+  file: File | null;
 }
 
 interface FormErrors {
@@ -20,6 +21,7 @@ interface FormErrors {
   issue_date?: string;
   progress?: string;
   url?: string;
+  file?: string;
 }
 
 interface UseCertificateFormOptions {
@@ -36,7 +38,7 @@ interface UseCertificateFormReturn {
   isLoading: boolean;
   isDirty: boolean;
   errorMessage: string | null;
-  handleChange: (field: keyof FormValues, value: string | number) => void;
+  handleChange: (field: keyof FormValues, value: string | number | File | null) => void;
   handleSubmit: (e?: React.FormEvent) => Promise<void>;
   resetForm: () => void;
 }
@@ -50,6 +52,7 @@ const DEFAULT_VALUES: FormValues = {
   certificate_image: '',
   platform: '',
   url: '',
+  file: null,
 };
 
 const toFormValues = (course: Course): FormValues => ({
@@ -62,10 +65,11 @@ const toFormValues = (course: Course): FormValues => ({
   certificate_image: course.certificate_image ?? '',
   platform: course.platform ?? '',
   url: course.url ?? '',
+  file: null,
 });
 
 /** Validate form values, return an error map */
-const validate = (values: FormValues): FormErrors => {
+const validate = (values: FormValues, isEdit: boolean): FormErrors => {
   const errors: FormErrors = {};
 
   if (!values.name.trim()) {
@@ -82,6 +86,9 @@ const validate = (values: FormValues): FormErrors => {
   }
   if (values.url && !/^https?:\/\/.+/.test(values.url.trim())) {
     errors.url = 'URL must start with http:// or https://';
+  }
+  if (!isEdit && !values.file) {
+    errors.file = 'Certificate image file is required.';
   }
 
   return errors;
@@ -112,7 +119,7 @@ export function useCertificateForm({
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const handleChange = useCallback(
-    (field: keyof FormValues, value: string | number) => {
+    (field: keyof FormValues, value: string | number | File | null) => {
       setValues((prev) => ({ ...prev, [field]: value }));
       setIsDirty(true);
       // Clear field error on change
@@ -133,8 +140,10 @@ export function useCertificateForm({
     async (e?: React.FormEvent) => {
       e?.preventDefault();
 
+      const isEdit = Boolean(initialCourse);
+
       // Validate
-      const newErrors = validate(values);
+      const newErrors = validate(values, isEdit);
       if (Object.keys(newErrors).length > 0) {
         setErrors(newErrors);
         return;
@@ -144,26 +153,27 @@ export function useCertificateForm({
       setErrorMessage(null);
 
       try {
-        const isEdit = Boolean(initialCourse);
         const url = isEdit
           ? `/api/certificates/${initialCourse!.id}?secret=${secret}`
           : `/api/certificates?secret=${secret}`;
 
-        const payload: CourseInput | CourseUpdate = {
-          name: values.name.trim(),
-          organisation: values.organisation.trim(),
-          issue_date: values.issue_date,
-          description: values.description.trim() || undefined,
-          progress: Number(values.progress),
-          certificate_image: values.certificate_image.trim() || undefined,
-          platform: values.platform.trim() || undefined,
-          url: values.url.trim() || undefined,
-        };
+        // Create FormData payload
+        const formData = new FormData();
+        formData.append('name', values.name.trim());
+        formData.append('organisation', values.organisation.trim());
+        formData.append('issue_date', values.issue_date);
+        formData.append('description', values.description.trim());
+        formData.append('progress', String(values.progress));
+        formData.append('platform', values.platform.trim());
+        formData.append('url', values.url.trim());
+        
+        if (values.file) {
+          formData.append('file', values.file);
+        }
 
         const res = await fetch(url, {
           method: isEdit ? 'PUT' : 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload),
+          body: formData,
         });
 
         if (!res.ok) {

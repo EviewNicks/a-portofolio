@@ -11,6 +11,7 @@ interface CertificateGridProps {
   secret?: string;
   isAdmin?: boolean;
   className?: string;
+  onOpen: (course: Course) => void;
 }
 
 const easeOutExpo = [0.22, 1, 0.36, 1] as const;
@@ -43,6 +44,7 @@ export const CertificateGrid: React.FC<CertificateGridProps> = ({
   secret,
   isAdmin = false,
   className,
+  onOpen,
 }) => {
   return (
     <div className={cn('mb-24', className)}>
@@ -78,6 +80,7 @@ export const CertificateGrid: React.FC<CertificateGridProps> = ({
               total={courses.length}
               secret={secret}
               isAdmin={isAdmin}
+              onOpen={onOpen}
             />
           ))}
         </motion.div>

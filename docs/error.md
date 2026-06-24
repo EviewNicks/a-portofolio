@@ -1,42 +1,29 @@
-# Analisis UI/UX Update: Landing Page & Halaman About (Revisi)
+[Fast Refresh] rebuilding
+forward-logs-shared.ts:95 [Fast Refresh] done in 4286ms
+installHook.js:1 Error: Invalid src prop (https://onrdpcigvqmsuqspnlhd.supabase.co/storage/v1/object/public/certificates/temp-1782298970186/1782298971202-Screenshot_2026-06-24_190233.png) on `next/image`, hostname "onrdpcigvqmsuqspnlhd.supabase.co" is not configured under images in your `next.config.js`
+See more info: https://nextjs.org/docs/messages/next-image-unconfigured-host
+    at defaultLoader (image-loader.ts:109:17)
+    at get-img-props.ts:265:14
+    at Array.map (<anonymous>)
+    at generateImgAttrs (get-img-props.ts:263:8)
+    at getImgProps (get-img-props.ts:742:25)
+    at image-component.tsx:402:64
+    at Object.react_stack_bottom_frame (react-dom-client.development.js:28241:20)
+    at renderWithHooks (react-dom-client.development.js:7925:22)
+    at updateForwardRef (react-dom-client.development.js:10000:19)
+    at beginWork (react-dom-client.development.js:12451:18)
+    at runWithFiberInDEV (react-dom-client.development.js:986:30)
+    at performUnitOfWork (react-dom-client.development.js:18988:22)
+    at workLoopSync (react-dom-client.development.js:18816:41)
+    at renderRootSync (react-dom-client.development.js:18797:11)
+    at performWorkOnRoot (react-dom-client.development.js:17902:35)
+    at performWorkOnRootViaSchedulerTask (react-dom-client.development.js:20471:7)
+    at MessagePort.performWorkUntilDeadline (scheduler.development.js:45:48)
 
-Berdasarkan masukan Anda, berikut adalah rancangan analisis yang diperbarui untuk restrukturisasi halaman About dan implementasi Framer Motion:
-
----
-
-## 1. Restrukturisasi Halaman & Konten About
-
-### A. Landing Page (Manifesto Section)
-* **File Target**: [AboutSection.tsx](file:///d:/2-Project/a-portofolio/features/about/components/AboutSection.tsx)
-* **Konsep**: Menyajikan pesan utama (manifesto) yang bersih dan minimalis (Swiss Minimalism).
-* **Perubahan**:
-  * Mengambil gaya visual dari `index.html` (Baris 603-624).
-  * **Manifesto**: *"In an era of technical noise, I build clarity."*
-  * **Lead Paragraph**: Penjelasan singkat tentang integrasi AI Research & Web Engineering.
-  * **Philosophy**: Diintegrasikan di sini sebagai landasan Manifesto.
-  * **Navigasi**: Tombol utama *"Read full profile →"* mengarahkan user ke halaman baru `/about`.
-
-### B. Halaman Baru `/about` (Profil Terperinci)
-* **File Target**: [app/about/page.tsx](file:///d:/2-Project/a-portofolio/app/about/page.tsx)
-* **Konsep**: Berfokus sepenuhnya tentang data pribadi Anda ("tentang saya"), menggunakan gaya visual (font, grid, border, layout editorial) dari `about.html` sebagai referensi gaya.
-* **Elemen Konten yang Ditampilkan**:
-  1. **Page Header / Hero**: Judul editorial *"The precision architect."* dengan detail lokasi/waktu saat ini.
-  2. **Personal Information & Bio**: Biodata ringkas, lokasi, zona waktu, serta deskripsi naratif diri Anda.
-  3. **Education & Achievements**: Menampilkan riwayat pendidikan formal beserta pencapaian/penghargaan terperinci dengan timeline bergaya minimalis.
-  4. **Career Objectives**: Target dan arah karir profesional.
-  5. **Interests**: Minat dan hobi pribadi dalam bentuk tag/pills yang interaktif.
-* **Catatan Penting**: **TIDAK** menyertakan *Core Values / Tenets* dan *Skill Matrix* di halaman ini karena sudah dijelaskan secara lengkap di landing page.
-
----
-
-## 2. Rencana Animasi Menggunakan Framer Motion
-
-Untuk memberikan impresi premium dan dinamis pada halaman utama:
-
-* **Text Reveal Animation**: Menggunakan staggered animation pada tajuk utama (*h1* dan *h2*) agar muncul kata-per-kata atau baris-per-baris secara halus menggunakan bezier curve `[0.22, 1, 0.36, 1]` (sesuai transisi CSS `[data-reveal]`).
-* **Scroll-Triggered Reveal**: Mengimplementasikan wrapper component berbasis `framer-motion` (menggunakan `useInView` atau dynamic variant trigger) untuk menggantikan logika CSS `[data-reveal]` agar transisi lebih smooth dan andal di berbagai browser.
-* **Interactive Hover Effects**:
-  * Hover pada tombol/badge dengan sedikit scale dan transisi translate untuk panah.
-  * Efek glassmorphism yang merespon posisi cursor (optional) atau pergantian opacity border yang lembut saat disentuh.
-  * Micro-interaction pada stats counter (angka naik secara dinamis saat bagian statistik terscroll ke layar).
-* **Parallax Background**: Pergerakan ambient glow circle di background secara asinkronus dan lambat untuk menambah kedalaman ruang (depth) tanpa memperlambat rendering halaman.
+The above error occurred in the <Unknown> component. It was handled by the <m> error boundary.
+overrideMethod @ installHook.js:1
+onCaughtError @ error-boundary-callbacks.ts:90
+logCaughtError @ react-dom-client.development.js:9713
+runWithFiberInDEV @ react-dom-client.development.js:986
+(anonymous) @ react-dom-client.development.js:9760
+callCallback @ react-dom-client.development.js:7676

@@ -39,9 +39,9 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ className }) => {
     <section
       id="hero"
       className={cn(
-        'relative flex min-h-screen items-center',
+        'relative flex flex-col justify-center',
         'overflow-hidden',
-        'py-12 md:py-16 lg:py-20',
+        'pt-24 pb-14 md:pt-28 md:pb-16 lg:pt-32 lg:pb-20',
         className
       )}
     >

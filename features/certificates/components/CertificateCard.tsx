@@ -1,6 +1,5 @@
 'use client';
 
-import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { Course } from '../types';
@@ -14,6 +13,7 @@ interface CertificateCardProps {
   total: number;
   secret?: string;
   isAdmin?: boolean;
+  onOpen: (course: Course) => void;
 }
 
 const easeOutExpo = [0.22, 1, 0.36, 1] as const;
@@ -200,13 +200,10 @@ const CertificateVariant: React.FC<{ course: Course }> = ({ course }) => (
 export const CertificateCard: React.FC<CertificateCardProps> = ({
   course,
   index,
-  secret,
   isAdmin = false,
+  onOpen,
 }) => {
   const displayType = categorizeForDisplay(course);
-  const href = secret
-    ? `/certificate/${course.slug}?secret=${secret}`
-    : `/certificate/${course.slug}`;
 
   return (
     <motion.div
@@ -220,38 +217,40 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({
         },
       }}
     >
-      <Link href={href} className="group block h-full focus-visible:outline-none">
-        <motion.div
-          className={cn(
-            'relative rounded-[18px] overflow-hidden h-full',
-            'bg-bone border border-line-soft',
-            'shadow-[0_30px_60px_-30px_rgba(21,20,15,0.18)]',
-            'transition-[border-color] duration-280',
-            'focus-visible:outline-2 focus-visible:outline-coral focus-visible:outline-offset-4',
-          )}
-          whileHover={{
-            y: -4,
-            borderColor: 'rgba(237,111,92,0.35)',
-            boxShadow: '0 34px 70px -38px rgba(21,20,15,0.28)',
-          }}
-          transition={{ type: 'spring', stiffness: 380, damping: 28 }}
-        >
-          {/* Admin badge */}
-          {isAdmin && (
-            <div className="absolute top-3 left-3 z-10">
-              <span className="px-2 py-0.5 text-[9px] font-bold tracking-widest uppercase bg-amber-400/90 text-amber-900 rounded-full">
-                Admin
-              </span>
-            </div>
-          )}
+      <motion.button
+        type="button"
+        onClick={() => onOpen(course)}
+        className={cn(
+          'group relative w-full rounded-[18px] overflow-hidden h-full text-left',
+          'bg-bone border border-line-soft',
+          'shadow-[0_30px_60px_-30px_rgba(21,20,15,0.18)]',
+          'transition-[border-color] duration-280',
+          'focus-visible:outline-2 focus-visible:outline-coral focus-visible:outline-offset-4',
+        )}
+        whileHover={{
+          y: -4,
+          borderColor: 'rgba(237,111,92,0.35)',
+          boxShadow: '0 34px 70px -38px rgba(21,20,15,0.28)',
+        }}
+        whileTap={{ scale: 0.98 }}
+        transition={{ type: 'spring', stiffness: 380, damping: 28 }}
+        aria-label={`View certificate: ${course.name}`}
+      >
+        {/* Admin badge */}
+        {isAdmin && (
+          <div className="absolute top-3 left-3 z-10">
+            <span className="px-2 py-0.5 text-[9px] font-bold tracking-widest uppercase bg-amber-400/90 text-amber-900 rounded-full">
+              Admin
+            </span>
+          </div>
+        )}
 
-          {displayType === 'learning' ? (
-            <LearningVariant course={course} />
-          ) : (
-            <CertificateVariant course={course} />
-          )}
-        </motion.div>
-      </Link>
+        {displayType === 'learning' ? (
+          <LearningVariant course={course} />
+        ) : (
+          <CertificateVariant course={course} />
+        )}
+      </motion.button>
     </motion.div>
   );
 };

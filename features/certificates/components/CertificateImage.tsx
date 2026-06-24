@@ -47,6 +47,7 @@ export const CertificateImage: React.FC<CertificateImageProps> = ({
             'transition-transform duration-500 ease-out',
             zoomOnHover && 'group-hover:scale-[1.035]',
           )}
+          unoptimized={src.startsWith('http')}
           onError={() => setHasError(true)}
         />
       ) : (
