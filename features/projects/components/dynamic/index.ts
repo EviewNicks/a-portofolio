@@ -8,3 +8,6 @@ export { MediaGallery } from './MediaGallery';
 export { TimelineSection } from './TimelineSection';
 export { SprintCard } from './SprintCard';
 export { TimelineEntryCard } from './TimelineEntryCard';
+export { ProjectDetailFeaturedWork } from './ProjectDetailFeaturedWork';
+export { ProjectDetailCta } from './ProjectDetailCta';
+export { ProjectDetailFooter } from './ProjectDetailFooter';

@@ -1,0 +1,561 @@
+{
+  "info": {
+    "name": "Certificate API",
+    "description": "API testing untuk Certificate Management System - FormData Only",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "BASE_URL",
+      "value": "http://localhost:3000",
+      "type": "string"
+    },
+    {
+      "key": "ADMIN_SECRET",
+      "value": "your-secret-key-here",
+      "type": "string"
+    },
+    {
+      "key": "COURSE_ID",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "COURSE_SLUG",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "1. Get All Certificates (Public)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 200', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test('Response has data array', function () {",
+              "    const jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.have.property('data');",
+              "    pm.expect(jsonData.data).to.be.an('array');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{BASE_URL}}/api/certificates",
+          "host": ["{{BASE_URL}}"],
+          "path": ["api", "certificates"]
+        },
+        "description": "Get all non-deleted certificates (public access)"
+      },
+      "response": []
+    },
+    {
+      "name": "2. Create Certificate with Image (Admin)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 201', function () {",
+              "    pm.response.to.have.status(201);",
+              "});",
+              "",
+              "pm.test('Response has course data', function () {",
+              "    const jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.have.property('data');",
+              "    pm.expect(jsonData.data).to.have.property('id');",
+              "    pm.expect(jsonData.data).to.have.property('slug');",
+              "    pm.expect(jsonData.data).to.have.property('certificate_image');",
+              "    ",
+              "    // Save for next requests",
+              "    pm.collectionVariables.set('COURSE_ID', jsonData.data.id);",
+              "    pm.collectionVariables.set('COURSE_SLUG', jsonData.data.slug);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "name",
+              "value": "Advanced TypeScript",
+              "type": "text"
+            },
+            {
+              "key": "organisation",
+              "value": "Frontend Masters",
+              "type": "text"
+            },
+            {
+              "key": "issue_date",
+              "value": "2024-01-15",
+              "type": "text"
+            },
+            {
+              "key": "description",
+              "value": "Deep dive into TypeScript advanced concepts",
+              "type": "text"
+            },
+            {
+              "key": "progress",
+              "value": "100",
+              "type": "text"
+            },
+            {
+              "key": "platform",
+              "value": "Frontend Masters",
+              "type": "text"
+            },
+            {
+              "key": "url",
+              "value": "https://frontendmasters.com/courses/advanced-typescript",
+              "type": "text"
+            },
+            {
+              "key": "file",
+              "type": "file",
+              "src": [],
+              "description": "Certificate image (REQUIRED)"
+            },
+            {
+              "key": "secret",
+              "value": "{{ADMIN_SECRET}}",
+              "type": "text"
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{BASE_URL}}/api/certificates",
+          "host": ["{{BASE_URL}}"],
+          "path": ["api", "certificates"]
+        },
+        "description": "Create certificate with image upload (FormData, file required)"
+      },
+      "response": []
+    },
+    {
+      "name": "3. Create Learning Progress with Image (Admin)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 201', function () {",
+              "    pm.response.to.have.status(201);",
+              "});",
+              "",
+              "pm.test('Status should be IN_PROGRESS', function () {",
+              "    const jsonData = pm.response.json();",
+              "    pm.expect(jsonData.data.status).to.equal('IN_PROGRESS');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "name",
+              "value": "React Performance",
+              "type": "text"
+            },
+            {
+              "key": "organisation",
+              "value": "Udemy",
+              "type": "text"
+            },
+            {
+              "key": "issue_date",
+              "value": "2024-02-01",
+              "type": "text"
+            },
+            {
+              "key": "description",
+              "value": "Optimizing React applications",
+              "type": "text"
+            },
+            {
+              "key": "progress",
+              "value": "45",
+              "type": "text"
+            },
+            {
+              "key": "platform",
+              "value": "Udemy",
+              "type": "text"
+            },
+            {
+              "key": "file",
+              "type": "file",
+              "src": [],
+              "description": "Course image (REQUIRED - can be course thumbnail)"
+            },
+            {
+              "key": "secret",
+              "value": "{{ADMIN_SECRET}}",
+              "type": "text"
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{BASE_URL}}/api/certificates",
+          "host": ["{{BASE_URL}}"],
+          "path": ["api", "certificates"]
+        },
+        "description": "Create learning progress with course image (FormData, progress < 100)"
+      },
+      "response": []
+    },
+    {
+      "name": "4. Get Certificate by Slug (Public)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 200', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test('Response has course data with slug', function () {",
+              "    const jsonData = pm.response.json();",
+              "    pm.expect(jsonData.data).to.have.property('slug');",
+              "    pm.expect(jsonData.data.slug).to.equal(pm.collectionVariables.get('COURSE_SLUG'));",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{BASE_URL}}/api/certificates/{{COURSE_SLUG}}",
+          "host": ["{{BASE_URL}}"],
+          "path": ["api", "certificates", "{{COURSE_SLUG}}"]
+        },
+        "description": "Get certificate by slug (endpoint accepts both UUID and slug)"
+      },
+      "response": []
+    },
+    {
+      "name": "5. Update Certificate with New Image (Admin)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 200', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test('Course updated successfully', function () {",
+              "    const jsonData = pm.response.json();",
+              "    pm.expect(jsonData.data).to.have.property('progress');",
+              "    pm.expect(jsonData.data).to.have.property('certificate_image');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "progress",
+              "value": "100",
+              "type": "text"
+            },
+            {
+              "key": "file",
+              "type": "file",
+              "src": [],
+              "description": "New certificate image (optional for update)"
+            },
+            {
+              "key": "secret",
+              "value": "{{ADMIN_SECRET}}",
+              "type": "text"
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{BASE_URL}}/api/certificates/{{COURSE_ID}}",
+          "host": ["{{BASE_URL}}"],
+          "path": ["api", "certificates", "{{COURSE_ID}}"]
+        },
+        "description": "Update certificate (FormData, UUID only, file optional)"
+      },
+      "response": []
+    },
+    {
+      "name": "6. Delete Certificate (Admin)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 204', function () {",
+              "    pm.response.to.have.status(204);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{BASE_URL}}/api/certificates/{{COURSE_ID}}?secret={{ADMIN_SECRET}}",
+          "host": ["{{BASE_URL}}"],
+          "path": ["api", "certificates", "{{COURSE_ID}}"],
+          "query": [
+            {
+              "key": "secret",
+              "value": "{{ADMIN_SECRET}}"
+            }
+          ]
+        },
+        "description": "Soft delete certificate by ID (admin only)"
+      },
+      "response": []
+    },
+    {
+      "name": "Error: Missing Image File",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 400', function () {",
+              "    pm.response.to.have.status(400);",
+              "});",
+              "",
+              "pm.test('Error message is Image file is required', function () {",
+              "    const jsonData = pm.response.json();",
+              "    pm.expect(jsonData.error).to.equal('Image file is required');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "name",
+              "value": "Test Course",
+              "type": "text"
+            },
+            {
+              "key": "organisation",
+              "value": "Test Org",
+              "type": "text"
+            },
+            {
+              "key": "issue_date",
+              "value": "2024-01-01",
+              "type": "text"
+            },
+            {
+              "key": "secret",
+              "value": "{{ADMIN_SECRET}}",
+              "type": "text"
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{BASE_URL}}/api/certificates",
+          "host": ["{{BASE_URL}}"],
+          "path": ["api", "certificates"]
+        },
+        "description": "Test missing image file error"
+      },
+      "response": []
+    },
+    {
+      "name": "Error: Invalid File Type",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 400', function () {",
+              "    pm.response.to.have.status(400);",
+              "});",
+              "",
+              "pm.test('Error message contains Invalid file type', function () {",
+              "    const jsonData = pm.response.json();",
+              "    pm.expect(jsonData.error).to.include('Invalid file type');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "name",
+              "value": "Test Course",
+              "type": "text"
+            },
+            {
+              "key": "organisation",
+              "value": "Test Org",
+              "type": "text"
+            },
+            {
+              "key": "issue_date",
+              "value": "2024-01-01",
+              "type": "text"
+            },
+            {
+              "key": "file",
+              "type": "file",
+              "src": [],
+              "description": "Upload a PDF or other non-image file"
+            },
+            {
+              "key": "secret",
+              "value": "{{ADMIN_SECRET}}",
+              "type": "text"
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{BASE_URL}}/api/certificates",
+          "host": ["{{BASE_URL}}"],
+          "path": ["api", "certificates"]
+        },
+        "description": "Test invalid file type error (upload PDF instead of image)"
+      },
+      "response": []
+    },
+    {
+      "name": "Error: Unauthorized",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 401', function () {",
+              "    pm.response.to.have.status(401);",
+              "});",
+              "",
+              "pm.test('Error message is Unauthorized', function () {",
+              "    const jsonData = pm.response.json();",
+              "    pm.expect(jsonData.error).to.equal('Unauthorized');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "name",
+              "value": "Test Course",
+              "type": "text"
+            },
+            {
+              "key": "organisation",
+              "value": "Test Org",
+              "type": "text"
+            },
+            {
+              "key": "issue_date",
+              "value": "2024-01-01",
+              "type": "text"
+            },
+            {
+              "key": "file",
+              "type": "file",
+              "src": []
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{BASE_URL}}/api/certificates",
+          "host": ["{{BASE_URL}}"],
+          "path": ["api", "certificates"]
+        },
+        "description": "Test unauthorized access (no secret provided)"
+      },
+      "response": []
+    },
+    {
+      "name": "Error: Not Found",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 404', function () {",
+              "    pm.response.to.have.status(404);",
+              "});",
+              "",
+              "pm.test('Error message is Course not found', function () {",
+              "    const jsonData = pm.response.json();",
+              "    pm.expect(jsonData.error).to.equal('Course not found');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{BASE_URL}}/api/certificates/non-existent-slug",
+          "host": ["{{BASE_URL}}"],
+          "path": ["api", "certificates", "non-existent-slug"]
+        },
+        "description": "Test 404 error for non-existent slug"
+      },
+      "response": []
+    }
+  ]
+}

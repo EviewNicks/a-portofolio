@@ -24,7 +24,8 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({
   size = 'md', 
   variant = 'button' 
 }) => {
-  const { theme, toggleTheme, setTheme } = useTheme()
+  const { theme, toggleTheme, setTheme, mounted } = useTheme()
+  const displayTheme = mounted ? theme : 'system'
 
   const sizeClasses = {
     sm: 'h-8 w-8',
@@ -39,7 +40,7 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({
   }
 
   const getIcon = () => {
-    switch (theme) {
+    switch (displayTheme) {
       case 'light':
         return <Sun size={iconSizes[size]} />
       case 'dark':
@@ -52,7 +53,7 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({
   }
 
   const getLabel = () => {
-    switch (theme) {
+    switch (displayTheme) {
       case 'light':
         return 'Switch to dark mode'
       case 'dark':
@@ -78,7 +79,7 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({
         title={getLabel()}
       >
         <motion.div
-          key={theme}
+          key={displayTheme}
           variants={iconVariants}
           initial="hidden"
           animate="visible"
@@ -103,7 +104,7 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({
               onClick={() => setTheme(themeOption)}
               className={cn(
                 'p-2 rounded-md transition-all duration-200',
-                theme === themeOption
+                displayTheme === themeOption
                   ? 'bg-orange-500 text-white shadow-lg'
                   : 'text-slate-400 hover:text-white hover:bg-white/10'
               )}

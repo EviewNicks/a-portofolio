@@ -2,26 +2,29 @@
 
 import { useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
+import { ArrowUpRight, CircleDot, FileCode2, Milestone, PlayCircle, Rocket, Video } from 'lucide-react';
 import type { TimelineEntry, EntryType } from '@/features/projects/types';
 
-const TYPE_CONFIG: Record<EntryType, { icon: string; label: string; color: string }> = {
-  pr:         { icon: '🔗', label: 'Pull Request', color: 'text-green-600 dark:text-green-400' },
-  milestone:  { icon: '🎯', label: 'Milestone',    color: 'text-blue-600 dark:text-blue-400' },
-  blog_post:  { icon: '📝', label: 'Blog Post',    color: 'text-purple-600 dark:text-purple-400' },
-  video:      { icon: '▶️', label: 'Video',        color: 'text-red-600 dark:text-red-400' },
-  deployment: { icon: '🚀', label: 'Deployment',   color: 'text-cyan-600 dark:text-cyan-400' },
-  release:    { icon: '📦', label: 'Release',      color: 'text-yellow-600 dark:text-yellow-500' },
+const TYPE_CONFIG: Record<EntryType, { icon: typeof Video; label: string; color: string }> = {
+  pr: { icon: FileCode2, label: 'Pull Request', color: 'text-olive' },
+  milestone: { icon: Milestone, label: 'Milestone', color: 'text-coral' },
+  blog_post: { icon: CircleDot, label: 'Blog Post', color: 'text-mustard' },
+  video: { icon: PlayCircle, label: 'Video', color: 'text-coral' },
+  deployment: { icon: Rocket, label: 'Deployment', color: 'text-olive' },
+  release: { icon: Milestone, label: 'Release', color: 'text-mustard' },
 };
 
 const PR_STATUS_BADGE: Record<string, string> = {
   merged: 'bg-purple-500/15 text-purple-700 border-purple-400/40 dark:text-purple-300 dark:border-purple-500/30',
-  open:   'bg-green-500/15 text-green-700 border-green-400/40 dark:text-green-300 dark:border-green-500/30',
+  open: 'bg-green-500/15 text-green-700 border-green-400/40 dark:text-green-300 dark:border-green-500/30',
   closed: 'bg-red-500/15 text-red-700 border-red-400/40 dark:text-red-300 dark:border-red-500/30',
 };
 
 function formatDate(dateStr: string) {
   return new Date(dateStr).toLocaleDateString('en-US', {
-    year: 'numeric', month: 'short', day: 'numeric',
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
   });
 }
 
@@ -31,6 +34,7 @@ interface TimelineEntryCardProps {
 
 export function TimelineEntryCard({ entry }: TimelineEntryCardProps) {
   const config = TYPE_CONFIG[entry.entry_type];
+  const Icon = config.icon;
   const router = useRouter();
 
   return (
@@ -40,27 +44,37 @@ export function TimelineEntryCard({ entry }: TimelineEntryCardProps) {
       data-testid="timeline-entry-card"
       data-entry-type={entry.entry_type}
       onClick={() => router.push(`/projects/${entry.project_id}/timeline/${entry.id}`)}
-      onKeyDown={(e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
+      onKeyDown={(event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
           router.push(`/projects/${entry.project_id}/timeline/${entry.id}`);
         }
       }}
       className={cn(
-        'rounded-lg glass-card p-4 transition-all duration-200 cursor-pointer',
-        'hover:shadow-md hover:border-primary/30 hover:bg-primary/5',
-        'active:scale-[0.99]',
-        entry.is_featured && 'border-primary/40 bg-primary/5'
+        'group rounded-2xl border border-line/50 bg-paper p-4 shadow-sm transition-all duration-300 cursor-pointer',
+        'hover:-translate-y-1 hover:border-coral/40 hover:bg-paper-warm hover:shadow-lg active:scale-[0.99]',
+        entry.is_featured && 'border-coral/50 bg-coral/5'
       )}
     >
-      <div className="flex items-start gap-3">
-        <span className="text-xl mt-0.5" aria-hidden="true">{config.icon}</span>
-        <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2 flex-wrap mb-1">
-            <span className={cn('text-xs font-medium', config.color)}>{config.label}</span>
+      <div className="flex items-start gap-4">
+        <span
+          className={cn(
+            'mt-1 inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border',
+            entry.is_featured ? 'border-coral bg-coral text-paper' : 'border-line bg-paper text-coral'
+          )}
+          aria-hidden="true"
+        >
+          <Icon size={18} />
+        </span>
+
+        <div className="min-w-0 flex-1">
+          <div className="mb-2 flex flex-wrap items-center gap-2">
+            <span className={cn('font-editorial-tight text-[0.62rem] font-bold uppercase tracking-[0.16em]', config.color)}>
+              {config.label}
+            </span>
             {entry.entry_type === 'pr' && entry.external_status && (
               <span
                 data-testid="pr-status-badge"
-                className={cn('px-1.5 py-0.5 rounded text-xs border', PR_STATUS_BADGE[entry.external_status])}
+                className={cn('rounded-full border px-2 py-0.5 text-[0.62rem] font-bold uppercase tracking-[0.12em]', PR_STATUS_BADGE[entry.external_status])}
               >
                 {entry.external_status}
               </span>
@@ -68,17 +82,19 @@ export function TimelineEntryCard({ entry }: TimelineEntryCardProps) {
             {entry.is_featured && (
               <span
                 data-testid="featured-badge"
-                className="px-1.5 py-0.5 rounded text-xs bg-primary/15 text-primary border border-primary/30"
+                className="rounded-full border border-coral/30 bg-coral/10 px-2 py-0.5 text-[0.62rem] font-bold uppercase tracking-[0.12em] text-coral"
               >
                 Featured
               </span>
             )}
           </div>
 
-          <h4 data-testid="entry-title" className="text-sm font-semibold text-foreground">{entry.title}</h4>
+          <h4 data-testid="entry-title" className="font-editorial-tight text-base font-bold leading-tight tracking-[-0.01em] text-ink">
+            {entry.title}
+          </h4>
 
           {entry.description && (
-            <p className="text-xs text-muted-foreground mt-1 line-clamp-2">{entry.description}</p>
+            <p className="mt-2 font-editorial-body text-sm leading-relaxed text-ink-mute">{entry.description}</p>
           )}
 
           {entry.entry_type === 'video' && entry.media_preview && (
@@ -86,12 +102,12 @@ export function TimelineEntryCard({ entry }: TimelineEntryCardProps) {
             <img
               src={entry.media_preview}
               alt={entry.title}
-              className="mt-2 rounded w-full max-w-xs object-cover"
+              className="mt-3 aspect-video w-full rounded-xl object-cover"
             />
           )}
 
-          <div className="flex items-center gap-3 mt-2">
-            <span data-testid="entry-date" className="text-xs text-muted-foreground/70">
+          <div className="mt-3 flex flex-wrap items-center gap-3 border-t border-line pt-3 font-editorial-mono text-[0.65rem] tracking-[0.04em] text-ink-faint">
+            <span data-testid="entry-date">
               {formatDate(entry.date)} · Sprint {entry.sprint_number}
             </span>
             {entry.external_url && (
@@ -100,11 +116,11 @@ export function TimelineEntryCard({ entry }: TimelineEntryCardProps) {
                 target="_blank"
                 rel="noopener noreferrer"
                 data-testid="entry-external-link"
-                onClick={(e) => e.stopPropagation()}
-                className="text-xs text-primary hover:text-primary/80 transition-colors"
+                onClick={(event) => event.stopPropagation()}
+                className="inline-flex items-center gap-1 text-coral transition hover:underline focus:outline-none focus-visible:underline"
               >
-                {entry.entry_type === 'pr' ? 'View PR' :
-                 entry.entry_type === 'video' ? 'Watch Video' : 'View Link'} →
+                {entry.entry_type === 'pr' ? 'View PR' : entry.entry_type === 'video' ? 'Watch Video' : 'View Link'}
+                <ArrowUpRight size={12} aria-hidden="true" />
               </a>
             )}
           </div>

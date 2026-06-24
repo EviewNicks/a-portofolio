@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useCallback } from 'react'
+import { useState, useLayoutEffect, useCallback } from 'react'
 
 export type Theme = 'light' | 'dark' | 'system'
 
@@ -8,15 +8,28 @@ export function useTheme() {
   // Get system preference
   const getSystemTheme = (): 'light' | 'dark' => {
     if (typeof window === 'undefined') return 'dark'
-    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+    return window.matchMedia('(prefers-color-scheme: dark)').matches
+      ? 'dark'
+      : 'light'
   }
 
-  // Initialize theme from localStorage or default to system
-  const [theme, setTheme] = useState<Theme>(() => {
-    if (typeof window === 'undefined' || typeof localStorage === 'undefined') return 'system'
+  // Initialize theme from localStorage or default to 'system'
+  const getInitialTheme = (): Theme => {
+    if (typeof localStorage === 'undefined') return 'system'
     const savedTheme = localStorage.getItem('theme') as Theme
-    return savedTheme && ['light', 'dark', 'system'].includes(savedTheme) ? savedTheme : 'system'
-  })
+    return savedTheme && ['light', 'dark', 'system'].includes(savedTheme)
+      ? savedTheme
+      : 'system'
+  }
+
+  const [theme, setTheme] = useState<Theme>(() => getInitialTheme())
+  const [mounted, setMounted] = useState(false)
+
+  // Mark component as mounted after hydration
+  useLayoutEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setMounted(true)
+  }, [])
 
   // Get resolved theme (actual theme being used)
   const resolvedTheme = theme === 'system' ? getSystemTheme() : theme
@@ -24,11 +37,14 @@ export function useTheme() {
   // Update theme and apply changes
   const updateTheme = useCallback((newTheme: Theme) => {
     setTheme(newTheme)
-    
+
     const actualTheme = newTheme === 'system' ? getSystemTheme() : newTheme
-    
+
     // Update document class and localStorage
-    if (typeof document !== 'undefined' && typeof localStorage !== 'undefined') {
+    if (
+      typeof document !== 'undefined' &&
+      typeof localStorage !== 'undefined'
+    ) {
       document.documentElement.classList.remove('light', 'dark')
       document.documentElement.classList.add(actualTheme)
       localStorage.setItem('theme', newTheme)
@@ -36,7 +52,8 @@ export function useTheme() {
   }, [])
 
   const toggleTheme = useCallback(() => {
-    const newTheme = theme === 'light' ? 'dark' : theme === 'dark' ? 'system' : 'light'
+    const newTheme =
+      theme === 'light' ? 'dark' : theme === 'dark' ? 'system' : 'light'
     updateTheme(newTheme)
   }, [theme, updateTheme])
 
@@ -46,6 +63,7 @@ export function useTheme() {
     setTheme: updateTheme,
     toggleTheme,
     isDark: resolvedTheme === 'dark',
-    isLight: resolvedTheme === 'light'
+    isLight: resolvedTheme === 'light',
+    mounted,
   }
 }

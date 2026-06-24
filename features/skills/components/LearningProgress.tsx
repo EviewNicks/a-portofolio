@@ -1,287 +1,391 @@
-'use client';
+'use client'
 
-import React from 'react';
-import { motion } from 'framer-motion';
-import { cn } from '@/lib/utils';
-import { LearningItem, Certification } from '@/lib/types/portfolio';
-import { GlassCard } from '@/components/common';
-import { ProgressBar } from './ProgressBar';
-import Image from 'next/image';
+import React, { useState, useCallback, useMemo } from 'react'
+import { motion, Variants } from 'framer-motion'
+import { cn } from '@/lib/utils'
+import Link from 'next/link'
+import { Course } from '@/features/certificates/types'
+import { CertificateCard } from '@/features/certificates/components/CertificateCard'
+import { CertificateModal } from '@/features/certificates/components/CertificateModal'
 
 interface LearningProgressProps {
-  learning: LearningItem[];
-  certifications: Certification[];
-  className?: string;
+  courses: Course[]
+  className?: string
 }
 
-interface LearningCardProps {
-  item: LearningItem;
-  index: number;
+/* ─────────────────────────────────────────────────────────────
+   MOTION VARIANTS
+───────────────────────────────────────────────────────────── */
+const easeOutExpo = [0.22, 1, 0.36, 1] as const
+
+const containerVariants: Variants = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.09 },
+  },
 }
 
-interface CertificationCardProps {
-  certification: Certification;
-  index: number;
+const revealVariants: Variants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.9, ease: easeOutExpo },
+  },
 }
 
-/**
- * LearningCard Component
- * Display current learning progress with enhanced layout
- */
-const LearningCard: React.FC<LearningCardProps> = ({ item, index }) => {
-  const targetDate = new Date(item.target_date);
-  const isOverdue = targetDate < new Date();
-  
-  return (
-    <motion.div
-      initial={{ opacity: 0, x: -20 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ delay: index * 0.1, duration: 0.6 }}
+/* ─────────────────────────────────────────────────────────────
+   SECTION RULE — editorial breadcrumb bar
+───────────────────────────────────────────────────────────── */
+const SectionRule: React.FC<{
+  roman: string
+  meta: string
+  index: string
+}> = ({ roman, meta, index }) => (
+  <motion.div
+    className={cn(
+      'border-line mb-12 border-t pt-4.5',
+      'flex items-center justify-between',
+      'text-ink-faint text-[10.5px] font-(--font-editorial-tight) tracking-[0.18em] uppercase'
+    )}
+    initial={{ opacity: 0, scaleX: 0.92 }}
+    whileInView={{ opacity: 1, scaleX: 1 }}
+    viewport={{ once: true, margin: '-40px' }}
+    transition={{ duration: 0.7, ease: easeOutExpo }}
+  >
+    <span
+      className="text-coral text-[14px] font-(--font-editorial-serif) tracking-wider normal-case italic"
+      style={{ fontFamily: 'var(--font-editorial-serif)' }}
     >
-      <GlassCard
-        variant="light"
-        hover
-        className="p-8 h-full transition-all duration-300 hover:scale-[1.02] min-h-[280px]"
-      >
-        <div className="flex items-start justify-between mb-6">
-          <div className="flex-1">
-            <h4 className="font-bold text-foreground text-xl mb-2">{item.name}</h4>
-            {/* Platform badge if available */}
-            {item.platform && (
-              <span className="inline-block px-3 py-1 bg-primary/10 text-primary text-sm font-medium rounded-full mb-3">
-                {item.platform}
-              </span>
-            )}
-          </div>
-          <span
-            className={cn(
-              'px-3 py-2 rounded-full text-sm font-semibold',
-              isOverdue
-                ? 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300'
-                : 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300'
-            )}
-          >
-            {targetDate.toLocaleDateString('en-US', { 
-              month: 'short', 
-              year: 'numeric' 
-            })}
-          </span>
-        </div>
+      {roman}
+    </span>
+    <span className="hidden sm:inline">{meta}</span>
+    <span>{index}</span>
+  </motion.div>
+)
 
-        {/* Progress Section */}
-        <div className="mb-6">
-          <div className="flex justify-between items-center mb-3">
-            <span className="text-sm font-medium text-muted-foreground">Progress</span>
-            <span className="text-lg font-bold text-foreground">{item.progress}%</span>
-          </div>
-          <ProgressBar
-            value={item.progress}
-            color={isOverdue ? '#ef4444' : '#3b82f6'}
-            animated
-            showValue={false}
-            className="mb-2 h-3"
-          />
-        </div>
+/* ─────────────────────────────────────────────────────────────
+   EDITORIAL LABEL — coral eyebrow with dash
+───────────────────────────────────────────────────────────── */
+const EditorialLabel: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => (
+  <span
+    className={cn(
+      'mb-5 inline-flex items-center gap-3',
+      'text-coral text-[11px] font-semibold tracking-[0.22em] uppercase'
+    )}
+    style={{ fontFamily: 'var(--font-editorial-tight)' }}
+  >
+    <span className="bg-coral inline-block h-px w-4.5" aria-hidden="true" />
+    {children}
+  </span>
+)
 
-        {/* Description */}
-        <p className="text-base text-muted-foreground leading-relaxed mb-4">
-          {item.reason}
-        </p>
-
-        {/* Course URL if available */}
-        {item.url && (
-          <div className="mt-auto pt-4 border-t border-border/50">
-            <a
-              href={item.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center text-sm text-primary hover:text-primary/80 transition-colors"
-            >
-              View Course
-              <svg className="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-              </svg>
-            </a>
-          </div>
-        )}
-      </GlassCard>
-    </motion.div>
-  );
-};
-
-/**
- * CertificationCard Component
- * Display certification with image and details
- */
-const CertificationCard: React.FC<CertificationCardProps> = ({ certification, index }) => {
-  const formatDate = (dateString: string) => {
-    // Convert DD/MM/YYYY to readable format
-    const [day, month, year] = dateString.split('/');
-    const date = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
-    return date.toLocaleDateString('en-US', {
-      month: 'long',
-      year: 'numeric'
-    });
-  };
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, x: 20 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ delay: index * 0.1, duration: 0.6 }}
-    >
-      <GlassCard
-        variant="light"
-        hover
-        className="p-6 h-full transition-all duration-300 hover:scale-[1.02] min-h-[400px]"
-      >
-        {/* Certificate Image */}
-        <div className="mb-6 relative overflow-hidden rounded-lg bg-gray-100 dark:bg-gray-800">
-          <Image
-            src={`/${certification.media}`}
-            alt={`${certification["name-license"]} Certificate`}
-            width={400}
-            height={300}
-            className="w-full  object-cover transition-transform duration-300 hover:scale-105"
-            onError={(e) => {
-              const target = e.target as HTMLImageElement;
-              target.style.display = 'none';
-              target.nextElementSibling?.classList.remove('hidden');
-            }}
-          />
-          {/* Fallback placeholder */}
-          <div className="hidden absolute inset-0 flex items-center justify-center bg-gray-200 dark:bg-gray-700">
-            <div className="text-center">
-              <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-              </svg>
-              <p className="mt-2 text-sm text-gray-500">Certificate</p>
-            </div>
-          </div>
-        </div>
-
-        {/* Certificate Details */}
-        <div className="space-y-4">
-          <div>
-            <h4 className="font-bold text-foreground text-lg mb-2 overflow-hidden" style={{ 
-              display: '-webkit-box', 
-              WebkitLineClamp: 2, 
-              WebkitBoxOrient: 'vertical' 
-            }}>
-              {certification["name-license"]}
-            </h4>
-            <div className="flex items-center justify-between mb-2">
-              <p className="text-sm font-medium text-primary">
-                {certification.organisasi}
-              </p>
-              <span className="px-2 py-1 bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300 rounded-full text-xs font-medium">
-                Completed
-              </span>
-            </div>
-          </div>
-
-          {/* Certificate Number and Date */}
-          <div className="space-y-2 text-sm text-muted-foreground">
-            <div className="flex justify-between">
-              <span className="font-medium">Certificate No:</span>
-              <span className="font-mono text-xs">{certification.no}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="font-medium">Issued:</span>
-              <span>{formatDate(certification["tanggal-terbit"])}</span>
-            </div>
-          </div>
-
-          {/* Description */}
-          <div className="pt-4 border-t border-border/50">
-            <p className="text-sm text-muted-foreground leading-relaxed overflow-hidden" style={{ 
-              display: '-webkit-box', 
-              WebkitLineClamp: 4, 
-              WebkitBoxOrient: 'vertical' 
-            }}>
-              {certification.deksripsi}
-            </p>
-          </div>
-        </div>
-      </GlassCard>
-    </motion.div>
-  );
-};
-
+/* ─────────────────────────────────────────────────────────────
+   LEARNING PROGRESS — main export
+───────────────────────────────────────────────────────────── */
 /**
  * LearningProgress Component
- * 
- * Display current learning items and certification plans
- * 
- * Features:
- * - Current learning progress with target dates
- * - Certification status tracking
- * - Progress indicators and visual status
- * - Responsive card layouts
- * - Animated entrance effects
+ *
+ * Refactored to use Course[] from the database.
+ * Splits courses by status:
+ *  - in_progress → "Currently Learning" section
+ *  - completed   → "Certificates" section
+ *
+ * Both sections use the same CertificateCard component.
+ * Clicking any card opens CertificateModal.
  */
 export const LearningProgress: React.FC<LearningProgressProps> = ({
-  learning,
-  certifications,
+  courses,
   className,
 }) => {
+  const [selectedCourse, setSelectedCourse] = useState<Course | null>(null)
+  const [selectedIndex, setSelectedIndex] = useState(0)
+
+  // Split by status
+  const learningCourses = useMemo(
+    () => courses.filter((c) => c.status === 'in_progress'),
+    [courses]
+  )
+  const completedCourses = useMemo(
+    () => courses.filter((c) => c.status === 'completed'),
+    [courses]
+  )
+
+  const handleOpen = useCallback(
+    (course: Course) => {
+      const pool = course.status === 'in_progress' ? learningCourses : completedCourses
+      const idx = pool.findIndex((c) => c.id === course.id)
+      setSelectedIndex(idx >= 0 ? idx : 0)
+      setSelectedCourse(course)
+    },
+    [learningCourses, completedCourses]
+  )
+
+  const handleClose = useCallback(() => {
+    setSelectedCourse(null)
+  }, [])
+
   return (
-    <div className={cn('container mx-auto px-4 mt-16', className)}>
-      {/* Learning Section */}
-      {learning.length > 0 && (
-        <div className="mb-12">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-8"
-          >
-            <h3 className="text-3xl font-bold text-foreground mb-2">
-              Currently Learning
-            </h3>
-            <p className="text-muted-foreground">
-              Skills and technologies I&apos;m actively developing
-            </p>
-          </motion.div>
+    <div className={cn('container mx-auto mt-16 px-4', className)}>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
-            {learning.map((item, index) => (
-              <LearningCard key={item.name} item={item} index={index} />
-            ))}
+      {/* ── Currently Learning Section ── */}
+      {learningCourses.length > 0 && (
+        <div className="mb-20">
+          <SectionRule
+            roman="IV."
+            meta="Labs / Learning Progress · Skills in development"
+            index="004 / 008"
+          />
+
+          {/* Section header */}
+          <div className="mb-12 grid grid-cols-1 items-end gap-10 md:grid-cols-[1.4fr_1fr] md:gap-16">
+            <div>
+              <motion.div
+                variants={revealVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: '-40px' }}
+              >
+                <EditorialLabel>
+                  Currently Learning{' '}
+                  <span
+                    className="text-ink-faint font-normal"
+                    style={{ letterSpacing: 0 }}
+                  >
+                    · Nº 04
+                  </span>
+                </EditorialLabel>
+                <h2
+                  className="text-ink text-[clamp(32px,4vw,56px)] leading-[1.04] font-extrabold tracking-[-0.024em]"
+                  style={{ fontFamily: 'var(--font-editorial-tight)' }}
+                >
+                  Skills and technologies I&apos;m actively{' '}
+                  <em
+                    className="text-ink font-medium not-italic"
+                    style={{
+                      fontFamily: 'var(--font-editorial-serif)',
+                      fontStyle: 'italic',
+                    }}
+                  >
+                    developing
+                  </em>
+                  <span className="text-coral">.</span>
+                </h2>
+              </motion.div>
+            </div>
+
+            <motion.div
+              className="flex items-start gap-3 pt-2 md:pt-0"
+              variants={revealVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: '-40px' }}
+              transition={{ delay: 0.1 }}
+            >
+              <span className="text-coral mt-1 text-[22px] leading-none font-(--font-editorial-tight)">
+                +
+              </span>
+              <p
+                className="text-ink-soft max-w-[24ch] text-[13px] leading-[1.55]"
+                style={{ fontFamily: 'var(--font-editorial-body)' }}
+              >
+                Active experiments documenting skills in flux — building
+                intelligence through making.
+              </p>
+            </motion.div>
           </div>
-        </div>
-      )}
 
-      {/* Certifications Section */}
-      {certifications.length > 0 && (
-        <div>
+          {/* Learning cards grid */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-center mb-8"
+            className="grid grid-cols-1 gap-5.5 md:grid-cols-2 lg:grid-cols-3"
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '-60px' }}
           >
-            <h3 className="text-3xl font-bold text-foreground mb-2">
-              Certifications
-            </h3>
-            <p className="text-muted-foreground">
-              Professional certifications and planned achievements
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {certifications.map((certification, index) => (
-              <CertificationCard
-                key={certification["name-license"]}
-                certification={certification}
+            {learningCourses.map((course, index) => (
+              <CertificateCard
+                key={course.id}
+                course={course}
                 index={index}
+                total={learningCourses.length}
+                onOpen={handleOpen}
               />
             ))}
-          </div>
+          </motion.div>
         </div>
       )}
-    </div>
-  );
-};
 
-export default LearningProgress;
+      {/* ── Certificates Section ── */}
+      {completedCourses.length > 0 && (
+        <div>
+          <SectionRule
+            roman="V."
+            meta="Certificates / Proof · Verified learning record"
+            index="005 / 008"
+          />
+
+          {/* cert-head — 2-col layout */}
+          <div className="mb-20 grid grid-cols-1 items-start gap-10 md:grid-cols-[1.4fr_1fr] md:gap-16">
+            <div>
+              <motion.div
+                variants={revealVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: '-40px' }}
+              >
+                <EditorialLabel>
+                  Certificates{' '}
+                  <span
+                    className="text-ink-faint font-normal"
+                    style={{ letterSpacing: 0 }}
+                  >
+                    · Nº 05
+                  </span>
+                </EditorialLabel>
+                <h2
+                  className="text-ink text-[clamp(36px,4.8vw,72px)] leading-[1.02] font-extrabold tracking-[-0.024em]"
+                  style={{ fontFamily: 'var(--font-editorial-tight)' }}
+                >
+                  Proof of{' '}
+                  <em
+                    style={{
+                      fontFamily: 'var(--font-editorial-serif)',
+                      fontStyle: 'italic',
+                      fontWeight: 500,
+                    }}
+                  >
+                    progress
+                  </em>
+                  , made{' '}
+                  <em
+                    style={{
+                      fontFamily: 'var(--font-editorial-serif)',
+                      fontStyle: 'italic',
+                      fontWeight: 500,
+                    }}
+                  >
+                    verifiable
+                  </em>
+                  <span className="text-coral">.</span>
+                </h2>
+              </motion.div>
+            </div>
+
+            {/* Right CTA col */}
+            <motion.div
+              className="flex items-start gap-3 pt-0 md:pt-4"
+              variants={revealVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: '-40px' }}
+              transition={{ delay: 0.12 }}
+            >
+              <span
+                className="text-coral mt-0.5 text-[24px] leading-none"
+                style={{ fontFamily: 'var(--font-editorial-tight)' }}
+              >
+                +
+              </span>
+              <div>
+                <p
+                  className="text-ink-soft mb-2 max-w-[24ch] text-[13px] leading-[1.55]"
+                  style={{ fontFamily: 'var(--font-editorial-body)' }}
+                >
+                  Click any certificate to inspect the full record.
+                </p>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Cert grid */}
+          <motion.div
+            className="grid grid-cols-1 gap-5.5 md:grid-cols-2 lg:grid-cols-3"
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '-60px' }}
+          >
+            {completedCourses.map((course, index) => (
+              <CertificateCard
+                key={course.id}
+                course={course}
+                index={index}
+                total={completedCourses.length}
+                onOpen={handleOpen}
+              />
+            ))}
+          </motion.div>
+
+          {/* cert-footnote — dashed separator */}
+          <motion.div
+            className={cn(
+              'mt-14 flex items-center justify-between',
+              'border-line border-t border-dashed pt-6',
+              'text-ink-faint text-[11px] font-(--font-editorial-tight) tracking-[0.16em] uppercase'
+            )}
+            variants={revealVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '-40px' }}
+          >
+            <span className="inline-flex items-center gap-3">
+              <span
+                className="border-ink-faint inline-block h-5 w-5 rounded-full border border-dashed"
+                aria-hidden="true"
+              />
+              Evidence-first learning archive
+            </span>
+            <span>
+              <span className="text-coral font-semibold">
+                {completedCourses.length} / {completedCourses.length} Verified
+              </span>
+            </span>
+          </motion.div>
+
+          {/* CTA — View All Certificates */}
+          <motion.div
+            className="mt-10 flex justify-center"
+            variants={revealVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '-40px' }}
+            transition={{ delay: 0.15 }}
+          >
+            <Link
+              href="/certificate"
+              className={cn(
+                'group inline-flex items-center gap-3',
+                'rounded-full px-7 py-3.5',
+                'border-ink text-ink border bg-transparent',
+                'text-[12px] font-(--font-editorial-tight) font-semibold tracking-[0.18em] uppercase',
+                'transition-all duration-300',
+                'hover:bg-ink hover:text-paper'
+              )}
+            >
+              <span>View All Certificates</span>
+              <span
+                className="inline-block transition-transform duration-300 group-hover:translate-x-1"
+                aria-hidden="true"
+              >
+                →
+              </span>
+            </Link>
+          </motion.div>
+        </div>
+      )}
+
+      {/* Certificate Modal */}
+      <CertificateModal
+        isOpen={Boolean(selectedCourse)}
+        course={selectedCourse}
+        certIndex={selectedIndex}
+        onClose={handleClose}
+      />
+    </div>
+  )
+}
+
+export default LearningProgress

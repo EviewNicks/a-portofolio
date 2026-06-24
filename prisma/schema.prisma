@@ -33,6 +33,11 @@ enum PRStatus {
   open
 }
 
+enum CourseStatus {
+  in_progress
+  completed
+}
+
 // ─── Models ──────────────────────────────────────────────────────────────────
 
 model Project {
@@ -51,6 +56,7 @@ model Project {
 
   timeline_entries  TimelineEntry[]
   project_media     ProjectMedia[]
+  features          ProjectFeature[]
 
   @@index([status])
   @@index([github_owner, github_repo])
@@ -96,4 +102,60 @@ model ProjectMedia {
 
   @@index([project_id])
   @@map("project_media")
+}
+
+model ProjectFeature {
+  id                String   @id @default(dbgenerated("gen_random_uuid()::text"))
+  project_id        String
+  title             String   @db.VarChar(200)
+  short_description String?  @db.VarChar(200)
+  description       String?  @db.Text
+  youtube_url       String?  @db.VarChar(2048)
+  display_order     Int      @default(0)
+  is_featured       Boolean  @default(false)
+  created_at        DateTime @default(now())
+  updated_at        DateTime @updatedAt
+
+  project           Project               @relation(fields: [project_id], references: [id], onDelete: Cascade)
+  media             ProjectFeatureMedia[]
+
+  @@index([project_id, display_order])
+  @@map("project_features")
+}
+
+model ProjectFeatureMedia {
+  id            String   @id @default(dbgenerated("gen_random_uuid()::text"))
+  feature_id    String
+  storage_path  String   @db.VarChar(1024)
+  public_url    String   @db.VarChar(2048)
+  file_name     String   @db.VarChar(255)
+  display_order Int      @default(0)
+  created_at    DateTime @default(now())
+
+  feature       ProjectFeature @relation(fields: [feature_id], references: [id], onDelete: Cascade)
+
+  @@index([feature_id, display_order])
+  @@map("project_feature_media")
+}
+
+model Course {
+  id                String        @id @default(dbgenerated("gen_random_uuid()::text"))
+  name              String
+  slug              String        @unique
+  organisation      String
+  issue_date        DateTime
+  description       String?       @db.Text
+  progress          Int           @default(0)
+  certificate_image String?       @db.VarChar(2048)
+  platform          String?       @db.VarChar(200)
+  url               String?       @db.VarChar(2048)
+  status            CourseStatus  @default(in_progress)
+  deleted_at        DateTime?
+  created_at        DateTime      @default(now())
+  updated_at        DateTime      @updatedAt
+
+  @@index([status])
+  @@index([deleted_at])
+  @@index([slug])
+  @@map("courses")
 }

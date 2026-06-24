@@ -24,12 +24,12 @@ exports.Prisma = Prisma
 exports.$Enums = {}
 
 /**
- * Prisma Client JS version: 7.5.0
- * Query Engine version: 280c870be64f457428992c43c1f6d557fab6e29e
+ * Prisma Client JS version: 7.8.0
+ * Query Engine version: 3c6e192761c0362d496ed980de936e2f3cebcd3a
  */
 Prisma.prismaVersion = {
-  client: "7.5.0",
-  engine: "280c870be64f457428992c43c1f6d557fab6e29e"
+  client: "7.8.0",
+  engine: "3c6e192761c0362d496ed980de936e2f3cebcd3a"
 }
 
 Prisma.PrismaClientKnownRequestError = () => {
@@ -164,6 +164,46 @@ exports.Prisma.ProjectMediaScalarFieldEnum = {
   created_at: 'created_at'
 };
 
+exports.Prisma.ProjectFeatureScalarFieldEnum = {
+  id: 'id',
+  project_id: 'project_id',
+  title: 'title',
+  short_description: 'short_description',
+  description: 'description',
+  youtube_url: 'youtube_url',
+  display_order: 'display_order',
+  is_featured: 'is_featured',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+};
+
+exports.Prisma.ProjectFeatureMediaScalarFieldEnum = {
+  id: 'id',
+  feature_id: 'feature_id',
+  storage_path: 'storage_path',
+  public_url: 'public_url',
+  file_name: 'file_name',
+  display_order: 'display_order',
+  created_at: 'created_at'
+};
+
+exports.Prisma.CourseScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  slug: 'slug',
+  organisation: 'organisation',
+  issue_date: 'issue_date',
+  description: 'description',
+  progress: 'progress',
+  certificate_image: 'certificate_image',
+  platform: 'platform',
+  url: 'url',
+  status: 'status',
+  deleted_at: 'deleted_at',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -199,10 +239,18 @@ exports.PRStatus = exports.$Enums.PRStatus = {
   open: 'open'
 };
 
+exports.CourseStatus = exports.$Enums.CourseStatus = {
+  in_progress: 'in_progress',
+  completed: 'completed'
+};
+
 exports.Prisma.ModelName = {
   Project: 'Project',
   TimelineEntry: 'TimelineEntry',
-  ProjectMedia: 'ProjectMedia'
+  ProjectMedia: 'ProjectMedia',
+  ProjectFeature: 'ProjectFeature',
+  ProjectFeatureMedia: 'ProjectFeatureMedia',
+  Course: 'Course'
 };
 
 /**

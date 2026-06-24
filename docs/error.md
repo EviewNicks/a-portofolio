@@ -1,45 +1,29 @@
- GET /admin/projects/new?secret=Ardiansy4 200 in 347ms (next.js: 142ms, proxy.ts: 21ms, application-code: 185ms)
-[POST /api/projects] Error [PrismaClientKnownRequestError]: 
-Invalid `prisma.project.create()` invocation:
+[Fast Refresh] rebuilding
+forward-logs-shared.ts:95 [Fast Refresh] done in 4286ms
+installHook.js:1 Error: Invalid src prop (https://onrdpcigvqmsuqspnlhd.supabase.co/storage/v1/object/public/certificates/temp-1782298970186/1782298971202-Screenshot_2026-06-24_190233.png) on `next/image`, hostname "onrdpcigvqmsuqspnlhd.supabase.co" is not configured under images in your `next.config.js`
+See more info: https://nextjs.org/docs/messages/next-image-unconfigured-host
+    at defaultLoader (image-loader.ts:109:17)
+    at get-img-props.ts:265:14
+    at Array.map (<anonymous>)
+    at generateImgAttrs (get-img-props.ts:263:8)
+    at getImgProps (get-img-props.ts:742:25)
+    at image-component.tsx:402:64
+    at Object.react_stack_bottom_frame (react-dom-client.development.js:28241:20)
+    at renderWithHooks (react-dom-client.development.js:7925:22)
+    at updateForwardRef (react-dom-client.development.js:10000:19)
+    at beginWork (react-dom-client.development.js:12451:18)
+    at runWithFiberInDEV (react-dom-client.development.js:986:30)
+    at performUnitOfWork (react-dom-client.development.js:18988:22)
+    at workLoopSync (react-dom-client.development.js:18816:41)
+    at renderRootSync (react-dom-client.development.js:18797:11)
+    at performWorkOnRoot (react-dom-client.development.js:17902:35)
+    at performWorkOnRootViaSchedulerTask (react-dom-client.development.js:20471:7)
+    at MessagePort.performWorkUntilDeadline (scheduler.development.js:45:48)
 
-
-Unique constraint failed on the fields: (`github_repo_url`)
-    at Gr.handleRequestError (generated\prisma\runtime\client.js:69:8286)
-    at Gr.handleAndLogRequestError (generated\prisma\runtime\client.js:69:7581)
-    at Gr.request (generated\prisma\runtime\client.js:69:7288)
-    at async a (generated\prisma\runtime\client.js:79:6730)
-    at async POST (app\api\projects\route.ts:49:21)
-  67 | ...
-  68 | ...
-> 69 | ...t u=s?{modelName:s,...t.meta}:t.meta;throw new b.PrismaClientKnownRequestError(l,{code...
-     |                                               ^
-  70 | ...
-  71 | ...
-  72 | ... {
-  code: 'P2002',
-  meta: {
-    modelName: 'Project',
-    driverAdapterError: Error [DriverAdapterError]: UniqueConstraintViolation
-        at async e.interpretNode (generated\prisma\runtime\client.js:15:44573)
-        at async e.interpretNode (generated\prisma\runtime\client.js:15:45017)
-        at async e.interpretNode (generated\prisma\runtime\client.js:15:46237)
-        at async e.run (generated\prisma\runtime\client.js:15:43287)
-        at async e.execute (generated\prisma\runtime\client.js:61:815)
-        at async jt.request (generated\prisma\runtime\client.js:62:2327)
-        at async Object.singleLoader (generated\prisma\runtime\client.js:69:6569)
-        at async Gr.request (generated\prisma\runtime\client.js:69:7175)
-        at async a (generated\prisma\runtime\client.js:79:6730)
-        at async POST (app\api\projects\route.ts:49:21)
-      13 | ...
-      14 | ...
-    > 15 | ...r(let o of n){let s=Ra(o,r.sqlCommenter),a=await this.#u(s,r.queryable,()=>r.queryable...
-         |                                               ^
-      16 | ...
-      17 | ...
-      18 | ... {
-      [cause]: [Object]
-    }
-  },
-  clientVersion: '7.5.0'
-}
- POST /api/projects?secret=Ardiansy4 500 in 1400ms (next.js: 96ms, application-code: 1304ms)
+The above error occurred in the <Unknown> component. It was handled by the <m> error boundary.
+overrideMethod @ installHook.js:1
+onCaughtError @ error-boundary-callbacks.ts:90
+logCaughtError @ react-dom-client.development.js:9713
+runWithFiberInDEV @ react-dom-client.development.js:986
+(anonymous) @ react-dom-client.development.js:9760
+callCallback @ react-dom-client.development.js:7676

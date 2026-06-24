@@ -1,34 +1,53 @@
-# Admin Dashboard UI Improvement Plan
+Perfect! Baik, ini ringkasan feature yang akan kita buat:
 
-## Scope
-Perbaikan UI pada `app/admin/layout.tsx` dan `app/admin/page.tsx`.
+---
 
-## Changes
+## **Project Features Showcase** - Ringkasan
 
-### 1. Sidebar — Collapsible Icon-Only (semua ukuran layar)
-- Ganti implementasi manual dengan shadcn `Sheet` untuk overlay mobile
-- Desktop: sidebar collapsible antara full (w-64) dan icon-only (w-16)
-- Bubble toggle button (floating, pojok kiri atas) untuk buka/tutup di semua ukuran
-- State collapse persist via `localStorage`
-- Ganti semua warna hardcode (`gray-950`, `gray-900`) ke CSS variables (`bg-background`, `bg-sidebar`, dll)
+### Konsep Utama
+Menampilkan **list card fitur-fitur spesifik** dalam setiap project dengan media (images/video YouTube) dan deskripsi markdown.
 
-### 2. Light/Dark Mode
-- Hapus hardcode dark colors dari `AdminLayout`
-- Gunakan CSS variables yang sudah ada di `globals.css`
-- Tambah theme toggle button di topbar admin (reuse pattern dari `ProjectsNavbar.tsx`)
-- Ikut global `ThemeProvider` yang sudah ada di `app/layout.tsx`
+### Data Model
+**Table: `project_features`**
+- `id` - UUID primary key
+- `project_id` - Foreign key ke projects
+- `title` - Judul feature (misal: "Real-time Chat")
+- `description` - Markdown text (support syntax highlighting)
+- `youtube_url` - YouTube video URL (nullable)
+- `tech_stack` - Array tech yang dipakai
+- `display_order` - Integer untuk sorting
+- `is_featured` - Boolean untuk highlight
+- `demo_url` - External demo link (nullable)
+- `created_at`, `updated_at`
 
-### 3. Recent Projects → Project Cards
-- Buat `AdminProjectCard` component baru di `features/admin/components/`
-- Reuse styling dari `DynamicProjectCard` tapi dengan dua action:
-  - Klik card → `/admin/projects/[id]?secret=...` (admin detail)
-  - Link "View Project →" → `/projects/[id]` (public detail, buka tab baru)
-- Fetch `sprintCount` dan `prCount` per project di `app/admin/page.tsx`
-- Tampilkan max 5 project terbaru dalam grid cards
+**Table: `project_feature_media`** (for multiple images per feature)
+- `id`, `feature_id`, `storage_path`, `public_url`, `file_name`, dll (mirip `project_media`)
 
-## Files to Modify
-- `features/admin/components/AdminLayout.tsx`
-- `app/admin/page.tsx`
+### User Interface
 
-## Files to Create
-- `features/admin/components/AdminProjectCard.tsx`
+**1. Public View** - `/projects/[id]` (tab baru "Features")
+- Grid card features dengan image thumbnail
+- Click card → new page project/[id]/feature/[id]/page.tsx detail view dengan:
+  - Multiple images gallery
+  - YouTube video player (embedded)
+  - Markdown description dengan syntax highlighting
+  - Tech stack badges
+  - Demo link button
+
+**2. Admin Management** - `/admin/projects/[id]/features` (halaman terpisah)
+- List semua features
+- CRUD operations: Create, Edit, Delete feature
+- Upload multiple images ke Supabase Storage
+- Input YouTube URL
+- Markdown editor untuk description
+- Drag & drop untuk reorder (`display_order`)
+
+### Tech Stack
+- Next.js App Router (existing pattern)
+- Supabase (database + storage)
+- React Markdown (existing, untuk render description)
+- YouTube Embed API (untuk video player)
+
+---
+
+Apakah ringkasan ini sudah sesuai? Jika sudah oke, saya akan mulai buat spec plan! 🚀

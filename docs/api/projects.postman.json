@@ -1,6 +1,6 @@
 {
     "info": {
-        "name": "Dynamic Project Timeline — Projects & Timeline",
+        "name": "Dynamic Project  — Projects ",
         "description": "CRUD untuk projects dan timeline entries. Self-contained: POST project dulu → id tersimpan otomatis → lanjut GET/PUT/DELETE.",
         "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
     },

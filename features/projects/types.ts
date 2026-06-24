@@ -1,6 +1,6 @@
 // Dynamic Project Management Timeline - Type Definitions
 
-export type ProjectStatus = 'active' | 'maintenance' | 'archived';
+export type ProjectStatus = 'active' | 'maintenance' | 'archived'
 
 export type EntryType =
   | 'pr'
@@ -8,107 +8,145 @@ export type EntryType =
   | 'blog_post'
   | 'video'
   | 'deployment'
-  | 'release';
+  | 'release'
 
-export type PRStatus = 'merged' | 'closed' | 'open';
+export type PRStatus = 'merged' | 'closed' | 'open'
 
 export interface DynamicProject {
-  id: string;
-  title: string;
-  short_description: string;
-  long_description?: string;
-  tech_stack: string[];
-  status: ProjectStatus;
-  github_repo_url?: string;
-  github_owner?: string;
-  github_repo?: string;
-  last_sync_at?: string;
-  created_at: string;
-  updated_at: string;
+  id: string
+  title: string
+  short_description: string
+  long_description?: string
+  tech_stack: string[]
+  status: ProjectStatus
+  github_repo_url?: string
+  github_owner?: string
+  github_repo?: string
+  last_sync_at?: string
+  created_at: string
+  updated_at: string
 }
 
 export interface TimelineEntry {
-  id: string;
-  project_id: string;
-  entry_type: EntryType;
-  date: string;
-  sprint_number: number;
-  title: string;
-  description?: string;
-  external_url?: string;
-  external_title?: string;
-  external_status?: PRStatus;
-  is_featured: boolean;
-  media_preview?: string;
-  github_pr_number?: number;
-  github_pr_title?: string;
-  github_author?: string;
-  created_at: string;
-  updated_at: string;
+  id: string
+  project_id: string
+  entry_type: EntryType
+  date: string
+  sprint_number: number
+  title: string
+  description?: string
+  external_url?: string
+  external_title?: string
+  external_status?: PRStatus
+  is_featured: boolean
+  media_preview?: string
+  github_pr_number?: number
+  github_pr_title?: string
+  github_author?: string
+  created_at: string
+  updated_at: string
 }
 
 export interface SprintGroup {
-  number: number;
-  entries: TimelineEntry[];
+  number: number
+  entries: TimelineEntry[]
 }
 
 export interface GitHubStats {
-  stars: number;
-  forks: number;
-  contributors: number;
-  last_commit_date?: string;
-  fetched_at: string;
+  stars: number
+  forks: number
+  contributors: number
+  last_commit_date?: string
+  fetched_at: string
 }
 
 export interface YouTubePreview {
-  video_id: string;
-  title: string;
-  thumbnail_url: string;
-  view_count: string;
-  url: string;
+  video_id: string
+  title: string
+  thumbnail_url: string
+  view_count: string
+  url: string
 }
 
 export interface ProjectMedia {
-  id: string;
-  project_id: string;
-  storage_path: string;
-  public_url: string;
-  file_name: string;
-  created_at: string;
+  id: string
+  project_id: string
+  storage_path: string
+  public_url: string
+  file_name: string
+  created_at: string
 }
 
 // Validation result type used by utility functions
 export interface ValidationResult {
-  valid: boolean;
-  errors: string[];
+  valid: boolean
+  errors: string[]
 }
 
 // Raw GitHub PR data from API response
 export interface GitHubPRData {
-  number: number;
-  title: string;
-  body: string | null;
-  html_url: string;
-  merged_at: string;
+  number: number
+  title: string
+  body: string | null
+  html_url: string
+  merged_at: string
   user: {
-    login: string;
-  };
-  labels: Array<{ name: string }>;
+    login: string
+  }
+  labels: Array<{ name: string }>
 }
 
 // Input types for creating/updating records
 export type CreateProjectInput = Omit<
   DynamicProject,
   'id' | 'created_at' | 'updated_at' | 'last_sync_at'
->;
+>
 
-export type UpdateProjectInput = Partial<CreateProjectInput>;
+export type UpdateProjectInput = Partial<CreateProjectInput>
 
 export type CreateTimelineEntryInput = Omit<
   TimelineEntry,
   'id' | 'created_at' | 'updated_at'
->;
+>
 
 export type UpdateTimelineEntryInput = Partial<
   Omit<CreateTimelineEntryInput, 'project_id'>
->;
+>
+
+// Project Feature Showcase Types
+export interface ProjectFeature {
+  id: string
+  project_id: string
+  title: string
+  short_description?: string | null
+  description?: string | null
+  youtube_url?: string | null
+  display_order: number
+  is_featured: boolean
+  created_at: string
+  updated_at: string
+  media?: ProjectFeatureMedia[] // Optional, populated in queries
+  thumbnail?: ProjectFeatureMedia // Optional, first media for cards
+}
+
+export interface ProjectFeatureMedia {
+  id: string
+  feature_id: string
+  storage_path: string
+  public_url: string
+  file_name: string
+  display_order: number
+  created_at: string
+}
+
+export type CreateFeatureInput = Omit<
+  ProjectFeature,
+  'id' | 'created_at' | 'updated_at' | 'media' | 'thumbnail'
+>
+
+export type UpdateFeatureInput = Partial<CreateFeatureInput>
+
+export interface FeatureValidationResult {
+  valid: boolean
+  errors: Record<string, string> // field -> error message
+}

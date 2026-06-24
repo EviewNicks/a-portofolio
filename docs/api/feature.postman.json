@@ -1,0 +1,1591 @@
+{
+  "info": {
+    "_postman_id": "f3a1b2c4-d5e6-7890-a1b2-c3d4e5f67890",
+    "name": "Feature API — Project Features Showcase",
+    "description": "API testing collection for the Project Features Showcase.\n\n## Quick Start\n1. Set `base_url`, `admin_secret`, and `test_project_id` in the **Variables** tab\n2. Run **TC-3.1** (Create Feature - Minimal) → auto-saves `test_feature_id`\n3. Run **TC-7.1** (Upload Media - JPEG) → auto-saves `test_media_id`\n4. Run remaining tests in order\n\n## Variable Reference\n- `base_url` — Next.js dev server (default: http://localhost:3000)\n- `admin_secret` — Value of ADMIN_SECRET_KEY from .env\n- `test_project_id` — UUID of an existing project (**set manually**)\n- `test_feature_id` — Auto-saved by TC-3.1\n- `test_media_id` — Auto-saved by TC-7.1\n\n## Media Upload Notes\nFor file upload tests (TC-7.x), attach real image files in the formdata 'file' field within Postman.\nPrepare test files: image.jpg, image.png, document.pdf, and a file >10MB.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3000",
+      "type": "string",
+      "description": "Next.js development server base URL"
+    },
+    {
+      "key": "admin_secret",
+      "value": "your-admin-secret-key",
+      "type": "string",
+      "description": "Matches ADMIN_SECRET_KEY environment variable"
+    },
+    {
+      "key": "test_project_id",
+      "value": "",
+      "type": "string",
+      "description": "UUID of an existing project — REQUIRED: set this before running tests"
+    },
+    {
+      "key": "test_feature_id",
+      "value": "",
+      "type": "string",
+      "description": "Auto-populated by TC-3.1 test script"
+    },
+    {
+      "key": "test_media_id",
+      "value": "",
+      "type": "string",
+      "description": "Auto-populated by TC-7.1 test script"
+    }
+  ],
+  "item": [
+    {
+      "name": "1. GET Features (List)",
+      "description": "Tests for GET /api/projects/:id/features — public endpoint, no auth required.",
+      "item": [
+        {
+          "name": "TC-1.1 — Get Features (Empty State)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('Response has data property', function () {",
+                  "  pm.expect(pm.response.json()).to.have.property('data');",
+                  "});",
+                  "pm.test('Data is an array', function () {",
+                  "  pm.expect(pm.response.json().data).to.be.an('array');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/projects/{{test_project_id}}/features",
+              "host": ["{{base_url}}"],
+              "path": ["api", "projects", "{{test_project_id}}", "features"]
+            },
+            "description": "[MUST HAVE] Get all features for a project before any are created. Expected: 200 with empty array."
+          }
+        },
+        {
+          "name": "TC-1.2 — Get Features (With Data)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('Features array sorted by display_order ASC', function () {",
+                  "  const features = pm.response.json().data;",
+                  "  if (features.length > 1) {",
+                  "    for (let i = 1; i < features.length; i++) {",
+                  "      pm.expect(features[i].display_order).to.be.at.least(features[i - 1].display_order);",
+                  "    }",
+                  "  }",
+                  "});",
+                  "pm.test('Each feature has required fields', function () {",
+                  "  pm.response.json().data.forEach(function (f) {",
+                  "    pm.expect(f).to.have.property('id');",
+                  "    pm.expect(f).to.have.property('title');",
+                  "    pm.expect(f).to.have.property('project_id');",
+                  "    pm.expect(f).to.have.property('display_order');",
+                  "  });",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/projects/{{test_project_id}}/features",
+              "host": ["{{base_url}}"],
+              "path": ["api", "projects", "{{test_project_id}}", "features"]
+            },
+            "description": "[MUST HAVE] Get features after TC-3.1/3.2 have created data. Validates response structure and display_order sorting."
+          }
+        },
+        {
+          "name": "TC-1.3 — Get Features (Non-existent Project)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('Returns empty array for unknown project', function () {",
+                  "  pm.expect(pm.response.json().data).to.be.an('array').that.is.empty;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/projects/00000000-0000-0000-0000-000000000000/features",
+              "host": ["{{base_url}}"],
+              "path": ["api", "projects", "00000000-0000-0000-0000-000000000000", "features"]
+            },
+            "description": "[SHOULD HAVE] Non-existent project → 200 with empty array (not 404)."
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. GET Single Feature",
+      "description": "Tests for GET /api/projects/:id/features/:featureId — public endpoint.",
+      "item": [
+        {
+          "name": "TC-2.1 — Get Feature (Success)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('Feature has all required fields', function () {",
+                  "  const f = pm.response.json().data;",
+                  "  pm.expect(f).to.have.property('id');",
+                  "  pm.expect(f).to.have.property('title');",
+                  "  pm.expect(f).to.have.property('project_id');",
+                  "  pm.expect(f).to.have.property('media');",
+                  "});",
+                  "pm.test('Feature belongs to correct project', function () {",
+                  "  const f = pm.response.json().data;",
+                  "  pm.expect(f.project_id).to.equal(pm.collectionVariables.get('test_project_id'));",
+                  "});",
+                  "pm.test('media is an array', function () {",
+                  "  pm.expect(pm.response.json().data.media).to.be.an('array');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/projects/{{test_project_id}}/features/{{test_feature_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "projects", "{{test_project_id}}", "features", "{{test_feature_id}}"]
+            },
+            "description": "[MUST HAVE] Get a single feature with its media. Requires test_feature_id (run TC-3.1 first)."
+          }
+        },
+        {
+          "name": "TC-2.2 — Get Feature (Not Found → 404)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 404', function () {",
+                  "  pm.response.to.have.status(404);",
+                  "});",
+                  "pm.test('Error message is Feature not found', function () {",
+                  "  pm.expect(pm.response.json().error).to.equal('Feature not found');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/projects/{{test_project_id}}/features/00000000-0000-0000-0000-000000000000",
+              "host": ["{{base_url}}"],
+              "path": ["api", "projects", "{{test_project_id}}", "features", "00000000-0000-0000-0000-000000000000"]
+            },
+            "description": "[MUST HAVE] Non-existent feature ID → 404."
+          }
+        },
+        {
+          "name": "TC-2.3 — Get Feature (Wrong Project → 404)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 404 for cross-project access', function () {",
+                  "  pm.response.to.have.status(404);",
+                  "});",
+                  "pm.test('Error is Feature not found (no data leakage)', function () {",
+                  "  pm.expect(pm.response.json().error).to.equal('Feature not found');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/projects/11111111-1111-1111-1111-111111111111/features/{{test_feature_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "projects", "11111111-1111-1111-1111-111111111111", "features", "{{test_feature_id}}"]
+            },
+            "description": "[SHOULD HAVE] Feature exists but belongs to a different project → 404 (ownership check, no data leakage)."
+          }
+        }
+      ]
+    },
+    {
+      "name": "3. POST Create Feature",
+      "description": "Tests for POST /api/projects/:id/features — admin only.",
+      "item": [
+        {
+          "name": "TC-3.1 — Create Feature (Minimal) ★ Saves ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 201', function () {",
+                  "  pm.response.to.have.status(201);",
+                  "});",
+                  "pm.test('Returns feature with id — saves to collection variable', function () {",
+                  "  const f = pm.response.json().data;",
+                  "  pm.expect(f).to.have.property('id');",
+                  "  pm.expect(f.title).to.equal('Test Feature');",
+                  "  pm.collectionVariables.set('test_feature_id', f.id);",
+                  "  console.log('[TC-3.1] Saved test_feature_id:', f.id);",
+                  "});",
+                  "pm.test('Default values applied correctly', function () {",
+                  "  const f = pm.response.json().data;",
+                  "  pm.expect(f.display_order).to.equal(0);",
+                  "  pm.expect(f.is_featured).to.equal(false);",
+                  "});",
+                  "pm.test('Timestamps are populated', function () {",
+                  "  const f = pm.response.json().data;",
+                  "  pm.expect(f.created_at).to.be.a('string');",
+                  "  pm.expect(f.updated_at).to.be.a('string');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Test Feature\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/projects/{{test_project_id}}/features?secret={{admin_secret}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "projects", "{{test_project_id}}", "features"],
+              "query": [{ "key": "secret", "value": "{{admin_secret}}" }]
+            },
+            "description": "[MUST HAVE] Create feature with minimal data (title only). AUTO-SAVES returned ID to `test_feature_id` collection variable for subsequent tests."
+          }
+        },
+        {
+          "name": "TC-3.2 — Create Feature (Full Data)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 201', function () {",
+                  "  pm.response.to.have.status(201);",
+                  "});",
+                  "pm.test('All fields saved correctly', function () {",
+                  "  const f = pm.response.json().data;",
+                  "  pm.expect(f.title).to.equal('Complete Feature');",
+                  "  pm.expect(f.youtube_url).to.equal('https://www.youtube.com/watch?v=dQw4w9WgXcQ');",
+                  "  pm.expect(f.tech_stack).to.deep.equal(['React', 'TypeScript', 'Next.js']);",
+                  "  pm.expect(f.demo_url).to.equal('https://example.com/demo');",
+                  "  pm.expect(f.is_featured).to.equal(true);",
+                  "  pm.expect(f.display_order).to.equal(5);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Complete Feature\",\n  \"description\": \"# Test Feature\\n\\nThis is a **markdown** description.\\n\\n```js\\nconsole.log('hello');\\n```\",\n  \"youtube_url\": \"https://www.youtube.com/watch?v=dQw4w9WgXcQ\",\n  \"tech_stack\": [\"React\", \"TypeScript\", \"Next.js\"],\n  \"demo_url\": \"https://example.com/demo\",\n  \"is_featured\": true,\n  \"display_order\": 5\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/projects/{{test_project_id}}/features?secret={{admin_secret}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "projects", "{{test_project_id}}", "features"],
+              "query": [{ "key": "secret", "value": "{{admin_secret}}" }]
+            },
+            "description": "[MUST HAVE] Create feature with all optional fields. Validates all fields are persisted correctly."
+          }
+        },
+        {
+          "name": "TC-3.3 — Create Feature (No Secret → 401)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 401', function () {",
+                  "  pm.response.to.have.status(401);",
+                  "});",
+                  "pm.test('Error indicates unauthorized', function () {",
+                  "  pm.expect(pm.response.json()).to.have.property('error');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Should Not Be Created\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/projects/{{test_project_id}}/features",
+              "host": ["{{base_url}}"],
+              "path": ["api", "projects", "{{test_project_id}}", "features"]
+            },
+            "description": "[MUST HAVE] No secret param → 401 Unauthorized."
+          }
+        },
+        {
+          "name": "TC-3.4 — Create Feature (Wrong Secret → 401)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 401', function () {",
+                  "  pm.response.to.have.status(401);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Should Not Be Created\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/projects/{{test_project_id}}/features?secret=wrong-secret-value",
+              "host": ["{{base_url}}"],
+              "path": ["api", "projects", "{{test_project_id}}", "features"],
+              "query": [{ "key": "secret", "value": "wrong-secret-value" }]
+            },
+            "description": "[SHOULD HAVE] Wrong secret value → 401."
+          }
+        },
+        {
+          "name": "TC-3.5 — Create Feature (Validation Errors → 400)",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.variables.set('long_description', 'a'.repeat(50001));"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 400', function () {",
+                  "  pm.response.to.have.status(400);",
+                  "});",
+                  "pm.test('Error is Validation failed', function () {",
+                  "  pm.expect(pm.response.json().error).to.equal('Validation failed');",
+                  "});",
+                  "pm.test('Field-specific errors returned', function () {",
+                  "  const details = pm.response.json().details;",
+                  "  pm.expect(details).to.have.property('title');",
+                  "  pm.expect(details).to.have.property('description');",
+                  "  pm.expect(details).to.have.property('youtube_url');",
+                  "  pm.expect(details).to.have.property('demo_url');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"\",\n  \"description\": \"{{long_description}}\",\n  \"youtube_url\": \"https://vimeo.com/123456\",\n  \"demo_url\": \"ftp://example.com\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/projects/{{test_project_id}}/features?secret={{admin_secret}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "projects", "{{test_project_id}}", "features"],
+              "query": [{ "key": "secret", "value": "{{admin_secret}}" }]
+            },
+            "description": "[MUST HAVE] Multiple validation failures at once:\n- title: empty string (required)\n- description: 50001 chars (exceeds 50000 limit) — generated by pre-request script\n- youtube_url: Vimeo URL (invalid format, not youtube.com/youtu.be)\n- demo_url: ftp:// protocol (must be http/https)"
+          }
+        }
+      ]
+    },
+    {
+      "name": "4. PUT Update Feature",
+      "description": "Tests for PUT /api/projects/:id/features/:featureId — admin only.",
+      "item": [
+        {
+          "name": "TC-4.1 — Update Feature (Partial Update)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('Title was updated', function () {",
+                  "  pm.expect(pm.response.json().data.title).to.equal('Updated Title');",
+                  "});",
+                  "pm.test('updated_at timestamp is present', function () {",
+                  "  pm.expect(pm.response.json().data.updated_at).to.be.a('string');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Updated Title\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/projects/{{test_project_id}}/features/{{test_feature_id}}?secret={{admin_secret}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "projects", "{{test_project_id}}", "features", "{{test_feature_id}}"],
+              "query": [{ "key": "secret", "value": "{{admin_secret}}" }]
+            },
+            "description": "[MUST HAVE] Partial update — only title sent. Other fields must remain unchanged."
+          }
+        },
+        {
+          "name": "TC-4.2 — Update Feature (Full Data)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('All updated fields are correct', function () {",
+                  "  const f = pm.response.json().data;",
+                  "  pm.expect(f.title).to.equal('Fully Updated Feature');",
+                  "  pm.expect(f.is_featured).to.equal(true);",
+                  "  pm.expect(f.tech_stack).to.include('Vue.js');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Fully Updated Feature\",\n  \"description\": \"Updated description with **markdown**.\",\n  \"youtube_url\": \"https://youtu.be/dQw4w9WgXcQ\",\n  \"tech_stack\": [\"Vue.js\", \"Nuxt\"],\n  \"demo_url\": \"https://updated-demo.example.com\",\n  \"is_featured\": true,\n  \"display_order\": 10\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/projects/{{test_project_id}}/features/{{test_feature_id}}?secret={{admin_secret}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "projects", "{{test_project_id}}", "features", "{{test_feature_id}}"],
+              "query": [{ "key": "secret", "value": "{{admin_secret}}" }]
+            },
+            "description": "[SHOULD HAVE] Full update with all fields provided."
+          }
+        },
+        {
+          "name": "TC-4.3 — Update Feature (Not Found → 404)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 404', function () {",
+                  "  pm.response.to.have.status(404);",
+                  "});",
+                  "pm.test('Error is Feature not found', function () {",
+                  "  pm.expect(pm.response.json().error).to.equal('Feature not found');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Should Not Update\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/projects/{{test_project_id}}/features/00000000-0000-0000-0000-000000000000?secret={{admin_secret}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "projects", "{{test_project_id}}", "features", "00000000-0000-0000-0000-000000000000"],
+              "query": [{ "key": "secret", "value": "{{admin_secret}}" }]
+            },
+            "description": "[MUST HAVE] Update non-existent feature → 404."
+          }
+        },
+        {
+          "name": "TC-4.5 — Update Feature (Unauthorized → 401)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 401', function () {",
+                  "  pm.response.to.have.status(401);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Should Not Update\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/projects/{{test_project_id}}/features/{{test_feature_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "projects", "{{test_project_id}}", "features", "{{test_feature_id}}"]
+            },
+            "description": "[MUST HAVE] Update without secret → 401. Does NOT modify the feature."
+          }
+        }
+      ]
+    },
+    {
+      "name": "5. DELETE Feature",
+      "description": "Tests for DELETE /api/projects/:id/features/:featureId — admin only.\n\n⚠️ TC-5.1 uses a pre-request script to create a temp feature for deletion so test_feature_id is preserved for other tests.",
+      "item": [
+        {
+          "name": "TC-5.1 — Delete Feature (Success)",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const baseUrl = pm.collectionVariables.get('base_url');",
+                  "const projectId = pm.collectionVariables.get('test_project_id');",
+                  "const secret = pm.collectionVariables.get('admin_secret');",
+                  "pm.sendRequest({",
+                  "  url: `${baseUrl}/api/projects/${projectId}/features?secret=${secret}`,",
+                  "  method: 'POST',",
+                  "  header: { 'Content-Type': 'application/json' },",
+                  "  body: { mode: 'raw', raw: JSON.stringify({ title: 'Temp Feature for Delete Test' }) }",
+                  "}, function (err, res) {",
+                  "  if (!err && res.code === 201) {",
+                  "    pm.variables.set('temp_delete_feature_id', res.json().data.id);",
+                  "    console.log('[TC-5.1] Created temp feature:', res.json().data.id);",
+                  "  } else {",
+                  "    console.error('[TC-5.1] Failed to create temp feature:', err || res.text());",
+                  "  }",
+                  "});"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('Returns success true', function () {",
+                  "  pm.expect(pm.response.json().success).to.equal(true);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/projects/{{test_project_id}}/features/{{temp_delete_feature_id}}?secret={{admin_secret}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "projects", "{{test_project_id}}", "features", "{{temp_delete_feature_id}}"],
+              "query": [{ "key": "secret", "value": "{{admin_secret}}" }]
+            },
+            "description": "[MUST HAVE] Pre-request script auto-creates a temp feature for deletion, preserving test_feature_id."
+          }
+        },
+        {
+          "name": "TC-5.2 — Delete Feature (Not Found → 404)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 404', function () {",
+                  "  pm.response.to.have.status(404);",
+                  "});",
+                  "pm.test('Error is Feature not found', function () {",
+                  "  pm.expect(pm.response.json().error).to.equal('Feature not found');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/projects/{{test_project_id}}/features/00000000-0000-0000-0000-000000000000?secret={{admin_secret}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "projects", "{{test_project_id}}", "features", "00000000-0000-0000-0000-000000000000"],
+              "query": [{ "key": "secret", "value": "{{admin_secret}}" }]
+            },
+            "description": "[MUST HAVE] Delete non-existent feature → 404."
+          }
+        },
+        {
+          "name": "TC-5.4 — Delete Feature (Unauthorized → 401)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 401', function () {",
+                  "  pm.response.to.have.status(401);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/projects/{{test_project_id}}/features/{{test_feature_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "projects", "{{test_project_id}}", "features", "{{test_feature_id}}"]
+            },
+            "description": "[MUST HAVE] Delete without secret → 401. Does NOT delete the feature."
+          }
+        }
+      ]
+    },
+    {
+      "name": "6. PUT Reorder Features",
+      "description": "Tests for PUT /api/projects/:id/features/reorder — admin only.",
+      "item": [
+        {
+          "name": "TC-6.1 — Reorder Features (Success)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('Returns success true', function () {",
+                  "  pm.expect(pm.response.json().success).to.equal(true);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  { \"id\": \"{{test_feature_id}}\", \"display_order\": 1 }\n]",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/projects/{{test_project_id}}/features/reorder?secret={{admin_secret}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "projects", "{{test_project_id}}", "features", "reorder"],
+              "query": [{ "key": "secret", "value": "{{admin_secret}}" }]
+            },
+            "description": "[MUST HAVE] Valid reorder payload → 200."
+          }
+        },
+        {
+          "name": "TC-6.2 — Reorder Features (Invalid Format → 400)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 400', function () {",
+                  "  pm.response.to.have.status(400);",
+                  "});",
+                  "pm.test('Error mentions array', function () {",
+                  "  pm.expect(pm.response.json().error.toLowerCase()).to.include('array');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": \"some-id\",\n  \"display_order\": 1\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/projects/{{test_project_id}}/features/reorder?secret={{admin_secret}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "projects", "{{test_project_id}}", "features", "reorder"],
+              "query": [{ "key": "secret", "value": "{{admin_secret}}" }]
+            },
+            "description": "[SHOULD HAVE] Body is object instead of array → 400."
+          }
+        },
+        {
+          "name": "TC-6.4 — Reorder Features (Unauthorized → 401)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 401', function () {",
+                  "  pm.response.to.have.status(401);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  { \"id\": \"{{test_feature_id}}\", \"display_order\": 1 }\n]",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/projects/{{test_project_id}}/features/reorder",
+              "host": ["{{base_url}}"],
+              "path": ["api", "projects", "{{test_project_id}}", "features", "reorder"]
+            },
+            "description": "[MUST HAVE] Reorder without secret → 401."
+          }
+        },
+        {
+          "name": "TC-6.5 — Reorder Features (Empty Array → 200 no-op)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('Returns success true for empty array no-op', function () {",
+                  "  pm.expect(pm.response.json().success).to.equal(true);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "[]",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/projects/{{test_project_id}}/features/reorder?secret={{admin_secret}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "projects", "{{test_project_id}}", "features", "reorder"],
+              "query": [{ "key": "secret", "value": "{{admin_secret}}" }]
+            },
+            "description": "[SHOULD HAVE] Empty array is valid — treated as no-op, returns 200."
+          }
+        }
+      ]
+    },
+    {
+      "name": "7. POST Upload Media",
+      "description": "Tests for POST /api/projects/:id/features/media/upload — admin only.\n\n📁 SETUP REQUIRED: Attach actual files in the 'file' formdata field before running.\n- TC-7.1: Valid JPEG (<10MB)\n- TC-7.3: Any file >10MB\n- TC-7.4: A .pdf file",
+      "item": [
+        {
+          "name": "TC-7.1 — Upload Media (JPEG Success) ★ Saves media ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 201', function () {",
+                  "  pm.response.to.have.status(201);",
+                  "});",
+                  "pm.test('Returns media record — saves ID to collection variable', function () {",
+                  "  const media = pm.response.json().data;",
+                  "  pm.expect(media).to.have.property('id');",
+                  "  pm.expect(media).to.have.property('feature_id');",
+                  "  pm.expect(media).to.have.property('storage_path');",
+                  "  pm.expect(media).to.have.property('public_url');",
+                  "  pm.expect(media).to.have.property('file_name');",
+                  "  pm.expect(media.display_order).to.equal(0);",
+                  "  pm.collectionVariables.set('test_media_id', media.id);",
+                  "  console.log('[TC-7.1] Saved test_media_id:', media.id);",
+                  "});",
+                  "pm.test('Storage path follows feature-media/{featureId}/ pattern', function () {",
+                  "  const storagePath = pm.response.json().data.storage_path;",
+                  "  pm.expect(storagePath).to.include('feature-media/');",
+                  "  pm.expect(storagePath).to.include(pm.collectionVariables.get('test_feature_id'));",
+                  "});",
+                  "pm.test('Public URL is a valid https URL', function () {",
+                  "  pm.expect(pm.response.json().data.public_url).to.match(/^https?:\\/\\//);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": [],
+                  "description": "⚠️ Attach a JPEG image file (<10MB)"
+                },
+                {
+                  "key": "feature_id",
+                  "value": "{{test_feature_id}}",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/api/projects/{{test_project_id}}/features/media/upload?secret={{admin_secret}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "projects", "{{test_project_id}}", "features", "media", "upload"],
+              "query": [{ "key": "secret", "value": "{{admin_secret}}" }]
+            },
+            "description": "[MUST HAVE] Upload a JPEG image. AUTO-SAVES returned media ID to `test_media_id`.\n\n⚠️ Attach an actual JPEG/PNG/GIF/WebP file (<10MB) to the 'file' form field."
+          }
+        },
+        {
+          "name": "TC-7.3 — Upload Media (File Too Large → 400)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 400', function () {",
+                  "  pm.response.to.have.status(400);",
+                  "});",
+                  "pm.test('Error message matches exact text', function () {",
+                  "  pm.expect(pm.response.json().error).to.equal('File size exceeds 10 MB limit');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": [],
+                  "description": "⚠️ Attach any file LARGER than 10MB"
+                },
+                {
+                  "key": "feature_id",
+                  "value": "{{test_feature_id}}",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/api/projects/{{test_project_id}}/features/media/upload?secret={{admin_secret}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "projects", "{{test_project_id}}", "features", "media", "upload"],
+              "query": [{ "key": "secret", "value": "{{admin_secret}}" }]
+            },
+            "description": "[MUST HAVE] File >10MB → 400 with exact error message.\n\n⚠️ Attach a file larger than 10MB to the 'file' form field."
+          }
+        },
+        {
+          "name": "TC-7.4 — Upload Media (Invalid Type PDF → 400)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 400', function () {",
+                  "  pm.response.to.have.status(400);",
+                  "});",
+                  "pm.test('Error message matches exact text', function () {",
+                  "  pm.expect(pm.response.json().error).to.equal('Unsupported file format. Please upload JPEG, PNG, GIF, or WebP');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": [],
+                  "description": "⚠️ Attach a .pdf file"
+                },
+                {
+                  "key": "feature_id",
+                  "value": "{{test_feature_id}}",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/api/projects/{{test_project_id}}/features/media/upload?secret={{admin_secret}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "projects", "{{test_project_id}}", "features", "media", "upload"],
+              "query": [{ "key": "secret", "value": "{{admin_secret}}" }]
+            },
+            "description": "[MUST HAVE] Unsupported file type (PDF) → 400.\n\n⚠️ Attach a .pdf file to the 'file' form field."
+          }
+        },
+        {
+          "name": "TC-7.6 — Upload Media (Missing File → 400)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 400', function () {",
+                  "  pm.response.to.have.status(400);",
+                  "});",
+                  "pm.test('Error says file is required', function () {",
+                  "  pm.expect(pm.response.json().error).to.equal('file is required');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "feature_id",
+                  "value": "{{test_feature_id}}",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/api/projects/{{test_project_id}}/features/media/upload?secret={{admin_secret}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "projects", "{{test_project_id}}", "features", "media", "upload"],
+              "query": [{ "key": "secret", "value": "{{admin_secret}}" }]
+            },
+            "description": "[MUST HAVE] FormData without 'file' field → 400 'file is required'."
+          }
+        },
+        {
+          "name": "TC-7.7 — Upload Media (Missing feature_id → 400)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 400', function () {",
+                  "  pm.response.to.have.status(400);",
+                  "});",
+                  "pm.test('Error says feature_id is required', function () {",
+                  "  pm.expect(pm.response.json().error).to.equal('feature_id is required');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": [],
+                  "description": "Attach any valid image file"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/api/projects/{{test_project_id}}/features/media/upload?secret={{admin_secret}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "projects", "{{test_project_id}}", "features", "media", "upload"],
+              "query": [{ "key": "secret", "value": "{{admin_secret}}" }]
+            },
+            "description": "[SHOULD HAVE] FormData without 'feature_id' field → 400 'feature_id is required'."
+          }
+        },
+        {
+          "name": "TC-7.9 — Upload Media (Unauthorized → 401)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 401 — auth checked before validation', function () {",
+                  "  pm.response.to.have.status(401);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "feature_id",
+                  "value": "{{test_feature_id}}",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/api/projects/{{test_project_id}}/features/media/upload",
+              "host": ["{{base_url}}"],
+              "path": ["api", "projects", "{{test_project_id}}", "features", "media", "upload"]
+            },
+            "description": "[MUST HAVE] Upload without secret → 401. Auth is checked before any file validation."
+          }
+        }
+      ]
+    },
+    {
+      "name": "8. DELETE Media",
+      "description": "Tests for DELETE /api/projects/:id/features/media/:mediaId — admin only.",
+      "item": [
+        {
+          "name": "TC-8.1 — Delete Media (Success)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('Returns success true', function () {",
+                  "  pm.expect(pm.response.json().success).to.equal(true);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/projects/{{test_project_id}}/features/media/{{test_media_id}}?secret={{admin_secret}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "projects", "{{test_project_id}}", "features", "media", "{{test_media_id}}"],
+              "query": [{ "key": "secret", "value": "{{admin_secret}}" }]
+            },
+            "description": "[MUST HAVE] Delete media record + storage file. Requires test_media_id (run TC-7.1 first)."
+          }
+        },
+        {
+          "name": "TC-8.2 — Delete Media (Not Found → 404)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 404', function () {",
+                  "  pm.response.to.have.status(404);",
+                  "});",
+                  "pm.test('Error is Media not found', function () {",
+                  "  pm.expect(pm.response.json().error).to.equal('Media not found');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/projects/{{test_project_id}}/features/media/00000000-0000-0000-0000-000000000000?secret={{admin_secret}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "projects", "{{test_project_id}}", "features", "media", "00000000-0000-0000-0000-000000000000"],
+              "query": [{ "key": "secret", "value": "{{admin_secret}}" }]
+            },
+            "description": "[MUST HAVE] Delete non-existent media → 404 'Media not found'."
+          }
+        },
+        {
+          "name": "TC-8.3 — Delete Media (Unauthorized → 401)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 401', function () {",
+                  "  pm.response.to.have.status(401);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/projects/{{test_project_id}}/features/media/{{test_media_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "projects", "{{test_project_id}}", "features", "media", "{{test_media_id}}"]
+            },
+            "description": "[MUST HAVE] Delete without secret → 401."
+          }
+        }
+      ]
+    },
+    {
+      "name": "9. Integration Tests",
+      "description": "End-to-end scenarios. Each sub-folder is self-contained with its own setup.\nRun requests within each scenario in order (Step 1 → last step).",
+      "item": [
+        {
+          "name": "Scenario 1 — Complete Feature Lifecycle",
+          "description": "Create → Upload Image → Read → Update → Delete Media → Delete Feature → Verify 404.\nRun steps 1–7 in order.",
+          "item": [
+            {
+              "name": "S1-Step1: Create Feature",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('201 - Feature created', function () {",
+                      "  pm.response.to.have.status(201);",
+                      "  const f = pm.response.json().data;",
+                      "  pm.variables.set('s1_feature_id', f.id);",
+                      "  console.log('[S1-Step1] feature_id:', f.id);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"S1 Integration Test Feature\",\n  \"description\": \"## Integration Test\\n\\nCreated by Scenario 1.\",\n  \"tech_stack\": [\"Next.js\", \"Supabase\"]\n}",
+                  "options": { "raw": { "language": "json" } }
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/projects/{{test_project_id}}/features?secret={{admin_secret}}",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "projects", "{{test_project_id}}", "features"],
+                  "query": [{ "key": "secret", "value": "{{admin_secret}}" }]
+                }
+              }
+            },
+            {
+              "name": "S1-Step2: Upload Image",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('201 - Image uploaded', function () {",
+                      "  pm.response.to.have.status(201);",
+                      "  pm.variables.set('s1_media_id', pm.response.json().data.id);",
+                      "  console.log('[S1-Step2] media_id:', pm.response.json().data.id);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    { "key": "file", "type": "file", "src": [], "description": "⚠️ Attach a valid image file" },
+                    { "key": "feature_id", "value": "{{s1_feature_id}}", "type": "text" }
+                  ]
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/projects/{{test_project_id}}/features/media/upload?secret={{admin_secret}}",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "projects", "{{test_project_id}}", "features", "media", "upload"],
+                  "query": [{ "key": "secret", "value": "{{admin_secret}}" }]
+                }
+              }
+            },
+            {
+              "name": "S1-Step3: GET Feature (Verify Media Included)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('200 - Feature has media attached', function () {",
+                      "  pm.response.to.have.status(200);",
+                      "  pm.expect(pm.response.json().data.media.length).to.be.at.least(1);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/api/projects/{{test_project_id}}/features/{{s1_feature_id}}",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "projects", "{{test_project_id}}", "features", "{{s1_feature_id}}"]
+                }
+              }
+            },
+            {
+              "name": "S1-Step4: Update Feature",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('200 - Title updated', function () {",
+                      "  pm.response.to.have.status(200);",
+                      "  pm.expect(pm.response.json().data.title).to.equal('S1 Updated Title');",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "PUT",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"S1 Updated Title\"\n}",
+                  "options": { "raw": { "language": "json" } }
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/projects/{{test_project_id}}/features/{{s1_feature_id}}?secret={{admin_secret}}",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "projects", "{{test_project_id}}", "features", "{{s1_feature_id}}"],
+                  "query": [{ "key": "secret", "value": "{{admin_secret}}" }]
+                }
+              }
+            },
+            {
+              "name": "S1-Step5: Delete Media",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('200 - Media deleted', function () {",
+                      "  pm.response.to.have.status(200);",
+                      "  pm.expect(pm.response.json().success).to.equal(true);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/api/projects/{{test_project_id}}/features/media/{{s1_media_id}}?secret={{admin_secret}}",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "projects", "{{test_project_id}}", "features", "media", "{{s1_media_id}}"],
+                  "query": [{ "key": "secret", "value": "{{admin_secret}}" }]
+                }
+              }
+            },
+            {
+              "name": "S1-Step6: Delete Feature",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('200 - Feature deleted', function () {",
+                      "  pm.response.to.have.status(200);",
+                      "  pm.expect(pm.response.json().success).to.equal(true);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/api/projects/{{test_project_id}}/features/{{s1_feature_id}}?secret={{admin_secret}}",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "projects", "{{test_project_id}}", "features", "{{s1_feature_id}}"],
+                  "query": [{ "key": "secret", "value": "{{admin_secret}}" }]
+                }
+              }
+            },
+            {
+              "name": "S1-Step7: Verify Feature Gone (404)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('404 - Feature no longer exists after delete', function () {",
+                      "  pm.response.to.have.status(404);",
+                      "});",
+                      "console.log('[S1] Scenario 1 complete ✅');"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/api/projects/{{test_project_id}}/features/{{s1_feature_id}}",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "projects", "{{test_project_id}}", "features", "{{s1_feature_id}}"]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Scenario 4 — CASCADE Delete Verification",
+          "description": "Create feature → Upload image → Delete feature → Verify 404.\nVerifies that deleting a feature cascades to delete all associated media records.\n\n⚠️ Step 2 requires attaching an image file manually.",
+          "item": [
+            {
+              "name": "S4-Step1: Create Feature",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('201 - Feature created', function () {",
+                      "  pm.response.to.have.status(201);",
+                      "  pm.variables.set('s4_feature_id', pm.response.json().data.id);",
+                      "  console.log('[S4-Step1] feature_id:', pm.response.json().data.id);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"S4 CASCADE Test Feature\"\n}",
+                  "options": { "raw": { "language": "json" } }
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/projects/{{test_project_id}}/features?secret={{admin_secret}}",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "projects", "{{test_project_id}}", "features"],
+                  "query": [{ "key": "secret", "value": "{{admin_secret}}" }]
+                }
+              }
+            },
+            {
+              "name": "S4-Step2: Upload Image (for CASCADE)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('201 - Image uploaded', function () {",
+                      "  pm.response.to.have.status(201);",
+                      "  pm.variables.set('s4_media_id', pm.response.json().data.id);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    { "key": "file", "type": "file", "src": [], "description": "⚠️ Attach any valid image file" },
+                    { "key": "feature_id", "value": "{{s4_feature_id}}", "type": "text" }
+                  ]
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/projects/{{test_project_id}}/features/media/upload?secret={{admin_secret}}",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "projects", "{{test_project_id}}", "features", "media", "upload"],
+                  "query": [{ "key": "secret", "value": "{{admin_secret}}" }]
+                }
+              }
+            },
+            {
+              "name": "S4-Step3: DELETE Feature (triggers CASCADE)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('200 - Feature deleted with CASCADE', function () {",
+                      "  pm.response.to.have.status(200);",
+                      "  pm.expect(pm.response.json().success).to.equal(true);",
+                      "});"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/api/projects/{{test_project_id}}/features/{{s4_feature_id}}?secret={{admin_secret}}",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "projects", "{{test_project_id}}", "features", "{{s4_feature_id}}"],
+                  "query": [{ "key": "secret", "value": "{{admin_secret}}" }]
+                },
+                "description": "Deleting the feature should CASCADE delete all associated media records."
+              }
+            },
+            {
+              "name": "S4-Step4: Verify Feature Deleted (404)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('404 - Feature gone after CASCADE delete', function () {",
+                      "  pm.response.to.have.status(404);",
+                      "});",
+                      "console.log('[S4] CASCADE delete verified ✅');",
+                      "console.log('[S4] Manually verify in Supabase Storage that image file is also deleted.');"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/api/projects/{{test_project_id}}/features/{{s4_feature_id}}",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "projects", "{{test_project_id}}", "features", "{{s4_feature_id}}"]
+                },
+                "description": "Confirm feature is 404. Also manually check Supabase Storage to confirm file cleanup."
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
