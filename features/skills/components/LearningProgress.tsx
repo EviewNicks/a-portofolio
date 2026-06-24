@@ -5,6 +5,7 @@ import { motion, AnimatePresence, Variants } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { LearningItem, Certification } from '@/lib/types/portfolio';
 import Image from 'next/image';
+import Link from 'next/link';
 
 interface LearningProgressProps {
   learning: LearningItem[];
@@ -833,6 +834,36 @@ export const LearningProgress: React.FC<LearningProgressProps> = ({
                 {certifications.length} / {certifications.length} Verified
               </span>
             </span>
+          </motion.div>
+
+          {/* CTA — View All Certificates */}
+          <motion.div
+            className="mt-10 flex justify-center"
+            variants={revealVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '-40px' }}
+            transition={{ delay: 0.15 }}
+          >
+            <Link
+              href="/certificate"
+              className={cn(
+                'group inline-flex items-center gap-3',
+                'px-7 py-3.5 rounded-full',
+                'border border-ink text-ink bg-transparent',
+                'font-(--font-editorial-tight) text-[12px] font-semibold tracking-[0.18em] uppercase',
+                'transition-all duration-300',
+                'hover:bg-ink hover:text-paper',
+              )}
+            >
+              <span>View All Certificates</span>
+              <span
+                className="inline-block transition-transform duration-300 group-hover:translate-x-1"
+                aria-hidden="true"
+              >
+                →
+              </span>
+            </Link>
           </motion.div>
         </div>
       )}

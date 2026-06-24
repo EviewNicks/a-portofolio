@@ -33,6 +33,11 @@ enum PRStatus {
   open
 }
 
+enum CourseStatus {
+  in_progress
+  completed
+}
+
 // ─── Models ──────────────────────────────────────────────────────────────────
 
 model Project {
@@ -131,4 +136,26 @@ model ProjectFeatureMedia {
 
   @@index([feature_id, display_order])
   @@map("project_feature_media")
+}
+
+model Course {
+  id                String       @id @default(dbgenerated("gen_random_uuid()::text"))
+  name              String
+  slug              String       @unique
+  organisation      String
+  issue_date        DateTime
+  description       String?      @db.Text
+  progress          Int          @default(0)
+  certificate_image String?      @db.VarChar(2048)
+  platform          String?      @db.VarChar(200)
+  url               String?      @db.VarChar(2048)
+  status            CourseStatus @default(in_progress)
+  deleted_at        DateTime?
+  created_at        DateTime     @default(now())
+  updated_at        DateTime     @updatedAt
+
+  @@index([status])
+  @@index([deleted_at])
+  @@index([slug])
+  @@map("courses")
 }

@@ -5,7 +5,6 @@ import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { cn } from '@/lib/utils'
 import { AboutSectionData } from '@/lib/types/portfolio'
-import { AboutContent } from './AboutContent'
 // import { AboutValues } from './AboutValues';
 import aboutData from '@/docs/data/about-section.json'
 
@@ -58,7 +57,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ className }) => {
     <section
       id="about"
       className={cn(
-        'relative py-20 lg:py-32 overflow-hidden',
+        'relative overflow-hidden py-20 lg:py-32',
         'bg-paper text-ink',
         className
       )}
@@ -75,20 +74,22 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ className }) => {
             repeat: Infinity,
             ease: 'easeInOut',
           }}
-          className="absolute top-1/4 right-1/4 h-[400px] w-[400px] rounded-full bg-coral/5 blur-3xl"
+          className="bg-coral/5 absolute top-1/4 right-1/4 h-100 w-100 rounded-full blur-3xl"
         />
       </div>
 
-      <div className="container mx-auto px-6 max-w-[1360px]">
+      <div className="container mx-auto max-w-340 px-6">
         {/* Section Rule */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          className="border-t border-line pt-4 mb-16 flex justify-between items-center font-editorial-tight text-[10.5px] tracking-[0.18em] uppercase text-ink-faint"
+          className="border-line font-editorial-tight text-ink-faint mb-16 flex items-center justify-between border-t pt-4 text-[10.5px] tracking-[0.18em] uppercase"
         >
-          <span className="font-editorial-serif italic text-coral text-sm font-medium">II.</span>
+          <span className="font-editorial-serif text-coral text-sm font-medium italic">
+            II.
+          </span>
           <span className="flex items-center gap-2">
             <span>About / Manifesto</span>
             <span className="text-coral">·</span>
@@ -107,41 +108,61 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ className }) => {
         >
           <motion.span
             variants={itemVariants}
-            className="font-editorial-tight text-[11px] font-semibold tracking-[0.22em] uppercase text-coral inline-flex items-center gap-3 before:content-[''] before:w-[18px] before:h-[1px] before:bg-coral"
+            className="font-editorial-tight text-coral before:bg-coral inline-flex items-center gap-3 text-[11px] font-semibold tracking-[0.22em] uppercase before:h-px before:w-4.5 before:content-['']"
           >
-            About the studio<span className="text-ink-faint font-normal">· Nº 02</span>
+            About the studio
+            <span className="text-ink-faint font-normal">· Nº 02</span>
           </motion.span>
 
           <motion.h2
             variants={itemVariants}
-            className="font-editorial-tight font-extrabold tracking-[-0.028em] text-ink text-4xl md:text-5xl lg:text-6xl leading-[1.1]"
+            className="font-editorial-tight text-ink text-4xl leading-[1.1] font-extrabold tracking-[-0.028em] md:text-5xl lg:text-6xl"
           >
-            In an era of technical <em className="font-editorial-serif italic font-medium tracking-[-0.018em]">noise</em>, I build <em className="font-editorial-serif italic font-medium tracking-[-0.018em]">clarity</em><span className="text-coral">.</span>
+            In an era of technical{' '}
+            <em className="font-editorial-serif font-medium tracking-[-0.018em] italic">
+              noise
+            </em>
+            , I build{' '}
+            <em className="font-editorial-serif font-medium tracking-[-0.018em] italic">
+              clarity
+            </em>
+            <span className="text-coral">.</span>
           </motion.h2>
 
           <motion.p
             variants={itemVariants}
-            className="font-editorial-body text-base md:text-lg lg:text-xl leading-[1.65] text-ink-soft max-w-[72ch]"
+            className="font-editorial-body text-ink-soft max-w-[72ch] text-base leading-[1.65] md:text-lg lg:text-xl"
           >
-            I bridge the gap between cutting-edge <code className="font-editorial-mono text-sm bg-bone/80 border border-line-soft px-1.5 py-0.5 rounded text-coral">AI research</code> and scalable, production-ready web systems.
-            Not a service provider — a <em className="font-editorial-serif italic font-medium">Precision Architect</em> who eliminates complexity and delivers what actually matters.
+            I bridge the gap between cutting-edge{' '}
+            <code className="font-editorial-mono bg-bone/80 border-line-soft text-coral rounded border px-1.5 py-0.5 text-sm">
+              AI research
+            </code>{' '}
+            and scalable, production-ready web systems. Not a service provider —
+            a{' '}
+            <em className="font-editorial-serif font-medium italic">
+              Precision Architect
+            </em>{' '}
+            who eliminates complexity and delivers what actually matters.
           </motion.p>
 
           <motion.p
             variants={itemVariants}
-            className="font-editorial-body text-sm md:text-base leading-[1.6] text-ink-mute max-w-[72ch] italic"
+            className="font-editorial-body text-ink-mute max-w-[72ch] text-sm leading-[1.6] italic md:text-base"
           >
-            "{about.personal.philosophy}"
+            &ldquo;{about.personal.philosophy}&rdquo;
           </motion.p>
 
           <motion.div variants={itemVariants} className="pt-4">
             <Link
               href="/about"
-              className="inline-flex items-center gap-3 px-6 py-4 rounded-full font-editorial-tight text-sm font-semibold border border-ink/20 hover:border-coral hover:text-coral transition-all text-ink bg-transparent"
+              className="font-editorial-tight border-ink/20 hover:border-coral hover:text-coral text-ink inline-flex items-center gap-3 rounded-full border bg-transparent px-6 py-4 text-sm font-semibold transition-all"
             >
               Read full profile
               <span className="transition-transform group-hover:translate-x-1">
-                <svg viewBox="0 0 16 16" className="w-4 h-4 fill-none stroke-current stroke-[1.6]">
+                <svg
+                  viewBox="0 0 16 16"
+                  className="h-4 w-4 fill-none stroke-current stroke-[1.6]"
+                >
                   <path d="M3 8h10M9 4l4 4-4 4" />
                 </svg>
               </span>
@@ -151,12 +172,16 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ className }) => {
           {/* Footer Row */}
           <motion.div
             variants={itemVariants}
-            className="flex flex-wrap items-center justify-between border-t border-line pt-6 mt-16 text-[10.5px] tracking-[0.18em] uppercase text-ink-faint gap-4"
+            className="border-line text-ink-faint mt-16 flex flex-wrap items-center justify-between gap-4 border-t pt-6 text-[10.5px] tracking-[0.18em] uppercase"
           >
-            <span className="font-editorial-serif italic text-2xl text-ink font-extrabold">A</span>
+            <span className="font-editorial-serif text-ink text-2xl font-extrabold italic">
+              A
+            </span>
             <span>Research · Precision · Engineering</span>
             <span className="text-right text-[10px] leading-relaxed">
-              <span className="block text-ink font-semibold">Studio practice</span>
+              <span className="text-ink block font-semibold">
+                Studio practice
+              </span>
               <span>Est. MMXXVI</span>
             </span>
           </motion.div>
@@ -166,4 +191,4 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ className }) => {
   )
 }
 
-export default AboutSection;
+export default AboutSection

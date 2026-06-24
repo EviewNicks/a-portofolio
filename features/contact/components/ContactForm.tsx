@@ -180,12 +180,12 @@ export function ContactForm({ form, isInView = true }: ContactFormProps) {
     },
   }
 
-  const shakeVariants = {
-    shake: {
-      x: [-8, 8, -8, 8, 0],
-      transition: { duration: 0.4 },
-    },
-  }
+  // const shakeVariants = {
+  //   shake: {
+  //     x: [-8, 8, -8, 8, 0],
+  //     transition: { duration: 0.4 },
+  //   },
+  // }
 
   if (formState.isSubmitted) {
     return (
@@ -261,7 +261,7 @@ export function ContactForm({ form, isInView = true }: ContactFormProps) {
         </motion.div>
 
         <form onSubmit={handleSubmit} className="space-y-6" id="contact-form">
-          {form.fields.map((field, index) => (
+          {form.fields.map(field => (
             <motion.div
               key={field.name}
               variants={itemVariants}
@@ -289,7 +289,7 @@ export function ContactForm({ form, isInView = true }: ContactFormProps) {
                     onChange={e =>
                       handleInputChange(field.name, e.target.value)
                     }
-                    className={`font-editorial-body bg-paper/50 border-line-soft focus:border-coral focus:ring-coral/20 rounded-[12px] px-4 py-3 transition-all duration-180 focus:ring-2 ${formState.errors[field.name] ? 'border-red-500 focus:border-red-500 focus:ring-red-500/20' : ''} `}
+                    className={`font-editorial-body bg-paper/50 border-line-soft focus:border-coral focus:ring-coral/20 rounded-2xl px-4 py-3 transition-all duration-180 focus:ring-2 ${formState.errors[field.name] ? 'border-red-500 focus:border-red-500 focus:ring-red-500/20' : ''} `}
                     disabled={formState.isSubmitting}
                   />
                 )}
@@ -303,7 +303,7 @@ export function ContactForm({ form, isInView = true }: ContactFormProps) {
                     onChange={e =>
                       handleInputChange(field.name, e.target.value)
                     }
-                    className={`font-editorial-body bg-paper/50 border-line-soft focus:border-coral focus:ring-coral/20 rounded-[12px] px-4 py-3 transition-all duration-180 focus:ring-2 ${formState.errors[field.name] ? 'border-red-500 focus:border-red-500 focus:ring-red-500/20' : ''} `}
+                    className={`font-editorial-body bg-paper/50 border-line-soft focus:border-coral focus:ring-coral/20 rounded-2xl px-4 py-3 transition-all duration-180 focus:ring-2 ${formState.errors[field.name] ? 'border-red-500 focus:border-red-500 focus:ring-red-500/20' : ''} `}
                     disabled={formState.isSubmitting}
                   />
                 )}
@@ -317,7 +317,7 @@ export function ContactForm({ form, isInView = true }: ContactFormProps) {
                     disabled={formState.isSubmitting}
                   >
                     <SelectTrigger
-                      className={`font-editorial-body bg-paper/50 border-line-soft focus:border-coral focus:ring-coral/20 rounded-[12px] px-4 py-3 transition-all duration-180 focus:ring-2 ${formState.errors[field.name] ? 'border-red-500' : ''} `}
+                      className={`font-editorial-body bg-paper/50 border-line-soft focus:border-coral focus:ring-coral/20 rounded-2xl px-4 py-3 transition-all duration-180 focus:ring-2 ${formState.errors[field.name] ? 'border-red-500' : ''} `}
                     >
                       <SelectValue placeholder={field.placeholder} />
                     </SelectTrigger>
@@ -339,7 +339,7 @@ export function ContactForm({ form, isInView = true }: ContactFormProps) {
                     onChange={e =>
                       handleInputChange(field.name, e.target.value)
                     }
-                    className={`font-editorial-body bg-paper/50 border-line-soft focus:border-coral focus:ring-coral/20 min-h-[140px] rounded-[12px] px-4 py-3 transition-all duration-180 focus:ring-2 ${formState.errors[field.name] ? 'border-red-500 focus:border-red-500 focus:ring-red-500/20' : ''} `}
+                    className={`font-editorial-body bg-paper/50 border-line-soft focus:border-coral focus:ring-coral/20 min-h-35 rounded-2xl px-4 py-3 transition-all duration-180 focus:ring-2 ${formState.errors[field.name] ? 'border-red-500 focus:border-red-500 focus:ring-red-500/20' : ''} `}
                     disabled={formState.isSubmitting}
                   />
                 )}
@@ -374,7 +374,7 @@ export function ContactForm({ form, isInView = true }: ContactFormProps) {
                 initial={{ opacity: 0, y: -10, scale: 0.95 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.95 }}
-                className="rounded-[12px] border border-red-300 bg-red-50 p-4"
+                className="rounded-2xl border border-red-300 bg-red-50 p-4"
               >
                 <div className="font-editorial-body flex items-center gap-2 text-sm text-red-700">
                   <AlertCircle size={16} />
@@ -393,7 +393,7 @@ export function ContactForm({ form, isInView = true }: ContactFormProps) {
               <Button
                 type="submit"
                 disabled={formState.isSubmitting}
-                className="bg-coral hover:bg-coral-soft text-paper font-editorial-tight group relative w-full overflow-hidden rounded-[12px] px-6 py-6 text-base font-semibold tracking-tight shadow-lg transition-all duration-180 hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-50"
+                className="bg-coral hover:bg-coral-soft text-paper font-editorial-tight group relative w-full overflow-hidden rounded-2xl px-6 py-6 text-base font-semibold tracking-tight shadow-lg transition-all duration-180 hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-50"
               >
                 <span className="relative z-10 flex items-center justify-center gap-2">
                   {formState.isSubmitting ? (
@@ -417,7 +417,7 @@ export function ContactForm({ form, isInView = true }: ContactFormProps) {
 
                 {/* Button hover glow effect */}
                 <motion.div
-                  className="from-coral to-coral-soft absolute inset-0 bg-gradient-to-r opacity-0 transition-opacity duration-180 group-hover:opacity-100"
+                  className="from-coral to-coral-soft absolute inset-0 bg-linear-to-r opacity-0 transition-opacity duration-180 group-hover:opacity-100"
                   initial={{ scale: 0, opacity: 0 }}
                   whileHover={{ scale: 1.5, opacity: 0.2 }}
                 />

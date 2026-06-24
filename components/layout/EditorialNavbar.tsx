@@ -94,10 +94,10 @@ export function EditorialNavbar({
             </li>
             <li>
               <Link
-                href="/#capabilities"
+                href="/certificate"
                 className="hover:text-coral transition-colors"
               >
-                Capabilities
+                Certificates
               </Link>
             </li>
             <li>

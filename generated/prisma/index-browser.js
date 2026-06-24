@@ -187,6 +187,23 @@ exports.Prisma.ProjectFeatureMediaScalarFieldEnum = {
   created_at: 'created_at'
 };
 
+exports.Prisma.CourseScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  slug: 'slug',
+  organisation: 'organisation',
+  issue_date: 'issue_date',
+  description: 'description',
+  progress: 'progress',
+  certificate_image: 'certificate_image',
+  platform: 'platform',
+  url: 'url',
+  status: 'status',
+  deleted_at: 'deleted_at',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -222,12 +239,18 @@ exports.PRStatus = exports.$Enums.PRStatus = {
   open: 'open'
 };
 
+exports.CourseStatus = exports.$Enums.CourseStatus = {
+  in_progress: 'in_progress',
+  completed: 'completed'
+};
+
 exports.Prisma.ModelName = {
   Project: 'Project',
   TimelineEntry: 'TimelineEntry',
   ProjectMedia: 'ProjectMedia',
   ProjectFeature: 'ProjectFeature',
-  ProjectFeatureMedia: 'ProjectFeatureMedia'
+  ProjectFeatureMedia: 'ProjectFeatureMedia',
+  Course: 'Course'
 };
 
 /**
