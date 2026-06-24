@@ -30,20 +30,55 @@ export interface ParallaxConfig {
 }
 
 // Hero Section Types
+// Hero Section Types
 export interface HeroData {
   name: string;
   title: string;
   subtitle: string;
+  label: string;
+  labelIx: string;
+  heading: string;
+  headingEm: string;
+  headingDot: string;
   description: string;
   tagline: string;
   cta: {
-    primary: CallToAction;
-    secondary: CallToAction;
+    primary: {
+      text: string;
+      link: string;
+      variant: 'primary' | 'outline' | 'ghost';
+    };
+    secondary: {
+      text: string;
+      link: string;
+      variant: 'primary' | 'outline' | 'ghost';
+    };
   };
-  highlights: string[];
-  avatar: Avatar;
-  background: Background;
-  parallax: ParallaxConfig;
+  avatar: {
+    url: string;
+    alt: string;
+  };
+  stats: {
+    value: string;
+    label: string;
+    labelDetails: string;
+    ringType: 'solid' | 'coral';
+  }[];
+  coordinates: string;
+  bottomMeta: string;
+  background: {
+    type: string;
+    theme: string;
+    particles: boolean;
+  };
+  parallax: {
+    enabled: boolean;
+    layers: ParallaxLayer[];
+  };
+  wire?: {
+    tools: { name: string; coord: string; }[];
+    skills: { handle: string; role: string; }[];
+  };
 }
 
 export interface HeroSectionData {

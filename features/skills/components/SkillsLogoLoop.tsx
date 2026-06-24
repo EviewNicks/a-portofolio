@@ -95,59 +95,36 @@ export const SkillsLogoLoop: React.FC<SkillsLogoLoopProps> = ({
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.8, duration: 0.6 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-40px' }}
+      transition={{ delay: 0.2, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
       className={`w-full ${className}`}
     >
-      {/* Section Header */}
-      <div className="text-center mb-8">
-        <motion.h3
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.9, duration: 0.5 }}
-          className="text-lg font-semibold text-muted-foreground mb-2"
-        >
-          Technologies & Tools
-        </motion.h3>
-        <motion.div
-          initial={{ opacity: 0, scaleX: 0 }}
-          animate={{ opacity: 1, scaleX: 1 }}
-          transition={{ delay: 1, duration: 0.8 }}
-          className="w-16 h-0.5 bg-gradient-to-r from-primary/50 to-ai-cyan/50 mx-auto"
+      {/* Logo Loop Strip */}
+      <div className="relative bg-bone border-y border-line py-5 overflow-hidden">
+        <LogoLoop
+          logos={logoItems}
+          speed={60}
+          direction="left"
+          logoHeight={32}
+          gap={48}
+          pauseOnHover={true}
+          scaleOnHover={true}
+          fadeOut={true}
+          className="w-full"
+          ariaLabel="Technology stack and tools used in projects"
         />
       </div>
 
-      {/* Logo Loop Container */}
-      <div className="relative">
-        {/* Background glow effect */}
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/5 to-transparent rounded-lg blur-xl" />
-        
-        {/* Logo Loop */}
-        <div className="relative bg-background/50 backdrop-blur-sm border border-border/50 rounded-lg p-6">
-          <LogoLoop
-            logos={logoItems}
-            speed={60}
-            direction="left"
-            logoHeight={32}
-            gap={48}
-            pauseOnHover={true}
-            scaleOnHover={true}
-            fadeOut={true}
-            className="w-full"
-            ariaLabel="Technology stack and tools used in projects"
-          />
-        </div>
+      {/* Bottom label */}
+      <div className="container mx-auto px-6 md:px-8 lg:px-16 mt-4 flex justify-end">
+        <p
+          className="font-sans text-[10.5px] tracking-[0.16em] uppercase text-ink-faint"
+          style={{ fontFamily: 'var(--font-editorial-tight)' }}
+        >
+          Hover to pause · Technologies used in real projects
+        </p>
       </div>
-
-      {/* Bottom description */}
-      <motion.p
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.2, duration: 0.5 }}
-        className="text-center text-sm text-muted-foreground mt-4"
-      >
-        Hover to pause • Technologies used in real projects
-      </motion.p>
     </motion.div>
   );
 };

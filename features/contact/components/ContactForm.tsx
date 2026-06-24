@@ -1,9 +1,8 @@
 'use client'
 
 import React, { useState } from 'react'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import { ContactForm as ContactFormType } from '@/lib/types/portfolio'
-import { GlassCard } from '@/components/common'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
@@ -18,6 +17,7 @@ import { Send, CheckCircle, AlertCircle, Loader2 } from 'lucide-react'
 
 interface ContactFormProps {
   form: ContactFormType
+  isInView?: boolean
 }
 
 interface FormData {
@@ -39,7 +39,7 @@ interface FormState {
   submitError: string | null
 }
 
-export function ContactForm({ form }: ContactFormProps) {
+export function ContactForm({ form, isInView = true }: ContactFormProps) {
   const [formState, setFormState] = useState<FormState>({
     data: {
       name: '',
@@ -157,180 +157,275 @@ export function ContactForm({ form }: ContactFormProps) {
       opacity: 1,
       transition: {
         duration: 0.6,
-        staggerChildren: 0.1,
+        staggerChildren: 0.08,
+        delayChildren: 0.2,
       },
     },
   }
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: {
+      opacity: 0,
+      y: 20,
+      scale: 0.98,
+    },
     visible: {
       opacity: 1,
       y: 0,
+      scale: 1,
       transition: {
         duration: 0.5,
+        ease: [0.22, 1, 0.36, 1] as const,
       },
+    },
+  }
+
+  const shakeVariants = {
+    shake: {
+      x: [-8, 8, -8, 8, 0],
+      transition: { duration: 0.4 },
     },
   }
 
   if (formState.isSubmitted) {
     return (
-      <GlassCard variant="medium" className="p-8">
+      <div className="bg-bone border-line-soft editorial-shadow rounded-[18px] border p-8">
         <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
+          initial={{ opacity: 0, scale: 0.92 }}
           animate={{ opacity: 1, scale: 1 }}
-          className="space-y-4 text-center"
+          transition={{
+            duration: 0.6,
+            ease: [0.22, 1, 0.36, 1] as const,
+          }}
+          className="space-y-6 text-center"
         >
-          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-green-100 dark:bg-green-900/50">
-            <CheckCircle className="h-8 w-8 text-green-600 dark:text-green-400" />
-          </div>
-          <h3 className="text-foreground text-xl font-semibold">
-            Message Sent Successfully!
-          </h3>
-          <p className="text-muted-foreground">
-            {form.settings.successMessage}
-          </p>
+          <motion.div
+            className="bg-coral/10 relative mx-auto flex h-20 w-20 items-center justify-center rounded-full"
+            initial={{ scale: 0, rotate: -180 }}
+            animate={{ scale: 1, rotate: 0 }}
+            transition={{
+              delay: 0.2,
+              duration: 0.8,
+              ease: [0.34, 1.56, 0.64, 1] as const,
+            }}
+          >
+            {/* Glow effect */}
+            <motion.div
+              className="bg-coral/20 absolute inset-0 rounded-full"
+              animate={{
+                scale: [1, 1.3, 1],
+                opacity: [0.5, 0.2, 0.5],
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                ease: 'easeInOut',
+              }}
+            />
+            <CheckCircle className="text-coral relative z-10 h-10 w-10" />
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4, duration: 0.5 }}
+          >
+            <h3 className="font-editorial-tight text-ink mb-2 text-2xl font-bold tracking-tight">
+              Message Sent Successfully!
+            </h3>
+            <p className="font-editorial-body text-ink-soft">
+              {form.settings.successMessage}
+            </p>
+          </motion.div>
         </motion.div>
-      </GlassCard>
+      </div>
     )
   }
 
   return (
-    <GlassCard variant="medium" className="p-8">
+    <div className="bg-bone border-line-soft editorial-shadow rounded-[18px] border p-8">
       <motion.div
         variants={containerVariants}
         initial="hidden"
-        animate="visible"
+        animate={isInView ? 'visible' : 'hidden'}
         className="space-y-6"
       >
         <motion.div variants={itemVariants}>
-          <h4 className="text-foreground mb-2 text-xl font-semibold">
+          <h4 className="font-editorial-tight text-ink mb-2 text-2xl font-bold tracking-tight">
             Send Me a Message
           </h4>
-          <p className="text-muted-foreground">
-            Fill out the form below and I&quo;ll get back to you as soon as
+          <p className="font-editorial-body text-ink-soft">
+            Fill out the form below and I&apos;ll get back to you as soon as
             possible.
           </p>
         </motion.div>
 
         <form onSubmit={handleSubmit} className="space-y-6" id="contact-form">
-          {form.fields.map(field => (
+          {form.fields.map((field, index) => (
             <motion.div
               key={field.name}
               variants={itemVariants}
+              animate={formState.errors[field.name] ? 'shake' : 'visible'}
               className="space-y-2"
             >
               <label
                 htmlFor={field.name}
-                className="text-foreground text-sm font-medium"
+                className="font-editorial-tight text-ink text-sm font-semibold tracking-tight"
               >
                 {field.label}
-                {field.required && <span className="ml-1 text-red-500">*</span>}
+                {field.required && <span className="text-coral ml-1">*</span>}
               </label>
 
-              {field.type === 'text' && (
-                <Input
-                  id={field.name}
-                  type="text"
-                  placeholder={field.placeholder}
-                  value={formState.data[field.name as keyof FormData]}
-                  onChange={e => handleInputChange(field.name, e.target.value)}
-                  className={`${formState.errors[field.name] ? 'border-red-500' : ''}`}
-                  disabled={formState.isSubmitting}
-                />
-              )}
+              <motion.div
+                whileFocus={{ scale: 1.02 }}
+                transition={{ duration: 0.18 }}
+              >
+                {field.type === 'text' && (
+                  <Input
+                    id={field.name}
+                    type="text"
+                    placeholder={field.placeholder}
+                    value={formState.data[field.name as keyof FormData]}
+                    onChange={e =>
+                      handleInputChange(field.name, e.target.value)
+                    }
+                    className={`font-editorial-body bg-paper/50 border-line-soft focus:border-coral focus:ring-coral/20 rounded-[12px] px-4 py-3 transition-all duration-180 focus:ring-2 ${formState.errors[field.name] ? 'border-red-500 focus:border-red-500 focus:ring-red-500/20' : ''} `}
+                    disabled={formState.isSubmitting}
+                  />
+                )}
 
-              {field.type === 'email' && (
-                <Input
-                  id={field.name}
-                  type="email"
-                  placeholder={field.placeholder}
-                  value={formState.data[field.name as keyof FormData]}
-                  onChange={e => handleInputChange(field.name, e.target.value)}
-                  className={`${formState.errors[field.name] ? 'border-red-500' : ''}`}
-                  disabled={formState.isSubmitting}
-                />
-              )}
+                {field.type === 'email' && (
+                  <Input
+                    id={field.name}
+                    type="email"
+                    placeholder={field.placeholder}
+                    value={formState.data[field.name as keyof FormData]}
+                    onChange={e =>
+                      handleInputChange(field.name, e.target.value)
+                    }
+                    className={`font-editorial-body bg-paper/50 border-line-soft focus:border-coral focus:ring-coral/20 rounded-[12px] px-4 py-3 transition-all duration-180 focus:ring-2 ${formState.errors[field.name] ? 'border-red-500 focus:border-red-500 focus:ring-red-500/20' : ''} `}
+                    disabled={formState.isSubmitting}
+                  />
+                )}
 
-              {field.type === 'select' && field.options && (
-                <Select
-                  value={formState.data[field.name as keyof FormData]}
-                  onValueChange={value => handleInputChange(field.name, value)}
-                  disabled={formState.isSubmitting}
-                >
-                  <SelectTrigger
-                    className={`${formState.errors[field.name] ? 'border-red-500' : ''}`}
+                {field.type === 'select' && field.options && (
+                  <Select
+                    value={formState.data[field.name as keyof FormData]}
+                    onValueChange={value =>
+                      handleInputChange(field.name, value)
+                    }
+                    disabled={formState.isSubmitting}
                   >
-                    <SelectValue placeholder={field.placeholder} />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {field.options.map(option => (
-                      <SelectItem key={option.value} value={option.value}>
-                        {option.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              )}
+                    <SelectTrigger
+                      className={`font-editorial-body bg-paper/50 border-line-soft focus:border-coral focus:ring-coral/20 rounded-[12px] px-4 py-3 transition-all duration-180 focus:ring-2 ${formState.errors[field.name] ? 'border-red-500' : ''} `}
+                    >
+                      <SelectValue placeholder={field.placeholder} />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {field.options.map(option => (
+                        <SelectItem key={option.value} value={option.value}>
+                          {option.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                )}
 
-              {field.type === 'textarea' && (
-                <Textarea
-                  id={field.name}
-                  placeholder={field.placeholder}
-                  value={formState.data[field.name as keyof FormData]}
-                  onChange={e => handleInputChange(field.name, e.target.value)}
-                  className={`min-h-30 ${formState.errors[field.name] ? 'border-red-500' : ''}`}
-                  disabled={formState.isSubmitting}
-                />
-              )}
+                {field.type === 'textarea' && (
+                  <Textarea
+                    id={field.name}
+                    placeholder={field.placeholder}
+                    value={formState.data[field.name as keyof FormData]}
+                    onChange={e =>
+                      handleInputChange(field.name, e.target.value)
+                    }
+                    className={`font-editorial-body bg-paper/50 border-line-soft focus:border-coral focus:ring-coral/20 min-h-[140px] rounded-[12px] px-4 py-3 transition-all duration-180 focus:ring-2 ${formState.errors[field.name] ? 'border-red-500 focus:border-red-500 focus:ring-red-500/20' : ''} `}
+                    disabled={formState.isSubmitting}
+                  />
+                )}
+              </motion.div>
 
-              {formState.errors[field.name] && (
-                <motion.p
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="flex items-center gap-1 text-sm text-red-500"
-                >
-                  <AlertCircle size={14} />
-                  {formState.errors[field.name]}
-                </motion.p>
-              )}
+              <AnimatePresence mode="wait">
+                {formState.errors[field.name] && (
+                  <motion.p
+                    key={`error-${field.name}`}
+                    initial={{ opacity: 0, y: -8, height: 0 }}
+                    animate={{
+                      opacity: 1,
+                      y: 0,
+                      height: 'auto',
+                      x: [-4, 4, -4, 0],
+                    }}
+                    exit={{ opacity: 0, height: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="font-editorial-body flex items-center gap-2 text-sm text-red-600"
+                  >
+                    <AlertCircle size={14} />
+                    {formState.errors[field.name]}
+                  </motion.p>
+                )}
+              </AnimatePresence>
             </motion.div>
           ))}
 
-          {formState.submitError && (
-            <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="rounded-lg border border-red-200 bg-red-50 p-4 dark:border-red-800 dark:bg-red-900/20"
-            >
-              <div className="flex items-center gap-2 text-sm text-red-600 dark:text-red-400">
-                <AlertCircle size={16} />
-                {formState.submitError}
-              </div>
-            </motion.div>
-          )}
+          <AnimatePresence>
+            {formState.submitError && (
+              <motion.div
+                initial={{ opacity: 0, y: -10, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                className="rounded-[12px] border border-red-300 bg-red-50 p-4"
+              >
+                <div className="font-editorial-body flex items-center gap-2 text-sm text-red-700">
+                  <AlertCircle size={16} />
+                  {formState.submitError}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
           <motion.div variants={itemVariants}>
-            <Button
-              type="submit"
-              disabled={formState.isSubmitting}
-              className="bg-primary hover:bg-primary/90 text-primary-foreground w-full"
+            <motion.div
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              transition={{ duration: 0.18 }}
             >
-              {formState.isSubmitting ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Sending...
-                </>
-              ) : (
-                <>
-                  <Send className="mr-2 h-4 w-4" />
-                  {form.settings.submitText}
-                </>
-              )}
-            </Button>
+              <Button
+                type="submit"
+                disabled={formState.isSubmitting}
+                className="bg-coral hover:bg-coral-soft text-paper font-editorial-tight group relative w-full overflow-hidden rounded-[12px] px-6 py-6 text-base font-semibold tracking-tight shadow-lg transition-all duration-180 hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                <span className="relative z-10 flex items-center justify-center gap-2">
+                  {formState.isSubmitting ? (
+                    <>
+                      <Loader2 className="h-5 w-5 animate-spin" />
+                      Sending...
+                    </>
+                  ) : (
+                    <>
+                      <span>{form.settings.submitText}</span>
+                      <motion.span
+                        initial={{ x: 0 }}
+                        whileHover={{ x: 5 }}
+                        transition={{ duration: 0.18 }}
+                      >
+                        <Send className="h-5 w-5" />
+                      </motion.span>
+                    </>
+                  )}
+                </span>
+
+                {/* Button hover glow effect */}
+                <motion.div
+                  className="from-coral to-coral-soft absolute inset-0 bg-gradient-to-r opacity-0 transition-opacity duration-180 group-hover:opacity-100"
+                  initial={{ scale: 0, opacity: 0 }}
+                  whileHover={{ scale: 1.5, opacity: 0.2 }}
+                />
+              </Button>
+            </motion.div>
           </motion.div>
         </form>
       </motion.div>
-    </GlassCard>
+    </div>
   )
 }

@@ -132,7 +132,7 @@ features/[feature-name]/
 ```
 features/
 ├── hero/                # Hero section
-│   ├── components/      # HeroSection, HeroBackground, HeroContent
+│   ├── components/      # HeroSection
 │   ├── hooks/          # useParallax, useHeroAnimations
 │   └── types.ts        # Hero-specific types
 ├── projects/           # Projects showcase

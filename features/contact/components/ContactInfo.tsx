@@ -2,7 +2,6 @@
 
 import { motion } from 'framer-motion'
 import { ContactInfo as ContactInfoType } from '@/lib/types/portfolio'
-import { GlassCard } from '@/components/common'
 import {
   Mail,
   Phone,
@@ -14,30 +13,38 @@ import {
 
 interface ContactInfoProps {
   info: ContactInfoType
+  isInView: boolean
 }
 
-export function ContactInfo({ info }: ContactInfoProps) {
+const iconHoverVariants = {
+  initial: { scale: 1, rotate: 0 },
+  hover: {
+    scale: 1.15,
+    rotate: 5,
+    color: 'var(--coral)',
+    transition: { duration: 0.3 },
+  },
+}
+
+export function ContactInfo({ info, isInView }: ContactInfoProps) {
   const contactItems = [
     {
       icon: Mail,
       label: 'Email',
       value: info.email,
       href: `mailto:${info.email}`,
-      color: 'text-blue-500',
     },
     {
       icon: Phone,
       label: 'Phone',
       value: info.phone,
       href: info.phone.includes('xxxx') ? undefined : `tel:${info.phone}`,
-      color: 'text-green-500',
     },
     {
       icon: MapPin,
       label: 'Location',
       value: info.location,
-      color: 'text-red-500',
-    }
+    },
   ]
 
   const statusItems = [
@@ -45,58 +52,51 @@ export function ContactInfo({ info }: ContactInfoProps) {
       icon: CheckCircle,
       label: 'Availability',
       value: info.availability,
-      color: 'text-green-500',
     },
     {
       icon: MessageCircle,
       label: 'Response Time',
       value: info.response_time,
-      color: 'text-blue-500',
     },
     {
       icon: Globe,
       label: 'Languages',
       value: info.languages.join(', '),
-      color: 'text-orange-500',
     },
   ]
 
-  const itemVariants = {
-    hidden: { opacity: 0, x: -20 },
-    visible: {
-      opacity: 1,
-      x: 0,
-      transition: {
-        duration: 0.5,
-      },
-    },
-  }
-
   return (
-    <GlassCard variant="light" className="space-y-6 p-6">
-      <h4 className="text-foreground mb-4 text-xl font-semibold">
+    <div className="bg-bone/95 border-line-soft space-y-6 rounded-[18px] border p-6 shadow-[0_30px_60px_-30px_rgba(21,20,15,0.18)]">
+      <h4 className="font-editorial-tight text-ink mb-4 text-xl font-bold">
         Contact Details
       </h4>
 
       {/* Contact Details */}
-      <div className="space-y-4">
+      <div className="space-y-3">
         {contactItems.map((item, index) => {
           const Icon = item.icon
           const uniqueKey = `contact-${item.label}-${index}`
           const content = (
             <motion.div
               key={uniqueKey}
-              variants={itemVariants}
-              className="hover:bg-accent/50 group flex items-center gap-3 rounded-lg p-3 transition-colors"
+              initial={{ opacity: 0, x: -20 }}
+              animate={isInView ? { opacity: 1, x: 0 } : {}}
+              transition={{ delay: index * 0.1, duration: 0.5 }}
+              className="hover:bg-paper-warm group flex items-center gap-3 rounded-lg p-3 transition-colors"
             >
-              <div className={`bg-background/50 rounded-lg p-2 ${item.color}`}>
+              <motion.div
+                variants={iconHoverVariants}
+                initial="initial"
+                whileHover="hover"
+                className="bg-paper-warm text-coral rounded-lg p-2"
+              >
                 <Icon size={18} />
-              </div>
+              </motion.div>
               <div className="min-w-0 flex-1">
-                <p className="text-muted-foreground text-sm font-medium">
+                <p className="font-editorial-tight text-ink-faint text-[10.5px] font-medium tracking-[0.14em] uppercase">
                   {item.label}
                 </p>
-                <p className="text-foreground group-hover:text-primary truncate text-sm transition-colors">
+                <p className="font-editorial-body text-ink group-hover:text-coral truncate text-sm transition-colors">
                   {item.value}
                 </p>
               </div>
@@ -120,32 +120,41 @@ export function ContactInfo({ info }: ContactInfoProps) {
       </div>
 
       {/* Status Information */}
-      <div className="border-border space-y-4 border-t pt-4">
-        <h5 className="text-foreground text-lg font-medium">Availability Status</h5>
+      <div className="border-line-soft space-y-3 border-t pt-4">
+        <h5 className="font-editorial-tight text-ink text-lg font-medium">
+          Availability Status
+        </h5>
         {statusItems.map((item, index) => {
           const Icon = item.icon
           const uniqueKey = `status-${item.label}-${index}`
           return (
             <motion.div
               key={uniqueKey}
-              variants={itemVariants}
-              className="bg-background/30 flex items-start gap-3 rounded-lg p-3"
+              initial={{ opacity: 0, x: -20 }}
+              animate={isInView ? { opacity: 1, x: 0 } : {}}
+              transition={{ delay: (index + 3) * 0.1, duration: 0.5 }}
+              className="bg-paper-warm flex items-start gap-3 rounded-lg p-3"
             >
-              <div
-                className={`bg-background/50 rounded-lg p-2 ${item.color} mt-0.5`}
+              <motion.div
+                variants={iconHoverVariants}
+                initial="initial"
+                whileHover="hover"
+                className="text-coral mt-0.5 rounded-lg p-2"
               >
                 <Icon size={16} />
-              </div>
+              </motion.div>
               <div className="min-w-0 flex-1">
-                <p className="text-muted-foreground text-sm font-medium">
+                <p className="font-editorial-tight text-ink-faint text-[10.5px] font-medium tracking-[0.14em] uppercase">
                   {item.label}
                 </p>
-                <p className="text-foreground text-sm">{item.value}</p>
+                <p className="font-editorial-body text-ink text-sm">
+                  {item.value}
+                </p>
               </div>
             </motion.div>
           )
         })}
       </div>
-    </GlassCard>
+    </div>
   )
 }

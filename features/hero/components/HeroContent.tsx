@@ -5,6 +5,7 @@ import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { HeroData } from '@/lib/types/portfolio'
 import Image from 'next/image'
+import { cn } from '@/lib/utils'
 
 interface HeroContentProps {
   heroData: HeroData
@@ -12,274 +13,230 @@ interface HeroContentProps {
 
 /**
  * HeroContent Component - Editorial Magazine Style
- *
- * Redesigned content layout with:
- * - 60-40 asymmetric split
- * - Mixed typography (regular + italic + bold)
- * - Editorial visual composition (collage-inspired)
- * - Numbered navigation system
- * - Feature badges instead of list
- * - Print-inspired animations
+ * 
+ * Re-designed hero layout with:
+ * - 12-column asymmetric grid for top content (7/12 copy, 5/12 avatar frame)
+ * - Section rule (`sec-rule`) at the top
+ * - Mixed display typography (Playfair serif italic + sans-serif)
+ * - Full-width custom circular stats with rings (outside the grid)
+ * - Full-width coordinates & metadata footer (outside the grid)
+ * - Editorial image frame with corner decorators and vertical side ribbon
+ * - Staggered Framer Motion entrance transitions
  */
 export const HeroContent: React.FC<HeroContentProps> = ({ heroData }) => {
-  // Animation variants - More subtle, editorial style
+  const easeOutExpo = [0.22, 1, 0.36, 1] as [number, number, number, number]
+
   const containerVariants = {
-    initial: { opacity: 0 },
+    initial: {},
     animate: {
-      opacity: 1,
       transition: {
-        duration: 0.8,
-        staggerChildren: 0.15,
+        staggerChildren: 0.12,
       },
     },
   }
 
   const itemVariants = {
-    initial: { opacity: 0, y: 20 },
+    initial: { opacity: 0, y: 28 },
     animate: {
       opacity: 1,
       y: 0,
+      transition: {
+        duration: 0.8,
+        ease: easeOutExpo,
+      },
     },
   }
 
-  const itemTransition = {
-    duration: 0.6,
-    ease: [0.16, 1, 0.3, 1] as [number, number, number, number],
+  const avatarVariants = {
+    initial: { opacity: 0, scale: 0.96, y: 15 },
+    animate: {
+      opacity: 1,
+      scale: 1,
+      y: 0,
+      transition: {
+        duration: 0.8,
+        ease: easeOutExpo,
+      },
+    },
   }
 
   return (
-    <div className="container mx-auto px-4 py-8 md:px-6 lg:px-8">
+    <div className="container mx-auto px-6 md:px-8 lg:px-16 w-full flex flex-col justify-between py-4">
+      {/* 1. Section Header Rule */}
+      <motion.div
+        initial={{ opacity: 0, scaleX: 0 }}
+        animate={{ opacity: 1, scaleX: 1 }}
+        transition={{ duration: 1, ease: easeOutExpo }}
+        className="w-full border-t border-line pt-[18px] mb-12 flex justify-between items-center text-[10.5px] tracking-[0.18em] uppercase text-ink-faint font-sans origin-left"
+      >
+        <span className="roman font-serif italic text-coral text-sm"></span>
+        <span className="flex items-center gap-[26px]">
+          <span>Precision Architect</span>
+          <span className="text-coral">·</span>
+          <span>{heroData.name} / Volume 01</span>
+        </span>
+        <span>001 / 008</span>
+      </motion.div>
+
+      {/* 2. Parent Stagger Wrapper */}
       <motion.div
         variants={containerVariants}
         initial="initial"
         animate="animate"
-        className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16"
+        className="flex flex-col gap-12"
       >
-        {/* Left Column - Text Content (60%) */}
-        <div className="space-y-8 lg:col-span-7">
-          {/* Overline / Category */}
-          <motion.div
-            variants={itemVariants}
-            transition={itemTransition}
-            className="flex items-center gap-4"
-          >
-            <div className="bg-primary h-px w-12" />
-            <span className="font-code text-muted-foreground text-xs tracking-wider uppercase">
-              AI Engineer Portfolio
-            </span>
-          </motion.div>
-
-          {/* Hero Headline - Mixed Typography */}
-          <motion.div
-            variants={itemVariants}
-            transition={itemTransition}
-            className="space-y-3"
-          >
-            <h1 className="font-display text-foreground text-4xl leading-tight font-normal md:text-5xl lg:text-6xl xl:text-7xl">
-              Designing{' '}
-              <span className="text-primary italic">intelligence</span> with
-              <br />
-              <span className="font-bold">skills</span>,{' '}
-              <span className="font-light italic">taste</span>, and
-              <br />
-              <span className="font-code text-5xl font-bold tracking-tight md:text-6xl lg:text-7xl">
-                code
+        {/* 2.1 Main Content Grid (Left Copy / Right Avatar) */}
+        <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16 items-center">
+          
+          {/* Left Column - Copy (7/12) */}
+          <div className="space-y-8 lg:col-span-7">
+            {/* Overline Badge */}
+            <motion.div variants={itemVariants} className="flex items-center gap-3">
+              <span className="font-sans text-[11px] font-semibold tracking-[0.22em] uppercase text-coral flex items-center gap-3">
+                <span className="inline-block w-[18px] h-[1px] bg-coral" />
+                {heroData.label}
+                <span className="font-medium text-ink-faint ml-1">{heroData.labelIx}</span>
               </span>
-              <span className="text-primary">.</span>
-            </h1>
-          </motion.div>
+            </motion.div>
 
-          {/* Description */}
-          <motion.div
-            variants={itemVariants}
-            transition={itemTransition}
-            className="max-w-xl"
-          >
-            <p className="font-body text-muted-foreground text-base leading-relaxed md:text-lg">
+            {/* Editorial Display Heading */}
+            <motion.h1 
+              variants={itemVariants} 
+              className="font-sans font-extrabold tracking-[-0.028em] text-ink leading-[1.0] text-[clamp(44px,5.2vw,88px)]"
+            >
+              {heroData.heading}{' '}
+              <em className="font-serif italic font-medium tracking-[-0.018em]">
+                {heroData.headingEm}
+              </em>
+              <span className="text-coral">{heroData.headingDot}</span>
+            </motion.h1>
+
+            {/* Lead Description */}
+            <motion.p 
+              variants={itemVariants} 
+              className="font-body text-base leading-[1.55] text-ink-soft max-w-[52ch]"
+            >
               {heroData.description}
-            </p>
-          </motion.div>
+            </motion.p>
 
-          {/* CTA Buttons */}
-          <motion.div
-            variants={itemVariants}
-            transition={itemTransition}
-            className="flex flex-wrap gap-4"
-          >
-            <Button
-              size="lg"
-              className="bg-primary text-primary-foreground hover:bg-primary/90 px-8 py-6 font-medium"
-              onClick={() => {
-                if (heroData.cta.primary.link.startsWith('#')) {
-                  const element = document.querySelector(
-                    heroData.cta.primary.link
-                  )
+            {/* CTA Buttons */}
+            <motion.div variants={itemVariants} className="flex flex-wrap items-center gap-3.5 pt-2">
+              <Button
+                size="lg"
+                className="bg-coral text-white border border-transparent shadow-[0_14px_26px_-16px_rgba(237,111,92,1)] hover:-translate-y-[1px] hover:bg-[#e25e4a] hover:shadow-[0_18px_32px_-12px_rgba(237,111,92,1.2)] active:scale-[0.98] rounded-full px-[22px] py-[14px] font-sans font-medium text-sm flex items-center gap-[12px] transition-all duration-200 cursor-pointer h-auto"
+                onClick={() => {
+                  const element = document.querySelector(heroData.cta.primary.link)
                   element?.scrollIntoView({ behavior: 'smooth' })
-                } else {
-                  window.open(heroData.cta.primary.link, '_blank')
-                }
-              }}
-            >
-              {heroData.cta.primary.text}
-              <span className="ml-2">→</span>
-            </Button>
+                }}
+              >
+                {heroData.cta.primary.text}
+                <span className="inline-flex w-4 h-4 items-center justify-center">
+                  <svg viewBox="0 0 16 16" className="w-3.5 h-3.5 stroke-current fill-none stroke-[1.6] transition-transform duration-200 group-hover:translate-x-1"><path d="M3 8h10M9 4l4 4-4 4"></path></svg>
+                </span>
+              </Button>
 
-            <Button
-              variant="outline"
-              size="lg"
-              className="border-foreground/20 hover:border-primary hover:bg-primary/5 hover:text-primary border-2 px-8 py-6 font-medium"
-              onClick={() => {
-                if (heroData.cta.secondary.link.startsWith('#')) {
-                  const element = document.querySelector(
-                    heroData.cta.secondary.link
-                  )
-                  element?.scrollIntoView({ behavior: 'smooth' })
-                } else {
+              <Button
+                variant="ghost"
+                className="bg-transparent text-ink border border-[rgba(21,20,15,0.2)] hover:bg-[rgba(21,20,15,0.04)] rounded-full px-[22px] py-[14px] font-sans font-medium text-sm flex items-center gap-[12px] transition-all duration-200 cursor-pointer h-auto"
+                onClick={() => {
                   window.open(heroData.cta.secondary.link, '_blank')
-                }
-              }}
-            >
-              {heroData.cta.secondary.text}
-              <span className="ml-2">⊕</span>
-            </Button>
-          </motion.div>
-
-          {/* Feature Badges - Editorial Style */}
-          <motion.div
-            variants={itemVariants}
-            transition={itemTransition}
-            className="flex flex-wrap gap-4 pt-4"
-          >
-            <div className="border-foreground/10 flex items-center gap-2 rounded-full border px-4 py-2">
-              <div className="bg-primary h-2 w-2 rounded-full" />
-              <span className="font-code text-foreground/70 text-xs tracking-wide uppercase">
-                AI Engineering
-              </span>
-            </div>
-            <div className="border-foreground/10 flex items-center gap-2 rounded-full border px-4 py-2">
-              <div className="bg-accent h-2 w-2 rounded-full" />
-              <span className="font-code text-foreground/70 text-xs tracking-wide uppercase">
-                Data-Centric
-              </span>
-            </div>
-            <div className="border-foreground/10 flex items-center gap-2 rounded-full border px-4 py-2">
-              <div className="bg-secondary h-2 w-2 rounded-full" />
-              <span className="font-code text-foreground/70 text-xs tracking-wide uppercase">
-                LLM Development
-              </span>
-            </div>
-          </motion.div>
-        </div>
-
-        {/* Right Column - Visual Composition (40%) */}
-        <div className="relative lg:col-span-5">
-          {/* Visual Collage Area */}
-          <motion.div
-            variants={itemVariants}
-            transition={itemTransition}
-            className="relative h-[500px] md:h-[600px] lg:h-[650px]"
-          >
-            {/* Main Image with Editorial Frame */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.4, duration: 0.8 }}
-              className="border-background absolute top-1/4 left-0 z-10 h-64 w-64 overflow-hidden rounded-lg border-4 shadow-2xl md:h-80 md:w-80"
-            >
-              <Image
-                src={heroData.avatar.url}
-                alt={heroData.avatar.alt}
-                fill
-                sizes="(max-width: 768px) 256px, 320px"
-                className="object-cover grayscale transition-all duration-500 hover:grayscale-0"
-              />
+                }}
+              >
+                {heroData.cta.secondary.text}
+              </Button>
             </motion.div>
+          </div>
 
-            {/* Geometric Circle Background */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.2, duration: 1 }}
-              className="bg-primary/20 absolute top-0 right-0 h-96 w-96 rounded-full"
-            />
+          {/* Right Column - Avatar Visual Container (5/12) */}
+          <div className="relative lg:col-span-5 flex items-center justify-center lg:justify-end">
+            {/* Subtle Decorative Circle behind Avatar */}
+            <div className="absolute top-[10%] right-[10%] -z-10 h-72 w-72 rounded-full bg-coral/5 blur-3xl" />
 
-            {/* Floating Info Card */}
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.6, duration: 0.8 }}
-              className="border-foreground/10 bg-background/90 absolute right-0 bottom-20 z-20 w-48 rounded-lg border p-4 shadow-lg backdrop-blur-sm"
+            {/* Editorial Frame Container with Corner Markers */}
+            <motion.div 
+              variants={avatarVariants}
+              className="relative aspect-square w-full max-w-[420px]"
             >
-              <div className="space-y-2">
-                <div className="font-display text-primary text-2xl font-bold">
-                  05
-                </div>
-                <div className="font-body text-foreground/70 text-sm">
-                  Semester Teknik Informatika
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Numbered Navigation */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.8, duration: 0.8 }}
-              className="absolute top-1/3 right-0 space-y-3"
-            >
-              {['01', '02', '03', '04'].map((num, index) => (
-                <div
-                  key={num}
-                  className="font-code text-foreground/40 flex items-center gap-2 text-xs"
-                >
-                  <span>{num}</span>
-                  <div
-                    className={`h-px w-8 ${index === 0 ? 'bg-primary' : 'bg-foreground/20'}`}
+              {/* Corner Decorators */}
+              <div className="absolute w-[22px] h-[22px] border-t border-l border-line top-0 left-0" />
+              <div className="absolute w-[22px] h-[22px] border-t border-r border-line top-0 right-0" />
+              <div className="absolute w-[22px] h-[22px] border-b border-l border-line bottom-0 left-0" />
+              <div className="absolute w-[22px] h-[22px] border-b border-r border-line bottom-0 right-0" />
+              
+              {/* Vertical Editorial Ribbon */}
+              <span className="absolute right-[-42px] top-[40%] font-sans text-[10.5px] tracking-[0.42em] uppercase text-ink-faint [writing-mode:vertical-rl] rotate-180 whitespace-nowrap select-none hidden sm:block">
+                <b className="text-coral">ARDI</b> &nbsp;·&nbsp; AI SYSTEM ARCHITECT &nbsp;·&nbsp; MMXXVI
+              </span>
+              
+              {/* Main Avatar Card Frame */}
+              <motion.div
+                whileHover={{ scale: 1.025, y: -4 }}
+                transition={{ type: 'spring', stiffness: 350, damping: 20 }}
+                className="w-full h-full p-[14px] bg-bone border border-line-soft rounded-[18px] shadow-lg flex flex-col justify-between select-none"
+              >
+                <div className="relative w-full aspect-square rounded-[12px] overflow-hidden border border-line-soft bg-paper-dark">
+                  <Image
+                    src={heroData.avatar.url}
+                    alt={heroData.avatar.alt}
+                    fill
+                    priority
+                    sizes="(max-width: 768px) 100vw, 420px"
+                    className="object-cover grayscale hover:grayscale-0 transition-all duration-500 ease-out scale-[1.01]"
                   />
                 </div>
-              ))}
+                <div className="flex justify-between items-center mt-3 text-[11px] tracking-wider uppercase font-sans text-ink-faint font-semibold">
+                  <span>Plate Nº 01 · Avatar</span>
+                  <span className="text-coral">Active Internship</span>
+                </div>
+              </motion.div>
             </motion.div>
+          </div>
 
-            {/* Label Tags */}
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1, duration: 0.6 }}
-              className="absolute bottom-4 left-4 space-y-1"
+        </div>
+
+        {/* 2.2 Stats Cards (Full Width) */}
+        <motion.div 
+          variants={itemVariants} 
+          className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-6"
+        >
+          {heroData.stats.map((stat, i) => (
+            <motion.div 
+              key={i} 
+              whileHover={{ y: -3 }}
+              transition={{ duration: 0.2 }}
+              className="flex items-center gap-[10px] whitespace-nowrap"
             >
-              <div className="font-code text-primary text-xs tracking-wider uppercase">
-                Detect
-              </div>
-              <div className="font-code text-accent text-xs tracking-wider uppercase">
-                Discover
-              </div>
-              <div className="font-code text-foreground/50 text-xs tracking-wider uppercase">
-                Direct
-              </div>
-              <div className="font-code text-secondary text-xs tracking-wider uppercase">
-                Deliver
-              </div>
+              <span
+                className={cn(
+                  "w-[34px] h-[34px] rounded-full flex items-center justify-center font-sans text-[11px] font-bold shrink-0 border",
+                  stat.ringType === 'solid' 
+                    ? "border-solid border-ink text-ink" 
+                    : "border-dashed border-coral text-coral"
+                )}
+              >
+                {stat.value}
+              </span>
+              <span className="font-sans text-[11px] leading-[1.25] text-ink-soft tracking-wider uppercase">
+                <b className="block font-bold text-ink text-[12px]">{stat.label}</b>
+                {stat.labelDetails}
+              </span>
             </motion.div>
-          </motion.div>
-        </div>
-      </motion.div>
+          ))}
+        </motion.div>
 
-      {/* Bottom Meta Info - Editorial Style */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.4, duration: 0.8 }}
-        className="border-foreground/10 text-muted-foreground mt-16 flex flex-wrap items-center justify-between border-t pt-6 text-xs"
-      >
-        <div className="font-code tracking-wider uppercase">
-          Portfolio Vol. 01 / Issue Nº 24
-        </div>
-        <div className="flex gap-6">
-          <span>
-            Status: <span className="text-primary">Active Internship</span>
+        {/* 2.3 Coordinates & Bottom Meta Footer (Full Width) */}
+        <motion.div 
+          variants={itemVariants}
+          className="pt-[22px] border-t border-line flex items-center justify-between gap-6"
+        >
+          <span className="font-sans text-[10.5px] tracking-[0.18em] uppercase text-ink-faint">
+            {heroData.bottomMeta}
           </span>
-          <span className="hidden md:inline">Location: Indonesia</span>
-        </div>
+          <span className="font-mono text-[10px] tracking-[0.04em] text-ink-faint">
+            {heroData.coordinates}
+          </span>
+        </motion.div>
+
       </motion.div>
     </div>
   )

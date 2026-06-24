@@ -1,65 +1,42 @@
-## Error Type
-Console Error
+# Analisis UI/UX Update: Landing Page & Halaman About (Revisi)
 
-## Error Message
-A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+Berdasarkan masukan Anda, berikut adalah rancangan analisis yang diperbarui untuk restrukturisasi halaman About dan implementasi Framer Motion:
 
-- A server/client branch `if (typeof window !== 'undefined')`.
-- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
-- Date formatting in a user's locale which doesn't match the server.
-- External changing data without sending a snapshot of it along with the HTML.
-- Invalid HTML tag nesting.
+---
 
-It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+## 1. Restrukturisasi Halaman & Konten About
 
-https://react.dev/link/hydration-mismatch
+### A. Landing Page (Manifesto Section)
+* **File Target**: [AboutSection.tsx](file:///d:/2-Project/a-portofolio/features/about/components/AboutSection.tsx)
+* **Konsep**: Menyajikan pesan utama (manifesto) yang bersih dan minimalis (Swiss Minimalism).
+* **Perubahan**:
+  * Mengambil gaya visual dari `index.html` (Baris 603-624).
+  * **Manifesto**: *"In an era of technical noise, I build clarity."*
+  * **Lead Paragraph**: Penjelasan singkat tentang integrasi AI Research & Web Engineering.
+  * **Philosophy**: Diintegrasikan di sini sebagai landasan Manifesto.
+  * **Navigasi**: Tombol utama *"Read full profile →"* mengarahkan user ke halaman baru `/about`.
 
-  ...
-    <SegmentViewNode type="page" pagePath="page.tsx">
-      <SegmentTrieNode>
-      <Home>
-        <HeroSection>
-        <AboutSection>
-          <section id="about" className="relative p...">
-            <div>
-            <AboutContent aboutData={{personal:{...}, ...}}>
-              <div className="container ...">
-                <motion.div variants={{initial:{...}, ...}} initial="initial" animate="animate" className="space-y-12...">
-                  <div className="space-y-12..." style={{opacity:0}} ref={function useMotionRef.useCallback}>
-                    <motion.div variants={{initial:{...}, ...}} className="text-cente...">
-                      <div className="text-cente..." style={{opacity:0, ...}} ref={function useMotionRef.useCallback}>
-                        <AnimatedText text="About Me" as="h2" variant="slideUp" className="text-3xl m...">
-                          <h2
-                            ref={null}
-                            className="text-3xl md:text-4xl lg:text-5xl font-bold"
--                           style={{opacity:"0",transform:"translateY..."}}
-                          >
-                        <AnimatedText text="Get to kno..." as="p" variant="fadeIn" delay={0.2} className="text-lg te...">
-                          <p
-                            ref={null}
-                            className="text-lg text-muted-foreground max-w-2xl mx-auto"
--                           style={{opacity:"0"}}
-                          >
-                    ...
-            ...
-        ...
-    ...
+### B. Halaman Baru `/about` (Profil Terperinci)
+* **File Target**: [app/about/page.tsx](file:///d:/2-Project/a-portofolio/app/about/page.tsx)
+* **Konsep**: Berfokus sepenuhnya tentang data pribadi Anda ("tentang saya"), menggunakan gaya visual (font, grid, border, layout editorial) dari `about.html` sebagai referensi gaya.
+* **Elemen Konten yang Ditampilkan**:
+  1. **Page Header / Hero**: Judul editorial *"The precision architect."* dengan detail lokasi/waktu saat ini.
+  2. **Personal Information & Bio**: Biodata ringkas, lokasi, zona waktu, serta deskripsi naratif diri Anda.
+  3. **Education & Achievements**: Menampilkan riwayat pendidikan formal beserta pencapaian/penghargaan terperinci dengan timeline bergaya minimalis.
+  4. **Career Objectives**: Target dan arah karir profesional.
+  5. **Interests**: Minat dan hobi pribadi dalam bentuk tag/pills yang interaktif.
+* **Catatan Penting**: **TIDAK** menyertakan *Core Values / Tenets* dan *Skill Matrix* di halaman ini karena sudah dijelaskan secara lengkap di landing page.
 
+---
 
+## 2. Rencana Animasi Menggunakan Framer Motion
 
-    at h2 (<anonymous>:null:null)
-    at AnimatedText (components/common/AnimatedText.tsx:128:9)
-    at AboutContent (features/about/components/AboutContent.tsx:80:11)
-    at AboutSection (features/about/components/AboutSection.tsx:72:7)
-    at Home (app\page.tsx:17:7)
+Untuk memberikan impresi premium dan dinamis pada halaman utama:
 
-## Code Frame
-  126 |       const StaticComponent = Component as React.ElementType
-  127 |       return (
-> 128 |         <StaticComponent
-      |         ^
-  129 |           ref={ref}
-  130 |           className={className}
-  131 |           {...props}
-
-Next.js version: 16.2.9 (Turbopack)
+* **Text Reveal Animation**: Menggunakan staggered animation pada tajuk utama (*h1* dan *h2*) agar muncul kata-per-kata atau baris-per-baris secara halus menggunakan bezier curve `[0.22, 1, 0.36, 1]` (sesuai transisi CSS `[data-reveal]`).
+* **Scroll-Triggered Reveal**: Mengimplementasikan wrapper component berbasis `framer-motion` (menggunakan `useInView` atau dynamic variant trigger) untuk menggantikan logika CSS `[data-reveal]` agar transisi lebih smooth dan andal di berbagai browser.
+* **Interactive Hover Effects**:
+  * Hover pada tombol/badge dengan sedikit scale dan transisi translate untuk panah.
+  * Efek glassmorphism yang merespon posisi cursor (optional) atau pergantian opacity border yang lembut saat disentuh.
+  * Micro-interaction pada stats counter (angka naik secara dinamis saat bagian statistik terscroll ke layar).
+* **Parallax Background**: Pergerakan ambient glow circle di background secara asinkronus dan lambat untuk menambah kedalaman ruang (depth) tanpa memperlambat rendering halaman.

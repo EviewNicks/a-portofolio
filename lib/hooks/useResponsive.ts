@@ -6,10 +6,8 @@
 import { useState, useEffect, useCallback } from 'react'
 import {
   getCurrentBreakpoint,
-  isBreakpoint,
   isTouchDevice,
   getOrientation,
-  getResponsiveValue,
   type BreakpointName,
   type ResponsiveConfig,
 } from '@/lib/utils/responsive'

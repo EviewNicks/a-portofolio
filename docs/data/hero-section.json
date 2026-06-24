@@ -3,30 +3,51 @@
     "name": "Ardiansyah",
     "title": "AI Engineer & Developer",
     "subtitle": "Fokus pada Data-Centric AI & LLM Development",
+    "label": "AI Researcher + Software Engineer",
+    "labelIx": "Nº 01",
+    "heading": "Engineering the",
+    "headingEm": "essential",
+    "headingDot": ".",
     "description": "Mahasiswa Teknik Informatika semester 5 dengan latar belakang software engineering dan minat kuat pada data-centric AI dan Large Language Models (LLM). Berpengalaman menggunakan Python untuk pemrosesan data teks, eksperimen NLP, dan pengembangan sistem LLM berbasis LangChain dan RAG.",
     "tagline": "Membangun sistem AI yang berpusat pada kualitas data",
     "cta": {
       "primary": {
-        "text": "Lihat Portfolio",
+        "text": "Lihat Projek",
         "link": "#projects",
         "variant": "primary"
       },
       "secondary": {
-        "text": "Download CV",
-        "link": "/docs/cv-Ardiansyah.pdf",
-        "variant": "outline"
+        "text": "Hubungi di LinkedIn",
+        "link": "https://www.linkedin.com/in/ardi-ansyah-421708325/",
+        "variant": "ghost"
       }
     },
-    "highlights": [
-      "Mahasiswa Semester 5 Teknik Informatika",
-      "Fokus Data-Centric AI & LLM Development",
-      "Berpengalaman Python & NLP Processing",
-      "Tertarik Data Science & AI Internship"
-    ],
     "avatar": {
       "url": "/images/profile/ardiansyah-professional.png",
       "alt": "Ardiansyah - Foto Profil AI Engineer"
     },
+    "stats": [
+      {
+        "value": "AI",
+        "label": "Deep Research",
+        "labelDetails": "NLP · CV · ML",
+        "ringType": "solid"
+      },
+      {
+        "value": "∞",
+        "label": "Scalable Web",
+        "labelDetails": "Full-stack · Cloud",
+        "ringType": "coral"
+      },
+      {
+        "value": "01",
+        "label": "Precision",
+        "labelDetails": "Zero tech debt",
+        "ringType": "solid"
+      }
+    ],
+    "coordinates": "6.2088° S · 106.8456° E",
+    "bottomMeta": "Research · Design · Engineering · Repeat",
     "background": {
       "type": "animated-gradient",
       "theme": "ai-neural-network",
@@ -45,6 +66,28 @@
           "speed": 0.5,
           "direction": "down"
         }
+      ]
+    },
+    "wire": {
+      "tools": [
+        { "name": "PyTorch", "coord": "2.x" },
+        { "name": "TensorFlow", "coord": "2.16" },
+        { "name": "Next.js", "coord": "15" },
+        { "name": "TypeScript", "coord": "5.6" },
+        { "name": "AWS", "coord": "CDK" },
+        { "name": "Docker", "coord": "Compose" },
+        { "name": "Python", "coord": "3.12" },
+        { "name": "Rust", "coord": "1.80" }
+      ],
+      "skills": [
+        { "handle": "NLP", "role": "Research" },
+        { "handle": "CV", "role": "Vision" },
+        { "handle": "MLOps", "role": "Pipeline" },
+        { "handle": "React", "role": "Frontend" },
+        { "handle": "K8s", "role": "Orchestration" },
+        { "handle": "PostgreSQL", "role": "Data" },
+        { "handle": "GraphQL", "role": "API" },
+        { "handle": "LLM", "role": "Inference" }
       ]
     }
   }

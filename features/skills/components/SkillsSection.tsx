@@ -38,61 +38,39 @@ export const SkillsSection: React.FC<SkillsSectionProps> = ({ className }) => {
     <section
       id="skills"
       className={cn(
-        'relative py-16 lg:py-24',
-        'bg-linear-to-b from-background via-background/95 to-background',
+        'relative py-20 lg:py-32 bg-paper overflow-hidden',
         className
       )}
     >
-      {/* Background Decorative Elements */}
-      <div className="absolute inset-0 -z-10 overflow-hidden">
-        <motion.div
-          animate={{
-            opacity: [0.2, 0.4, 0.2],
-            scale: [1, 1.1, 1],
-            rotate: [0, 180, 360],
-          }}
-          transition={{
-            duration: 20,
-            repeat: Infinity,
-            ease: "linear",
-          }}
-          className="absolute top-1/3 left-1/4 w-96 h-96 bg-linear-to-br from-ai-cyan/5 to-primary/5 rounded-full blur-3xl"
-        />
-        <motion.div
-          animate={{
-            opacity: [0.3, 0.5, 0.3],
-            scale: [1, 1.2, 1],
-            rotate: [360, 180, 0],
-          }}
-          transition={{
-            duration: 25,
-            repeat: Infinity,
-            ease: "linear",
-          }}
-          className="absolute bottom-1/3 right-1/4 w-80 h-80 bg-linear-to-br from-ai-amber/5 to-ai-cyan/5 rounded-full blur-3xl"
-        />
-        <motion.div
-          animate={{
-            opacity: [0.1, 0.3, 0.1],
-            scale: [1, 1.3, 1],
-          }}
-          transition={{
-            duration: 15,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-          className="absolute top-1/2 right-1/3 w-64 h-64 bg-linear-to-br from-primary/5 to-ai-amber/5 rounded-full blur-3xl"
-        />
-      </div>
+      {/* Subtle grain / texture overlay — keeps bg-paper from being too flat */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 -z-10 opacity-[0.03]"
+        style={{
+          backgroundImage:
+            'url("data:image/svg+xml,%3Csvg width=\'80\' height=\'80\' viewBox=\'0 0 80 80\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23000\' fill-opacity=\'1\'%3E%3Cpath d=\'M0 0h80v80H0z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
+        }}
+      />
 
       {/* Main Skills Content */}
       <SkillsContent skillsData={skills} />
 
-      {/* Technology Logo Loop */}
-      <div className="container mx-auto px-4 mt-16">
-        <SkillsLogoLoop 
+      {/* Technology Logo Loop — wire divider + marquee */}
+      <div className="mt-20 lg:mt-28">
+        {/* Wire section rule */}
+        <div className="container mx-auto px-6 md:px-8 lg:px-16 border-t border-line pt-[18px] mb-8 flex justify-between items-center font-sans text-[10.5px] tracking-[0.18em] uppercase text-ink-faint">
+          <span
+            className="font-serif italic text-coral text-[14px] tracking-wider normal-case"
+            style={{ fontFamily: 'var(--font-editorial-serif)' }}
+          >
+            03.a
+          </span>
+          <span className="hidden sm:block">Technology stack · tools · ecosystem</span>
+          <span>Stack / Loop</span>
+        </div>
+        <SkillsLogoLoop
           categories={skills.categories}
-          className="mb-16"
+          className="mb-0"
         />
       </div>
 
@@ -102,13 +80,15 @@ export const SkillsSection: React.FC<SkillsSectionProps> = ({ className }) => {
         certifications={skills.certifications}
       />
 
-      {/* Section Divider */}
-      <div className="container mx-auto px-4 mt-16">
+      {/* Section-end rule */}
+      <div className="container mx-auto px-6 md:px-8 lg:px-16 mt-20">
         <motion.div
           initial={{ opacity: 0, scaleX: 0 }}
-          animate={{ opacity: 1, scaleX: 1 }}
-          transition={{ delay: 1.5, duration: 1 }}
-          className="w-full h-px bg-linear-to-r from-transparent via-primary/30 to-transparent"
+          whileInView={{ opacity: 1, scaleX: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+          className="w-full h-px bg-line"
+          style={{ originX: 0 }}
         />
       </div>
     </section>
